@@ -1,0 +1,22 @@
+---
+// UNREVIEWED TRANSLATION
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+
+const title = `${practice.doctorName} | 经过认证的家庭医学医生 | 圣盖博，加州`;
+const description = `经过认证的家庭医学医生在圣盖博，加州。张医生提供全面的家庭医学和内科服务。现在接受新患者。`;
+const canonicalUrl = 'https://shengchangmd.com/zh-hans/';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hans"
+  canonicalUrl={canonicalUrl}
+>
+  <section style="padding: 2rem 1rem; text-align: center;">
+    <h1>简体中文版本 — 未审查</h1>
+    <p>此页面的翻译正在进行中，尚未经过审查。</p>
+    <p>敬请期待完整的服务内容。</p>
+  </section>
+</BaseLayout>

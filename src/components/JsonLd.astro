@@ -1,0 +1,68 @@
+---
+import { practice } from '@data/practice';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: practice.doctorName,
+  description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
+  telephone: practice.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '330 W. Las Tunas Drive, Suite 3',
+    addressLocality: 'San Gabriel',
+    addressRegion: 'CA',
+    postalCode: '91776',
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 34.0853,
+    longitude: -118.1085,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
+  availableLanguage: practice.languages,
+  medicalSpecialty: practice.practiceAreas.primary.concat(
+    practice.practiceAreas.secondary,
+  ),
+  areaServed: {
+    '@type': 'City',
+    name: 'San Gabriel',
+  },
+  priceRange: 'Varies',
+  acceptsNewPatients: practice.acceptingNewPatients,
+  doctor: {
+    '@type': 'Physician',
+    name: practice.doctorName,
+    medicalSpecialty: practice.practiceAreas.primary,
+    hasCredential: practice.boardCertifications.map((cert) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: `Board Certified in ${cert.specialty}`,
+      credentialCategory: 'Certification',
+      issuedBy: {
+        '@type': 'Organization',
+        name: cert.board,
+      },
+      validFrom: `${cert.firstCertified}`,
+      validUntil: cert.mostRecentCertification
+        ? `${cert.mostRecentCertification + 10}`
+        : undefined,
+    })),
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

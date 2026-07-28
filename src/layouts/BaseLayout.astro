@@ -1,0 +1,445 @@
+---
+import { getCollection } from 'astro:content';
+import { practice } from '@data/practice';
+import { locales } from '@i18n/locales';
+import FontSizeControl from '@components/FontSizeControl.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import JsonLd from '@components/JsonLd.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: string;
+  ogImage?: string;
+  canonicalUrl: string;
+}
+
+const { title, description, locale, ogImage, canonicalUrl } = Astro.props;
+
+// Get locale metadata for reviewed status
+const localeCode = locale.split('-')[0];
+const localeMetadata = locales[localeCode];
+const isReviewed = localeMetadata?.reviewed ?? false;
+
+// Build hreflang links for all locales
+const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
+  lang: metadata.code,
+  href: canonicalUrl.replace(
+    /^(https?:\/\/[^/]+)(\/)?.*$/,
+    (match, domain, slash) => {
+      const basePath = domain + (slash || '/');
+      if (code === 'en') {
+        return basePath + canonicalUrl.split('/').slice(3).join('/');
+      }
+      return basePath + code + '/' + canonicalUrl.split('/').slice(3).join('/');
+    },
+  ),
+}));
+
+// Build x-default hreflang (points to English)
+const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
+---
+
+<!doctype html>
+<html lang={localeMetadata?.code || 'en-US'} style="--font-scale: 1;">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {!isReviewed && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- hreflang -->
+    {
+      hreflangLinks.map((link) => (
+        <link rel="alternate" hrefLang={link.lang} href={link.href} />
+      ))
+    }
+    <link rel="alternate" hrefLang="x-default" href={xDefaultHref} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={practice.doctorName} />
+    <meta property="og:type" content="website" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts: system stack for now, will be configured with tokens -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- Favicon placeholder -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>⚕️</text></svg>"
+    />
+
+    <!-- Tailwind CSS -->
+    <style is:global>
+      @import 'tailwindcss';
+
+      :root {
+        font-size: calc(100% * var(--font-scale, 1));
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: #1a1a1a;
+        background-color: #fff;
+      }
+
+      /* Ensure prefers-reduced-motion is respected */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Minimum touch target size */
+      a,
+      button {
+        position: relative;
+      }
+
+      /* Ensure text remains readable at all zoom levels */
+      @media (min-width: 0px) {
+        body {
+          font-size: 1.125rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Skip-to-content link (first focusable element) -->
+    <a href="#main" class="skip-to-content">Skip to content</a>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <!-- Left: Logo/Name -->
+        <div class="header-left">
+          <a href="/" class="logo">
+            <span class="logo-text">{practice.doctorName}</span>
+          </a>
+        </div>
+
+        <!-- Center: Phone number (visible at all widths) -->
+        <div class="header-center">
+          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="phone-link">
+            {practice.phone}
+          </a>
+        </div>
+
+        <!-- Right: Font size control + Language switcher -->
+        <div class="header-right">
+          <FontSizeControl />
+          <LanguageSwitcher currentLocale={localeCode} currentPath={Astro.url.pathname} />
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main id="main">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Office Information</h3>
+          <dl>
+            <dt>Hours</dt>
+            <dd>
+              <div>{practice.hours.weekday}</div>
+              <div>{practice.hours.weekend}</div>
+            </dd>
+            <dt>Address</dt>
+            <dd>
+              <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776">
+                {practice.address}
+              </a>
+            </dd>
+            <dt>Phone</dt>
+            <dd>
+              <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>
+                {practice.phone}
+              </a>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="footer-column">
+          <h3>Professional</h3>
+          <p>California Medical License {practice.medicalLicenseNumber}</p>
+          <p>{practice.medicalLicenseStatus}</p>
+        </div>
+
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/accessibility/">Accessibility Statement</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} {practice.doctorName}. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- JSON-LD schema -->
+    <JsonLd locale={localeCode} />
+  </body>
+</html>
+
+<style>
+  .skip-to-content {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    z-index: 999;
+  }
+
+  .skip-to-content:focus {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    padding: 1rem;
+    background: #1a1a1a;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .header {
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .header-left {
+    flex: 0 0 auto;
+  }
+
+  .logo {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+
+  .logo:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .header-center {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .phone-link {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #1a1a1a;
+    border-radius: 0.25rem;
+    display: inline-block;
+    transition: background-color 0.2s;
+  }
+
+  .phone-link:hover {
+    background-color: #f5f5f5;
+  }
+
+  .phone-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .header-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem 1rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-list a {
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: inline-block;
+    transition: border-bottom-color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav-list a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .nav-list a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 400px);
+  }
+
+  .footer {
+    background: #f9f9f9;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 4rem;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-column h3 {
+    font-size: 1.125rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .footer-column dl {
+    margin: 0;
+  }
+
+  .footer-column dt {
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-column dd {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .footer-column a {
+    color: inherit;
+  }
+
+  .footer-column a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-column li {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    border-top: 1px solid #e5e5e5;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .header-left,
+    .header-center,
+    .header-right {
+      width: 100%;
+    }
+
+    .nav-list {
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1rem;
+    }
+
+    .phone-link {
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+    }
+  }
+</style>

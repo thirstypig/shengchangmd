@@ -1,0 +1,169 @@
+---
+// Font size control: three buttons (−, A, +) to control --font-scale CSS variable
+// Must read localStorage before first paint to avoid flash of wrong size
+// This is the only client-side JavaScript on the site.
+---
+
+<div class="font-size-control">
+  <button
+    class="font-size-btn"
+    id="decrease-text"
+    aria-label="Decrease text size"
+    aria-disabled="false"
+  >
+    −
+  </button>
+
+  <button
+    class="font-size-btn font-size-reset"
+    id="reset-text"
+    aria-label="Reset text size"
+  >
+    A
+  </button>
+
+  <button
+    class="font-size-btn"
+    id="increase-text"
+    aria-label="Increase text size"
+    aria-disabled="false"
+  >
+    +
+  </button>
+
+  <div class="font-size-announcement" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<style>
+  .font-size-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  .font-size-btn {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 1px solid currentColor;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .font-size-btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .font-size-btn:hover:not([aria-disabled='true']) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .font-size-btn[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .font-size-reset {
+    border-style: none;
+  }
+
+  .font-size-announcement {
+    position: absolute;
+    left: -9999px;
+  }
+</style>
+
+<script>
+  const SCALE_STEPS = [1, 1.25, 1.5];
+  const SCALE_LABELS = ['100%', '125%', '150%'];
+  const STORAGE_KEY = 'font-scale-index';
+
+  function initFontSize() {
+    // Read stored value or default to 0 (100%)
+    const stored = localStorage.getItem(STORAGE_KEY);
+    let index = stored ? parseInt(stored, 10) : 0;
+    if (!Number.isInteger(index) || index < 0 || index >= SCALE_STEPS.length) {
+      index = 0;
+    }
+
+    const scale = SCALE_STEPS[index];
+    document.documentElement.style.setProperty('--font-scale', String(scale));
+    updateButtons(index);
+  }
+
+  function updateButtons(index: number) {
+    const decreaseBtn = document.getElementById('decrease-text') as HTMLButtonElement;
+    const resetBtn = document.getElementById('reset-text') as HTMLButtonElement;
+    const increaseBtn = document.getElementById('increase-text') as HTMLButtonElement;
+
+    if (decreaseBtn) {
+      const isAtMin = index === 0;
+      decreaseBtn.setAttribute('aria-disabled', isAtMin ? 'true' : 'false');
+    }
+
+    if (increaseBtn) {
+      const isAtMax = index === SCALE_STEPS.length - 1;
+      increaseBtn.setAttribute('aria-disabled', isAtMax ? 'true' : 'false');
+    }
+  }
+
+  function setFontSize(index: number) {
+    if (index < 0 || index >= SCALE_STEPS.length) return;
+
+    localStorage.setItem(STORAGE_KEY, String(index));
+    const scale = SCALE_STEPS[index];
+    const label = SCALE_LABELS[index];
+
+    document.documentElement.style.setProperty('--font-scale', String(scale));
+    updateButtons(index);
+
+    const announcement = document.querySelector(
+      '.font-size-announcement',
+    ) as HTMLElement;
+    if (announcement) {
+      announcement.textContent = `Text size: ${label}`;
+    }
+  }
+
+  // Initialize on page load
+  initFontSize();
+
+  // Attach event listeners
+  const decreaseBtn = document.getElementById('decrease-text');
+  const resetBtn = document.getElementById('reset-text');
+  const increaseBtn = document.getElementById('increase-text');
+
+  if (decreaseBtn) {
+    decreaseBtn.addEventListener('click', () => {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      let index = stored ? parseInt(stored, 10) : 0;
+      if (index > 0) {
+        setFontSize(index - 1);
+      }
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      setFontSize(0);
+    });
+  }
+
+  if (increaseBtn) {
+    increaseBtn.addEventListener('click', () => {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      let index = stored ? parseInt(stored, 10) : 0;
+      if (index < SCALE_STEPS.length - 1) {
+        setFontSize(index + 1);
+      }
+    });
+  }
+</script>

@@ -1,0 +1,89 @@
+---
+import { locales } from '@i18n/locales';
+
+interface Props {
+  currentLocale: string;
+  currentPath: string;
+}
+
+const { currentLocale, currentPath } = Astro.props;
+
+// Map of locale codes to their URL prefixes
+const localeToPrefix = {
+  en: '',
+  'zh-hant': '/zh-hant',
+  'zh-hans': '/zh-hans',
+};
+
+// Get clean path without locale prefix
+function getCleanPath(path: string): string {
+  if (path.startsWith('/zh-hant/')) {
+    return path.slice('/zh-hant'.length);
+  }
+  if (path.startsWith('/zh-hans/')) {
+    return path.slice('/zh-hans'.length);
+  }
+  return path;
+}
+
+const cleanPath = getCleanPath(currentPath);
+
+// Build links for each locale
+const localeLinks = Object.entries(locales).map(([code, metadata]) => {
+  const prefix = localeToPrefix[code as keyof typeof localeToPrefix];
+  const href = prefix + (cleanPath || '/');
+  return {
+    code,
+    href,
+    name: metadata.nativeName,
+    isCurrent: code === currentLocale,
+  };
+});
+---
+
+<nav class="language-switcher" aria-label="Language selection">
+  {
+    localeLinks.map((link) => (
+      <a
+        href={link.href}
+        lang={link.code}
+        aria-current={link.isCurrent ? 'page' : undefined}
+        class:list={[
+          'language-link',
+          { 'is-current': link.isCurrent },
+        ]}
+      >
+        {link.name}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .language-switcher {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .language-link {
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .language-link:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .language-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .language-link.is-current {
+    border-bottom-color: currentColor;
+    font-weight: 600;
+  }
+</style>
