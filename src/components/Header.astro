@@ -1,0 +1,52 @@
+---
+import Navigation from '@/components/Navigation.astro';
+import MobileNav from '@/components/MobileNav.astro';
+import CallButton from '@/components/CallButton.astro';
+import FontSizeControl from '@/components/FontSizeControl.astro';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import { practice } from '@/data/practice';
+
+interface Props {
+  locale: string;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+---
+
+<header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between min-h-16">
+    {/* Logo / Practice Name - Left */}
+    <a href={locale === 'en' ? '/' : `/${locale}/`} class="flex items-center gap-2 flex-shrink-0">
+      <div class="text-lg md:text-xl font-serif font-semibold text-primary-600">
+        {practice.doctorName}
+      </div>
+      <div class="hidden sm:block text-xs text-gray-500 font-sans whitespace-nowrap">
+        {locale === 'en' ? 'Family Medicine' : locale === 'zh-hant' ? '家庭醫學' : '家庭医学'}
+      </div>
+    </a>
+
+    {/* Desktop Navigation - Center */}
+    <Navigation {locale} {currentPath} />
+
+    {/* Right Side: Controls + Call Button */}
+    <div class="flex items-center gap-2 md:gap-4 flex-shrink-0">
+      <FontSizeControl />
+      <LanguageSwitcher currentLocale={locale} {currentPath} />
+      <CallButton text={locale === 'en' ? 'Call Now' : locale === 'zh-hant' ? '致電' : '致电'} size="sm" />
+
+      {/* Mobile Menu Toggle - via MobileNav */}
+      <div class="md:hidden">
+        <MobileNav {locale} {currentPath} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  header {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+</style>
