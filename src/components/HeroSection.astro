@@ -1,0 +1,38 @@
+---
+import CallButton from '@/components/CallButton.astro';
+
+interface Props {
+  headline: string;
+  subheadline: string;
+  locale: string;
+}
+
+const { headline, subheadline, locale } = Astro.props;
+---
+
+<section class="bg-gradient-to-b from-primary-50 to-white py-12 md:py-20">
+  <div class="max-w-container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+    {/* Text Content */}
+    <div class="flex-1">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        {headline}
+      </h1>
+      <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+        {subheadline}
+      </p>
+      <CallButton text={locale === 'en' ? 'Call Us Today' : locale === 'zh-hant' ? '立即致電' : '立即致电'} size="lg" />
+    </div>
+
+    {/* Illustration Placeholder */}
+    <div class="flex-1 flex justify-center items-center">
+      <div class="w-full max-w-md aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
+        <div class="text-center">
+          <div class="text-6xl mb-4">🏥</div>
+          <p class="text-gray-600 text-sm">
+            {locale === 'en' ? 'Healthcare illustration' : locale === 'zh-hant' ? '醫療插圖' : '医疗插图'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
