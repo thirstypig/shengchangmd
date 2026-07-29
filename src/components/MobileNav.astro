@@ -1,0 +1,86 @@
+---
+import { getTranslation } from '@/i18n/locales';
+
+interface Props {
+  locale: string;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+
+const navItems = [
+  { label: getTranslation(locale, 'home'), href: locale === 'en' ? '/' : `/${locale}/` },
+  { label: getTranslation(locale, 'about'), href: locale === 'en' ? '/about' : `/${locale}/about` },
+  { label: getTranslation(locale, 'services'), href: locale === 'en' ? '/services' : `/${locale}/services` },
+  { label: getTranslation(locale, 'insurance'), href: locale === 'en' ? '/insurance' : `/${locale}/insurance` },
+  { label: getTranslation(locale, 'hoursLocation'), href: locale === 'en' ? '/location' : `/${locale}/location` },
+  { label: getTranslation(locale, 'contact'), href: locale === 'en' ? '/contact' : `/${locale}/contact` },
+];
+
+const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
+---
+
+<div class="md:hidden">
+  <button
+    id="mobile-menu-toggle"
+    class="p-2 text-gray-700 hover:text-primary-600"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 bg-white z-40 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+    style="top: 60px; left: 0; right: 0; bottom: 0;"
+  >
+    <nav class="p-6 space-y-4">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`block py-2 px-4 rounded-lg transition-colors ${
+            isActive(item.href)
+              ? 'bg-primary-100 text-primary-600 font-semibold'
+              : 'text-gray-700 hover:bg-gray-100'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.classList.contains('translate-x-0');
+      if (isOpen) {
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('-translate-x-full');
+        toggle.setAttribute('aria-expanded', 'false');
+      } else {
+        menu.classList.add('translate-x-0');
+        menu.classList.remove('-translate-x-full');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close menu on link click
+    const links = menu.querySelectorAll('a');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('-translate-x-full');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
