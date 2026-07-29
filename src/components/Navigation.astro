@@ -11,9 +11,9 @@ const { locale, currentPath } = Astro.props;
 const navItems = [
   { label: getTranslation(locale, 'home'), href: locale === 'en' ? '/' : `/${locale}/` },
   { label: getTranslation(locale, 'about'), href: locale === 'en' ? '/about' : `/${locale}/about` },
-  { label: 'Services', href: locale === 'en' ? '/services' : `/${locale}/services` },
-  { label: 'Insurance', href: locale === 'en' ? '/insurance' : `/${locale}/insurance` },
-  { label: 'Hours & Location', href: locale === 'en' ? '/location' : `/${locale}/location` },
+  { label: getTranslation(locale, 'services'), href: locale === 'en' ? '/services' : `/${locale}/services` },
+  { label: getTranslation(locale, 'insurance'), href: locale === 'en' ? '/insurance' : `/${locale}/insurance` },
+  { label: getTranslation(locale, 'hoursLocation'), href: locale === 'en' ? '/location' : `/${locale}/location` },
   { label: getTranslation(locale, 'contact'), href: locale === 'en' ? '/contact' : `/${locale}/contact` },
 ];
 
