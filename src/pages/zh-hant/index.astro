@@ -13,66 +13,70 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
   locale="zh-hant"
   canonicalUrl={canonicalUrl}
 >
-  <!-- Portrait and Intro Section -->
-  <section class="intro-section">
-    <div class="intro-container">
-      <div class="portrait-placeholder">照片</div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-image">
+        <div class="portrait-placeholder">照片</div>
+      </div>
 
-      <div class="intro-content">
+      <div class="hero-content">
         <h1 class="doctor-name">張勝雄 醫師</h1>
         <p class="doctor-subtitle-en">Sheng Chang, M.D.</p>
         <p class="doctor-subtitle">
           家庭醫學科 · 聖蓋博 · 國語與英語
         </p>
+
+        <div class="hero-cta">
+          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button cta-primary">
+            電話 {practice.phone}
+          </a>
+          <a href="/zh-hant/new-patients/" class="cta-button cta-secondary">
+            預約掛號
+          </a>
+        </div>
+
+        <div class="hero-quick-info">
+          <div class="info-item">
+            <div class="info-label">門診時間</div>
+            <div class="info-value">週一至週五 9:00 AM – 5:00 PM</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">位置</div>
+            <div class="info-value">聖蓋博，加州</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">保險</div>
+            <a href="/zh-hant/insurance/" class="info-link">查看保險計畫</a>
+          </div>
+          <div class="info-item">
+            <div class="info-label">新患者</div>
+            <div class="info-value">接受掛號</div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Navigation Links -->
-    <nav class="page-nav" aria-label="頁面章節">
-      <a href="#the-doctor" class="nav-link">關於醫師</a>
-      <a href="#services" class="nav-link">診療項目</a>
-      <a href="#office-hours" class="nav-link">門診時間</a>
-      <a href="#location" class="nav-link">診所位置</a>
-      <a href="#insurance" class="nav-link">保險</a>
-      <a href="#new-patients" class="nav-link">初診患者</a>
-    </nav>
   </section>
 
-  <!-- CTA Banner -->
-  <section class="cta-banner">
-    <div class="cta-content">
-      <div class="cta-left">
-        <p class="cta-label">電話預約</p>
-        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="phone-number">
-          {practice.phone}
-        </a>
-      </div>
-      <div class="cta-right">
-        <p>週一至週五 上午九點至下午五點</p>
-        <p>由診所人員親白接聽</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- The Doctor Section -->
-  <section id="the-doctor" class="content-section">
+  <!-- About Section -->
+  <section class="content-section">
     <div class="content-container">
       <div class="content-left">
-        <h2>認識你全家的家庭醫師</h2>
+        <h2>認識您全家的家庭醫師</h2>
         <p>
-          張醫生自二十世紀六○年代末起，就在聖蓋博谷地為家庭服務，一直在同一間診所──拉斯圖納斯大道(Las
-          Tunas Drive)上的小診間。自1979年起擁有美國醫學委員會家庭醫學認證，具豐富的臨床經驗，並致力於為每位患者及其家人提供個性化、細心周到的醫療護理。
+          張醫生自1960年代後期起，即開始在聖蓋博谷地照顧家庭患者，服務地點始終是位在Las Tunas Drive的同一間診所。
+          自1979年起獲得美國家庭醫學委員會認證，擁有豐富的臨床經驗，致力於為每位患者及其家庭提供個人化、細心周到的醫療照護。
         </p>
       </div>
       <div class="content-right">
         <div class="info-box">
-          <h3>專科認證</h3>
+          <h3>醫學認證</h3>
           {
             practice.boardCertifications.map((cert) => (
               <div class="cert-item">
-                <p class="cert-specialty">{cert.specialty}</p>
+                <p class="cert-specialty"><strong>{cert.specialty}</strong></p>
                 <p class="cert-detail">{cert.board}</p>
-                <p class="cert-detail">1979年認證</p>
+                <p class="cert-detail">認證年份 {cert.firstCertified}</p>
               </div>
             ))
           }
@@ -80,142 +84,42 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
       </div>
     </div>
   </section>
-
-  <!-- Services Section -->
-  <section id="services" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>診療項目</h2>
-        <ul class="service-list">
-          <li>家庭醫學</li>
-          <li>慢性病管理</li>
-          <li>預防保健</li>
-          <li>內科醫學</li>
-        </ul>
-      </div>
-      <div class="content-right">
-        <p>
-          為各年齡的患者提供全面的初級保健，特別著重於建立長期的醫患關係，並利用深厚的臨床知識來管理慢性疾病。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Office Hours Section -->
-  <section id="office-hours" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>門診時間</h2>
-        <div class="hours-list">
-          <div class="hours-item">
-            <span>週一至週五</span>
-            <span>上午9:00 至 下午5:00</span>
-          </div>
-          <div class="hours-item">
-            <span>星期六</span>
-            <span>需先預約</span>
-          </div>
-          <p class="hours-note">
-            下午五點後請留言，電話會在下一個營業日回覆。
-          </p>
-        </div>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- Location Section -->
-  <section id="location" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>診所位置</h2>
-        <p class="address">
-          <a
-            href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776
-          </a>
-        </p>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- Insurance Section -->
-  <section id="insurance" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>保險</h2>
-        <p>保險清單佔位符</p>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- New Patients Section -->
-  <section id="new-patients" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>初診患者</h2>
-        <p>
-          我們目前正在接受新患者。如需安排初次看診，請在營業時間致電診所。
-        </p>
-        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="button">
-          致電預約
-        </a>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
 <style is:global>
-  /* Homepage header - minimal version */
-  body:has(main > .intro-section) .header-left,
-  body:has(main > .intro-section) .header-center,
-  body:has(main > .intro-section) .nav {
-    display: none !important;
+  html[lang="zh-Hant"] body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+    font-size: 1.06rem;
+    line-height: 1.85;
+    letter-spacing: 0.02em;
   }
 
-  body:has(main > .intro-section) .header-container {
-    padding: 0.75rem 1rem !important;
-    justify-content: flex-end !important;
+  html[lang="zh-Hant"] main {
+    max-width: 24em;
   }
 
-  body:has(main > .intro-section) .header-right {
-    gap: 1rem;
-    flex: initial;
-  }
-
-  body:has(main > .intro-section) .header {
-    border-bottom: 1px solid #e5e5e5;
-    position: static;
-  }
-
-  /* Intro Section */
-  .intro-section {
+  /* Hero Section */
+  .hero {
     padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    border-bottom: 2px solid #e5e5e5;
   }
 
-  .intro-container {
+  .hero-container {
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 250px 1fr;
     gap: 2rem;
     align-items: flex-start;
-    margin-bottom: 2rem;
+  }
+
+  .hero-image {
+    flex-shrink: 0;
   }
 
   .portrait-placeholder {
-    width: 150px;
-    height: 200px;
+    width: 250px;
+    height: 350px;
     background-color: #f5f5f5;
     border: 1px solid #e5e5e5;
     display: flex;
@@ -224,11 +128,10 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
     font-size: 0.875rem;
     color: #999;
     border-radius: 2px;
-    flex-shrink: 0;
   }
 
-  .intro-content {
-    padding: 1rem 0;
+  .hero-content {
+    padding: 0;
   }
 
   .doctor-name {
@@ -248,91 +151,85 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
   .doctor-subtitle {
     font-size: 1.125rem;
     color: #666;
-    margin: 0;
+    margin: 0 0 1.5rem;
   }
 
-  /* Page Navigation */
-  .page-nav {
+  .hero-cta {
     display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e5e5e5;
+    gap: 1rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
   }
 
-  .nav-link {
-    color: #1a1a1a;
+  .cta-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 2px;
+    font-weight: 600;
     text-decoration: none;
-    font-weight: 500;
+    display: inline-block;
     font-size: 1rem;
-    transition: color 0.2s;
-    scroll-behavior: smooth;
-  }
-
-  .nav-link:hover {
-    color: #4a3f6b;
-  }
-
-  .nav-link:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 4px;
-  }
-
-  /* CTA Banner */
-  .cta-banner {
-    background-color: #3d2b52;
-    color: #fff;
-    padding: 2rem 1rem;
-    margin: 0 0 2rem 0;
-  }
-
-  .cta-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    transition: all 0.2s;
+    border: 2px solid;
+    min-height: 48px;
+    display: inline-flex;
     align-items: center;
   }
 
-  .cta-left {
-    text-align: left;
-  }
-
-  .cta-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    margin: 0 0 0.5rem;
-    opacity: 0.9;
-  }
-
-  .phone-number {
-    display: inline-block;
-    font-size: 2.5rem;
-    font-weight: 700;
+  .cta-primary {
+    background: #3d2b52;
     color: #fff;
-    text-decoration: none;
-    transition: opacity 0.2s;
+    border-color: #3d2b52;
   }
 
-  .phone-number:hover {
-    opacity: 0.9;
+  .cta-primary:hover {
+    background: #2d1b42;
+    border-color: #2d1b42;
   }
 
-  .phone-number:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
+  .cta-secondary {
+    background: white;
+    color: #3d2b52;
+    border-color: #3d2b52;
   }
 
-  .cta-right {
-    text-align: right;
+  .cta-secondary:hover {
+    background: #f5f5f5;
+  }
+
+  .hero-quick-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .info-item {
     font-size: 0.95rem;
-    line-height: 1.6;
   }
 
-  .cta-right p {
-    margin: 0.25rem 0;
+  .info-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  .info-value {
+    color: #1a1a1a;
+    font-size: 1rem;
+  }
+
+  .info-link {
+    color: #4a3f6b;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .info-link:hover {
+    text-decoration: underline;
   }
 
   /* Content Sections */
@@ -340,11 +237,7 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
     padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .content-section:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #e5e5e5;
   }
 
   .content-container {
@@ -365,17 +258,14 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
     font-size: 1rem;
     line-height: 1.8;
     color: #333;
-    margin: 0 0 1rem;
-  }
-
-  .content-right {
-    padding-top: 0.5rem;
+    margin: 0;
   }
 
   .info-box {
     background-color: #f9f9f9;
     padding: 1.5rem;
     border-radius: 2px;
+    border-left: 4px solid #4a3f6b;
   }
 
   .info-box h3 {
@@ -408,107 +298,10 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
     margin: 0.25rem 0;
   }
 
-  .service-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .service-list li {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #333;
-  }
-
-  .hours-list {
-    font-size: 1rem;
-  }
-
-  .hours-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
-  }
-
-  .hours-item span:last-child {
-    text-align: right;
-    min-width: 100px;
-  }
-
-  .hours-note {
-    font-size: 0.875rem;
-    color: #666;
-    margin-top: 1rem;
-  }
-
-  .address {
-    font-size: 1rem;
-    line-height: 1.8;
-  }
-
-  .address a {
-    color: #4a3f6b;
-    text-decoration: none;
-  }
-
-  .address a:hover {
-    text-decoration: underline;
-  }
-
-  .address a:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #4a3f6b;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: background-color 0.2s;
-    min-height: 48px;
-    min-width: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .button:hover {
-    background-color: #3d2645;
-  }
-
-  .button:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  /* CJK Typography for Chinese pages */
-  html[lang="zh-Hant"] {
-    font-size: calc(100% * var(--font-scale, 1));
-  }
-
-  html[lang="zh-Hant"] body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
-    font-size: 1.06rem;
-    line-height: 1.85;
-    letter-spacing: 0.02em;
-  }
-
-  html[lang="zh-Hant"] main {
-    max-width: 24em;
-  }
-
   /* Responsive */
   @media (max-width: 768px) {
-    .intro-container {
+    .hero-container {
       grid-template-columns: 1fr;
-      gap: 1rem;
     }
 
     .portrait-placeholder {
@@ -520,21 +313,8 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
       font-size: 2rem;
     }
 
-    .page-nav {
-      gap: 1rem;
-    }
-
-    .nav-link {
-      font-size: 0.9rem;
-    }
-
-    .cta-content {
+    .hero-quick-info {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .cta-right {
-      text-align: left;
     }
 
     .content-container {
@@ -544,86 +324,6 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
 
     .content-left h2 {
       font-size: 1.5rem;
-    }
-
-    .phone-number {
-      font-size: 1.75rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .intro-section {
-      padding: 1rem 0.75rem;
-    }
-
-    .intro-container {
-      gap: 0.75rem;
-    }
-
-    .portrait-placeholder {
-      width: 80px;
-      height: 120px;
-      font-size: 0.75rem;
-    }
-
-    .doctor-name {
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .doctor-subtitle-en {
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .doctor-subtitle {
-      font-size: 0.95rem;
-    }
-
-    .page-nav {
-      gap: 0.75rem;
-      padding: 1rem 0;
-    }
-
-    .nav-link {
-      font-size: 0.85rem;
-    }
-
-    .cta-banner {
-      padding: 1.5rem 0.75rem;
-    }
-
-    .cta-content {
-      gap: 1rem;
-    }
-
-    .cta-label {
-      font-size: 0.75rem;
-    }
-
-    .phone-number {
-      font-size: 1.5rem;
-    }
-
-    .cta-right {
-      font-size: 0.85rem;
-    }
-
-    .content-section {
-      padding: 1.5rem 0.75rem;
-    }
-
-    .content-left h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .content-left p {
-      font-size: 0.95rem;
-    }
-
-    .info-box {
-      padding: 1rem;
     }
   }
 </style>

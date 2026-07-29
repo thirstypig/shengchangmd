@@ -27,14 +27,26 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/';
       </div>
     </div>
 
-    <!-- Navigation Links -->
+    <!-- Navigation Button Board -->
     <nav class="page-nav" aria-label="页面章节">
-      <a href="#the-doctor" class="nav-link">关于医师</a>
-      <a href="#services" class="nav-link">诊疗项目</a>
-      <a href="#office-hours" class="nav-link">门诊时间</a>
-      <a href="#location" class="nav-link">诊所位置</a>
-      <a href="#insurance" class="nav-link">保险</a>
-      <a href="#new-patients" class="nav-link">初诊患者</a>
+      <a href="#the-doctor" class="nav-tile">
+        <span class="nav-tile-label">关于医师</span>
+      </a>
+      <a href="#services" class="nav-tile">
+        <span class="nav-tile-label">诊疗项目</span>
+      </a>
+      <a href="#office-hours" class="nav-tile">
+        <span class="nav-tile-label">门诊时间</span>
+      </a>
+      <a href="#location" class="nav-tile">
+        <span class="nav-tile-label">诊所位置</span>
+      </a>
+      <a href="#insurance" class="nav-tile">
+        <span class="nav-tile-label">保险</span>
+      </a>
+      <a href="#new-patients" class="nav-tile">
+        <span class="nav-tile-label">初诊患者</span>
+      </a>
     </nav>
   </section>
 
@@ -251,31 +263,45 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/';
     margin: 0;
   }
 
-  /* Page Navigation */
+  /* Page Navigation - Button Board */
   .page-nav {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 2rem 1rem;
     border-bottom: 1px solid #e5e5e5;
-    flex-wrap: wrap;
   }
 
-  .nav-link {
-    color: #1a1a1a;
+  .nav-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 64px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 2px;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.2s;
-    scroll-behavior: smooth;
+    transition: all 0.2s;
+    cursor: pointer;
   }
 
-  .nav-link:hover {
-    color: #4a3f6b;
+  .nav-tile:hover {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
   }
 
-  .nav-link:focus-visible {
+  .nav-tile:focus-visible {
     outline: 2px solid #4a3f6b;
-    outline-offset: 4px;
+    outline-offset: 2px;
+  }
+
+  .nav-tile-label {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.2;
   }
 
   /* CTA Banner */
@@ -521,11 +547,17 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/';
     }
 
     .page-nav {
-      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 1.5rem 0.75rem;
     }
 
-    .nav-link {
-      font-size: 0.9rem;
+    .nav-tile {
+      min-height: 56px;
+    }
+
+    .nav-tile-label {
+      font-size: 0.8rem;
     }
 
     .cta-content {
