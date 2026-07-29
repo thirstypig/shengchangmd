@@ -17,7 +17,6 @@ const { title, description, locale, ogImage, canonicalUrl } = Astro.props;
 
 const localeMetadata = locales[locale as keyof typeof locales] || locales['en'];
 const isReviewed = localeMetadata?.reviewed ?? false;
-const langCode = locale.split('-')[0]; // Extract language code for Header usage
 
 const navItems = {
   en: [
@@ -155,7 +154,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     <a href="#main" class="skip-to-content">Skip to content</a>
 
     <!-- Header -->
-    <Header locale={localeCode} currentPath={Astro.url.pathname} />
+    <Header locale={locale} currentPath={Astro.url.pathname} />
 
     <!-- Main content -->
     <main id="main">
@@ -218,7 +217,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       </div>
     </footer>
 
-    <JsonLd locale={localeCode} />
+    <JsonLd locale={locale} />
   </body>
 </html>
 
