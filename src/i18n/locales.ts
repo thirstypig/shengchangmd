@@ -2,6 +2,8 @@ export interface LocaleMetadata {
   code: string;
   name: string;
   nativeName: string;
+  /** Compact label for the header switcher, where horizontal space is tight. */
+  shortName: string;
   reviewed: boolean;
 }
 
@@ -10,18 +12,21 @@ export const locales: Record<string, LocaleMetadata> = {
     code: 'en-US',
     name: 'English',
     nativeName: 'English',
+    shortName: 'EN',
     reviewed: true,
   },
   'zh-hant': {
     code: 'zh-Hant',
     name: '繁體中文',
     nativeName: '繁體中文',
+    shortName: '繁體',
     reviewed: false,
   },
   'zh-hans': {
     code: 'zh-Hans',
     name: '簡體中文',
     nativeName: '簡體中文',
+    shortName: '简体',
     reviewed: false,
   },
 };

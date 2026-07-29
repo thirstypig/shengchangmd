@@ -38,19 +38,25 @@
   .font-size-control {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.125rem;
     position: relative;
   }
 
+  /* Compact 32px controls. They sit in a narrow utility strip where 48px boxes
+     dominated the mobile header; 32px still clears the 24px AAA target-size
+     minimum, and the page's own body text remains at 18px. */
   .font-size-btn {
-    min-width: 48px;
-    min-height: 48px;
+    min-width: 32px;
+    min-height: 32px;
     padding: 0;
-    border: 1px solid currentColor;
+    border: 1px solid var(--line);
+    border-radius: 3px;
     background: transparent;
+    color: inherit;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 600;
+    line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +69,8 @@
   }
 
   .font-size-btn:hover:not([aria-disabled='true']) {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--surface-accent);
+    color: var(--brand);
   }
 
   .font-size-btn[aria-disabled='true'] {

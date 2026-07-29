@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* Tailwind v4 is CSS-first, but this project's design tokens (purple `primary`
+/* Tailwind v4 is CSS-first, but this project's design tokens (the red `primary`
    palette, spacing scale, `max-w-container`) live in tailwind.config.ts.
    `@config` loads that legacy JS config so those tokens resolve. */
 @config '../../tailwind.config.ts';
@@ -8,59 +8,63 @@
 /* ---------------------------------------------------------------------------
    Theme tokens
 
-   Light mode gets a warmer, more colourful footing than flat purple-on-white:
-   a teal secondary for informational surfaces and an amber accent for
-   wayfinding, both held at WCAG AA contrast against their backgrounds.
+   Light mode is deliberately NOT paper-white. Surfaces are warm, slightly
+   tinted neutrals so large pages of text do not glare, which matters for the
+   older patients this site is aimed at. A muted teal and a warm ochre sit
+   alongside the red so informational panels are not all one hue.
 
-   Dark mode is opted into by `data-theme="dark"` on <html>, set by
-   ThemeToggle before first paint. `prefers-color-scheme` seeds the default so
-   a visitor who has already chosen dark at the OS level gets it immediately.
+   Dark mode is opted into by data-theme="dark" on <html>, resolved by an
+   inline pre-paint script in BaseLayout so navigation never flashes.
 --------------------------------------------------------------------------- */
 :root {
   color-scheme: light;
 
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --surface-sunken: #f7f5fa;
-  --surface-accent: #f4f1f7;
-  --surface-info: #eef7f7;
+  /* Warm off-whites rather than #fff — less glare, more depth between bands. */
+  --surface: #fbf7f4;
+  --surface-raised: #fffdfb;
+  --surface-sunken: #f4ece7;
+  --surface-accent: #fbeeec;
+  --surface-info: #ecf3f2;
 
-  --text-strong: #1a1a1a;
-  --text: #333333;
-  --text-muted: #5c5c66;
+  --text-strong: #23191a;
+  --text: #3d3234;
+  --text-muted: #6b5c5e;
 
-  --line: #e0dce6;
+  --line: #e4d6d2;
 
-  --brand: #4a3f6b;
-  --brand-strong: #3d2b52;
-  --brand-contrast: #ffffff;
+  --brand: #8a2f3c;
+  --brand-strong: #6f2531;
+  --brand-contrast: #fffdfb;
 
   --secondary: #1d6a6a;
-  --accent: #a35a00;
+  --accent: #96560c;
+  --positive: #2f6b39;
 }
 
 html[data-theme='dark'] {
   color-scheme: dark;
 
-  --surface: #14131a;
-  --surface-raised: #1e1c26;
-  --surface-sunken: #1a1822;
-  --surface-accent: #241f33;
+  --surface: #171315;
+  --surface-raised: #211a1d;
+  --surface-sunken: #1d1719;
+  --surface-accent: #2d1d21;
   --surface-info: #16262a;
 
-  --text-strong: #f4f2f8;
-  --text: #ddd9e6;
-  --text-muted: #a9a3b8;
+  --text-strong: #f6f0f0;
+  --text: #e2d8d9;
+  --text-muted: #ab9c9e;
 
-  --line: #332e42;
+  --line: #3a2c30;
 
-  /* Lightened so the purple keeps AA contrast on dark surfaces. */
-  --brand: #b9a6e0;
-  --brand-strong: #cfc0ef;
-  --brand-contrast: #17141f;
+  /* Lightened so the red keeps AA contrast on dark surfaces; filled buttons
+     flip to a dark label via --brand-contrast. */
+  --brand: #e8a0a8;
+  --brand-strong: #f2bcc1;
+  --brand-contrast: #24161a;
 
   --secondary: #5cc9c9;
-  --accent: #f0a950;
+  --accent: #e0a05a;
+  --positive: #74c583;
 }
 
 /* ---------------------------------------------------------------------------
@@ -123,91 +127,91 @@ button {
 }
 
 /* ---------------------------------------------------------------------------
-   Dark-mode remapping of the Tailwind utilities the pages actually use.
+   Utility remap
 
-   The pages were written with literal utilities (bg-white, text-gray-900,
-   bg-primary-50 …) rather than semantic tokens. Rather than rewrite 22 pages,
-   remap that finite set here. `html[data-theme='dark']` outranks a bare
-   utility class, so these win without !important.
+   The pages were written with literal Tailwind utilities (bg-white,
+   text-gray-900, bg-primary-50 …) rather than semantic tokens. Rather than
+   rewrite 22 pages, point that finite set at the theme variables here — so
+   both light and dark come from one place and neither is pure white or pure
+   black. These rules sit outside @layer, so they outrank Tailwind's layered
+   utilities without !important.
 
-   If you add a new colour utility to a page, add its dark counterpart here or
-   it will stay light in dark mode.
+   If you add a new colour utility to a page, add its counterpart here or it
+   will ignore the theme.
 --------------------------------------------------------------------------- */
+.bg-white {
+  background-color: var(--surface-raised);
+}
+.bg-gray-50,
+.bg-gray-100 {
+  background-color: var(--surface-sunken);
+}
+.bg-primary-50 {
+  background-color: var(--surface-accent);
+}
+.bg-gray-900 {
+  background-color: var(--text-strong);
+}
+
+.from-primary-50 {
+  --tw-gradient-from: var(--surface-accent);
+}
+.to-white {
+  --tw-gradient-to: var(--surface);
+}
+
+.text-gray-900 {
+  color: var(--text-strong);
+}
+.text-gray-800,
+.text-gray-700 {
+  color: var(--text);
+}
+.text-gray-600,
+.text-gray-500 {
+  color: var(--text-muted);
+}
+.text-primary-600 {
+  color: var(--brand);
+}
+
+.border-gray-200,
+.border-gray-300 {
+  border-color: var(--line);
+}
+
+.text-success {
+  color: var(--positive);
+}
+.border-success {
+  border-color: var(--positive);
+}
+.text-info {
+  color: var(--secondary);
+}
+.border-info {
+  border-color: var(--secondary);
+}
+
+/* Filled brand buttons: the label colour has to move with the fill, otherwise
+   white-on-light-red fails contrast in dark mode. */
+.bg-primary-600 {
+  background-color: var(--brand);
+  color: var(--brand-contrast);
+}
+.hover\:bg-primary-700:hover {
+  background-color: var(--brand-strong);
+}
+
 html[data-theme='dark'] {
-  .bg-white {
-    background-color: var(--surface-raised);
-  }
-  .bg-gray-50 {
-    background-color: var(--surface-sunken);
-  }
-  .bg-gray-100 {
-    background-color: var(--surface-sunken);
-  }
-  .bg-gray-900 {
-    background-color: #0f0e14;
-  }
-  .bg-primary-50 {
-    background-color: var(--surface-accent);
-  }
   .bg-primary-100 {
-    background-color: #2d2740;
-  }
-
-  .from-primary-50 {
-    --tw-gradient-from: var(--surface-accent);
-  }
-  .to-white {
-    --tw-gradient-to: var(--surface);
-  }
-
-  .text-gray-900 {
-    color: var(--text-strong);
-  }
-  .text-gray-800,
-  .text-gray-700 {
-    color: var(--text);
-  }
-  .text-gray-600,
-  .text-gray-500 {
-    color: var(--text-muted);
-  }
-  .text-primary-600 {
-    color: var(--brand);
-  }
-
-  .border-gray-200,
-  .border-gray-300 {
-    border-color: var(--line);
+    background-color: var(--surface-accent);
   }
   .border-primary-200,
   .border-primary-300 {
-    border-color: #423a5c;
+    border-color: #4a3237;
   }
-
   .ring-white {
     --tw-ring-color: var(--surface-raised);
-  }
-
-  /* Filled brand buttons: lighten the fill and darken the label so the pair
-     stays legible once the surface is dark. */
-  .bg-primary-600 {
-    background-color: var(--brand);
-    color: var(--brand-contrast);
-  }
-  .hover\:bg-primary-700:hover {
-    background-color: var(--brand-strong);
-  }
-
-  .text-success {
-    color: #6fcf7f;
-  }
-  .border-success {
-    border-color: #6fcf7f;
-  }
-  .text-info {
-    color: var(--secondary);
-  }
-  .border-info {
-    border-color: var(--secondary);
   }
 }
