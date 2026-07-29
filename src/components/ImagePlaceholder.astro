@@ -1,0 +1,54 @@
+---
+/**
+ * Labelled art-direction placeholder for imagery that has not been shot yet.
+ * Renders a dashed box describing the photo to source, so the layout is final
+ * and the image can be dropped in later without touching the page.
+ *
+ * Pass `src` once the real photograph exists and it renders the image instead.
+ */
+interface Props {
+  /** What photograph belongs here, e.g. "Waiting room, natural light". */
+  label: string;
+  /** Recommended dimensions, shown to whoever sources the photo. */
+  spec?: string;
+  /** Tailwind aspect ratio class. */
+  aspect?: string;
+  /** Once the photo exists, pass its path and it replaces the placeholder. */
+  src?: string;
+  alt?: string;
+  class?: string;
+}
+
+const {
+  label,
+  spec,
+  aspect = 'aspect-[4/3]',
+  src,
+  alt,
+  class: className = '',
+} = Astro.props;
+---
+
+{
+  src ? (
+    <img
+      src={src}
+      alt={alt ?? label}
+      loading="lazy"
+      decoding="async"
+      class={`w-full ${aspect} object-cover rounded-lg ${className}`}
+    />
+  ) : (
+    <div
+      class={`w-full ${aspect} rounded-lg bg-primary-50 border-2 border-dashed border-primary-300 flex items-center justify-center ${className}`}
+      role="img"
+      aria-label={`Placeholder: ${label}`}
+    >
+      <div class="text-center px-4 py-6">
+        <div class="text-4xl mb-3" aria-hidden="true">📷</div>
+        <p class="text-gray-800 font-semibold text-sm">{label}</p>
+        {spec && <p class="text-gray-600 text-xs mt-1">{spec}</p>}
+      </div>
+    </div>
+  )
+}

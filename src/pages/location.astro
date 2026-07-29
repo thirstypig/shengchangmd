@@ -10,6 +10,14 @@ const breadcrumbs = [
   { label: 'Home', href: '/' },
   { label: 'Location', href: '/location/' },
 ];
+
+// Derive every map URL from the single address in practice.ts, so a change of
+// address never leaves a stale coordinate or place ID behind. The `output=embed`
+// form geocodes the query server-side and needs no API key.
+const addressQuery = encodeURIComponent(practice.address);
+const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
+const googleDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
+const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
 ---
 
 <BaseLayout
@@ -68,31 +76,45 @@ const breadcrumbs = [
 
       <!-- Right Column: Map & Directions -->
       <div class="content-right">
-        <!-- Map Placeholder -->
+        <!-- Interactive map -->
         <div class="map-container">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3306.0542156547!2d-118.09534!3d34.08519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2d5a8f8f8f8f9%3A0x1234567890!2s330%20W%20Las%20Tunas%20Dr%20Suite%203%20San%20Gabriel%20CA%2091776!5e0!3m2!1sen!2sus!4v1234567890"
+            src={mapEmbedUrl}
             width="100%"
             height="400"
             style="border:0;"
-            allowfullscreen=""
+            allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Google Maps showing Dr. Chang's office location"
+            title={`Interactive map showing ${practice.doctorName}'s office at ${practice.address}`}
           ></iframe>
         </div>
 
-        <!-- Directions Link -->
-        <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776" target="_blank" rel="noopener noreferrer" class="directions-link">
-          Get Directions
-        </a>
+        <!-- Directions: one button per maps app so nobody has to know which they have -->
+        <div class="directions-group">
+          <a
+            href={googleDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="directions-link"
+          >
+            Get Directions (Google Maps)
+          </a>
+          <a
+            href={appleDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="directions-link directions-link-secondary"
+          >
+            Get Directions (Apple Maps)
+          </a>
+        </div>
 
         <!-- Address Card -->
         <div class="address-card">
           <h2>Address</h2>
           <p class="address-full">
-            {practice.address}<br />
-            San Gabriel, CA 91776
+            {practice.address}
           </p>
         </div>
 
@@ -276,14 +298,26 @@ const breadcrumbs = [
     display: block;
   }
 
+  .directions-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
   .directions-link {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 14rem;
+    /* 56px tall: above the 48px WCAG floor, sized for reduced motor control. */
+    min-height: 56px;
     padding: 0.75rem 1.5rem;
     background: #4a3f6b;
     color: white;
     text-decoration: none;
     border-radius: 4px;
     font-weight: 600;
+    font-size: 1.05rem;
     text-align: center;
     transition: background 0.2s;
   }
@@ -293,8 +327,19 @@ const breadcrumbs = [
   }
 
   .directions-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 3px solid #1a1a1a;
     outline-offset: 2px;
+  }
+
+  .directions-link-secondary {
+    background: #ffffff;
+    color: #4a3f6b;
+    border: 2px solid #4a3f6b;
+  }
+
+  .directions-link-secondary:hover {
+    background: #f4f1f7;
+    color: #3d2b52;
   }
 
   .address-full {

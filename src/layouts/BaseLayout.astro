@@ -1,8 +1,10 @@
 ---
+import '@/styles/global.css';
 import { getCollection } from 'astro:content';
 import { practice } from '@data/practice';
 import { locales } from '@i18n/locales';
 import Header from '@components/Header.astro';
+import StickyCallBar from '@components/StickyCallBar.astro';
 import JsonLd from '@components/JsonLd.astro';
 
 interface BreadcrumbItem {
@@ -130,49 +132,6 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       })} />
     )}
 
-    <style is:global>
-      @import 'tailwindcss';
-
-      :root {
-        font-size: calc(100% * var(--font-scale, 1));
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 1.05rem;
-        line-height: 1.6;
-        color: #1a1a1a;
-        background-color: #fff;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        font-family: Georgia, 'Times New Roman', serif;
-        font-weight: 600;
-        line-height: 1.3;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
-      a, button {
-        position: relative;
-      }
-    </style>
   </head>
 
   <body>
@@ -241,6 +200,8 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
         <p>&copy; {new Date().getFullYear()} {practice.doctorName}. All rights reserved.</p>
       </div>
     </footer>
+
+    <StickyCallBar locale={locale} />
 
     <JsonLd locale={locale} pageSchema={pageSchema} />
   </body>

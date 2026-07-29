@@ -12,62 +12,50 @@ interface Props {
 }
 
 const { locale, currentPath } = Astro.props;
+
+const tagline =
+  locale === 'zh-hant' ? '家庭醫學' : locale === 'zh-hans' ? '家庭医学' : 'Family Medicine';
+const callLabel = locale === 'zh-hant' ? '致電' : locale === 'zh-hans' ? '致电' : 'Call Now';
+const homeHref = locale === 'en' ? '/' : `/${locale}/`;
 ---
 
 <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between min-h-16">
-    {/* Logo / Practice Name - Left */}
-    <a href={locale === 'en' ? '/' : `/${locale}/`} class="flex items-center gap-2 flex-shrink-0">
-      <div class="text-lg md:text-xl font-serif font-semibold text-primary-600">
-        {practice.doctorName}
-      </div>
-      <div class="hidden sm:block text-xs text-gray-500 font-sans whitespace-nowrap">
-        {locale === 'en' ? 'Family Medicine' : locale === 'zh-hant' ? '家庭醫學' : '家庭医学'}
-      </div>
-    </a>
-
-    {/* Desktop Navigation - Center */}
-    <Navigation {locale} {currentPath} />
-
-    {/* Right Side: Controls + Call Button */}
-    <div class="flex items-center gap-2 md:gap-4 flex-shrink-0">
+  {/*
+    Utility bar. Text size and language are accessibility affordances, not
+    navigation — giving them their own row keeps the main bar from overflowing
+    and makes them easier to find, which matters for the older patients who
+    need them most.
+  */}
+  <div class="bg-gray-100 border-b border-gray-200">
+    <div
+      class="max-w-container mx-auto px-4 md:px-6 py-1 flex items-center justify-end gap-4 flex-wrap"
+    >
       <FontSizeControl />
       <LanguageSwitcher currentLocale={locale} {currentPath} />
-      <div class="call-button-wrapper">
-        <CallButton text={locale === 'en' ? 'Call Now' : locale === 'zh-hant' ? '致電' : '致电'} size="base" />
-      </div>
+    </div>
+  </div>
 
-      {/* Mobile Menu Toggle - via MobileNav */}
-      <div class="md:hidden">
-        <MobileNav {locale} {currentPath} />
-      </div>
+  {/* Main bar: identity, navigation, primary call to action. */}
+  <div
+    class="max-w-container mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4 min-h-16"
+  >
+    <a href={homeHref} class="flex items-baseline gap-2 shrink-0">
+      <span class="text-lg md:text-xl font-serif font-semibold text-primary-600">
+        {practice.doctorName}
+      </span>
+      <span class="hidden lg:inline text-xs text-gray-500 whitespace-nowrap">
+        {tagline}
+      </span>
+    </a>
+
+    <Navigation {locale} {currentPath} />
+
+    <div class="flex items-center gap-2 shrink-0">
+      {/* On mobile the sticky bottom bar carries the call CTA, so hide it here. */}
+      <span class="hidden md:block">
+        <CallButton text={callLabel} size="base" />
+      </span>
+      <MobileNav {locale} {currentPath} />
     </div>
   </div>
 </header>
-
-<style is:global>
-  .call-button-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 48px !important;
-    min-height: 48px !important;
-  }
-
-  .call-button-wrapper a {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 100% !important;
-    min-width: 48px !important;
-    padding: 0.5rem 1rem !important;
-  }
-</style>
-
-<style is:global>
-  header {
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-</style>

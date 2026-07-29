@@ -1,0 +1,98 @@
+---
+/**
+ * Mobile-only sticky call bar.
+ *
+ * Seniors overwhelmingly prefer phoning over filling in a form, and the
+ * header CTA scrolls out of reach on long pages. This keeps a 64px-tall
+ * tap target — well above the 48px WCAG floor — anchored to the bottom of
+ * the viewport on small screens, where the thumb already rests.
+ */
+import { practice } from '@/data/practice';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+
+const t = {
+  en: { label: 'Call the office', aria: `Call the office at ${practice.phone}` },
+  'zh-hant': { label: '致電診所', aria: `致電診所 ${practice.phone}` },
+  'zh-hans': { label: '致电诊所', aria: `致电诊所 ${practice.phone}` },
+}[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
+  label: 'Call the office',
+  aria: `Call the office at ${practice.phone}`,
+};
+
+const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
+---
+
+<div class="sticky-call-bar md:hidden">
+  <a href={phoneUrl} class="sticky-call-link" aria-label={t.aria}>
+    <span class="sticky-call-icon" aria-hidden="true">📞</span>
+    <span class="sticky-call-text">
+      <span class="sticky-call-label">{t.label}</span>
+      <span class="sticky-call-number">{practice.phone}</span>
+    </span>
+  </a>
+</div>
+
+<style>
+  .sticky-call-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: #ffffff;
+    border-top: 1px solid #d9d9d9;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+    /* Clear the home-indicator area on notched phones. */
+    padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
+  }
+
+  .sticky-call-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 64px;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: #4a3f6b;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .sticky-call-link:active {
+    background: #3d2645;
+  }
+
+  .sticky-call-link:focus-visible {
+    outline: 3px solid #1a1a1a;
+    outline-offset: 2px;
+  }
+
+  .sticky-call-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .sticky-call-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .sticky-call-label {
+    font-size: 0.95rem;
+  }
+
+  .sticky-call-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+</style>

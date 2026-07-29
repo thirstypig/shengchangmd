@@ -1,0 +1,122 @@
+---
+/**
+ * Patient testimonial section.
+ *
+ * IMPORTANT: the default content is PLACEHOLDER copy, not real reviews.
+ * Replace it only with quotes you have written patient consent to publish
+ * (a patient's identity plus their care is protected health information —
+ * publishing it without authorization is a HIPAA violation).
+ *
+ * Until real, consented quotes exist, render with `placeholder` (the default)
+ * so nothing on the live site reads as a genuine patient review.
+ */
+interface Testimonial {
+  quote: string;
+  name: string;
+  detail?: string;
+  photo?: string;
+}
+
+interface Props {
+  locale: string;
+  /** Real, consented testimonials. When empty, consent-pending slots render. */
+  testimonials?: Testimonial[];
+  heading?: string;
+}
+
+const { locale, testimonials = [], heading } = Astro.props;
+
+const t = {
+  en: {
+    heading: 'What Our Patients Say',
+    pendingTitle: 'Patient testimonial',
+    pendingBody: 'Awaiting a signed patient release before publishing.',
+    consentNote:
+      'Testimonials are published only with written patient authorization.',
+  },
+  'zh-hant': {
+    heading: '患者評價',
+    pendingTitle: '患者評價',
+    pendingBody: '待取得患者書面同意後刊登。',
+    consentNote: '評價僅在取得患者書面授權後刊登。',
+  },
+  'zh-hans': {
+    heading: '患者评价',
+    pendingTitle: '患者评价',
+    pendingBody: '待取得患者书面同意后刊登。',
+    consentNote: '评价仅在取得患者书面授权后刊登。',
+  },
+}[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
+  heading: 'What Our Patients Say',
+  pendingTitle: 'Patient testimonial',
+  pendingBody: 'Awaiting a signed patient release before publishing.',
+  consentNote: 'Testimonials are published only with written patient authorization.',
+};
+
+const hasReal = testimonials.length > 0;
+const slots = hasReal ? testimonials : [1, 2, 3];
+---
+
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="max-w-container mx-auto px-4 md:px-6">
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+      {heading ?? t.heading}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {
+        hasReal
+          ? (slots as Testimonial[]).map((item) => (
+              <figure class="bg-white rounded-lg border border-gray-200 p-8 flex flex-col gap-4">
+                <blockquote class="text-gray-700 text-lg leading-relaxed flex-1">
+                  “{item.quote}”
+                </blockquote>
+                <figcaption class="flex items-center gap-3 pt-4 border-t border-gray-200">
+                  {item.photo ? (
+                    <img
+                      src={item.photo}
+                      alt=""
+                      width="56"
+                      height="56"
+                      loading="lazy"
+                      class="w-14 h-14 rounded-full object-cover bg-primary-100"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      class="w-14 h-14 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 text-xl font-semibold"
+                    >
+                      {item.name.charAt(0)}
+                    </span>
+                  )}
+                  <span>
+                    <span class="block font-semibold text-gray-900">{item.name}</span>
+                    {item.detail && (
+                      <span class="block text-sm text-gray-600">{item.detail}</span>
+                    )}
+                  </span>
+                </figcaption>
+              </figure>
+            ))
+          : (slots as number[]).map(() => (
+              <div
+                class="bg-white rounded-lg border-2 border-dashed border-primary-300 p-8 flex flex-col gap-4"
+                role="note"
+              >
+                <div class="text-4xl" aria-hidden="true">💬</div>
+                <p class="font-semibold text-gray-900">{t.pendingTitle}</p>
+                <p class="text-sm text-gray-600 leading-relaxed">{t.pendingBody}</p>
+              </div>
+            ))
+      }
+    </div>
+
+    {
+      !hasReal && (
+        <p class="text-center text-sm text-gray-600 mt-8 max-w-2xl mx-auto">
+          {t.consentNote}
+        </p>
+      )
+    }
+  </div>
+</section>

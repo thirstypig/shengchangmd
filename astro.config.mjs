@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 
 const LOCALES = {
   en: 'en-US',
@@ -14,6 +15,9 @@ export default defineConfig({
   site: 'https://shengchangmd.com',
   server: {
     port: 3120,
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
   integrations: [
     sitemap({

@@ -1,38 +1,120 @@
 ---
 import CallButton from '@/components/CallButton.astro';
+import { practice } from '@/data/practice';
 
 interface Props {
   headline: string;
   subheadline: string;
   locale: string;
+  /** Path to a portrait/photo. When omitted, a labelled placeholder is shown. */
+  image?: string;
+  imageAlt?: string;
+  /** Caption rendered under the image — used for the doctor's name/credentials. */
+  imageCaption?: string;
+  /** 'photo' shows a portrait, 'placeholder' shows a labelled art-direction box. */
+  media?: 'photo' | 'placeholder';
 }
 
-const { headline, subheadline, locale } = Astro.props;
+const {
+  headline,
+  subheadline,
+  locale,
+  image,
+  imageAlt,
+  imageCaption,
+  media = image ? 'photo' : 'placeholder',
+} = Astro.props;
+
+const t = {
+  en: {
+    cta: 'Call Us Today',
+    placeholder: 'Photograph placeholder',
+    boardCertified: 'Board-Certified Family Physician',
+    acceptingPatients: 'Accepting new patients',
+  },
+  'zh-hant': {
+    cta: '立即致電',
+    placeholder: '照片預留位置',
+    boardCertified: '委員會認證家庭醫師',
+    acceptingPatients: '正在接受新患者',
+  },
+  'zh-hans': {
+    cta: '立即致电',
+    placeholder: '照片预留位置',
+    boardCertified: '委员会认证家庭医师',
+    acceptingPatients: '正在接受新患者',
+  },
+}[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
+  cta: 'Call Us Today',
+  placeholder: 'Photograph placeholder',
+  boardCertified: 'Board-Certified Family Physician',
+  acceptingPatients: 'Accepting new patients',
+};
 ---
 
 <section class="bg-gradient-to-b from-primary-50 to-white py-12 md:py-20">
-  <div class="max-w-container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+  <div
+    class="max-w-container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-10 md:gap-12"
+  >
     {/* Text Content */}
-    <div class="flex-1">
+    <div class="flex-1 order-2 md:order-1 text-center md:text-left">
       <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
         {headline}
       </h1>
       <p class="text-xl text-gray-700 mb-8 leading-relaxed">
         {subheadline}
       </p>
-      <CallButton text={locale === 'en' ? 'Call Us Today' : locale === 'zh-hant' ? '立即致電' : '立即致电'} size="lg" />
+
+      <div class="flex flex-col sm:flex-row items-center md:items-start gap-4">
+        <CallButton text={t.cta} size="lg" />
+        {
+          practice.acceptingNewPatients && (
+            <p class="flex items-center gap-2 text-base text-gray-700">
+              <span aria-hidden="true" class="text-success text-xl font-bold">✓</span>
+              {t.acceptingPatients}
+            </p>
+          )
+        }
+      </div>
     </div>
 
-    {/* Illustration Placeholder */}
-    <div class="flex-1 flex justify-center items-center">
-      <div class="w-full max-w-md aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-        <div class="text-center">
-          <div class="text-6xl mb-4">🏥</div>
-          <p class="text-gray-600 text-sm">
-            {locale === 'en' ? 'Healthcare illustration' : locale === 'zh-hant' ? '醫療插圖' : '医疗插图'}
-          </p>
-        </div>
-      </div>
+    {/* Media: portrait photo or labelled placeholder */}
+    <div class="flex-1 order-1 md:order-2 flex justify-center items-center w-full">
+      {
+        media === 'photo' && image ? (
+          <figure class="text-center">
+            {/*
+              Capped at 256px: the current source photo is only 150px native,
+              so rendering it larger visibly pixelates it. Raise this cap once a
+              high-resolution headshot replaces it.
+            */}
+            <img
+              src={image}
+              alt={imageAlt ?? practice.doctorName}
+              width="256"
+              height="256"
+              loading="eager"
+              decoding="async"
+              class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover rounded-2xl shadow-lg ring-4 ring-white mx-auto bg-primary-100"
+            />
+            <figcaption class="mt-4 text-base text-gray-700">
+              <span class="block font-semibold text-gray-900">{practice.doctorName}</span>
+              <span class="block text-sm text-gray-600">{imageCaption ?? t.boardCertified}</span>
+            </figcaption>
+          </figure>
+        ) : (
+          <div
+            class="w-full max-w-md aspect-square bg-primary-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-primary-300"
+            role="img"
+            aria-label={t.placeholder}
+          >
+            <div class="text-center px-6">
+              <div class="text-6xl mb-4" aria-hidden="true">🏥</div>
+              <p class="text-gray-600 text-sm">{t.placeholder}</p>
+            </div>
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

@@ -3,6 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
+import ImagePlaceholder from '@components/ImagePlaceholder.astro';
+import Testimonials from '@components/Testimonials.astro';
 import { practice } from '@data/practice';
 
 const locale = 'en';
@@ -22,6 +24,9 @@ const canonicalUrl = 'https://shengchangmd.com/';
     headline="Meet Dr. Sheng Chang, M.D."
     subheadline="Comprehensive family medicine and internal medicine care serving San Gabriel and surrounding communities. Board-certified, compassionate, and dedicated to your health."
     locale={locale}
+    image="/images/dr-sheng-chang.jpg"
+    imageAlt="Portrait of Dr. Sheng Chang, M.D."
+    imageCaption="Board-Certified Family Physician"
   />
 
   {/* Services Section */}
@@ -118,6 +123,36 @@ const canonicalUrl = 'https://shengchangmd.com/';
       </div>
     </div>
   </section>
+
+  {/* Our Practice — imagery placeholders until the photographs are shot */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">
+        Our Practice
+      </h2>
+      <p class="text-lg text-gray-700 text-center mb-12 max-w-2xl mx-auto">
+        A calm, accessible office in San Gabriel — with free parking and staff who
+        speak English and Mandarin.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <ImagePlaceholder
+          label="Reception & waiting area"
+          spec="1200 × 900px, natural light"
+        />
+        <ImagePlaceholder
+          label="Exam room"
+          spec="1200 × 900px, clean and uncluttered"
+        />
+        <ImagePlaceholder
+          label="Building entrance & parking"
+          spec="1200 × 900px, shows accessible entry"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* Patient testimonials — consent-pending slots, no invented quotes */}
+  <Testimonials locale={locale} />
 
   {/* Quick Contact CTA */}
   <section class="py-16 md:py-24 bg-primary-50">
