@@ -12,7 +12,6 @@ const canonicalUrl = 'https://shengchangmd.com/';
   description={description}
   locale="en"
   canonicalUrl={canonicalUrl}
-  class="homepage"
 >
   <!-- Portrait and Intro Section -->
   <section class="intro-section">
@@ -180,27 +179,29 @@ const canonicalUrl = 'https://shengchangmd.com/';
   </section>
 </BaseLayout>
 
-<style>
-  /* Hide header elements for minimal homepage header */
-  :global(.homepage .header-left),
-  :global(.homepage .header-center),
-  :global(.homepage .nav) {
-    display: none;
+<style is:global>
+  /* Homepage header - minimal version */
+  body:has(main > .intro-section) .header-left,
+  body:has(main > .intro-section) .header-center,
+  body:has(main > .intro-section) .nav {
+    display: none !important;
   }
 
-  :global(.homepage .header-container) {
-    padding: 0.75rem 1rem;
+  body:has(main > .intro-section) .header-container {
+    padding: 0.75rem 1rem !important;
+    justify-content: flex-end !important;
   }
 
-  :global(.homepage .header-right) {
+  body:has(main > .intro-section) .header-right {
     gap: 1rem;
+    flex: initial;
   }
 
-  /* Minimal top bar styling */
-  :global(.homepage .header) {
+  body:has(main > .intro-section) .header {
     border-bottom: 1px solid #e5e5e5;
     position: static;
   }
+</style>
 
   /* Intro Section */
   .intro-section {
