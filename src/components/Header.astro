@@ -33,7 +33,9 @@ const { locale, currentPath } = Astro.props;
     <div class="flex items-center gap-2 md:gap-4 flex-shrink-0">
       <FontSizeControl />
       <LanguageSwitcher currentLocale={locale} {currentPath} />
-      <CallButton text={locale === 'en' ? 'Call Now' : locale === 'zh-hant' ? '致電' : '致电'} size="sm" />
+      <div class="call-button-wrapper">
+        <CallButton text={locale === 'en' ? 'Call Now' : locale === 'zh-hant' ? '致電' : '致电'} size="base" />
+      </div>
 
       {/* Mobile Menu Toggle - via MobileNav */}
       <div class="md:hidden">
@@ -42,6 +44,25 @@ const { locale, currentPath } = Astro.props;
     </div>
   </div>
 </header>
+
+<style is:global>
+  .call-button-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 48px !important;
+    min-height: 48px !important;
+  }
+
+  .call-button-wrapper a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    min-width: 48px !important;
+    padding: 0.5rem 1rem !important;
+  }
+</style>
 
 <style is:global>
   header {
