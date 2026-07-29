@@ -13,349 +13,428 @@ const canonicalUrl = 'https://shengchangmd.com/';
   locale="en"
   canonicalUrl={canonicalUrl}
 >
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">{practice.doctorName}</h1>
-      <p class="hero-credential">Board-Certified Family Physician</p>
-      <p class="hero-location">San Gabriel, California</p>
-      <p class="hero-languages">
-        Speaks English & Mandarin
-      </p>
-      <div class="hero-cta">
-        <a href="tel:(626)573-0055" class="cta-button primary">
-          Call to Schedule
+  <!-- Portrait and Intro Section -->
+  <section class="intro-section">
+    <div class="intro-container">
+      <div class="portrait-placeholder">Portrait</div>
+
+      <div class="intro-content">
+        <h1 class="doctor-name">{practice.doctorName}</h1>
+        <p class="doctor-subtitle">
+          Family Medicine · San Gabriel · English and Mandarin
+        </p>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="page-nav" aria-label="Page sections">
+      <a href="#the-doctor" class="nav-link">The doctor</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#office-hours" class="nav-link">Office hours</a>
+      <a href="#location" class="nav-link">Location</a>
+      <a href="#insurance" class="nav-link">Insurance</a>
+      <a href="#new-patients" class="nav-link">New patients</a>
+    </nav>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="cta-content">
+      <div class="cta-left">
+        <p class="cta-label">CALL THE OFFICE</p>
+        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="phone-number">
+          {practice.phone}
         </a>
       </div>
-      <p class="hero-status">✓ Accepting New Patients</p>
+      <div class="cta-right">
+        <p>{practice.hours.weekday}</p>
+        <p>The front desk answers.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Quick Info Section -->
-  <section class="quick-info">
-    <div class="info-block">
-      <h2>Office Hours</h2>
-      <p>{practice.hours.weekday}</p>
-      <p>{practice.hours.weekend}</p>
+  <!-- The Doctor Section -->
+  <section id="the-doctor" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>A family doctor who knows your family.</h2>
+        <p>
+          Dr. Chang has cared for families in the San Gabriel Valley since the late 1960s,
+          from the same small suite on Las Tunas Drive. Board-certified in Family Medicine
+          since 1979, he brings extensive clinical experience and a commitment to personalized,
+          thoughtful care for each patient and their family.
+        </p>
+      </div>
+      <div class="content-right">
+        <div class="info-box">
+          <h3>Board Certifications</h3>
+          {
+            practice.boardCertifications.map((cert) => (
+              <div class="cert-item">
+                <p class="cert-specialty"><strong>{cert.specialty}</strong></p>
+                <p class="cert-detail">{cert.board}</p>
+                <p class="cert-detail">Certified {cert.firstCertified}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
-
-    <div class="info-block">
-      <h2>Location</h2>
-      <p>
-        <a
-          href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {practice.address}
-          <span class="external-icon">↗</span>
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <!-- Board Certifications Section -->
-  <section class="certifications">
-    <h2>Board Certifications</h2>
-    <p class="certification-intro">
-      Dr. Chang holds dual board certifications from ABMS member boards, an uncommon
-      combination in primary care.
-    </p>
-
-    <div class="certification-cards">
-      {
-        practice.boardCertifications.map((cert) => (
-          <div class="cert-card">
-            <h3>{cert.specialty}</h3>
-            <p class="cert-board">{cert.board}</p>
-            <p class="cert-status">
-              <strong>Status:</strong> {cert.currentStatus}
-            </p>
-            <p class="cert-year">
-              <strong>First Certified:</strong> {cert.firstCertified}
-            </p>
-            {cert.mostRecentCertification && (
-              <p class="cert-renewal">
-                <strong>Most Recent Certification:</strong> {cert.mostRecentCertification}
-              </p>
-            )}
-          </div>
-        ))
-      }
-    </div>
-
-    <p class="certification-note">
-      A family physician who is also a certified pathologist brings a deeper understanding
-      of how disease processes work at the cellular and tissue level, informing more
-      thoughtful clinical care.
-    </p>
   </section>
 
   <!-- Services Section -->
-  <section class="services">
-    <h2>Services</h2>
-    <div class="service-cards">
-      <a href="/services/family-medicine/" class="service-card">
-        <h3>Family Medicine</h3>
-        <p>Comprehensive primary care for all ages</p>
-      </a>
-
-      <a href="/services/chronic-disease-management/" class="service-card">
-        <h3>Chronic Disease Management</h3>
-        <p>Treatment and monitoring for ongoing conditions</p>
-      </a>
-
-      <a href="/services/preventive-care/" class="service-card">
-        <h3>Preventive Care</h3>
-        <p>Screenings and wellness visits</p>
-      </a>
-
-      <a href="/services/internal-medicine/" class="service-card">
-        <h3>Internal Medicine</h3>
-        <p>Diagnosis and treatment of adult illnesses</p>
-      </a>
+  <section id="services" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>Services</h2>
+        <ul class="service-list">
+          <li>Family Medicine</li>
+          <li>Chronic Disease Management</li>
+          <li>Preventive Care</li>
+          <li>Internal Medicine</li>
+        </ul>
+      </div>
+      <div class="content-right">
+        <p>
+          Comprehensive primary care for patients of all ages, with special focus on
+          building long-term relationships and managing chronic conditions with expertise
+          informed by deep clinical knowledge.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- About Teaser Section -->
-  <section class="about-teaser">
-    <h2>About Dr. Chang</h2>
-    <p>
-      Dr. Chang is a board-certified family physician with a background in pathology and
-      extensive clinical experience. He is committed to building long-term relationships
-      with his patients and providing personalized, thoughtful care.
-    </p>
-    <a href="/about/" class="button">Learn More</a>
+  <!-- Office Hours Section -->
+  <section id="office-hours" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>Office Hours</h2>
+        <div class="hours-list">
+          <div class="hours-item">
+            <span>Monday – Friday</span>
+            <span>9:00 – 5:00</span>
+          </div>
+          <div class="hours-item">
+            <span>Saturday</span>
+            <span>By appointment</span>
+          </div>
+          <p class="hours-note">
+            After 5:00 please leave a message — calls are returned the next business day.
+          </p>
+        </div>
+      </div>
+      <div class="content-right">
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section -->
+  <section id="location" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>Location</h2>
+        <p class="address">
+          <a
+            href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {practice.address}
+          </a>
+        </p>
+      </div>
+      <div class="content-right">
+      </div>
+    </div>
+  </section>
+
+  <!-- Insurance Section -->
+  <section id="insurance" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>Insurance</h2>
+        <p>Insurance list placeholder</p>
+      </div>
+      <div class="content-right">
+      </div>
+    </div>
+  </section>
+
+  <!-- New Patients Section -->
+  <section id="new-patients" class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>New Patients</h2>
+        <p>
+          We are currently accepting new patients. To schedule your first appointment,
+          please call the office during business hours.
+        </p>
+        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="button">
+          Call to Schedule
+        </a>
+      </div>
+      <div class="content-right">
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
-    text-align: center;
+  /* Intro Section */
+  .intro-section {
     padding: 2rem 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .hero-content {
-    max-width: 600px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  .hero-title {
-    font-size: 2rem;
-    margin: 0 0 0.5rem;
-    font-weight: 700;
+  .intro-container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
   }
 
-  .hero-credential {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #4a4a4a;
-    margin: 0 0 0.5rem;
-  }
-
-  .hero-location {
-    font-size: 1.25rem;
-    color: #4a4a4a;
-    margin: 0 0 1rem;
-  }
-
-  .hero-languages {
-    font-size: 1.125rem;
-    color: #4a4a4a;
-    margin: 0 0 1.5rem;
-  }
-
-  .hero-cta {
-    margin: 1.5rem 0;
-  }
-
-  .cta-button {
-    display: inline-flex;
-    padding: 1rem 2rem;
-    background-color: #4a3f6b;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 1.125rem;
-    min-height: 48px;
-    min-width: 48px;
+  .portrait-placeholder {
+    width: 150px;
+    height: 200px;
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    font-size: 0.875rem;
+    color: #999;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
 
-  .cta-button:hover {
-    background-color: #3d2645;
+  .intro-content {
+    padding: 1rem 0;
   }
 
-  .cta-button:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  .hero-status {
-    font-size: 1rem;
-    color: #4a3f6b;
-    font-weight: 600;
-    margin: 1rem 0 0;
-  }
-
-  .quick-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-  }
-
-  .info-block h2 {
-    font-size: 1.25rem;
-    margin-top: 0;
-  }
-
-  .info-block p {
-    margin: 0.5rem 0;
-  }
-
-  .info-block a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  .info-block a:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
-  }
-
-  .external-icon {
-    font-size: 0.75em;
-    margin-left: 0.25rem;
-  }
-
-  .certifications {
-    margin: 3rem 0;
-  }
-
-  .certifications h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .certification-intro {
-    font-size: 1.125rem;
-    max-width: 600px;
-    margin-bottom: 2rem;
-  }
-
-  .certification-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .cert-card {
-    padding: 1.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    background-color: #fafafa;
-  }
-
-  .cert-card h3 {
-    font-size: 1.25rem;
+  .doctor-name {
+    font-size: 2.5rem;
     margin: 0 0 0.5rem;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
-  .cert-board {
+  .doctor-subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Page Navigation */
+  .page-nav {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+    scroll-behavior: smooth;
+  }
+
+  .nav-link:hover {
+    color: #4a3f6b;
+  }
+
+  .nav-link:focus-visible {
+    outline: 2px solid #4a3f6b;
+    outline-offset: 4px;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background-color: #3d2b52;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin: 0 0 2rem 0;
+  }
+
+  .cta-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .cta-left {
+    text-align: left;
+  }
+
+  .cta-label {
+    font-size: 0.875rem;
     font-weight: 600;
-    color: #555;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem;
+    opacity: 0.9;
+  }
+
+  .phone-number {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .phone-number:hover {
+    opacity: 0.9;
+  }
+
+  .phone-number:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .cta-right {
+    text-align: right;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .cta-right p {
+    margin: 0.25rem 0;
+  }
+
+  /* Content Sections */
+  .content-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .content-section:last-child {
+    border-bottom: none;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .content-left h2 {
+    font-size: 2rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .content-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #333;
     margin: 0 0 1rem;
   }
 
-  .cert-status,
-  .cert-year,
-  .cert-renewal {
-    font-size: 0.95rem;
-    margin: 0.5rem 0;
-    color: #666;
+  .content-right {
+    padding-top: 0.5rem;
   }
 
-  .certification-note {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.8;
+  .info-box {
+    background-color: #f9f9f9;
     padding: 1.5rem;
-    background-color: #f4f1f7;
-    border-left: 4px solid #4a3f6b;
     border-radius: 2px;
   }
 
-  .services {
-    margin: 3rem 0;
+  .info-box h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  .services h2 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-  }
-
-  .service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    padding: 1.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s, border-color 0.2s;
-    background-color: #fff;
-  }
-
-  .service-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: #1a1a1a;
-  }
-
-  .service-card:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
-  }
-
-  .service-card h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .service-card p {
-    margin: 0;
-    color: #666;
-    font-size: 0.95rem;
-  }
-
-  .about-teaser {
-    margin: 3rem 0;
-    padding: 2rem;
-    background-color: #f0f8f0;
-    border-radius: 4px;
-  }
-
-  .about-teaser h2 {
-    font-size: 1.75rem;
-    margin-top: 0;
-  }
-
-  .about-teaser p {
-    font-size: 1.125rem;
-    line-height: 1.8;
+  .cert-item {
     margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .cert-item:last-child {
+    border-bottom: none;
+  }
+
+  .cert-specialty {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  .cert-detail {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0.25rem 0;
+  }
+
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .service-list li {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .hours-list {
+    font-size: 1rem;
+  }
+
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .hours-item span:last-child {
+    text-align: right;
+    min-width: 100px;
+  }
+
+  .hours-note {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 1rem;
+  }
+
+  .address {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .address a {
+    color: #4a3f6b;
+    text-decoration: none;
+  }
+
+  .address a:hover {
+    text-decoration: underline;
+  }
+
+  .address a:focus-visible {
+    outline: 2px solid #4a3f6b;
+    outline-offset: 2px;
   }
 
   .button {
@@ -366,7 +445,13 @@ const canonicalUrl = 'https://shengchangmd.com/';
     text-decoration: none;
     border-radius: 0.25rem;
     font-weight: 600;
+    font-size: 1rem;
     transition: background-color 0.2s;
+    min-height: 48px;
+    min-width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .button:hover {
@@ -378,46 +463,121 @@ const canonicalUrl = 'https://shengchangmd.com/';
     outline-offset: 2px;
   }
 
-  /* Responsive: Ensure hero fits above fold on 375px */
-  @media (max-width: 480px) {
-    .hero {
-      padding: 1rem 0.5rem;
-      margin-bottom: 1rem;
+  /* Responsive */
+  @media (max-width: 768px) {
+    .intro-container {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
 
-    .hero-title {
+    .portrait-placeholder {
+      width: 100%;
+      height: 250px;
+    }
+
+    .doctor-name {
+      font-size: 2rem;
+    }
+
+    .page-nav {
+      gap: 1rem;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+    }
+
+    .cta-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .cta-right {
+      text-align: left;
+    }
+
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .content-left h2 {
       font-size: 1.5rem;
     }
 
-    .hero-credential {
-      font-size: 1.25rem;
+    .phone-number {
+      font-size: 1.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .intro-section {
+      padding: 1rem 0.75rem;
     }
 
-    .hero-location {
-      font-size: 1rem;
+    .intro-container {
+      gap: 0.75rem;
     }
 
-    .hero-languages {
-      font-size: 1rem;
+    .portrait-placeholder {
+      width: 80px;
+      height: 120px;
+      font-size: 0.75rem;
     }
 
-    .cta-button {
-      padding: 0.875rem 1.5rem;
-      font-size: 1rem;
+    .doctor-name {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
     }
 
-    .quick-info {
-      grid-template-columns: 1fr;
+    .doctor-subtitle {
+      font-size: 0.95rem;
+    }
+
+    .page-nav {
+      gap: 0.75rem;
+      padding: 1rem 0;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+    }
+
+    .cta-banner {
+      padding: 1.5rem 0.75rem;
+    }
+
+    .cta-content {
       gap: 1rem;
-      padding: 1.5rem;
     }
 
-    .certification-cards {
-      grid-template-columns: 1fr;
+    .cta-label {
+      font-size: 0.75rem;
     }
 
-    .service-cards {
-      grid-template-columns: 1fr;
+    .phone-number {
+      font-size: 1.5rem;
+    }
+
+    .cta-right {
+      font-size: 0.85rem;
+    }
+
+    .content-section {
+      padding: 1.5rem 0.75rem;
+    }
+
+    .content-left h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .content-left p {
+      font-size: 0.95rem;
+    }
+
+    .info-box {
+      padding: 1rem;
     }
   }
 </style>
