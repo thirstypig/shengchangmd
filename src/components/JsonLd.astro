@@ -3,13 +3,42 @@ import { practice } from '@data/practice';
 
 interface Props {
   locale: string;
+  pageSchema?: Record<string, unknown>;
 }
 
-const { locale } = Astro.props;
+const { locale, pageSchema } = Astro.props;
 
-const schema = {
+// LocalBusiness Schema
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://shengchangmd.com/#organization',
+  name: practice.doctorName,
+  description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
+  url: 'https://shengchangmd.com',
+  logo: 'https://shengchangmd.com/logo.svg',
+  telephone: practice.phone,
+  email: 'mailto:info@shengchangmd.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '330 W. Las Tunas Drive, Suite 3',
+    addressLocality: 'San Gabriel',
+    addressRegion: 'CA',
+    postalCode: '91776',
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 34.0853,
+    longitude: -118.1085,
+  },
+};
+
+// MedicalBusiness Schema
+const medicalBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'MedicalBusiness',
+  '@id': 'https://shengchangmd.com/#medical-business',
   name: practice.doctorName,
   description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
   telephone: practice.phone,
@@ -44,25 +73,149 @@ const schema = {
   },
   priceRange: 'Varies',
   acceptsNewPatients: practice.acceptingNewPatients,
-  doctor: {
-    '@type': 'Physician',
+};
+
+// Person (Doctor) Schema
+const doctorSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://shengchangmd.com/#doctor',
+  name: practice.doctorName,
+  givenName: 'Sheng',
+  familyName: 'Chang',
+  description: 'Board-certified family physician and medical doctor',
+  jobTitle: 'Family Physician, Medical Doctor',
+  telephone: practice.phone,
+  worksFor: {
+    '@type': 'Organization',
     name: practice.doctorName,
-    medicalSpecialty: practice.practiceAreas.primary,
-    hasCredential: practice.boardCertifications.map((cert) => ({
-      '@type': 'EducationalOccupationalCredential',
-      name: `Board Certified in ${cert.specialty}`,
-      credentialCategory: 'Certification',
-      issuedBy: {
-        '@type': 'Organization',
-        name: cert.board,
-      },
-      validFrom: `${cert.firstCertified}`,
-      validUntil: cert.mostRecentCertification
-        ? `${cert.mostRecentCertification + 10}`
-        : undefined,
-    })),
+  },
+  knowsLanguage: practice.languages,
+  hasCredential: practice.boardCertifications.map((cert) => ({
+    '@type': 'EducationalOccupationalCredential',
+    name: `Board Certified in ${cert.specialty}`,
+    credentialCategory: 'Certification',
+    issuedBy: {
+      '@type': 'Organization',
+      name: cert.board,
+    },
+    validFrom: `${cert.firstCertified}`,
+    validUntil: cert.mostRecentCertification
+      ? `${cert.mostRecentCertification + 10}`
+      : undefined,
+  })),
+  affiliation: practice.hospitalAffiliations.map((hospital) => ({
+    '@type': 'Organization',
+    name: hospital,
+  })),
+  educationDetails: {
+    '@type': 'EducationEvent',
+    name: `${practice.education.medicalDegree} from ${practice.education.school}`,
+    educationLevel: 'DoctorateType',
+    startDate: `${practice.education.year - 4}`,
+    endDate: `${practice.education.year}`,
   },
 };
+
+// ContactPoint Schema
+const contactPointSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPoint',
+  '@id': 'https://shengchangmd.com/#contact-point',
+  contactType: 'Patient Services',
+  telephone: practice.phone,
+  email: 'mailto:info@shengchangmd.com',
+  hoursAvailable: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
+  areaServed: {
+    '@type': 'City',
+    name: 'San Gabriel, California',
+  },
+};
+
+// Service Schemas
+const servicesSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalService',
+    '@id': 'https://shengchangmd.com/services/#family-medicine',
+    name: 'Family Medicine',
+    description: 'Comprehensive family medicine care for patients of all ages, from newborns to seniors. Includes preventive care, acute illness treatment, and chronic disease management.',
+    provider: {
+      '@type': 'MedicalBusiness',
+      name: practice.doctorName,
+    },
+    serviceArea: {
+      '@type': 'City',
+      name: 'San Gabriel, California',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalService',
+    '@id': 'https://shengchangmd.com/services/#internal-medicine',
+    name: 'Internal Medicine',
+    description: 'Expert care for complex medical conditions and chronic disease management in adults.',
+    provider: {
+      '@type': 'MedicalBusiness',
+      name: practice.doctorName,
+    },
+    serviceArea: {
+      '@type': 'City',
+      name: 'San Gabriel, California',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalService',
+    '@id': 'https://shengchangmd.com/services/#preventive-care',
+    name: 'Preventive Care',
+    description: 'Annual physical exams, health screenings, and wellness visits to keep you healthy.',
+    provider: {
+      '@type': 'MedicalBusiness',
+      name: practice.doctorName,
+    },
+    serviceArea: {
+      '@type': 'City',
+      name: 'San Gabriel, California',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalService',
+    '@id': 'https://shengchangmd.com/services/#chronic-disease-management',
+    name: 'Chronic Disease Management',
+    description: 'Ongoing management of diabetes, hypertension, and other chronic conditions.',
+    provider: {
+      '@type': 'MedicalBusiness',
+      name: practice.doctorName,
+    },
+    serviceArea: {
+      '@type': 'City',
+      name: 'San Gabriel, California',
+    },
+  },
+];
+
+// Combine all schemas
+const schemas = [
+  localBusinessSchema,
+  medicalBusinessSchema,
+  doctorSchema,
+  contactPointSchema,
+  ...servicesSchema,
+  pageSchema,
+].filter(Boolean);
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+{
+  schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))
+}

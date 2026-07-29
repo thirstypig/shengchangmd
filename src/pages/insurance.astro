@@ -5,6 +5,11 @@ import { practice } from '@data/practice';
 const title = `Insurance & Payment | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Insurance and payment options for Dr. Chang's medical practice. Learn about accepted plans and flexible payment solutions.`;
 const canonicalUrl = 'https://shengchangmd.com/insurance/';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Insurance', href: '/insurance/' },
+];
 ---
 
 <BaseLayout
@@ -12,6 +17,7 @@ const canonicalUrl = 'https://shengchangmd.com/insurance/';
   description={description}
   locale="en"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   <!-- Hero Section -->
   <section class="hero-section">

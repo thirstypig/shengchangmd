@@ -5,6 +5,11 @@ import { practice } from '@data/practice';
 const title = `Office Hours | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Office hours and availability for Dr. Chang's family medicine practice in San Gabriel, California.`;
 const canonicalUrl = 'https://shengchangmd.com/hours/';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Hours', href: '/hours/' },
+];
 ---
 
 <BaseLayout
@@ -12,6 +17,7 @@ const canonicalUrl = 'https://shengchangmd.com/hours/';
   description={description}
   locale="en"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   <section class="content-section">
     <div class="content-left">

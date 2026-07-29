@@ -8,6 +8,11 @@ const title = `Services | ${practice.doctorName} | Family Medicine in San Gabrie
 const description = `Comprehensive family medicine services including chronic disease management, preventive care, and internal medicine. Learn about Dr. Chang's medical services.`;
 const canonicalUrl = 'https://shengchangmd.com/services/';
 const locale = 'en';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+];
 ---
 
 <BaseLayout
@@ -15,6 +20,7 @@ const locale = 'en';
   description={description}
   locale={locale}
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   {/* Hero Section */}
   <HeroSection
