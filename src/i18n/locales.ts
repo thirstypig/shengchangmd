@@ -14,14 +14,14 @@ export const locales: Record<string, LocaleMetadata> = {
   },
   'zh-hant': {
     code: 'zh-Hant',
-    name: 'Traditional Chinese',
+    name: '繁體中文',
     nativeName: '繁體中文',
     reviewed: false,
   },
   'zh-hans': {
     code: 'zh-Hans',
-    name: 'Simplified Chinese',
-    nativeName: '简体中文',
+    name: '簡體中文',
+    nativeName: '簡體中文',
     reviewed: false,
   },
 };
@@ -111,7 +111,7 @@ export const translations = {
       accessibility: '无障碍说明',
     },
     notFound: '页面未找到',
-    home: '首頁',
+    home: '首页',
     about: '关于我们',
     contact: '联络',
     privacy: '隐私政策',
