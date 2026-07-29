@@ -1,0 +1,369 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+
+const title = `保險與支付 | ${practice.doctorName} | 聖蓋博加州`;
+const description = `張醫生診所接受的保險計畫和靈活的支付選項。了解接受的保險和支付方案。`;
+const canonicalUrl = 'https://shengchangmd.com/zh-hant/insurance/';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hant"
+  canonicalUrl={canonicalUrl}
+>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>保險與支付</h1>
+      <p class="hero-subtitle">接受的保險計畫和靈活的支付選項</p>
+    </div>
+  </section>
+
+  <!-- Accepted Plans Section -->
+  <section class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>接受的保險計畫</h2>
+        <p>
+          我們接受大部分主要保險計畫。我們直接與您的保險合作，幫助減少您的自付費用。
+        </p>
+        <ul class="insurance-list">
+          <li>Medicare（醫療保險）</li>
+          <li>Medicaid（醫療救助）</li>
+          <li>藍十字藍盾 (Blue Cross Blue Shield)</li>
+          <li>安泰保險 (Aetna)</li>
+          <li>信諾保險 (Cigna)</li>
+          <li>聯合醫療 (United Healthcare)</li>
+          <li>美國安泰 (Anthem)</li>
+          <li>莫利納醫療 (Molina Healthcare)</li>
+        </ul>
+        <p class="note">
+          <strong>沒有看到您的計畫？</strong> 請致電我們 <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> 以驗證保障範圍。我們可能仍然接受您的計畫。
+        </p>
+      </div>
+      <div class="content-right">
+        <div class="info-box">
+          <h3>驗證您的保障</h3>
+          <p>
+            在就診前，請聯繫我們的辦公室驗證您的保險福利、自付額和任何所需的授權。
+          </p>
+          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button">
+            致電驗證保障
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Options Section -->
+  <section class="payment-section">
+    <h2>支付選項</h2>
+    <div class="payment-grid">
+      <div class="payment-card">
+        <h3>保險計費</h3>
+        <p>
+          我們直接向您的保險公司計費。您只需要支付您計畫中規定的任何自付額、共同保險或免賠額。
+        </p>
+      </div>
+      <div class="payment-card">
+        <h3>自付折扣</h3>
+        <p>
+          沒有保險的患者可以獲得標準費用的折扣。在就診時或提前致電詢問我們的自付費率。
+        </p>
+      </div>
+      <div class="payment-card">
+        <h3>付款計畫</h3>
+        <p>
+          對於較大的餘額，我們提供靈活的付款安排。聯繫我們的辦公室討論適合您情況的付款計畫。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions Section -->
+  <section class="questions-section">
+    <div class="questions-content">
+      <h2>有關保險或計費的問題？</h2>
+      <p>
+        我們的知識淵博的員工已準備好回答您關於保險覆蓋、計費和支付選項的問題。
+      </p>
+      <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
+        立即致電我們
+      </a>
+      <p class="contact-info">
+        {practice.phone} | 星期一至星期五，{practice.hours.weekday}
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  /* Hero Section */
+  .hero-section {
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #3d2b52 0%, #4a3f6b 100%);
+    color: white;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  /* Content Section */
+  .content-section {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .content-left h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .content-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin: 0 0 1.5rem;
+  }
+
+  .insurance-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .insurance-list li {
+    font-size: 1rem;
+    color: #333;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .insurance-list li:before {
+    content: "✓";
+    color: #4a3f6b;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  .note {
+    font-size: 0.95rem;
+    color: #666;
+    background: #f5f5f5;
+    padding: 1rem;
+    border-left: 3px solid #4a3f6b;
+    margin-top: 1rem;
+  }
+
+  .note a {
+    color: #4a3f6b;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .note a:hover {
+    text-decoration: underline;
+  }
+
+  .info-box {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 2px;
+    border-left: 4px solid #4a3f6b;
+  }
+
+  .info-box h3 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .info-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    margin: 0 0 1rem;
+  }
+
+  /* Payment Section */
+  .payment-section {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .payment-section h2 {
+    font-size: 1.8rem;
+    margin: 0 0 2rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+  }
+
+  .payment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .payment-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    border-radius: 2px;
+    transition: box-shadow 0.2s;
+  }
+
+  .payment-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .payment-card h3 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: #3d2b52;
+  }
+
+  .payment-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    margin: 0;
+  }
+
+  /* Questions Section */
+  .questions-section {
+    padding: 3rem 1rem;
+    background: #f9f9f9;
+  }
+
+  .questions-content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .questions-section h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .questions-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin: 0 0 1.5rem;
+  }
+
+  /* CTA Buttons */
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #3d2b52;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .cta-button:hover {
+    background: #2d1b42;
+  }
+
+  .cta-button-large {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #3d2b52;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+    margin: 0 0 1.5rem;
+  }
+
+  .cta-button-large:hover {
+    background: #2d1b42;
+  }
+
+  .contact-info {
+    font-size: 0.9rem;
+    color: #999;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section h1 {
+      font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .insurance-list {
+      grid-template-columns: 1fr;
+    }
+
+    .content-left h2 {
+      font-size: 1.5rem;
+    }
+
+    .payment-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .payment-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .questions-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
