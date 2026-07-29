@@ -1,661 +1,148 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
-const title = `${practice.doctorName} | 经过认证的家庭医学医生 | 圣盖博，加州`;
-const description = `经过认证的家庭医学医生在圣盖博，加州。张医生提供全面的家庭医学和内科服务。现在接受新患者。`;
+const locale = 'zh-hans';
+const title = `${practice.doctorName} | 委员会认证家庭医师 | 加州圣盖博`;
+const description = `加州圣盖博的委员会认证家庭医师。张医师提供全面的家庭医学与内科诊疗，现正接受新患者。`;
 const canonicalUrl = 'https://shengchangmd.com/zh-hans/';
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  locale="zh-hans"
-  canonicalUrl={canonicalUrl}
->
-  <!-- Portrait and Intro Section -->
-  <section class="intro-section">
-    <div class="intro-container">
-      <div class="portrait-placeholder">照片</div>
+<BaseLayout {title} {description} {locale} {canonicalUrl}>
+  <HeroSection
+    headline="张胜雄 医师"
+    subheadline="于圣盖博及邻近社区提供全面的家庭医学与内科诊疗。委员会认证，看诊细心，国语与英语皆可沟通。"
+    {locale}
+    image="/images/dr-sheng-chang.jpg"
+    imageAlt="张胜雄医师肖像"
+    imageCaption="委员会认证家庭医师"
+  />
 
-      <div class="intro-content">
-        <h1 class="doctor-name">张胜雄 医师</h1>
-        <p class="doctor-subtitle-en">Sheng Chang, M.D.</p>
-        <p class="doctor-subtitle">
-          家庭医学科 · 圣盖博 · 普通话与英语
-        </p>
-      </div>
-    </div>
-
-    <!-- Navigation Button Board -->
-    <nav class="page-nav" aria-label="页面章节">
-      <a href="#the-doctor" class="nav-tile">
-        <span class="nav-tile-label">关于医师</span>
-      </a>
-      <a href="#services" class="nav-tile">
-        <span class="nav-tile-label">诊疗项目</span>
-      </a>
-      <a href="#office-hours" class="nav-tile">
-        <span class="nav-tile-label">门诊时间</span>
-      </a>
-      <a href="#location" class="nav-tile">
-        <span class="nav-tile-label">诊所位置</span>
-      </a>
-      <a href="#insurance" class="nav-tile">
-        <span class="nav-tile-label">保险</span>
-      </a>
-      <a href="#new-patients" class="nav-tile">
-        <span class="nav-tile-label">初诊患者</span>
-      </a>
-    </nav>
-  </section>
-
-  <!-- CTA Banner -->
-  <section class="cta-banner">
-    <div class="cta-content">
-      <div class="cta-left">
-        <p class="cta-label">电话预约</p>
-        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="phone-number">
-          {practice.phone}
-        </a>
-      </div>
-      <div class="cta-right">
-        <p>周一至周五 上午九点至下午五点</p>
-        <p>由诊所人员亲白接听</p>
+  {/* 诊疗项目 */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        诊疗项目
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ServiceCard
+          icon="family"
+          title="家庭医学"
+          description="从预防保健到急性病症治疗，为全家人提供全面照护。"
+          href="/zh-hans/services/#family-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="stethoscope"
+          title="内科医学"
+          description="为成人的复杂病症与慢性疾病提供专业诊疗与管理。"
+          href="/zh-hans/services/#internal-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="shield"
+          title="预防保健"
+          description="年度健康检查、筛检与保健咨询，协助您维持健康。"
+          href="/zh-hans/services/#preventive-care"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="chart"
+          title="慢性病管理"
+          description="持续管理糖尿病、高血压及其他慢性疾病。"
+          href="/zh-hans/services/#chronic-disease"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="document"
+          title="移民体检"
+          description="办理移民申请所需的身体检查，包含必要筛检与疫苗记录审核。"
+          href="/zh-hans/services/#immigration-exams"
+          linkLabel="了解更多"
+        />
       </div>
     </div>
   </section>
 
-  <!-- The Doctor Section -->
-  <section id="the-doctor" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>认识你全家的家庭医师</h2>
-        <p>
-          张医生自二十世纪六○年代末起，就在圣盖博山谷为家庭服务，一直在同一间诊所──拉斯图纳斯大道(Las
-          Tunas Drive)上的小诊间。自1979年起拥有美国医学委员会家庭医学认证，具丰富的临床经验，并致力于为每位患者及其家人提供个性化、细心周到的医疗护理。
-        </p>
-      </div>
-      <div class="content-right">
-        <div class="info-box">
-          <h3>专科认证</h3>
-          {
-            practice.boardCertifications.map((cert) => (
-              <div class="cert-item">
-                <p class="cert-specialty">{cert.specialty}</p>
-                <p class="cert-detail">{cert.board}</p>
-                <p class="cert-detail">1979年认证</p>
-              </div>
-            ))
-          }
+  {/* 专业资格 */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
+        为何选择张医师
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">委员会认证</h3>
+          <ul class="space-y-4 text-gray-700">
+            {
+              practice.boardCertifications.map((cert) => (
+                <li class="flex gap-3">
+                  <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
+                  <div>
+                    <p class="font-semibold">{cert.specialty}</p>
+                    <p class="text-sm text-gray-600">{cert.board}</p>
+                    <p class="text-xs text-gray-500">认证年份 {cert.firstCertified}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+            资历与医院关系
+          </h3>
+          <div class="space-y-6">
+            <div>
+              <p class="font-semibold text-gray-900">医学教育</p>
+              <p class="text-gray-700">
+                M.D.，{practice.education.school}，{practice.education.year}
+              </p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">合作医院</p>
+              <ul class="text-gray-700 space-y-1">
+                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">语言</p>
+              <p class="text-gray-700">英语、国语</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">门诊时间</p>
+              <p class="text-gray-700">{getTranslation(locale, 'hoursWeekday')}</p>
+              <p class="text-gray-600 text-sm">{getTranslation(locale, 'hoursWeekend')}</p>
+            </div>
+            {
+              practice.acceptingNewPatients && (
+                <div class="bg-primary-50 border border-success rounded-lg p-4">
+                  <p class="text-success font-semibold">
+                    <span aria-hidden="true">✓</span> 现正接受新患者
+                  </p>
+                </div>
+              )
+            }
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section id="services" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>诊疗项目</h2>
-        <ul class="service-list">
-          <li>家庭医学</li>
-          <li>慢性病管理</li>
-          <li>预防保健</li>
-          <li>内科医学</li>
-        </ul>
-      </div>
-      <div class="content-right">
-        <p>
-          为各年龄的患者提供全面的初级保健，特别着重于建立长期的医患关系，并利用深厚的临床知识来管理慢性疾病。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Office Hours Section -->
-  <section id="office-hours" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>门诊时间</h2>
-        <div class="hours-list">
-          <div class="hours-item">
-            <span>周一至周五</span>
-            <span>上午9:00 至 下午5:00</span>
-          </div>
-          <div class="hours-item">
-            <span>星期六</span>
-            <span>需先预约</span>
-          </div>
-          <p class="hours-note">
-            下午五点后请留言，电话会在下一个营业日回覆。
-          </p>
-        </div>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- Location Section -->
-  <section id="location" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>诊所位置</h2>
-        <p class="address">
-          <a
-            href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776
-          </a>
-        </p>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- Insurance Section -->
-  <section id="insurance" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>保险</h2>
-        <p>保险清单佔位符</p>
-      </div>
-      <div class="content-right">
-      </div>
-    </div>
-  </section>
-
-  <!-- New Patients Section -->
-  <section id="new-patients" class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>初诊患者</h2>
-        <p>
-          我们目前正在接受新患者。如需安排初次看诊，请在营业时间致电诊所。
-        </p>
-        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="button">
-          致电预约
-        </a>
-      </div>
-      <div class="content-right">
-      </div>
+  {/* 预约 */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl font-bold mb-6 text-gray-900">准备预约看诊？</h2>
+      <p class="text-lg text-gray-700 mb-8">
+        欢迎来电预约，或进一步了解我们的诊疗项目。
+      </p>
+      <CallButton text="立即致电" size="lg" />
     </div>
   </section>
 </BaseLayout>
-
-<style is:global>
-  /* Homepage header - minimal version */
-  body:has(main > .intro-section) .header-left,
-  body:has(main > .intro-section) .header-center,
-  body:has(main > .intro-section) .nav {
-    display: none !important;
-  }
-
-  body:has(main > .intro-section) .header-container {
-    padding: 0.75rem 1rem !important;
-    justify-content: flex-end !important;
-  }
-
-  body:has(main > .intro-section) .header-right {
-    gap: 1rem;
-    flex: initial;
-  }
-
-  body:has(main > .intro-section) .header {
-    border-bottom: 1px solid #e5e5e5;
-    position: static;
-  }
-
-  /* Intro Section */
-  .intro-section {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .intro-container {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 2rem;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-  }
-
-  .portrait-placeholder {
-    width: 150px;
-    height: 200px;
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    color: #999;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .intro-content {
-    padding: 1rem 0;
-  }
-
-  .doctor-name {
-    font-size: 2.5rem;
-    margin: 0 0 0.25rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .doctor-subtitle-en {
-    font-size: 1rem;
-    color: #666;
-    margin: 0 0 0.5rem;
-    font-weight: 500;
-  }
-
-  .doctor-subtitle {
-    font-size: 1.125rem;
-    color: #666;
-    margin: 0;
-  }
-
-  /* Page Navigation - Button Board */
-  .page-nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 2rem 1rem;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .nav-tile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 64px;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border: 1px solid #e5e5e5;
-    border-radius: 2px;
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-
-  .nav-tile:hover {
-    background-color: #f0f0f0;
-    border-color: #d0d0d0;
-  }
-
-  .nav-tile:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  .nav-tile-label {
-    color: #1a1a1a;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  /* CTA Banner */
-  .cta-banner {
-    background-color: #3d2b52;
-    color: #fff;
-    padding: 2rem 1rem;
-    margin: 0 0 2rem 0;
-  }
-
-  .cta-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .cta-left {
-    text-align: left;
-  }
-
-  .cta-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    margin: 0 0 0.5rem;
-    opacity: 0.9;
-  }
-
-  .phone-number {
-    display: inline-block;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .phone-number:hover {
-    opacity: 0.9;
-  }
-
-  .phone-number:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-  }
-
-  .cta-right {
-    text-align: right;
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .cta-right p {
-    margin: 0.25rem 0;
-  }
-
-  /* Content Sections */
-  .content-section {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .content-section:last-child {
-    border-bottom: none;
-  }
-
-  .content-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: flex-start;
-  }
-
-  .content-left h2 {
-    font-size: 2rem;
-    margin: 0 0 1rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .content-left p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #333;
-    margin: 0 0 1rem;
-  }
-
-  .content-right {
-    padding-top: 0.5rem;
-  }
-
-  .info-box {
-    background-color: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 2px;
-  }
-
-  .info-box h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cert-item {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .cert-item:last-child {
-    border-bottom: none;
-  }
-
-  .cert-specialty {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem;
-  }
-
-  .cert-detail {
-    font-size: 0.875rem;
-    color: #666;
-    margin: 0.25rem 0;
-  }
-
-  .service-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .service-list li {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #333;
-  }
-
-  .hours-list {
-    font-size: 1rem;
-  }
-
-  .hours-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
-  }
-
-  .hours-item span:last-child {
-    text-align: right;
-    min-width: 100px;
-  }
-
-  .hours-note {
-    font-size: 0.875rem;
-    color: #666;
-    margin-top: 1rem;
-  }
-
-  .address {
-    font-size: 1rem;
-    line-height: 1.8;
-  }
-
-  .address a {
-    color: #4a3f6b;
-    text-decoration: none;
-  }
-
-  .address a:hover {
-    text-decoration: underline;
-  }
-
-  .address a:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #4a3f6b;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: background-color 0.2s;
-    min-height: 48px;
-    min-width: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .button:hover {
-    background-color: #3d2645;
-  }
-
-  .button:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  /* CJK Typography for Chinese pages */
-  html[lang="zh-Hans"] {
-    font-size: calc(100% * var(--font-scale, 1));
-  }
-
-  html[lang="zh-Hans"] body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
-    font-size: 1.06rem;
-    line-height: 1.85;
-    letter-spacing: 0.02em;
-  }
-
-  html[lang="zh-Hans"] main {
-    max-width: 24em;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .intro-container {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .portrait-placeholder {
-      width: 100%;
-      height: 250px;
-    }
-
-    .doctor-name {
-      font-size: 2rem;
-    }
-
-    .page-nav {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      padding: 1.5rem 0.75rem;
-    }
-
-    .nav-tile {
-      min-height: 56px;
-    }
-
-    .nav-tile-label {
-      font-size: 0.8rem;
-    }
-
-    .cta-content {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .cta-right {
-      text-align: left;
-    }
-
-    .content-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .content-left h2 {
-      font-size: 1.5rem;
-    }
-
-    .phone-number {
-      font-size: 1.75rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .intro-section {
-      padding: 1rem 0.75rem;
-    }
-
-    .intro-container {
-      gap: 0.75rem;
-    }
-
-    .portrait-placeholder {
-      width: 80px;
-      height: 120px;
-      font-size: 0.75rem;
-    }
-
-    .doctor-name {
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .doctor-subtitle-en {
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .doctor-subtitle {
-      font-size: 0.95rem;
-    }
-
-    .page-nav {
-      gap: 0.75rem;
-      padding: 1rem 0;
-    }
-
-    .nav-link {
-      font-size: 0.85rem;
-    }
-
-    .cta-banner {
-      padding: 1.5rem 0.75rem;
-    }
-
-    .cta-content {
-      gap: 1rem;
-    }
-
-    .cta-label {
-      font-size: 0.75rem;
-    }
-
-    .phone-number {
-      font-size: 1.5rem;
-    }
-
-    .cta-right {
-      font-size: 0.85rem;
-    }
-
-    .content-section {
-      padding: 1.5rem 0.75rem;
-    }
-
-    .content-left h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .content-left p {
-      font-size: 0.95rem;
-    }
-
-    .info-box {
-      padding: 1rem;
-    }
-  }
-</style>

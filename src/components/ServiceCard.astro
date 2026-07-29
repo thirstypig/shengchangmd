@@ -1,24 +1,71 @@
 ---
+/**
+ * Service summary card.
+ *
+ * Icons are inline line-art SVG rather than emoji: emoji render differently on
+ * every platform, are read aloud by screen readers as their unicode name, and
+ * undercut the tone a medical practice needs.
+ */
+type IconName =
+  | 'family'
+  | 'stethoscope'
+  | 'shield'
+  | 'chart'
+  | 'document';
+
 interface Props {
-  icon: string;
+  icon: IconName;
   title: string;
   description: string;
   href: string;
+  /** Localised label for the trailing link. */
+  linkLabel?: string;
 }
 
-const { icon, title, description, href } = Astro.props;
+const { icon, title, description, href, linkLabel = 'Learn more' } = Astro.props;
+
+const paths: Record<IconName, string> = {
+  // Two figures, one smaller — family care.
+  family:
+    'M17 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM19 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm3 9v-1a3 3 0 0 0-2.5-3',
+  stethoscope:
+    'M6 3v6a5 5 0 0 0 10 0V3M4 3h4m4 0h4m-2 11v2a4 4 0 0 0 8 0v-3m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
+  shield: 'M12 3l8 3v6c0 4.5-3.2 7.9-8 9-4.8-1.1-8-4.5-8-9V6l8-3Zm-2.5 9 2 2 3.5-3.5',
+  chart: 'M4 19h16M7 16V9m5 7V5m5 11v-5',
+  document:
+    'M8 3h6l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 0v4h4M9.5 13h5m-5 3.5h5',
+};
 ---
 
-<div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-  <div class="text-4xl mb-4">{icon}</div>
+<div
+  class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+>
+  <div class="mb-4 text-primary-600">
+    <svg
+      viewBox="0 0 24 24"
+      width="32"
+      height="32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d={paths[icon]}></path>
+    </svg>
+  </div>
   <h3 class="font-serif text-xl font-semibold text-gray-900 mb-2">
     {title}
   </h3>
-  <p class="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-2">
+  <p class="text-gray-600 mb-4 text-sm leading-relaxed">
     {description}
   </p>
-  <a href={href} class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-2 transition-colors">
-    Learn more
-    <span>→</span>
+  <a
+    href={href}
+    class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-2 transition-colors"
+  >
+    {linkLabel}
+    <span aria-hidden="true">&rarr;</span>
   </a>
 </div>

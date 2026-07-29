@@ -67,7 +67,6 @@ const breadcrumbs = [
         <div class="flex justify-center items-center">
           <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">👨‍⚕️</div>
               <p class="text-gray-600 text-sm">Family Medicine</p>
             </div>
           </div>
@@ -81,9 +80,8 @@ const breadcrumbs = [
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-amber-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">🏥</div>
               <p class="text-gray-600 text-sm">Internal Medicine</p>
             </div>
           </div>
@@ -159,9 +157,8 @@ const breadcrumbs = [
           <CallButton text="Schedule an Appointment" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-emerald-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">❤️</div>
               <p class="text-gray-600 text-sm">Preventive Care</p>
             </div>
           </div>
@@ -175,9 +172,8 @@ const breadcrumbs = [
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-red-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">💊</div>
               <p class="text-gray-600 text-sm">Chronic Disease Management</p>
             </div>
           </div>
@@ -221,6 +217,48 @@ const breadcrumbs = [
     </div>
   </section>
 
+  {/* Immigration Medical Exams */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Immigration Medical Exams
+        </h2>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          Medical examinations for immigration applications, carried out in one
+          visit wherever possible, with results explained to you in English or
+          Mandarin.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Physical examination and medical history review</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Required screening tests and laboratory work</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Vaccination record review, with any missing doses given</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Completed paperwork returned to you for your application</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            Requirements differ by visa and application type. Please call the
+            office before booking so we can confirm which examination and forms
+            your case needs, and what to bring with you.
+          </p>
+        </div>
+        <CallButton text="Call to Confirm Requirements" size="base" />
+      </div>
+    </div>
+  </section>
+
   {/* Final CTA Section */}
   <section class="py-16 md:py-24 bg-primary-50">
     <div class="max-w-container mx-auto px-4 md:px-6 text-center">
@@ -239,4 +277,5 @@ const breadcrumbs = [
       </p>
     </div>
   </section>
+
 </BaseLayout>

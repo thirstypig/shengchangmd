@@ -16,12 +16,15 @@ interface Props {
 const { locale } = Astro.props;
 
 const t = {
-  en: { label: 'Call the office', aria: `Call the office at ${practice.phone}` },
-  'zh-hant': { label: '致電診所', aria: `致電診所 ${practice.phone}` },
-  'zh-hans': { label: '致电诊所', aria: `致电诊所 ${practice.phone}` },
+  en: {
+    label: 'Call for an appointment',
+    aria: `Call ${practice.phone} for an appointment`,
+  },
+  'zh-hant': { label: '電話預約', aria: `致電 ${practice.phone} 預約看診` },
+  'zh-hans': { label: '电话预约', aria: `致电 ${practice.phone} 预约看诊` },
 }[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
-  label: 'Call the office',
-  aria: `Call the office at ${practice.phone}`,
+  label: 'Call for an appointment',
+  aria: `Call ${practice.phone} for an appointment`,
 };
 
 const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
@@ -29,7 +32,22 @@ const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
 
 <div class="sticky-call-bar md:hidden">
   <a href={phoneUrl} class="sticky-call-link" aria-label={t.aria}>
-    <span class="sticky-call-icon" aria-hidden="true">📞</span>
+    <svg
+      class="sticky-call-icon"
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"
+      ></path>
+    </svg>
     <span class="sticky-call-text">
       <span class="sticky-call-label">{t.label}</span>
       <span class="sticky-call-number">{practice.phone}</span>
@@ -44,8 +62,8 @@ const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
     left: 0;
     right: 0;
     z-index: 60;
-    background: #ffffff;
-    border-top: 1px solid #d9d9d9;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
     /* Clear the home-indicator area on notched phones. */
     padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
@@ -59,25 +77,24 @@ const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
     min-height: 64px;
     width: 100%;
     padding: 0.75rem 1rem;
-    background: #4a3f6b;
-    color: #ffffff;
+    background: var(--brand);
+    color: var(--surface);
     border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 600;
   }
 
   .sticky-call-link:active {
-    background: #3d2645;
+    background: var(--brand-strong);
   }
 
   .sticky-call-link:focus-visible {
-    outline: 3px solid #1a1a1a;
+    outline: 3px solid var(--text-strong);
     outline-offset: 2px;
   }
 
   .sticky-call-icon {
-    font-size: 1.5rem;
-    line-height: 1;
+    flex-shrink: 0;
   }
 
   .sticky-call-text {

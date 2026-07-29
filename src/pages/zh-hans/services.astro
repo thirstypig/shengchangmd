@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const title = `诊疗项目 | ${practice.doctorName} | 圣盖博加州的家庭医学`;
 const description = `综合家庭医学诊疗项目，包括慢性病管理、预防保健和内科医学。了解张医生的医疗诊疗服务。`;
@@ -61,7 +62,6 @@ const locale = 'zh-hans';
         <div class="flex justify-center items-center">
           <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">👨‍⚕️</div>
               <p class="text-gray-600 text-sm">家庭医学</p>
             </div>
           </div>
@@ -75,9 +75,8 @@ const locale = 'zh-hans';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-amber-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">🏥</div>
               <p class="text-gray-600 text-sm">内科医学</p>
             </div>
           </div>
@@ -153,9 +152,8 @@ const locale = 'zh-hans';
           <CallButton text="安排就诊" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-emerald-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">❤️</div>
               <p class="text-gray-600 text-sm">预防保健</p>
             </div>
           </div>
@@ -169,9 +167,8 @@ const locale = 'zh-hans';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-red-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">💊</div>
               <p class="text-gray-600 text-sm">慢性病管理</p>
             </div>
           </div>
@@ -215,6 +212,44 @@ const locale = 'zh-hans';
     </div>
   </section>
 
+  {/* 移民体检 */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          移民体检
+        </h2>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          办理移民申请所需的身体检查，尽可能一次看诊完成，并以国语或英语为您说明结果。
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">身体检查与病史审阅</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">必要的筛检项目与抽血检验</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">疫苗记录审核，并补接种缺少的疫苗</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">完成的文件交还给您，供申请使用</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            各类签证与申请的要求并不相同。预约前请先来电，我们会确认您的案件需要哪一种体检与表格，以及当天需要携带的资料。
+          </p>
+        </div>
+        <CallButton text="来电确认所需项目" size="base" />
+      </div>
+    </div>
+  </section>
+
   {/* Final CTA Section */}
   <section class="py-16 md:py-24 bg-primary-50">
     <div class="max-w-container mx-auto px-4 md:px-6 text-center">
@@ -229,8 +264,9 @@ const locale = 'zh-hans';
       </p>
       <CallButton text="立即致电我们" size="lg" />
       <p class="text-sm text-gray-600 mt-6">
-        {practice.phone} • {practice.hours.weekday}
+        {practice.phone} • {getTranslation('zh-hans', 'hoursWeekday')}
       </p>
     </div>
   </section>
+
 </BaseLayout>

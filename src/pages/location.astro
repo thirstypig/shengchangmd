@@ -134,7 +134,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   .hero-section {
     padding: 3rem 1rem 2rem;
     text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--line);
     margin-bottom: 2rem;
   }
 
@@ -142,7 +142,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
     font-size: 2.5rem;
     margin: 0;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--text-strong);
     font-family: Georgia, 'Times New Roman', serif;
   }
 
@@ -171,8 +171,8 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   .address-card,
   .parking-box {
     padding: 1.5rem;
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
     border-radius: 4px;
   }
 
@@ -183,7 +183,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
     font-size: 1.2rem;
     margin: 0 0 1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
   }
 
   .hours-item {
@@ -197,18 +197,18 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
 
   .hours-item .label {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
     min-width: 100px;
   }
 
   .hours-item .time {
     text-align: right;
-    color: #333;
+    color: var(--text);
   }
 
   .hours-note {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-muted);
     margin-top: 1rem;
     margin-bottom: 0;
     line-height: 1.6;
@@ -225,7 +225,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   .contact-item .label {
     display: block;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
     margin-bottom: 0.25rem;
     font-size: 0.9rem;
   }
@@ -233,24 +233,24 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   .contact-link {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #4a3f6b;
+    color: var(--brand);
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .contact-link:hover {
-    color: #3d2b52;
+    color: var(--brand-strong);
     text-decoration: underline;
   }
 
   .contact-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
 
   .address-text {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.6;
     margin: 0;
   }
@@ -262,8 +262,8 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   .hours-link {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #4a3f6b;
-    color: white;
+    background: var(--brand);
+    color: var(--brand-contrast);
     text-decoration: none;
     border-radius: 4px;
     font-weight: 600;
@@ -272,11 +272,11 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   }
 
   .hours-link:hover {
-    background: #3d2b52;
+    background: var(--brand-strong);
   }
 
   .hours-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
 
@@ -312,8 +312,8 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
     /* 56px tall: above the 48px WCAG floor, sized for reduced motor control. */
     min-height: 56px;
     padding: 0.75rem 1.5rem;
-    background: #4a3f6b;
-    color: white;
+    background: var(--brand);
+    color: var(--brand-contrast);
     text-decoration: none;
     border-radius: 4px;
     font-weight: 600;
@@ -323,35 +323,35 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   }
 
   .directions-link:hover {
-    background: #3d2b52;
+    background: var(--brand-strong);
   }
 
   .directions-link:focus-visible {
-    outline: 3px solid #1a1a1a;
+    outline: 3px solid var(--text-strong);
     outline-offset: 2px;
   }
 
   .directions-link-secondary {
-    background: #ffffff;
-    color: #4a3f6b;
-    border: 2px solid #4a3f6b;
+    background: var(--surface);
+    color: var(--brand);
+    border: 2px solid var(--brand);
   }
 
   .directions-link-secondary:hover {
-    background: #f4f1f7;
-    color: #3d2b52;
+    background: var(--surface-accent);
+    color: var(--brand-strong);
   }
 
   .address-full {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.8;
     margin: 0;
   }
 
   .parking-box p {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.8;
     margin: 0;
   }

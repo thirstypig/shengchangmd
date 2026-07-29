@@ -49,7 +49,7 @@ export const practice: PracticeInfo = {
   address: '330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776',
   phone: '(626) 573-0055',
   hours: {
-    weekday: 'Monday–Friday 9:00 AM – 6:00 PM',
+    weekday: 'Monday–Friday 9:00 AM – 12:00 PM',
     weekend: 'Closed Saturday and Sunday',
   },
   acceptingNewPatients: true,

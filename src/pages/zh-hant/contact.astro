@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const title = '聯繫我們 | 張勝雄醫生';
 const description = '聯繫張勝雄醫生診所。在聖蓋博加州致電、訪問我們的辦公室或發送信息。';
@@ -66,10 +67,10 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hant/contact/';
             <div class="mb-6">
               <h3 class="font-semibold text-gray-900 mb-2">辦公室時間</h3>
               <p class="text-gray-700 mb-2">
-                <strong>工作日：</strong> {practice.hours.weekday}
+                <strong>工作日：</strong> {getTranslation('zh-hant', 'hoursWeekday')}
               </p>
               <p class="text-gray-700">
-                <strong>週末：</strong> {practice.hours.weekend}
+                <strong>週末：</strong> {getTranslation('zh-hant', 'hoursWeekend')}
               </p>
             </div>
 

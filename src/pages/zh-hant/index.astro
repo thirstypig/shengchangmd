@@ -1,329 +1,148 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
-const title = `${practice.doctorName} | 經過認證的家庭醫學醫生 | 聖蓋博，加州`;
-const description = `經過認證的家庭醫學醫生在聖蓋博，加州。張醫生提供全面的家庭醫學和內科服務。現在接受新患者。`;
+const locale = 'zh-hant';
+const title = `${practice.doctorName} | 委員會認證家庭醫師 | 加州聖蓋博`;
+const description = `加州聖蓋博的委員會認證家庭醫師。張醫師提供全面的家庭醫學與內科診療，現正接受新患者。`;
 const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  locale="zh-hant"
-  canonicalUrl={canonicalUrl}
->
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-container">
-      <div class="hero-image">
-        <div class="portrait-placeholder">照片</div>
+<BaseLayout {title} {description} {locale} {canonicalUrl}>
+  <HeroSection
+    headline="張勝雄 醫師"
+    subheadline="於聖蓋博及鄰近社區提供全面的家庭醫學與內科診療。委員會認證，看診細心，國語與英語皆可溝通。"
+    {locale}
+    image="/images/dr-sheng-chang.jpg"
+    imageAlt="張勝雄醫師肖像"
+    imageCaption="委員會認證家庭醫師"
+  />
+
+  {/* 診療項目 */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        診療項目
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ServiceCard
+          icon="family"
+          title="家庭醫學"
+          description="從預防保健到急性病症治療，為全家人提供全面照護。"
+          href="/zh-hant/services/#family-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="stethoscope"
+          title="內科醫學"
+          description="為成人的複雜病症與慢性疾病提供專業診療與管理。"
+          href="/zh-hant/services/#internal-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="shield"
+          title="預防保健"
+          description="年度健康檢查、篩檢與保健諮詢，協助您維持健康。"
+          href="/zh-hant/services/#preventive-care"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="chart"
+          title="慢性病管理"
+          description="持續管理糖尿病、高血壓及其他慢性疾病。"
+          href="/zh-hant/services/#chronic-disease"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="document"
+          title="移民體檢"
+          description="辦理移民申請所需的身體檢查，包含必要篩檢與疫苗紀錄審核。"
+          href="/zh-hant/services/#immigration-exams"
+          linkLabel="了解更多"
+        />
       </div>
+    </div>
+  </section>
 
-      <div class="hero-content">
-        <h1 class="doctor-name">張勝雄 醫師</h1>
-        <p class="doctor-subtitle-en">Sheng Chang, M.D.</p>
-        <p class="doctor-subtitle">
-          家庭醫學科 · 聖蓋博 · 國語與英語
-        </p>
+  {/* 專業資格 */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
+        為何選擇張醫師
+      </h2>
 
-        <div class="hero-cta">
-          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button cta-primary">
-            電話 {practice.phone}
-          </a>
-          <a href="/zh-hant/new-patients/" class="cta-button cta-secondary">
-            預約掛號
-          </a>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">委員會認證</h3>
+          <ul class="space-y-4 text-gray-700">
+            {
+              practice.boardCertifications.map((cert) => (
+                <li class="flex gap-3">
+                  <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
+                  <div>
+                    <p class="font-semibold">{cert.specialty}</p>
+                    <p class="text-sm text-gray-600">{cert.board}</p>
+                    <p class="text-xs text-gray-500">認證年份 {cert.firstCertified}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
         </div>
 
-        <div class="hero-quick-info">
-          <div class="info-item">
-            <div class="info-label">門診時間</div>
-            <div class="info-value">週一至週五 9:00 AM – 5:00 PM</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">位置</div>
-            <div class="info-value">聖蓋博，加州</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">保險</div>
-            <a href="/zh-hant/insurance/" class="info-link">查看保險計畫</a>
-          </div>
-          <div class="info-item">
-            <div class="info-label">新患者</div>
-            <div class="info-value">接受掛號</div>
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+            資歷與醫院關係
+          </h3>
+          <div class="space-y-6">
+            <div>
+              <p class="font-semibold text-gray-900">醫學教育</p>
+              <p class="text-gray-700">
+                M.D.，{practice.education.school}，{practice.education.year}
+              </p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">合作醫院</p>
+              <ul class="text-gray-700 space-y-1">
+                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">語言</p>
+              <p class="text-gray-700">英語、國語</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">門診時間</p>
+              <p class="text-gray-700">{getTranslation(locale, 'hoursWeekday')}</p>
+              <p class="text-gray-600 text-sm">{getTranslation(locale, 'hoursWeekend')}</p>
+            </div>
+            {
+              practice.acceptingNewPatients && (
+                <div class="bg-primary-50 border border-success rounded-lg p-4">
+                  <p class="text-success font-semibold">
+                    <span aria-hidden="true">✓</span> 現正接受新患者
+                  </p>
+                </div>
+              )
+            }
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="content-section">
-    <div class="content-container">
-      <div class="content-left">
-        <h2>認識您全家的家庭醫師</h2>
-        <p>
-          張醫生自1960年代後期起，即開始在聖蓋博谷地照顧家庭患者，服務地點始終是位在Las Tunas Drive的同一間診所。
-          自1979年起獲得美國家庭醫學委員會認證，擁有豐富的臨床經驗，致力於為每位患者及其家庭提供個人化、細心周到的醫療照護。
-        </p>
-      </div>
-      <div class="content-right">
-        <div class="info-box">
-          <h3>醫學認證</h3>
-          {
-            practice.boardCertifications.map((cert) => (
-              <div class="cert-item">
-                <p class="cert-specialty"><strong>{cert.specialty}</strong></p>
-                <p class="cert-detail">{cert.board}</p>
-                <p class="cert-detail">認證年份 {cert.firstCertified}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
+  {/* 預約 */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl font-bold mb-6 text-gray-900">準備預約看診？</h2>
+      <p class="text-lg text-gray-700 mb-8">
+        歡迎來電預約，或進一步了解我們的診療項目。
+      </p>
+      <CallButton text="立即致電" size="lg" />
     </div>
   </section>
 </BaseLayout>
-
-<style is:global>
-  html[lang="zh-Hant"] body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
-    font-size: 1.06rem;
-    line-height: 1.85;
-    letter-spacing: 0.02em;
-  }
-
-  html[lang="zh-Hant"] main {
-    max-width: 24em;
-  }
-
-  /* Hero Section */
-  .hero {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    border-bottom: 2px solid #e5e5e5;
-  }
-
-  .hero-container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 2rem;
-    align-items: flex-start;
-  }
-
-  .hero-image {
-    flex-shrink: 0;
-  }
-
-  .portrait-placeholder {
-    width: 250px;
-    height: 350px;
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    color: #999;
-    border-radius: 2px;
-  }
-
-  .hero-content {
-    padding: 0;
-  }
-
-  .doctor-name {
-    font-size: 2.5rem;
-    margin: 0 0 0.25rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .doctor-subtitle-en {
-    font-size: 1rem;
-    color: #666;
-    margin: 0 0 0.5rem;
-    font-weight: 500;
-  }
-
-  .doctor-subtitle {
-    font-size: 1.125rem;
-    color: #666;
-    margin: 0 0 1.5rem;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .cta-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 2px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    transition: all 0.2s;
-    border: 2px solid;
-    min-height: 48px;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .cta-primary {
-    background: #3d2b52;
-    color: #fff;
-    border-color: #3d2b52;
-  }
-
-  .cta-primary:hover {
-    background: #2d1b42;
-    border-color: #2d1b42;
-  }
-
-  .cta-secondary {
-    background: white;
-    color: #3d2b52;
-    border-color: #3d2b52;
-  }
-
-  .cta-secondary:hover {
-    background: #f5f5f5;
-  }
-
-  .hero-quick-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e5e5;
-  }
-
-  .info-item {
-    font-size: 0.95rem;
-  }
-
-  .info-label {
-    font-weight: 600;
-    color: #666;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-  }
-
-  .info-value {
-    color: #1a1a1a;
-    font-size: 1rem;
-  }
-
-  .info-link {
-    color: #4a3f6b;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .info-link:hover {
-    text-decoration: underline;
-  }
-
-  /* Content Sections */
-  .content-section {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .content-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: flex-start;
-  }
-
-  .content-left h2 {
-    font-size: 2rem;
-    margin: 0 0 1rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .content-left p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #333;
-    margin: 0;
-  }
-
-  .info-box {
-    background-color: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 2px;
-    border-left: 4px solid #4a3f6b;
-  }
-
-  .info-box h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cert-item {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .cert-item:last-child {
-    border-bottom: none;
-  }
-
-  .cert-specialty {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem;
-  }
-
-  .cert-detail {
-    font-size: 0.875rem;
-    color: #666;
-    margin: 0.25rem 0;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero-container {
-      grid-template-columns: 1fr;
-    }
-
-    .portrait-placeholder {
-      width: 100%;
-      height: 250px;
-    }
-
-    .doctor-name {
-      font-size: 2rem;
-    }
-
-    .hero-quick-info {
-      grid-template-columns: 1fr;
-    }
-
-    .content-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .content-left h2 {
-      font-size: 1.5rem;
-    }
-  }
-</style>

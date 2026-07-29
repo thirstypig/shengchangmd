@@ -109,8 +109,8 @@ const breadcrumbs = [
   /* Hero Section */
   .hero-section {
     padding: 3rem 1rem;
-    background: linear-gradient(135deg, #3d2b52 0%, #4a3f6b 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+    color: var(--brand-contrast);
     text-align: center;
   }
 
@@ -150,13 +150,13 @@ const breadcrumbs = [
     font-size: 1.8rem;
     margin: 0 0 1rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text);
   }
 
   .content-left p {
     font-size: 1rem;
     line-height: 1.8;
-    color: #555;
+    color: var(--text-muted);
     margin: 0 0 1.5rem;
   }
 
@@ -171,14 +171,14 @@ const breadcrumbs = [
 
   .insurance-list li {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     padding-left: 1.5rem;
     position: relative;
   }
 
   .insurance-list li:before {
     content: "✓";
-    color: #4a3f6b;
+    color: var(--brand);
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -186,15 +186,15 @@ const breadcrumbs = [
 
   .note {
     font-size: 0.95rem;
-    color: #666;
-    background: #f5f5f5;
+    color: var(--text-muted);
+    background: var(--surface-sunken);
     padding: 1rem;
-    border-left: 3px solid #4a3f6b;
+    border-left: 3px solid var(--brand);
     margin-top: 1rem;
   }
 
   .note a {
-    color: #4a3f6b;
+    color: var(--brand);
     text-decoration: none;
     font-weight: 600;
   }
@@ -204,23 +204,23 @@ const breadcrumbs = [
   }
 
   .info-box {
-    background: #f9f9f9;
+    background: var(--surface-sunken);
     padding: 1.5rem;
     border-radius: 2px;
-    border-left: 4px solid #4a3f6b;
+    border-left: 4px solid var(--brand);
   }
 
   .info-box h3 {
     font-size: 1.2rem;
     margin: 0 0 1rem;
     font-weight: 600;
-    color: #333;
+    color: var(--text);
   }
 
   .info-box p {
     font-size: 0.95rem;
     line-height: 1.7;
-    color: #555;
+    color: var(--text-muted);
     margin: 0 0 1rem;
   }
 
@@ -235,7 +235,7 @@ const breadcrumbs = [
     font-size: 1.8rem;
     margin: 0 0 2rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text);
     text-align: center;
   }
 
@@ -246,8 +246,8 @@ const breadcrumbs = [
   }
 
   .payment-card {
-    background: white;
-    border: 1px solid #e0e0e0;
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
     padding: 2rem;
     border-radius: 2px;
     transition: box-shadow 0.2s;
@@ -261,20 +261,20 @@ const breadcrumbs = [
     font-size: 1.2rem;
     margin: 0 0 1rem;
     font-weight: 600;
-    color: #3d2b52;
+    color: var(--brand-strong);
   }
 
   .payment-card p {
     font-size: 0.95rem;
     line-height: 1.7;
-    color: #555;
+    color: var(--text-muted);
     margin: 0;
   }
 
   /* Questions Section */
   .questions-section {
     padding: 3rem 1rem;
-    background: #f9f9f9;
+    background: var(--surface-sunken);
   }
 
   .questions-content {
@@ -287,13 +287,13 @@ const breadcrumbs = [
     font-size: 1.8rem;
     margin: 0 0 1rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text);
   }
 
   .questions-section p {
     font-size: 1rem;
     line-height: 1.8;
-    color: #555;
+    color: var(--text-muted);
     margin: 0 0 1.5rem;
   }
 
@@ -301,8 +301,8 @@ const breadcrumbs = [
   .cta-button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #3d2b52;
-    color: white !important;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
     text-decoration: none !important;
     border-radius: 2px;
     font-weight: 600;
@@ -311,14 +311,14 @@ const breadcrumbs = [
   }
 
   .cta-button:hover {
-    background: #2d1b42;
+    background: var(--brand-strong);
   }
 
   .cta-button-large {
     display: inline-block;
     padding: 1rem 2rem;
-    background: #3d2b52;
-    color: white !important;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
     text-decoration: none !important;
     border-radius: 2px;
     font-weight: 600;
@@ -328,12 +328,12 @@ const breadcrumbs = [
   }
 
   .cta-button-large:hover {
-    background: #2d1b42;
+    background: var(--brand-strong);
   }
 
   .contact-info {
     font-size: 0.9rem;
-    color: #999;
+    color: var(--text-muted);
   }
 
   /* Responsive */

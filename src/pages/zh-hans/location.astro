@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const title = `门诊时间与位置 | ${practice.doctorName} | 圣盖博加州`;
 const description = `张医生诊所在圣盖博加州的门诊时间、位置、方向和停车信息。`;
@@ -26,11 +27,11 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
           <h2>门诊时间</h2>
           <div class="hours-item">
             <span class="label">工作日</span>
-            <span class="time">{practice.hours.weekday}</span>
+            <span class="time">{getTranslation('zh-hans', 'hoursWeekday')}</span>
           </div>
           <div class="hours-item">
             <span class="label">周末</span>
-            <span class="time">{practice.hours.weekend}</span>
+            <span class="time">{getTranslation('zh-hans', 'hoursWeekend')}</span>
           </div>
           <p class="hours-note">
             下班后的来电可以留言。我们会在营业时间回复。
@@ -52,11 +53,6 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
               {practice.address}
             </p>
           </div>
-        </div>
-
-        <!-- Hours Link -->
-        <div class="hours-link-box">
-          <a href="/zh-hans/hours/" class="hours-link">查看完整门诊时间与日程</a>
         </div>
       </div>
 
@@ -106,7 +102,7 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .hero-section {
     padding: 3rem 1rem 2rem;
     text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--line);
     margin-bottom: 2rem;
   }
 
@@ -114,7 +110,7 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
     font-size: 2.5rem;
     margin: 0;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--text-strong);
     font-family: Georgia, 'Times New Roman', serif;
   }
 
@@ -143,8 +139,8 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .address-card,
   .parking-box {
     padding: 1.5rem;
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
     border-radius: 4px;
   }
 
@@ -155,7 +151,7 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
     font-size: 1.2rem;
     margin: 0 0 1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
   }
 
   .hours-item {
@@ -169,18 +165,18 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
 
   .hours-item .label {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
     min-width: 100px;
   }
 
   .hours-item .time {
     text-align: right;
-    color: #333;
+    color: var(--text);
   }
 
   .hours-note {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-muted);
     margin-top: 1rem;
     margin-bottom: 0;
     line-height: 1.6;
@@ -197,7 +193,7 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .contact-item .label {
     display: block;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-strong);
     margin-bottom: 0.25rem;
     font-size: 0.9rem;
   }
@@ -205,24 +201,24 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .contact-link {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #4a3f6b;
+    color: var(--brand);
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .contact-link:hover {
-    color: #3d2b52;
+    color: var(--brand-strong);
     text-decoration: underline;
   }
 
   .contact-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
 
   .address-text {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.6;
     margin: 0;
   }
@@ -234,8 +230,8 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .hours-link {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #4a3f6b;
-    color: white;
+    background: var(--brand);
+    color: var(--brand-contrast);
     text-decoration: none;
     border-radius: 4px;
     font-weight: 600;
@@ -244,11 +240,11 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   }
 
   .hours-link:hover {
-    background: #3d2b52;
+    background: var(--brand-strong);
   }
 
   .hours-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
 
@@ -273,8 +269,8 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   .directions-link {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #4a3f6b;
-    color: white;
+    background: var(--brand);
+    color: var(--brand-contrast);
     text-decoration: none;
     border-radius: 4px;
     font-weight: 600;
@@ -283,24 +279,24 @@ const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
   }
 
   .directions-link:hover {
-    background: #3d2b52;
+    background: var(--brand-strong);
   }
 
   .directions-link:focus-visible {
-    outline: 2px solid #4a3f6b;
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
 
   .address-full {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.8;
     margin: 0;
   }
 
   .parking-box p {
     font-size: 1rem;
-    color: #333;
+    color: var(--text);
     line-height: 1.8;
     margin: 0;
   }

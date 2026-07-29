@@ -1,0 +1,111 @@
+---
+/**
+ * Light/dark theme toggle.
+ *
+ * The theme is applied to <html data-theme> by an inline script in <head>
+ * (see BaseLayout) so there is no flash of the wrong theme on first paint.
+ * This button only flips the stored preference.
+ */
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const label = getTranslation(locale, 'toggleTheme');
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  class="theme-toggle"
+  aria-label={label}
+  title={label}
+  aria-pressed="false"
+>
+  <span class="theme-toggle-icon" data-icon="light" aria-hidden="true">
+    <!-- Sun -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path
+        stroke-linecap="round"
+        d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"
+      ></path>
+    </svg>
+  </span>
+  <span class="theme-toggle-icon" data-icon="dark" aria-hidden="true">
+    <!-- Moon -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+      ></path>
+    </svg>
+  </span>
+</button>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+
+  const sync = () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    toggle?.setAttribute('aria-pressed', String(isDark));
+  };
+
+  toggle?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* Private browsing can reject writes; the theme still applies for this page. */
+    }
+    sync();
+  });
+
+  sync();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Matches the 48px floor used by the other header controls. */
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    background: var(--surface-accent);
+    color: var(--brand);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* Show the icon for the theme you would switch *to*. */
+  .theme-toggle-icon[data-icon='dark'] {
+    display: inline-flex;
+  }
+  .theme-toggle-icon[data-icon='light'] {
+    display: none;
+  }
+
+  :global(html[data-theme='dark']) .theme-toggle-icon[data-icon='dark'] {
+    display: none;
+  }
+  :global(html[data-theme='dark']) .theme-toggle-icon[data-icon='light'] {
+    display: inline-flex;
+  }
+</style>

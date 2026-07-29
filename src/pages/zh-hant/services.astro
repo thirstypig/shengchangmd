@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
 const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫生的醫療診療服務。`;
@@ -61,7 +62,6 @@ const locale = 'zh-hant';
         <div class="flex justify-center items-center">
           <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">👨‍⚕️</div>
               <p class="text-gray-600 text-sm">家庭醫學</p>
             </div>
           </div>
@@ -75,9 +75,8 @@ const locale = 'zh-hant';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-amber-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">🏥</div>
               <p class="text-gray-600 text-sm">內科醫學</p>
             </div>
           </div>
@@ -153,9 +152,8 @@ const locale = 'zh-hant';
           <CallButton text="安排就診" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-emerald-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">❤️</div>
               <p class="text-gray-600 text-sm">預防保健</p>
             </div>
           </div>
@@ -169,9 +167,8 @@ const locale = 'zh-hant';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-red-100 rounded-2xl flex items-center justify-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
             <div class="text-center">
-              <div class="text-6xl mb-4">💊</div>
               <p class="text-gray-600 text-sm">慢性病管理</p>
             </div>
           </div>
@@ -215,6 +212,44 @@ const locale = 'zh-hant';
     </div>
   </section>
 
+  {/* 移民體檢 */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          移民體檢
+        </h2>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          辦理移民申請所需的身體檢查，盡可能一次看診完成，並以國語或英語為您說明結果。
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">身體檢查與病史審閱</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">必要的篩檢項目與抽血檢驗</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">疫苗紀錄審核，並補接種缺少的疫苗</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">完成的文件交還給您，供申請使用</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            各類簽證與申請的要求並不相同。預約前請先來電，我們會確認您的案件需要哪一種體檢與表格，以及當天需要攜帶的資料。
+          </p>
+        </div>
+        <CallButton text="來電確認所需項目" size="base" />
+      </div>
+    </div>
+  </section>
+
   {/* Final CTA Section */}
   <section class="py-16 md:py-24 bg-primary-50">
     <div class="max-w-container mx-auto px-4 md:px-6 text-center">
@@ -229,8 +264,9 @@ const locale = 'zh-hant';
       </p>
       <CallButton text="立即致電我們" size="lg" />
       <p class="text-sm text-gray-600 mt-6">
-        {practice.phone} • {practice.hours.weekday}
+        {practice.phone} • {getTranslation('zh-hant', 'hoursWeekday')}
       </p>
     </div>
   </section>
+
 </BaseLayout>

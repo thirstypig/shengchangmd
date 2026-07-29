@@ -2,7 +2,7 @@
 import '@/styles/global.css';
 import { getCollection } from 'astro:content';
 import { practice } from '@data/practice';
-import { locales } from '@i18n/locales';
+import { locales, getTranslation } from '@i18n/locales';
 import Header from '@components/Header.astro';
 import StickyCallBar from '@components/StickyCallBar.astro';
 import JsonLd from '@components/JsonLd.astro';
@@ -30,37 +30,11 @@ const isReviewed = localeMetadata?.reviewed ?? false;
 // Set default og:image if not provided
 const finalOgImage = ogImage || 'https://shengchangmd.com/og-image.png';
 
-const navItems = {
-  en: [
-    { href: '/', label: 'Home' },
-    { href: '/the-doctor/', label: 'The doctor' },
-    { href: '/services/', label: 'Services' },
-    { href: '/hours/', label: 'Hours' },
-    { href: '/location/', label: 'Location' },
-    { href: '/insurance/', label: 'Insurance' },
-    { href: '/new-patients/', label: 'New patients' },
-  ],
-  'zh-hant': [
-    { href: '/zh-hant/', label: '首頁' },
-    { href: '/zh-hant/the-doctor/', label: '關於醫師' },
-    { href: '/zh-hant/services/', label: '診療項目' },
-    { href: '/zh-hant/hours/', label: '門診時間' },
-    { href: '/zh-hant/location/', label: '診所位置' },
-    { href: '/zh-hant/insurance/', label: '保險' },
-    { href: '/zh-hant/new-patients/', label: '初診患者' },
-  ],
-  'zh-hans': [
-    { href: '/zh-hans/', label: '首页' },
-    { href: '/zh-hans/the-doctor/', label: '关于医师' },
-    { href: '/zh-hans/services/', label: '诊疗项目' },
-    { href: '/zh-hans/hours/', label: '门诊时间' },
-    { href: '/zh-hans/location/', label: '诊所位置' },
-    { href: '/zh-hans/insurance/', label: '保险' },
-    { href: '/zh-hans/new-patients/', label: '初诊患者' },
-  ],
-};
+const t = (key: string) => getTranslation(locale, key);
 
-const currentNavItems = navItems[locale as keyof typeof navItems] || navItems.en;
+// Privacy and accessibility exist only in English so far; point non-English
+// visitors at the English copy rather than a 404 until they are translated.
+const legalPrefix = '';
 
 const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
   lang: metadata.code,
@@ -114,9 +88,29 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={finalOgImage} />
 
+    {/*
+      Resolve the theme before first paint, otherwise a visitor who chose dark
+      sees a white flash on every navigation. Inline and synchronous by
+      necessity — a deferred module would run after the first paint.
+    */}
+    <script is:inline>
+      (() => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {
+          /* Private browsing can reject reads. */
+        }
+        const prefersDark =
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme =
+          stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+      })();
+    </script>
+
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>⚕️</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%234a3f6b'/><text x='16' y='23' font-size='18' font-family='Georgia,serif' fill='white' text-anchor='middle'>SC</text></svg>"
     />
 
     {breadcrumbs && (
@@ -145,36 +139,30 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       <slot />
     </main>
 
-    <!-- CTA Banner -->
-    <section class="cta-banner">
-      <div class="cta-content">
-        <span class="cta-label">CALL THE OFFICE</span>
-        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-phone">
-          {practice.phone}
-        </a>
-      </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-column">
-          <h3>Office Information</h3>
+          <h3>{t('footer.officeInformation')}</h3>
           <dl>
-            <dt>Hours</dt>
+            <dt>{t('footer.hours')}</dt>
             <dd>
-              <div>{practice.hours.weekday}</div>
-              <div>{practice.hours.weekend}</div>
+              <div>{t('hoursWeekday')}</div>
+              <div>{t('hoursWeekend')}</div>
             </dd>
-            <dt>Address</dt>
+            <dt>{t('footer.address')}</dt>
             <dd>
-              <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776">
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(practice.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {practice.address}
               </a>
             </dd>
-            <dt>Phone</dt>
+            <dt>{t('footer.phone')}</dt>
             <dd>
-              <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>
+              <a href={`tel:+1${practice.phone.replace(/\D/g, '')}`}>
                 {practice.phone}
               </a>
             </dd>
@@ -182,22 +170,26 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
         </div>
 
         <div class="footer-column">
-          <h3>Professional</h3>
-          <p>California Medical License {practice.medicalLicenseNumber}</p>
+          <h3>{t('footer.professional')}</h3>
+          <p>{t('footer.license')} {practice.medicalLicenseNumber}</p>
           <p>{practice.medicalLicenseStatus}</p>
         </div>
 
         <div class="footer-column">
-          <h3>Legal</h3>
+          <h3>{t('footer.legal')}</h3>
           <ul>
-            <li><a href="/privacy/">Privacy Policy</a></li>
-            <li><a href="/accessibility/">Accessibility Statement</a></li>
+            <li><a href={`${legalPrefix}/privacy/`}>{t('footer.privacy')}</a></li>
+            <li>
+              <a href={`${legalPrefix}/accessibility/`}>{t('footer.accessibility')}</a>
+            </li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} {practice.doctorName}. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} {practice.doctorName}. {t('footer.rightsReserved')}
+        </p>
       </div>
     </footer>
 
@@ -221,61 +213,20 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     right: auto;
     bottom: auto;
     padding: 1rem;
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--text-strong);
+    color: var(--surface);
     text-decoration: none;
   }
 
+  /* No max-width here: pages own their own width. Clamping <main> was cutting
+     the homepage's full-bleed banded sections into a floating inset panel. */
   main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
     min-height: calc(100vh - 400px);
   }
 
-  .cta-banner {
-    background: #3d2b52;
-    color: #fff;
-    padding: 2rem 1rem;
-    margin: 2rem auto;
-    max-width: 1200px;
-    border-radius: 2px;
-  }
-
-  .cta-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .cta-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    opacity: 0.9;
-  }
-
-  .cta-phone {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #fff;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .cta-phone:hover {
-    opacity: 0.9;
-  }
-
-  .cta-phone:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-  }
-
   .footer {
-    background: #f9f9f9;
-    border-top: 1px solid #ddd;
+    background: var(--surface-sunken);
+    border-top: 1px solid var(--line);
     margin-top: 4rem;
   }
 
@@ -310,7 +261,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
   }
 
   .footer-column a {
-    color: #3d2b52;
+    color: var(--brand-strong);
     text-decoration: none;
   }
 
@@ -319,7 +270,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
   }
 
   .footer-column a:focus-visible {
-    outline: 2px solid #3d2b52;
+    outline: 2px solid var(--brand-strong);
     outline-offset: 2px;
   }
 
@@ -337,10 +288,10 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--line);
     text-align: center;
     font-size: 0.875rem;
-    color: #666;
+    color: var(--text-muted);
   }
 
   @media (max-width: 768px) {
@@ -367,13 +318,5 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       padding: 0.5rem;
     }
 
-    .cta-content {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .cta-phone {
-      font-size: 1.5rem;
-    }
   }
 </style>

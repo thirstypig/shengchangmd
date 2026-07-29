@@ -79,12 +79,12 @@ const breadcrumbs = [
   .content-left p {
     font-size: 1rem;
     line-height: 1.8;
-    color: #333;
+    color: var(--text);
     margin: 0 0 1rem;
   }
 
   .content-left a {
-    color: #4a3f6b;
+    color: var(--brand);
     text-decoration: none;
     font-weight: 600;
   }
@@ -96,8 +96,8 @@ const breadcrumbs = [
   .cta-button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #3d2b52;
-    color: white !important;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
     text-decoration: none !important;
     border-radius: 2px;
     font-weight: 600;
@@ -107,14 +107,14 @@ const breadcrumbs = [
   }
 
   .cta-button:hover {
-    background: #2d1b42;
+    background: var(--brand-strong);
   }
 
   .info-box {
-    background: #f9f9f9;
+    background: var(--surface-sunken);
     padding: 1.5rem;
     border-radius: 2px;
-    border-left: 4px solid #4a3f6b;
+    border-left: 4px solid var(--brand);
   }
 
   .info-box h3 {
@@ -133,12 +133,12 @@ const breadcrumbs = [
     padding: 0.5rem 0;
     padding-left: 1.5rem;
     position: relative;
-    color: #333;
+    color: var(--text);
   }
 
   .info-box li:before {
     content: "•";
-    color: #4a3f6b;
+    color: var(--brand);
     font-weight: bold;
     position: absolute;
     left: 0;
