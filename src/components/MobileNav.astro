@@ -23,7 +23,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 <div class="md:hidden">
   <button
     id="mobile-menu-toggle"
-    class="p-2 text-gray-700 hover:text-primary-600"
+    class="p-3 text-gray-700 hover:text-primary-600"
     aria-label="Toggle navigation menu"
     aria-expanded="false"
     aria-controls="mobile-menu"
@@ -81,6 +81,15 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
         menu.classList.add('-translate-x-full');
         toggle.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Close menu on overlay click (outside click)
+    menu.addEventListener('click', (e) => {
+      if (e.target === menu) {
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('-translate-x-full');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 </script>
