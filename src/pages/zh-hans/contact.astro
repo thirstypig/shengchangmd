@@ -1,0 +1,206 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import { practice } from '@data/practice';
+
+const title = '联系我们 | 张胜雄医生';
+const description = '联系张胜雄医生诊所。在圣盖博加州致电、访问我们的办公室或发送信息。';
+const canonicalUrl = 'https://shengchangmd.com/zh-hans/contact/';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hans"
+  canonicalUrl={canonicalUrl}
+>
+  {/* Hero Section */}
+  <section class="bg-gradient-to-b from-primary-50 to-white py-12 md:py-20">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        联系我们
+      </h1>
+      <p class="text-xl text-gray-700 leading-relaxed max-w-2xl">
+        有问题或准备预约？我们在这里帮助您。直接致电我们或发送信息，我们会尽快回复。
+      </p>
+    </div>
+  </section>
+
+  {/* Contact Content Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+
+        {/* Left Column: Call & Visit Info */}
+        <div class="space-y-12">
+
+          {/* Call Us Section */}
+          <div>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              致电我们
+            </h2>
+            <p class="text-gray-600 mb-4">
+              最快的联系方式是通过电话。我们很乐意回答您的问题并安排预约。
+            </p>
+            <a href={`tel:+1${practice.phone.replace(/\D/g, '')}`} class="inline-block">
+              <div class="text-2xl md:text-3xl font-bold text-primary-600 hover:text-primary-700 transition-colors mb-6">
+                {practice.phone}
+              </div>
+            </a>
+            <CallButton text="立即致电" size="base" />
+          </div>
+
+          {/* Visit Us Section */}
+          <div>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              访问我们
+            </h2>
+
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 mb-2">办公室地址</h3>
+              <p class="text-gray-700 leading-relaxed">
+                {practice.address}
+              </p>
+            </div>
+
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 mb-2">办公室时间</h3>
+              <p class="text-gray-700 mb-2">
+                <strong>工作日：</strong> {practice.hours.weekday}
+              </p>
+              <p class="text-gray-700">
+                <strong>周末：</strong> {practice.hours.weekend}
+              </p>
+            </div>
+
+            <a
+              href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
+            >
+              获取路线
+            </a>
+          </div>
+        </div>
+
+        {/* Right Column: Contact Form */}
+        <div>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            发送信息
+          </h2>
+          <p class="text-gray-600 mb-8">
+            填写下方表单，我们会尽快回复。如有紧急事项，请直接致电我们的办公室。
+          </p>
+
+          <form id="contact-form" class="space-y-5">
+            {/* Name Field */}
+            <div>
+              <label for="name" class="block text-sm font-semibold text-gray-900 mb-2">
+                全名 <span class="text-error">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition"
+                placeholder="您的全名"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div>
+              <label for="email" class="block text-sm font-semibold text-gray-900 mb-2">
+                电子邮件地址 <span class="text-error">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition"
+                placeholder="您的电子邮件地址"
+              />
+            </div>
+
+            {/* Phone Field */}
+            <div>
+              <label for="phone" class="block text-sm font-semibold text-gray-900 mb-2">
+                电话号码
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition"
+                placeholder="(123) 456-7890"
+              />
+            </div>
+
+            {/* Subject Field */}
+            <div>
+              <label for="subject" class="block text-sm font-semibold text-gray-900 mb-2">
+                主题 <span class="text-error">*</span>
+              </label>
+              <select
+                id="subject"
+                name="subject"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition bg-white"
+              >
+                <option value="">选择主题...</option>
+                <option value="appointment">预约就诊</option>
+                <option value="insurance">保险问题</option>
+                <option value="medical">医疗问题</option>
+                <option value="general">一般咨询</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+
+            {/* Message Field */}
+            <div>
+              <label for="message" class="block text-sm font-semibold text-gray-900 mb-2">
+                信息 <span class="text-error">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="6"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition resize-none"
+                placeholder="请告诉我们我们如何能帮助您..."
+              ></textarea>
+            </div>
+
+            {/* Form Note */}
+            <div class="bg-primary-50 border border-primary-200 rounded-lg p-4 text-sm text-gray-700">
+              <p class="font-semibold text-gray-900 mb-1">演示表单</p>
+              <p>这是一个演示表单。如需立即帮助，请致电我们 <a href={`tel:+1${practice.phone.replace(/\D/g, '')}`} class="font-semibold text-primary-600 hover:text-primary-700">{practice.phone}</a></p>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              class="w-full px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
+            >
+              发送信息
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Demo: Show success message
+      alert('感谢您的信息！我们会尽快回复您。如需立即帮助，请致电我们的办公室。');
+      form.reset();
+    });
+  }
+</script>

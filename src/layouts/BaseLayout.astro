@@ -15,9 +15,9 @@ interface Props {
 
 const { title, description, locale, ogImage, canonicalUrl } = Astro.props;
 
-const localeCode = locale.split('-')[0];
-const localeMetadata = locales[localeCode];
+const localeMetadata = locales[locale as keyof typeof locales] || locales['en'];
 const isReviewed = localeMetadata?.reviewed ?? false;
+const langCode = locale.split('-')[0]; // Extract language code for Header usage
 
 const navItems = {
   en: [

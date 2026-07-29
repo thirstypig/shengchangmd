@@ -1,0 +1,209 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import { practice } from '@data/practice';
+
+const title = '关于张胜雄医生 | 美国委员会认证的家庭医学医生';
+const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，在圣盖博加州拥有数十年的临床经验。教育、认证和医院从属关系。';
+const canonicalUrl = 'https://shengchangmd.com/zh-hans/about/';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hans"
+  canonicalUrl={canonicalUrl}
+>
+  {/* Hero Section */}
+  <HeroSection
+    headline="关于张胜雄医生"
+    subheadline="美国委员会认证的家庭医学医生，拥有数十年的临床经验，致力于为圣盖博及周边社区的所有年龄段患者提供富有同情心和综合的医疗护理。"
+    locale="zh-hans"
+  />
+
+  {/* Bio Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+          专业背景
+        </h2>
+        <div class="prose prose-lg text-gray-700 space-y-6">
+          <p class="leading-relaxed">
+            张胜雄医生在圣盖博的家庭医学诊所积累了数十年的临床经验。他的医学生涯建立在严格的科学培训基础上，同时对以患者为中心的护理和建立长期医患关系有着深刻的承诺。
+          </p>
+          <p class="leading-relaxed">
+            作为美国委员会认证的家庭医学医生，张医生为所有年龄段的患者提供综合初级保健。他专门从事预防医学、慢性病管理和内科医学，在管理复杂医疗状况方面有专长。他的方法强调针对每个患者的个人需求、目标和健康状况的个性化、周密的护理。
+          </p>
+          <p class="leading-relaxed">
+            张医生的临床理念以循证医学、患者教育和连续性护理为中心——研究表明这些因素能带来更好的健康结果和更高的患者满意度。他相信最好的医疗护理来自于真正了解每个患者的完整健康状况，并与患者合作实现他们的健康目标。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Credentials & Languages Section */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        执业资格和专业信息
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {/* Medical Degree */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            医学学位
+          </h3>
+          <p class="text-gray-700 mb-2">
+            <span class="font-semibold">{practice.education.medicalDegree}</span>
+          </p>
+          <p class="text-gray-600 text-sm mb-2">
+            {practice.education.school}
+          </p>
+          <p class="text-gray-600 text-sm">
+            毕业于 {practice.education.year}
+          </p>
+        </div>
+
+        {/* Medical License */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            加州医学执业证书
+          </h3>
+          <p class="text-gray-700 mb-2">
+            <span class="font-semibold">执照号 #{practice.medicalLicenseNumber}</span>
+          </p>
+          <p class="text-gray-600 text-sm mb-2">
+            {practice.medicalLicenseStatus}
+          </p>
+          <p class="text-gray-600 text-xs">
+            有效期至 {practice.licenseExpiresDate}
+          </p>
+        </div>
+
+        {/* Languages */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            语言
+          </h3>
+          <ul class="space-y-2">
+            {practice.languages.map((lang) => (
+              <li class="text-gray-700">
+                <span class="inline-block mr-2">•</span>{lang}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Postgraduate Training Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+          研究生培训
+        </h2>
+        <div class="bg-primary-50 border-l-4 border-primary-600 p-8 rounded-r-lg">
+          <p class="text-gray-700 mb-3 leading-relaxed">
+            <span class="font-semibold text-gray-900">{practice.education.postgraduateTraining}</span> 在 <span class="font-semibold">{practice.education.residency}</span> 接受家庭医学和内科培训，张医生在此期间发展了他的临床专长，并完善了他以患者为中心的综合医疗护理方法。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Board Certifications Section */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        委员会认证
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {practice.boardCertifications.map((cert) => (
+          <div class="bg-white rounded-lg p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-start gap-4 mb-4">
+              <div class="text-3xl">✓</div>
+              <div>
+                <h3 class="font-serif text-xl font-bold text-gray-900">
+                  {cert.specialty}
+                </h3>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <p class="text-gray-600 text-sm">委员会</p>
+                <p class="text-gray-900 font-semibold">{cert.board}</p>
+              </div>
+              <div>
+                <p class="text-gray-600 text-sm">首次认证</p>
+                <p class="text-gray-900">{cert.firstCertified}</p>
+              </div>
+              {cert.mostRecentCertification && (
+                <div>
+                  <p class="text-gray-600 text-sm">最近认证</p>
+                  <p class="text-gray-900">{cert.mostRecentCertification}</p>
+                </div>
+              )}
+              <div>
+                <p class="text-gray-600 text-sm">状态</p>
+                <p class="text-gray-900 font-semibold text-green-600">{cert.currentStatus}</p>
+              </div>
+              {cert.maintenanceRequired && (
+                <div class="pt-2 border-t border-gray-200">
+                  <p class="text-xs text-gray-600 italic">需要认证维持 (MOC)</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Hospital Affiliations Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-12 text-gray-900">
+          医院关联
+        </h2>
+
+        <div class="space-y-4">
+          {practice.hospitalAffiliations.map((hospital) => (
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 flex items-start gap-4">
+              <span class="text-2xl text-blue-600 flex-shrink-0">🏥</span>
+              <div>
+                <p class="text-gray-900 font-semibold text-lg">{hospital}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <p class="text-gray-700">
+            张医生与这些享誉盛名的医疗保健机构保持积极的联系，确保在需要时为患者提供全面的医院服务和咨询。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Call to Action Section */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+        预约您的就诊
+      </h2>
+      <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+        体验富有同情心的综合家庭医学护理。张医生正在接收新患者，期待成为您值得信赖的医疗保健合作伙伴。
+      </p>
+      <CallButton text="立即致电我们" size="lg" />
+    </div>
+  </section>
+</BaseLayout>

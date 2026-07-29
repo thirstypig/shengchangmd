@@ -1,0 +1,209 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import { practice } from '@data/practice';
+
+const title = '關於張勝雄醫生 | 美國委員會認證的家庭醫學醫生';
+const description = '了解張勝雄醫生，美國委員會認證的家庭醫學醫生，在聖蓋博加州擁有數十年的臨床經驗。教育、認證和醫院從屬關係。';
+const canonicalUrl = 'https://shengchangmd.com/zh-hant/about/';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hant"
+  canonicalUrl={canonicalUrl}
+>
+  {/* Hero Section */}
+  <HeroSection
+    headline="關於張勝雄醫生"
+    subheadline="美國委員會認證的家庭醫學醫生，擁有數十年的臨床經驗，致力於為聖蓋博及周邊社區的所有年齡段患者提供富有同情心和綜合的醫療護理。"
+    locale="zh-hant"
+  />
+
+  {/* Bio Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+          專業背景
+        </h2>
+        <div class="prose prose-lg text-gray-700 space-y-6">
+          <p class="leading-relaxed">
+            張勝雄醫生在聖蓋博的家庭醫學診所積累了數十年的臨床經驗。他的醫學生涯建立在嚴格的科學培訓基礎上，同時對以患者為中心的護理和建立長期醫患關係有著深刻的承諾。
+          </p>
+          <p class="leading-relaxed">
+            作為美國委員會認證的家庭醫學醫生，張醫生為所有年齡段的患者提供綜合初級保健。他專門從事預防醫學、慢性病管理和內科醫學，在管理複雜醫療狀況方面有專長。他的方法強調針對每個患者的個人需求、目標和健康狀況的個性化、周密的護理。
+          </p>
+          <p class="leading-relaxed">
+            張醫生的臨床理念以循證醫學、患者教育和連續性護理為中心——研究表明這些因素能帶來更好的健康結果和更高的患者滿意度。他相信最好的醫療護理來自於真正了解每個患者的完整健康狀況，並與患者合作實現他們的健康目標。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Credentials & Languages Section */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        執業資格和專業信息
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {/* Medical Degree */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            醫學學位
+          </h3>
+          <p class="text-gray-700 mb-2">
+            <span class="font-semibold">{practice.education.medicalDegree}</span>
+          </p>
+          <p class="text-gray-600 text-sm mb-2">
+            {practice.education.school}
+          </p>
+          <p class="text-gray-600 text-sm">
+            畢業於 {practice.education.year}
+          </p>
+        </div>
+
+        {/* Medical License */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            加州醫學執業證書
+          </h3>
+          <p class="text-gray-700 mb-2">
+            <span class="font-semibold">執照號 #{practice.medicalLicenseNumber}</span>
+          </p>
+          <p class="text-gray-600 text-sm mb-2">
+            {practice.medicalLicenseStatus}
+          </p>
+          <p class="text-gray-600 text-xs">
+            有效期至 {practice.licenseExpiresDate}
+          </p>
+        </div>
+
+        {/* Languages */}
+        <div class="bg-white rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            語言
+          </h3>
+          <ul class="space-y-2">
+            {practice.languages.map((lang) => (
+              <li class="text-gray-700">
+                <span class="inline-block mr-2">•</span>{lang}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Postgraduate Training Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+          研究生培訓
+        </h2>
+        <div class="bg-primary-50 border-l-4 border-primary-600 p-8 rounded-r-lg">
+          <p class="text-gray-700 mb-3 leading-relaxed">
+            <span class="font-semibold text-gray-900">{practice.education.postgraduateTraining}</span> 在 <span class="font-semibold">{practice.education.residency}</span> 接受家庭醫學和內科培訓，張醫生在此期間發展了他的臨床專長，並完善了他以患者為中心的綜合醫療護理方法。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Board Certifications Section */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        委員會認證
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {practice.boardCertifications.map((cert) => (
+          <div class="bg-white rounded-lg p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-start gap-4 mb-4">
+              <div class="text-3xl">✓</div>
+              <div>
+                <h3 class="font-serif text-xl font-bold text-gray-900">
+                  {cert.specialty}
+                </h3>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <p class="text-gray-600 text-sm">委員會</p>
+                <p class="text-gray-900 font-semibold">{cert.board}</p>
+              </div>
+              <div>
+                <p class="text-gray-600 text-sm">首次認證</p>
+                <p class="text-gray-900">{cert.firstCertified}</p>
+              </div>
+              {cert.mostRecentCertification && (
+                <div>
+                  <p class="text-gray-600 text-sm">最近認證</p>
+                  <p class="text-gray-900">{cert.mostRecentCertification}</p>
+                </div>
+              )}
+              <div>
+                <p class="text-gray-600 text-sm">狀態</p>
+                <p class="text-gray-900 font-semibold text-green-600">{cert.currentStatus}</p>
+              </div>
+              {cert.maintenanceRequired && (
+                <div class="pt-2 border-t border-gray-200">
+                  <p class="text-xs text-gray-600 italic">需要認證維持 (MOC)</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Hospital Affiliations Section */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-12 text-gray-900">
+          醫院關聯
+        </h2>
+
+        <div class="space-y-4">
+          {practice.hospitalAffiliations.map((hospital) => (
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 flex items-start gap-4">
+              <span class="text-2xl text-blue-600 flex-shrink-0">🏥</span>
+              <div>
+                <p class="text-gray-900 font-semibold text-lg">{hospital}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <p class="text-gray-700">
+            張醫生與這些享譽盛名的醫療保健機構保持積極的聯繫，確保在需要時為患者提供全面的醫院服務和諮詢。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Call to Action Section */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+        預約您的就診
+      </h2>
+      <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+        體驗富有同情心的綜合家庭醫學護理。張醫生正在接收新患者，期待成為您值得信賴的醫療保健合作夥伴。
+      </p>
+      <CallButton text="立即致電我們" size="lg" />
+    </div>
+  </section>
+</BaseLayout>
