@@ -1,0 +1,236 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import { practice } from '@data/practice';
+
+const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
+const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫生的醫療診療服務。`;
+const canonicalUrl = 'https://shengchangmd.com/zh-hant/services/';
+const locale = 'zh-hant';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+>
+  {/* Hero Section */}
+  <HeroSection
+    headline="診療項目"
+    subheadline="為您的健康需求量身定製的綜合初級保健。張醫生提供全套醫療診療服務，提供個性化、富有同情心的護理。"
+    locale={locale}
+  />
+
+  {/* Family Medicine Section */}
+  <section id="family-medicine" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            家庭醫學
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            家庭醫學是綜合醫療保健的基礎。張醫生為各個年齡段的患者提供個性化護理，從新生兒到老年人，在患者的家庭背景中對整個人進行治療。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">綜合體檢和健康評估</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">急性病診斷和治療</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">常規疫苗接種和免疫</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">小型手術和傷口護理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">需要時的專科護理協調</span>
+            </li>
+          </ul>
+          <CallButton text="安排就診" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-4">👨‍⚕️</div>
+              <p class="text-gray-600 text-sm">家庭醫學</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Internal Medicine Section */}
+  <section id="internal-medicine" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <div class="w-full aspect-square bg-amber-100 rounded-2xl flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-4">🏥</div>
+              <p class="text-gray-600 text-sm">內科醫學</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            內科醫學
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            內科醫學專注於成人疾病的預防、診斷和治療。張醫生擅長用循證方法管理複雜的醫療狀況。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">複雜慢性病的管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">藥物管理和優化</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">醫院和專科醫生協調</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">成人預防健康檢查</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">長期疾病監測和優化</span>
+            </li>
+          </ul>
+          <CallButton text="安排就診" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Preventive Care Section */}
+  <section id="preventive-care" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            預防保健
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            預防勝於治療。定期保健訪問和健康檢查有助於早期發現潛在健康問題，長期保持您的健康。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">年度體檢和健康評估</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">適齡癌症篩查</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">心血管風險評估和管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">實驗室檢查和解釋</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">生活方式諮詢和健康規劃</span>
+            </li>
+          </ul>
+          <CallButton text="安排就診" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <div class="w-full aspect-square bg-emerald-100 rounded-2xl flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-4">❤️</div>
+              <p class="text-gray-600 text-sm">預防保健</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Chronic Disease Management Section */}
+  <section id="chronic-disease" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <div class="w-full aspect-square bg-red-100 rounded-2xl flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-4">💊</div>
+              <p class="text-gray-600 text-sm">慢性病管理</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            慢性病管理
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            慢性病需要持續、個性化的護理。張醫生與您合作，制定綜合管理方案，改善您的生活質量和健康結果。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">糖尿病管理和血糖監測</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">高血壓控制和監測</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">心臟病管理和預防</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">哮喘和慢阻肺管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">甲狀腺和代謝紊亂管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">關節炎和疼痛管理</span>
+            </li>
+          </ul>
+          <CallButton text="安排就診" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Final CTA Section */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        準備好開始了嗎？
+      </h2>
+      <p class="text-lg text-gray-700 mb-2">
+        不要等待來掌控您的健康。
+      </p>
+      <p class="text-lg text-gray-700 mb-8">
+        立即致電張醫生預約就診或討論您的醫療保健需求。
+      </p>
+      <CallButton text="立即致電我們" size="lg" />
+      <p class="text-sm text-gray-600 mt-6">
+        {practice.phone} • {practice.hours.weekday}
+      </p>
+    </div>
+  </section>
+</BaseLayout>
