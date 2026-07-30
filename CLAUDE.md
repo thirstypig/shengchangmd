@@ -82,19 +82,31 @@ colour.
   `practice.civilSurgeon`. Note the term misleads — "civil surgeon" is a USCIS
   designation for licensed physicians of any specialty, not a surgical
   qualification.
-- **Doctor's portrait** now comes from a real photograph the owner supplied
-  (`src-photos/formal-tighter.jpeg`), cropped to `public/images/dr-sheng-chang.jpg`
-  at 1024×1024. It is a banquet photo, not a studio headshot — fine for now, but
-  a clinical/office portrait would suit the practice better.
-- **A couple crop** exists at `public/images/dr-and-mrs-chang.jpg`. Unused:
-  unconfirmed whether Mrs. Chang is part of the practice.
+- **Doctor's portrait** comes from a photograph the owner supplied, cropped and
+  colour-corrected to `public/images/dr-sheng-chang.jpg` at 1024×1024. It is a
+  banquet photo, not a studio headshot — serviceable, but a clinical portrait
+  would suit the practice better.
+- **A crop of Dr. and Mrs. Chang** exists at
+  `src-photos/dr-and-mrs-chang-crop.jpg`. Unused, and deliberately not in
+  `public/` — anything there is served publicly, and whether Mrs. Chang has a
+  role in the practice is unconfirmed.
+
+## Photographs
+
+Originals live in `src-photos/`, which is **gitignored on purpose**: this repo is
+public, and the originals include full-resolution personal photographs of the
+doctor and his wife that were never meant for publication. They were stripped
+from git history while it was still unpushed. Only the derived portrait the site
+actually renders is committed. Keep it that way — if the originals are ever
+needed in version control, make the repo private first.
 
 ## Setup
 
 ```
 npm install
 npm run dev      # http://localhost:3120
-npm run build
+npm run build    # 22 pages; postbuild runs scripts/verify-css.mjs
+npm test         # 27 vitest tests
 ```
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
@@ -102,3 +114,37 @@ styles and the theme in `src/styles/global.css`. Design tokens live in
 `tailwind.config.ts`, loaded by the `@config` directive. Utility classes will
 silently do nothing if that plugin is ever removed — verify visually after
 touching the build config.
+
+## Tests
+
+`tests/i18n/locale-coverage.test.ts` — 27 tests, run with `npm test`.
+
+Deliberately narrow. Every test prevents a regression that has actually happened
+here, and all of them are for defects that typecheck and build cleanly:
+
+- a value in `practice.ts` with no counterpart in `practiceLocalized`, which
+  falls back to English and so leaks English onto a Chinese page
+- a key present in `en` but missing from a Chinese locale, which makes
+  `getTranslation` return the key itself, so a patient sees the literal text
+  `hoursWeekday`
+- a Chinese value left byte-identical to its English counterpart
+- both fallback paths returning something renderable rather than `undefined`
+
+**Not yet in CI.** `.github/workflows/deploy.yml` runs the build and the CSS
+guard but not `npm test`, so a locale regression fails locally and still deploys.
+
+## Deployment
+
+Live at **https://shengchangmd.bahtzang.com** via GitHub Pages
+(`thirstypig/shengchangmd`, public repo). `.github/workflows/deploy.yml` builds
+on push to `main`. DNS is a CNAME on Squarespace: `shengchangmd` →
+`thirstypig.github.io`.
+
+`SITE_URL` in the workflow feeds every canonical URL, sitemap entry, hreflang
+link and JSON-LD `@id`. Nothing else should hardcode the domain — pages derive it
+via `new URL(path, Astro.site)`.
+
+**Crawlers are blocked by default.** The build only emits an indexable page when
+`ALLOW_INDEXING=true`, which the workflow leaves commented out. Do not enable it
+until the insurance carrier list is replaced with the real one. Unreviewed
+locales stay `noindex` regardless, driven by `reviewed` in `locales.ts`.
