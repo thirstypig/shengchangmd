@@ -29,6 +29,17 @@ jobs:
 
       - run: npm ci
 
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      # 27 tests over the i18n layer. They guard defects that typecheck and build
+      # cleanly — a practice.ts value with no translation, or a key missing from a
+      # locale, either of which puts English or a raw key name in front of a
+      # patient. Runs before the build so a locale regression blocks the deploy
+      # rather than shipping.
+      - name: Tests
+        run: npm test
+
       # `postbuild` runs scripts/verify-css.mjs, which fails the build if the
       # compiled CSS is missing real Tailwind output. That guard exists because
       # this site once shipped with zero compiled CSS while the build passed.

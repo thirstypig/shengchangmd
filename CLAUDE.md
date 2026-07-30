@@ -130,8 +130,9 @@ here, and all of them are for defects that typecheck and build cleanly:
 - a Chinese value left byte-identical to its English counterpart
 - both fallback paths returning something renderable rather than `undefined`
 
-**Not yet in CI.** `.github/workflows/deploy.yml` runs the build and the CSS
-guard but not `npm test`, so a locale regression fails locally and still deploys.
+**In CI.** `.github/workflows/deploy.yml` runs `npx tsc --noEmit` then `npm test`
+before the build, so a typecheck or locale regression blocks the deploy rather
+than shipping.
 
 ## Deployment
 
