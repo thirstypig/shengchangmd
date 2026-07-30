@@ -53,6 +53,16 @@ colour.
 
 - Hours, address, phone → `src/data/practice.ts` (single source of truth)
 - Localized copy → `src/i18n/locales.ts`
+- **Never interpolate `practice.*` directly into a `zh-hans`/`zh-hant` page or a
+  shared component.** Route it through `getPracticeLocalized()` or
+  `getTranslation()`. Those fields are English strings, so rendering them on a
+  Chinese page produces sentences that switch language mid-clause. This shipped
+  once, including via the shared footer, so it hit every Chinese page:
+  [write-up](docs/solutions/logic-errors/shared-data-module-locale-strings.md).
+- **Verify against the invariant, not against your diff.** Grepping for the
+  strings you just fixed proves only that you fixed them. Search for the *shape*
+  of the defect — that is what found a hardcoded English skip link on every
+  Chinese page after a "no English remains" claim had already been made.
 - Board certifications, licence numbers, education → `src/data/practice.ts`
 - Map URLs → derive from `practice.address`, never hardcode coordinates or
   Google place IDs

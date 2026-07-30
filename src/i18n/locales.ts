@@ -179,6 +179,23 @@ export function getTranslation(locale: string, key: string): string {
  * Look values up here instead, keyed on the English value so the two cannot
  * drift apart silently.
  */
+/*
+  Deliberately NOT localised, and why — recorded so these stop reading as
+  oversights the next time someone audits for English on Chinese pages:
+
+  - `practice.education.residency` ("University of Alabama Hospital") and
+    `practice.hospitalAffiliations` (San Gabriel Valley Medical Center, College
+    Hospital Costa Mesa) are US institutions with no established Chinese name.
+    Patients and USCIS paperwork cite them in English. Translating them would
+    invent a name nobody uses.
+  - `practice.doctorName` ("Sheng Chang, M.D.") stays English in the portrait
+    caption beneath the Chinese headline 張勝雄 醫師 — showing both is the point.
+  - `education.school` IS localised, because 國立臺灣大學醫學院 is the
+    institution's own name, not a translation of the English one.
+
+  The test is not "is it a proper noun" but "does this entity have a real name in
+  the target language that readers would expect".
+*/
 export const practiceLocalized = {
   en: {
     licenseStatus: 'License Renewed & Current',
