@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `门诊时间与位置 | ${practice.doctorName} | 圣盖博加州`;
-const description = `张医生诊所在圣盖博加州的门诊时间、位置、方向和停车信息。`;
+const description = `张医生诊所在加州圣盖博的门诊时间、位置、方向和停车信息。`;
 const canonicalUrl = new URL('/zh-hans/location/', Astro.site).href;
 ---
 
@@ -34,7 +34,7 @@ const canonicalUrl = new URL('/zh-hans/location/', Astro.site).href;
             <span class="time">{getTranslation('zh-hans', 'hoursWeekend')}</span>
           </div>
           <p class="hours-note">
-            下班后的来电可以留言。我们会在营业时间回复。
+            下班后的来电可以留言。我们会在门诊时间回复。
           </p>
         </div>
 

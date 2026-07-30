@@ -4,22 +4,23 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getTranslation } from '@i18n/locales';
+import { getTranslation, getPracticeLocalized } from '@i18n/locales';
 
 const locale = 'zh-hans';
-const title = `${practice.doctorName} | 委员会认证家庭医师 | 加州圣盖博`;
-const description = `加州圣盖博的委员会认证家庭医师。张医师提供全面的家庭医学与内科诊疗，现正接受新患者。`;
+const pl = getPracticeLocalized(locale);
+const title = `${practice.doctorName} | 委员会认证家庭医生 | 加州圣盖博`;
+const description = `加州圣盖博的委员会认证家庭医生。张医生提供全面的家庭医学与内科诊疗，现正接受新患者。`;
 const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>
   <HeroSection
-    headline="张胜雄 医师"
-    subheadline="于圣盖博及邻近社区提供全面的家庭医学与内科诊疗。委员会认证，看诊细心，国语与英语皆可沟通。"
+    headline="张胜雄 医生"
+    subheadline="于圣盖博及邻近社区提供全面的家庭医学与内科诊疗。委员会认证，看诊细心，普通话与英语皆可沟通。"
     {locale}
     image="/images/dr-sheng-chang.jpg"
-    imageAlt="张胜雄医师肖像"
-    imageCaption="委员会认证家庭医师"
+    imageAlt="张胜雄医生肖像"
+    imageCaption="委员会认证家庭医生"
   />
 
   {/* 诊疗项目 */}
@@ -72,7 +73,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
   <section class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
-        为何选择张医师
+        为何选择张医生
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -84,8 +85,8 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
                 <li class="flex gap-3">
                   <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
                   <div>
-                    <p class="font-semibold">{cert.specialty}</p>
-                    <p class="text-sm text-gray-600">{cert.board}</p>
+                    <p class="font-semibold">{pl.specialties[cert.specialty] ?? cert.specialty}</p>
+                    <p class="text-sm text-gray-600">{pl.boards[cert.board] ?? cert.board}</p>
                     <p class="text-xs text-gray-500">认证年份 {cert.firstCertified}</p>
                   </div>
                 </li>
@@ -102,7 +103,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
             <div>
               <p class="font-semibold text-gray-900">医学教育</p>
               <p class="text-gray-700">
-                M.D.，{practice.education.school}，{practice.education.year}
+                M.D.，{pl.school}，{practice.education.year}
               </p>
             </div>
             <div>
@@ -113,7 +114,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
             </div>
             <div>
               <p class="font-semibold text-gray-900">语言</p>
-              <p class="text-gray-700">英语、国语</p>
+              <p class="text-gray-700">英语、普通话</p>
             </div>
             <div>
               <p class="font-semibold text-gray-900">门诊时间</p>

@@ -23,6 +23,13 @@ export interface PracticeInfo {
     weekend: string;
   };
   acceptingNewPatients: boolean;
+  /**
+   * USCIS-designated civil surgeon, authorised to complete Form I-693 for
+   * adjustment of status. Confirmed 2026-07-29 via the USCIS Find a Doctor
+   * locator. Note: "civil surgeon" is a USCIS designation for licensed
+   * physicians of any specialty, not a surgical qualification.
+   */
+  civilSurgeon: boolean;
   education: {
     medicalDegree: string;
     school: string;
@@ -55,6 +62,7 @@ export const practice: PracticeInfo = {
     weekend: 'Closed Saturday and Sunday',
   },
   acceptingNewPatients: true,
+  civilSurgeon: true,
   education: {
     medicalDegree: 'M.D.',
     school: 'National Taiwan University College of Medicine',

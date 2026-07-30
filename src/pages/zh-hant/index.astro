@@ -4,9 +4,10 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getTranslation } from '@i18n/locales';
+import { getTranslation, getPracticeLocalized } from '@i18n/locales';
 
 const locale = 'zh-hant';
+const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 委員會認證家庭醫師 | 加州聖蓋博`;
 const description = `加州聖蓋博的委員會認證家庭醫師。張醫師提供全面的家庭醫學與內科診療，現正接受新患者。`;
 const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
@@ -84,8 +85,8 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
                 <li class="flex gap-3">
                   <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
                   <div>
-                    <p class="font-semibold">{cert.specialty}</p>
-                    <p class="text-sm text-gray-600">{cert.board}</p>
+                    <p class="font-semibold">{pl.specialties[cert.specialty] ?? cert.specialty}</p>
+                    <p class="text-sm text-gray-600">{pl.boards[cert.board] ?? cert.board}</p>
                     <p class="text-xs text-gray-500">認證年份 {cert.firstCertified}</p>
                   </div>
                 </li>
@@ -102,7 +103,7 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
             <div>
               <p class="font-semibold text-gray-900">醫學教育</p>
               <p class="text-gray-700">
-                M.D.，{practice.education.school}，{practice.education.year}
+                M.D.，{pl.school}，{practice.education.year}
               </p>
             </div>
             <div>

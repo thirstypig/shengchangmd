@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
-const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫生的醫療診療服務。`;
+const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫師的醫療診療服務。`;
 const canonicalUrl = new URL('/zh-hant/services/', Astro.site).href;
 const locale = 'zh-hant';
 ---
@@ -21,7 +21,7 @@ const locale = 'zh-hant';
   {/* Hero Section */}
   <HeroSection
     headline="診療項目"
-    subheadline="為您的健康需求量身定製的綜合初級保健。張醫生提供全套醫療診療服務，提供個性化、富有同情心的護理。"
+    subheadline="為您的健康需求量身定製的綜合初級保健。張醫師提供全套醫療診療服務，提供個人化、富有同情心的護理。"
     locale={locale}
     illustration="preventive"
   />
@@ -35,7 +35,7 @@ const locale = 'zh-hant';
             家庭醫學
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            家庭醫學是綜合醫療保健的基礎。張醫生為各個年齡段的患者提供個性化護理，從新生兒到老年人，在患者的家庭背景中對整個人進行治療。
+            家庭醫學是綜合醫療保健的基礎。張醫師為各個年齡段的患者提供個人化護理，從新生兒到老年人，從家庭的角度提供全人照護。
           </p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-start gap-3">
@@ -80,7 +80,7 @@ const locale = 'zh-hant';
             內科醫學
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            內科醫學專注於成人疾病的預防、診斷和治療。張醫生擅長用循證方法管理複雜的醫療狀況。
+            內科醫學專注於成人疾病的預防、診斷和治療。張醫師擅長用循證方法管理複雜的醫療狀況。
           </p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-start gap-3">
@@ -93,7 +93,7 @@ const locale = 'zh-hant';
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">醫院和專科醫生協調</span>
+              <span class="text-gray-700">醫院和專科醫師協調</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
@@ -164,7 +164,7 @@ const locale = 'zh-hant';
             慢性病管理
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            慢性病需要持續、個性化的護理。張醫生與您合作，制定綜合管理方案，改善您的生活質量和健康結果。
+            慢性病需要持續、個人化的護理。張醫師與您合作，制定綜合管理方案，改善您的生活品質和健康狀況。
           </p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-start gap-3">
@@ -181,7 +181,7 @@ const locale = 'zh-hant';
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">哮喘和慢阻肺管理</span>
+              <span class="text-gray-700">氣喘和慢性阻塞性肺病管理</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
@@ -206,7 +206,7 @@ const locale = 'zh-hant';
           移民體檢
         </h2>
         <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-          辦理移民申請所需的身體檢查，盡可能一次看診完成，並以國語或英語為您說明結果。
+          張醫師為<strong>美國移民局指定的公共衛生醫師（civil surgeon）</strong>，可辦理身分調整所需的 <strong>I-693 表</strong>體檢。盡可能一次看診完成，並以國語或英語為您說明結果。
         </p>
         <ul class="space-y-3 mb-8">
           <li class="flex items-start gap-3">
@@ -223,12 +223,12 @@ const locale = 'zh-hant';
           </li>
           <li class="flex items-start gap-3">
             <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">檢查結果與疫苗紀錄的書面文件，供申請使用</span>
+            <span class="text-gray-700">填妥並密封 I-693 表，供您隨申請一併遞交</span>
           </li>
         </ul>
         <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
           <p class="text-gray-700">
-            各類簽證與申請的要求並不相同，部分表格（例如身分調整所需的 I-693 表）須由具備美國移民局相關資格的醫師填寫。預約前請先來電，我們會確認您的案件需要哪一種體檢與表格，以及當天需要攜帶的資料。
+            各類簽證與申請的要求並不相同。預約前請先來電，我們會確認您的案件需要哪一種體檢與表格，並提醒您攜帶疫苗紀錄與照片身分證件。
           </p>
         </div>
         <CallButton text="來電確認所需項目" size="base" />
@@ -243,10 +243,10 @@ const locale = 'zh-hant';
         準備好開始了嗎？
       </h2>
       <p class="text-lg text-gray-700 mb-2">
-        不要等待來掌控您的健康。
+        別再等待，現在就開始掌握您的健康。
       </p>
       <p class="text-lg text-gray-700 mb-8">
-        立即致電張醫生預約就診或討論您的醫療保健需求。
+        立即致電張醫師預約就診或討論您的醫療保健需求。
       </p>
       <CallButton text="立即致電我們" size="lg" />
       <p class="text-sm text-gray-600 mt-6">

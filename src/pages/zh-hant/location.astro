@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `門診時間與位置 | ${practice.doctorName} | 聖蓋博加州`;
-const description = `張醫生診所在聖蓋博加州的門診時間、位置、方向和停車信息。`;
+const description = `張醫師診所在加州聖蓋博的門診時間、位置、方向和停車資訊。`;
 const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
 ---
 
@@ -34,13 +34,13 @@ const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
             <span class="time">{getTranslation('zh-hant', 'hoursWeekend')}</span>
           </div>
           <p class="hours-note">
-            下班後的來電可以留言。我們會在營業時間回復。
+            下班後的來電可以留言。我們會在門診時間回復。
           </p>
         </div>
 
         <!-- Contact Info -->
         <div class="contact-box">
-          <h2>聯繫我們</h2>
+          <h2>聯絡我們</h2>
           <div class="contact-item">
             <span class="label">電話</span>
             <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="contact-link">
@@ -68,7 +68,7 @@ const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="谷歌地圖顯示張醫生的辦公室位置"
+            title="谷歌地圖顯示張醫師的辦公室位置"
           ></iframe>
         </div>
 

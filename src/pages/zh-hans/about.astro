@@ -3,9 +3,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getPracticeLocalized } from '@i18n/locales';
 
 const title = '关于张胜雄医生 | 美国委员会认证的家庭医学医生';
-const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，在圣盖博加州拥有数十年的临床经验。教育、认证和医院从属关系。';
+const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，在加州圣盖博拥有数十年的临床经验。教育、认证和合作医院。';
+const pl = getPracticeLocalized('zh-hans');
 const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 ---
 
@@ -40,7 +42,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             作为美国委员会认证的家庭医学医生，张医生为所有年龄段的患者提供综合初级保健。他专门从事预防医学、慢性病管理和内科医学，在管理复杂医疗状况方面有专长。他的方法强调针对每个患者的个人需求、目标和健康状况的个性化、周密的护理。
           </p>
           <p class="leading-relaxed">
-            张医生的临床理念以循证医学、患者教育和连续性护理为中心——研究表明这些因素能带来更好的健康结果和更高的患者满意度。他相信最好的医疗护理来自于真正了解每个患者的完整健康状况，并与患者合作实现他们的健康目标。
+            张医生的临床理念以循证医学、患者教育和连续性护理为中心——研究表明这些因素能带来更好的健康状况和更高的患者满意度。他相信最好的医疗护理来自于真正了解每个患者的完整健康状况，并与患者合作实现他们的健康目标。
           </p>
         </div>
       </div>
@@ -64,7 +66,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             <span class="font-semibold">{practice.education.medicalDegree}</span>
           </p>
           <p class="text-gray-600 text-sm mb-2">
-            {practice.education.school}
+            {pl.school}
           </p>
           <p class="text-gray-600 text-sm">
             毕业于 {practice.education.year}
@@ -80,10 +82,10 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             <span class="font-semibold">执照号 #{practice.medicalLicenseNumber}</span>
           </p>
           <p class="text-gray-600 text-sm mb-2">
-            {practice.medicalLicenseStatus}
+            {pl.licenseStatus}
           </p>
           <p class="text-gray-600 text-xs">
-            有效期至 {practice.licenseExpiresDate}
+            有效期至 {pl.licenseExpires}
           </p>
         </div>
 
@@ -93,7 +95,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             语言
           </h3>
           <ul class="space-y-2">
-            {practice.languages.map((lang) => (
+            {pl.languages.map((lang) => (
               <li class="text-gray-700">
                 <span class="inline-block mr-2">•</span>{lang}
               </li>
@@ -109,11 +111,11 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl mx-auto">
         <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
-          研究生培训
+          毕业后医学培训
         </h2>
         <div class="bg-primary-50 border-l-4 border-primary-600 p-8 rounded-r-lg">
           <p class="text-gray-700 mb-3 leading-relaxed">
-            <span class="font-semibold text-gray-900">{practice.education.postgraduateTraining}</span> 在 <span class="font-semibold">{practice.education.residency}</span> 接受家庭医学和内科培训，张医生在此期间发展了他的临床专长，并完善了他以患者为中心的综合医疗护理方法。
+            <span class="font-semibold text-gray-900">{pl.postgraduateTraining}</span> 在 <span class="font-semibold">{practice.education.residency}</span> 接受家庭医学和内科培训，张医生在此期间发展了他的临床专长，并完善了他以患者为中心的综合医疗护理方法。
           </p>
         </div>
       </div>
@@ -134,14 +136,14 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
               <div class="text-3xl">✓</div>
               <div>
                 <h3 class="font-serif text-xl font-bold text-gray-900">
-                  {cert.specialty}
+                  {pl.specialties[cert.specialty] ?? cert.specialty}
                 </h3>
               </div>
             </div>
             <div class="space-y-3">
               <div>
                 <p class="text-gray-600 text-sm">委员会</p>
-                <p class="text-gray-900 font-semibold">{cert.board}</p>
+                <p class="text-gray-900 font-semibold">{pl.boards[cert.board] ?? cert.board}</p>
               </div>
               <div>
                 <p class="text-gray-600 text-sm">首次认证</p>
@@ -155,7 +157,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
               )}
               <div>
                 <p class="text-gray-600 text-sm">状态</p>
-                <p class="text-gray-900 font-semibold text-success">{cert.currentStatus}</p>
+                <p class="text-gray-900 font-semibold text-success">{pl.certStatus[cert.currentStatus] ?? cert.currentStatus}</p>
               </div>
               {cert.maintenanceRequired && (
                 <div class="pt-2 border-t border-gray-200">
@@ -174,7 +176,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl mx-auto">
         <h2 class="font-serif text-3xl md:text-4xl font-bold mb-12 text-gray-900">
-          医院关联
+          合作医院
         </h2>
 
         <div class="space-y-4">
@@ -189,7 +191,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 
         <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
           <p class="text-gray-700">
-            张医生与这些享誉盛名的医疗保健机构保持积极的联系，确保在需要时为患者提供全面的医院服务和咨询。
+            张医生与这些知名医疗机构保持积极的联系，确保在需要时为患者提供全面的医院服务和咨询。
           </p>
         </div>
       </div>
@@ -203,7 +205,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
         预约您的就诊
       </h2>
       <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-        体验富有同情心的综合家庭医学护理。张医生正在接收新患者，期待成为您值得信赖的医疗保健合作伙伴。
+        体验富有同情心的综合家庭医学护理。张医生正在接受新患者，期待成为您值得信赖的医疗保健合作伙伴。
       </p>
       <CallButton text="立即致电我们" size="lg" />
     </div>

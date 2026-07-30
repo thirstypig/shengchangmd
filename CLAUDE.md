@@ -59,19 +59,19 @@ colour.
 
 ## Known open items requiring the owner's confirmation
 
-- **Doctor's Chinese name.** The Chinese pages use 张胜雄 / 張勝雄. This was
-  generated, not supplied. Unconfirmed.
+- ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
+  (2026-07-29).
 - **Insurance carriers.** The list on `insurance.astro` was generated, not
-  supplied. Unconfirmed.
-- **Immigration medical exams.** Confirmed by the owner (2026-07-29) that the
-  practice does offer them. What is still unconfirmed is whether Dr. Chang holds
-  the **USCIS civil surgeon designation**, which is required to complete Form
-  I-693 for adjustment of status. Note the term is misleading: "civil surgeon"
-  is a USCIS designation granted to licensed physicians of any specialty, not a
-  surgical qualification — a family physician can hold it. Verify via the USCIS
-  Find a Doctor locator (my.uscis.gov/findadoctor). Until confirmed, the copy
-  must not imply I-693 capability. If he IS designated, say so explicitly — it
-  is a real differentiator and a high-intent search term.
+  supplied, and is currently live. The owner is compiling the real list
+  (2026-07-29). Do not enable indexing until it is replaced. No carrier logos:
+  reproducing the marks copies trademarks, and displaying them asserts network
+  participation.
+- ~~Immigration medical exams~~ — confirmed 2026-07-29: Dr. Chang is listed in
+  the USCIS Find a Doctor locator, i.e. he holds the **civil surgeon
+  designation** and may complete **Form I-693**. Recorded as
+  `practice.civilSurgeon`. Note the term misleads — "civil surgeon" is a USCIS
+  designation for licensed physicians of any specialty, not a surgical
+  qualification.
 - **Doctor's portrait** now comes from a real photograph the owner supplied
   (`src-photos/formal-tighter.jpeg`), cropped to `public/images/dr-sheng-chang.jpg`
   at 1024×1024. It is a banquet photo, not a studio headshot — fine for now, but
