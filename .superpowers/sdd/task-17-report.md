@@ -1,3 +1,5 @@
+> **INVALIDATED.** Written before the Tailwind pipeline fix (commit `6003825`, 15:05), against a site rendering with zero compiled CSS. All styling, layout, contrast and score claims in this report are void. See [the write-up](../../docs/solutions/integration-issues/tailwind-v4-astro-silently-uncompiled.md).
+
 # Task 17: Final Production Build and Deployment Verification
 
 **Status:** ✅ COMPLETE  

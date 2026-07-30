@@ -1,3 +1,5 @@
+> **INVALIDATED.** Written before the Tailwind pipeline fix (commit `6003825`, 15:05), against a site rendering with zero compiled CSS. All styling, layout, contrast and score claims in this report are void. See [the write-up](../../docs/solutions/integration-issues/tailwind-v4-astro-silently-uncompiled.md).
+
 # QA Testing Report - Task 16: Full Accessibility & Mobile Optimization
 
 **Test Date:** 2026-07-29  

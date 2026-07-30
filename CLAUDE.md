@@ -26,6 +26,11 @@ that was rendering with **zero compiled CSS** — Tailwind had never been wired
 into Astro. The same session shipped a fabricated Google Maps embed URL, an
 invented insurance carrier list, and an invented Chinese name for the doctor.
 
+Full write-up, including which prior reports are void:
+[`docs/solutions/integration-issues/tailwind-v4-astro-silently-uncompiled.md`](docs/solutions/integration-issues/tailwind-v4-astro-silently-uncompiled.md).
+`npm run build` now runs `scripts/verify-css.mjs` via `postbuild`, which fails
+the build if the compiled CSS lacks real Tailwind output.
+
 ## Colour rule (do not break this)
 
 `--brand` **inverts between themes**: deep red in light mode, light amber in

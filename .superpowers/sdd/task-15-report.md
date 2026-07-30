@@ -1,3 +1,5 @@
+> **PARTLY VALID.** Written before the Tailwind pipeline fix (commit `6003825`, 15:05). The font-size control itself did work — `--font-scale` used a plain passthrough style block. Its interaction with utility-driven layout was unverified. See [the write-up](../../docs/solutions/integration-issues/tailwind-v4-astro-silently-uncompiled.md).
+
 # Task 15: Font Size Control Verification Report
 
 ## Executive Summary
