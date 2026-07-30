@@ -1,0 +1,258 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import ServiceIllustration from '@components/ServiceIllustration.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+
+const title = `诊疗项目 | ${practice.doctorName} | 圣盖博加州的家庭医学`;
+const description = `综合家庭医学诊疗项目，包括慢性病管理、预防保健和内科医学。了解张医生的医疗诊疗服务。`;
+const canonicalUrl = new URL('/zh-hans/services/', Astro.site).href;
+const locale = 'zh-hans';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+>
+  {/* Hero Section */}
+  <HeroSection
+    headline="诊疗项目"
+    subheadline="为您的健康需求量身定制的综合初级保健。张医生提供全套医疗诊疗服务，提供个性化、富有同情心的护理。"
+    locale={locale}
+    illustration="preventive"
+  />
+
+  {/* Family Medicine Section */}
+  <section id="family-medicine" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            家庭医学
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            家庭医学是综合医疗保健的基础。张医生为各个年龄段的患者提供个性化护理，从新生儿到老年人，在患者的家庭背景中对整个人进行治疗。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">综合体检和健康评估</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">急性病诊断和治疗</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">常规疫苗接种和免疫</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">小型手术和伤口护理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">需要时的专科护理协调</span>
+            </li>
+          </ul>
+          <CallButton text="安排就诊" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="family" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Internal Medicine Section */}
+  <section id="internal-medicine" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="internal" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            内科医学
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            内科医学专注于成人疾病的预防、诊断和治疗。张医生擅长用循证方法管理复杂的医疗状况。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">复杂慢性病的管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">药物管理和优化</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">医院和专科医生协调</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">成人预防健康检查</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">长期疾病监测和优化</span>
+            </li>
+          </ul>
+          <CallButton text="安排就诊" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Preventive Care Section */}
+  <section id="preventive-care" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            预防保健
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            预防胜于治疗。定期保健访问和健康检查有助于早期发现潜在健康问题，长期保持您的健康。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">年度体检和健康评估</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">适龄癌症筛查</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">心血管风险评估和管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">实验室检查和解释</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">生活方式咨询和健康规划</span>
+            </li>
+          </ul>
+          <CallButton text="安排就诊" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="preventive" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Chronic Disease Management Section */}
+  <section id="chronic-disease" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="chronic" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            慢性病管理
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            慢性病需要持续、个性化的护理。张医生与您合作，制定综合管理方案，改善您的生活质量和健康结果。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">糖尿病管理和血糖监测</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">高血压控制和监测</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">心脏病管理和预防</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">哮喘和慢阻肺管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">甲状腺和代谢紊乱管理</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">关节炎和疼痛管理</span>
+            </li>
+          </ul>
+          <CallButton text="安排就诊" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 移民体检 */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          移民体检
+        </h2>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          办理移民申请所需的身体检查，尽可能一次看诊完成，并以国语或英语为您说明结果。
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">身体检查与病史审阅</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">必要的筛检项目与抽血检验</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">疫苗记录审核，并补接种缺少的疫苗</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">完成的文件交还给您，供申请使用</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            各类签证与申请的要求并不相同。预约前请先来电，我们会确认您的案件需要哪一种体检与表格，以及当天需要携带的资料。
+          </p>
+        </div>
+        <CallButton text="来电确认所需项目" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* Final CTA Section */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        准备好开始了吗？
+      </h2>
+      <p class="text-lg text-gray-700 mb-2">
+        不要等待来掌控您的健康。
+      </p>
+      <p class="text-lg text-gray-700 mb-8">
+        立即致电张医生预约就诊或讨论您的医疗保健需求。
+      </p>
+      <CallButton text="立即致电我们" size="lg" />
+      <p class="text-sm text-gray-600 mt-6">
+        {practice.phone} • {getTranslation('zh-hans', 'hoursWeekday')}
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>

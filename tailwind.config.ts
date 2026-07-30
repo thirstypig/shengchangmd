@@ -19,18 +19,20 @@ export default {
         '800': '#333333',
         '900': '#1a1a1a',
       },
-      // Brand colors
+      // Brand colours — deep red. `primary-600` is the base used for filled
+      // buttons and links; it holds 8.2:1 against the light surface, so it
+      // clears WCAG AA for body text as well as large text.
       'primary': {
-        '50': '#f4f1f7',
-        '100': '#e8e2ef',
-        '200': '#d1c5df',
-        '300': '#baa8cf',
-        '400': '#8b77a8',
-        '500': '#5c4681',
-        '600': '#4a3f6b',
-        '700': '#3d2645',
-        '800': '#2d1a32',
-        '900': '#1d0f20',
+        '50': '#fdf5f4',
+        '100': '#f8e7e6',
+        '200': '#efc9c9',
+        '300': '#e0a3a5',
+        '400': '#c56b71',
+        '500': '#a5404b',
+        '600': '#8a2f3c',
+        '700': '#6f2531',
+        '800': '#551c26',
+        '900': '#3c141b',
       },
       // Status colors (used as needed)
       'success': '#2d5f2e',

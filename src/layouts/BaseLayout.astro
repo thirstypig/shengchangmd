@@ -1,10 +1,16 @@
 ---
+import '@/styles/global.css';
 import { getCollection } from 'astro:content';
 import { practice } from '@data/practice';
-import { locales } from '@i18n/locales';
-import FontSizeControl from '@components/FontSizeControl.astro';
-import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { locales, getTranslation } from '@i18n/locales';
+import Header from '@components/Header.astro';
+import StickyCallBar from '@components/StickyCallBar.astro';
 import JsonLd from '@components/JsonLd.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
 
 interface Props {
   title: string;
@@ -12,16 +18,31 @@ interface Props {
   locale: string;
   ogImage?: string;
   canonicalUrl: string;
+  breadcrumbs?: BreadcrumbItem[];
+  pageSchema?: Record<string, unknown>;
 }
 
-const { title, description, locale, ogImage, canonicalUrl } = Astro.props;
+const { title, description, locale, ogImage, canonicalUrl, breadcrumbs, pageSchema } = Astro.props;
 
-// Get locale metadata for reviewed status
-const localeCode = locale.split('-')[0];
-const localeMetadata = locales[localeCode];
+const localeMetadata = locales[locale as keyof typeof locales] || locales['en'];
 const isReviewed = localeMetadata?.reviewed ?? false;
 
-// Build hreflang links for all locales
+// Search engines are blocked unless ALLOW_INDEXING is explicitly set at build
+// time. Default-closed on purpose: the site currently carries content nobody has
+// confirmed (insurance carriers, the doctor's Chinese name, immigration-exam
+// scope), and a staging URL that gets indexed is hard to un-index.
+const allowIndexing = process.env.ALLOW_INDEXING === 'true';
+const noIndex = !allowIndexing || !isReviewed;
+
+// Set default og:image if not provided
+const finalOgImage = ogImage || new URL('/og-image.png', Astro.site).href;
+
+const t = (key: string) => getTranslation(locale, key);
+
+// Privacy and accessibility exist only in English so far; point non-English
+// visitors at the English copy rather than a 404 until they are translated.
+const legalPrefix = '';
+
 const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
   lang: metadata.code,
   href: canonicalUrl.replace(
@@ -36,7 +57,6 @@ const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
   ),
 }));
 
-// Build x-default hreflang (points to English)
 const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
 ---
 
@@ -46,15 +66,13 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {!isReviewed && <meta name="robots" content="noindex, nofollow" />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <!-- Canonical -->
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- hreflang -->
     {
       hreflangLinks.map((link) => (
         <link rel="alternate" hrefLang={link.lang} href={link.href} />
@@ -62,116 +80,66 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     }
     <link rel="alternate" hrefLang="x-default" href={xDefaultHref} />
 
-    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={practice.doctorName} />
     <meta property="og:type" content="website" />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={finalOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={localeMetadata?.code || 'en_US'} />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={finalOgImage} />
 
-    <!-- Fonts: system stack for now, will be configured with tokens -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    {/*
+      Resolve the theme before first paint, otherwise a visitor who chose dark
+      sees a white flash on every navigation. Inline and synchronous by
+      necessity — a deferred module would run after the first paint.
+    */}
+    <script is:inline>
+      (() => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {
+          /* Private browsing can reject reads. */
+        }
+        const prefersDark =
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme =
+          stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+      })();
+    </script>
 
-    <!-- Favicon placeholder -->
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>⚕️</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%238a2f3c'/><text x='16' y='23' font-size='18' font-family='Georgia,serif' fill='white' text-anchor='middle'>SC</text></svg>"
     />
 
-    <!-- Tailwind CSS -->
-    <style is:global>
-      @import 'tailwindcss';
+    {breadcrumbs && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.label,
+          item: new URL(item.href, Astro.site).href,
+        })),
+      })} />
+    )}
 
-      :root {
-        font-size: calc(100% * var(--font-scale, 1));
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: system-ui, -apple-system, sans-serif;
-        font-size: 1.125rem;
-        line-height: 1.6;
-        color: #1a1a1a;
-        background-color: #fff;
-      }
-
-      /* Ensure prefers-reduced-motion is respected */
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
-      /* Minimum touch target size */
-      a,
-      button {
-        position: relative;
-      }
-
-      /* Ensure text remains readable at all zoom levels */
-      @media (min-width: 0px) {
-        body {
-          font-size: 1.125rem;
-        }
-      }
-    </style>
   </head>
 
   <body>
-    <!-- Skip-to-content link (first focusable element) -->
     <a href="#main" class="skip-to-content">Skip to content</a>
 
     <!-- Header -->
-    <header class="header">
-      <div class="header-container">
-        <!-- Left: Logo/Name -->
-        <div class="header-left">
-          <a href="/" class="logo">
-            <span class="logo-text">{practice.doctorName}</span>
-          </a>
-        </div>
-
-        <!-- Center: Phone number (visible at all widths) -->
-        <div class="header-center">
-          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="phone-link">
-            {practice.phone}
-          </a>
-        </div>
-
-        <!-- Right: Font size control + Language switcher -->
-        <div class="header-right">
-          <FontSizeControl />
-          <LanguageSwitcher currentLocale={localeCode} currentPath={Astro.url.pathname} />
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="nav" aria-label="Main navigation">
-        <ul class="nav-list">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/services/">Services</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
+    <Header locale={locale} currentPath={Astro.url.pathname} />
 
     <!-- Main content -->
     <main id="main">
@@ -182,22 +150,26 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-column">
-          <h3>Office Information</h3>
+          <h3>{t('footer.officeInformation')}</h3>
           <dl>
-            <dt>Hours</dt>
+            <dt>{t('footer.hours')}</dt>
             <dd>
-              <div>{practice.hours.weekday}</div>
-              <div>{practice.hours.weekend}</div>
+              <div>{t('hoursWeekday')}</div>
+              <div>{t('hoursWeekend')}</div>
             </dd>
-            <dt>Address</dt>
+            <dt>{t('footer.address')}</dt>
             <dd>
-              <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776">
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(practice.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {practice.address}
               </a>
             </dd>
-            <dt>Phone</dt>
+            <dt>{t('footer.phone')}</dt>
             <dd>
-              <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>
+              <a href={`tel:+1${practice.phone.replace(/\D/g, '')}`}>
                 {practice.phone}
               </a>
             </dd>
@@ -205,27 +177,32 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
         </div>
 
         <div class="footer-column">
-          <h3>Professional</h3>
-          <p>California Medical License {practice.medicalLicenseNumber}</p>
+          <h3>{t('footer.professional')}</h3>
+          <p>{t('footer.license')} {practice.medicalLicenseNumber}</p>
           <p>{practice.medicalLicenseStatus}</p>
         </div>
 
         <div class="footer-column">
-          <h3>Legal</h3>
+          <h3>{t('footer.legal')}</h3>
           <ul>
-            <li><a href="/privacy/">Privacy Policy</a></li>
-            <li><a href="/accessibility/">Accessibility Statement</a></li>
+            <li><a href={`${legalPrefix}/privacy/`}>{t('footer.privacy')}</a></li>
+            <li>
+              <a href={`${legalPrefix}/accessibility/`}>{t('footer.accessibility')}</a>
+            </li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} {practice.doctorName}. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} {practice.doctorName}. {t('footer.rightsReserved')}
+        </p>
       </div>
     </footer>
 
-    <!-- JSON-LD schema -->
-    <JsonLd locale={localeCode} />
+    <StickyCallBar locale={locale} />
+
+    <JsonLd locale={locale} pageSchema={pageSchema} />
   </body>
 </html>
 
@@ -243,119 +220,20 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     right: auto;
     bottom: auto;
     padding: 1rem;
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--text-strong);
+    color: var(--surface);
     text-decoration: none;
   }
 
-  .header {
-    border-bottom: 1px solid #e5e5e5;
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 100;
-  }
-
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .header-left {
-    flex: 0 0 auto;
-  }
-
-  .logo {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.25rem;
-  }
-
-  .logo:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .header-center {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
-  .phone-link {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.125rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid #1a1a1a;
-    border-radius: 0.25rem;
-    display: inline-block;
-    transition: background-color 0.2s;
-  }
-
-  .phone-link:hover {
-    background-color: #f5f5f5;
-  }
-
-  .phone-link:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .header-right {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem 1rem;
-    border-top: 1px solid #e5e5e5;
-  }
-
-  .nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 2rem;
-  }
-
-  .nav-list a {
-    text-decoration: none;
-    padding: 0.5rem 0;
-    display: inline-block;
-    transition: border-bottom-color 0.2s;
-    border-bottom: 2px solid transparent;
-  }
-
-  .nav-list a:hover {
-    border-bottom-color: currentColor;
-  }
-
-  .nav-list a:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
+  /* No max-width here: pages own their own width. Clamping <main> was cutting
+     the homepage's full-bleed banded sections into a floating inset panel. */
   main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
     min-height: calc(100vh - 400px);
   }
 
   .footer {
-    background: #f9f9f9;
-    border-top: 1px solid #e5e5e5;
+    background: var(--surface-sunken);
+    border-top: 1px solid var(--line);
     margin-top: 4rem;
   }
 
@@ -369,7 +247,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
   }
 
   .footer-column h3 {
-    font-size: 1.125rem;
+    font-size: 1.05rem;
     margin-top: 0;
     margin-bottom: 1rem;
   }
@@ -390,11 +268,16 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
   }
 
   .footer-column a {
-    color: inherit;
+    color: var(--brand-strong);
+    text-decoration: none;
+  }
+
+  .footer-column a:hover {
+    text-decoration: underline;
   }
 
   .footer-column a:focus-visible {
-    outline: 2px solid currentColor;
+    outline: 2px solid var(--brand-strong);
     outline-offset: 2px;
   }
 
@@ -412,13 +295,12 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--line);
     text-align: center;
     font-size: 0.875rem;
-    color: #666;
+    color: var(--text-muted);
   }
 
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .header-container {
       flex-direction: column;
@@ -431,15 +313,17 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       width: 100%;
     }
 
-    .nav-list {
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding-top: 1rem;
+    .main-nav {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 0.5rem;
     }
 
-    .phone-link {
-      font-size: 1rem;
-      padding: 0.75rem 1rem;
+    .nav-link {
+      display: block;
+      text-align: center;
+      padding: 0.5rem;
     }
+
   }
 </style>

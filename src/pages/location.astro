@@ -1,0 +1,382 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+
+const title = `Hours & Location | ${practice.doctorName} | San Gabriel, CA`;
+const description = `Office hours, location, directions, and parking information for Dr. Chang's medical practice in San Gabriel, California.`;
+const canonicalUrl = new URL('/location/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Location', href: '/location/' },
+];
+
+// Derive every map URL from the single address in practice.ts, so a change of
+// address never leaves a stale coordinate or place ID behind. The `output=embed`
+// form geocodes the query server-side and needs no API key.
+const addressQuery = encodeURIComponent(practice.address);
+const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
+const googleDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
+const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="en"
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="hero-section">
+    <h1>Hours & Location</h1>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container">
+      <!-- Left Column: Hours & Contact -->
+      <div class="content-left">
+        <!-- Hours Box -->
+        <div class="hours-box">
+          <h2>Office Hours</h2>
+          <div class="hours-item">
+            <span class="label">Weekdays</span>
+            <span class="time">{practice.hours.weekday}</span>
+          </div>
+          <div class="hours-item">
+            <span class="label">Weekends</span>
+            <span class="time">{practice.hours.weekend}</span>
+          </div>
+          <p class="hours-note">
+            After hours calls may be left on voicemail. We return calls during business hours.
+          </p>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-box">
+          <h2>Contact Us</h2>
+          <div class="contact-item">
+            <span class="label">Phone</span>
+            <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="contact-link">
+              {practice.phone}
+            </a>
+          </div>
+          <div class="contact-item">
+            <span class="label">Address</span>
+            <p class="address-text">
+              {practice.address}
+            </p>
+          </div>
+        </div>
+
+        <!-- Hours Link -->
+        <div class="hours-link-box">
+          <a href="/hours/" class="hours-link">View Full Hours & Schedule</a>
+        </div>
+      </div>
+
+      <!-- Right Column: Map & Directions -->
+      <div class="content-right">
+        <!-- Interactive map -->
+        <div class="map-container">
+          <iframe
+            src={mapEmbedUrl}
+            width="100%"
+            height="400"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title={`Interactive map showing ${practice.doctorName}'s office at ${practice.address}`}
+          ></iframe>
+        </div>
+
+        <!-- Directions: one button per maps app so nobody has to know which they have -->
+        <div class="directions-group">
+          <a
+            href={googleDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="directions-link"
+          >
+            Get Directions (Google Maps)
+          </a>
+          <a
+            href={appleDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="directions-link directions-link-secondary"
+          >
+            Get Directions (Apple Maps)
+          </a>
+        </div>
+
+        <!-- Address Card -->
+        <div class="address-card">
+          <h2>Address</h2>
+          <p class="address-full">
+            {practice.address}
+          </p>
+        </div>
+
+        <!-- Parking Info -->
+        <div class="parking-box">
+          <h2>Parking</h2>
+          <p>
+            Free parking is available in the building lot. Street parking is also available on Las Tunas Drive and surrounding streets.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .hero-section {
+    padding: 3rem 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2rem;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 700;
+    color: var(--text-strong);
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  .content-section {
+    padding: 0 1rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  /* Left Column */
+  .content-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hours-box,
+  .contact-box,
+  .address-card,
+  .parking-box {
+    padding: 1.5rem;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+
+  .hours-box h2,
+  .contact-box h2,
+  .address-card h2,
+  .parking-box h2 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: var(--text-strong);
+  }
+
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .hours-item .label {
+    font-weight: 600;
+    color: var(--text-strong);
+    min-width: 100px;
+  }
+
+  .hours-item .time {
+    text-align: right;
+    color: var(--text);
+  }
+
+  .hours-note {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  .contact-item {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-item .label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-strong);
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  .contact-link {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--brand);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover {
+    color: var(--brand-strong);
+    text-decoration: underline;
+  }
+
+  .contact-link:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  .address-text {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .hours-link-box {
+    text-align: center;
+  }
+
+  .hours-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand);
+    color: var(--brand-contrast);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .hours-link:hover {
+    background: var(--brand-strong);
+  }
+
+  .hours-link:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* Right Column */
+  .content-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .map-container {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .map-container iframe {
+    display: block;
+  }
+
+  .directions-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .directions-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 14rem;
+    /* 56px tall: above the 48px WCAG floor, sized for reduced motor control. */
+    min-height: 56px;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand);
+    color: var(--brand-contrast);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .directions-link:hover {
+    background: var(--brand-strong);
+  }
+
+  .directions-link:focus-visible {
+    outline: 3px solid var(--text-strong);
+    outline-offset: 2px;
+  }
+
+  .directions-link-secondary {
+    background: var(--surface);
+    color: var(--brand);
+    border: 2px solid var(--brand);
+  }
+
+  .directions-link-secondary:hover {
+    background: var(--surface-accent);
+    color: var(--brand-strong);
+  }
+
+  .address-full {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .parking-box p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2rem 1rem 1.5rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2rem;
+    }
+
+    .content-section {
+      padding: 0 1rem 2rem;
+    }
+
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .map-container iframe {
+      height: 300px;
+    }
+  }
+</style>

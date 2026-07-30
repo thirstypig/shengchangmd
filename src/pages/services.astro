@@ -1,17 +1,267 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import ServiceIllustration from '@components/ServiceIllustration.astro';
+import { practice } from '@data/practice';
 
-const title = 'Services | Sheng Chang, M.D.';
-const description = 'Services provided by Dr. Sheng Chang, board-certified family physician in San Gabriel, California.';
-const canonicalUrl = 'https://shengchangmd.com/services/';
+const title = `Services | ${practice.doctorName} | Family Medicine in San Gabriel, CA`;
+const description = `Comprehensive family medicine services including chronic disease management, preventive care, and internal medicine. Learn about Dr. Chang's medical services.`;
+const canonicalUrl = new URL('/services/', Astro.site).href;
+const locale = 'en';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+];
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  locale="en"
+  locale={locale}
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
-  <h1>Services</h1>
-  <p>Coming soon.</p>
+  {/* Hero Section */}
+  <HeroSection
+    headline="Our Services"
+    subheadline="Comprehensive primary care tailored to your health needs. Dr. Chang offers a full range of medical services with personalized, compassionate care."
+    locale={locale}
+    illustration="preventive"
+  />
+
+  {/* Family Medicine Section */}
+  <section id="family-medicine" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Family Medicine
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            Family medicine is the foundation of comprehensive healthcare. Dr. Chang provides personalized care for patients of all ages, from newborns to seniors, treating the whole person within their family context.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Comprehensive physical exams and health assessments</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Acute illness diagnosis and treatment</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Routine immunizations and vaccinations</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Minor surgical procedures and wound care</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Coordination of specialty care when needed</span>
+            </li>
+          </ul>
+          <CallButton text="Schedule an Appointment" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="family" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Internal Medicine Section */}
+  <section id="internal-medicine" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="internal" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Internal Medicine
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            Internal medicine focuses on the prevention, diagnosis, and treatment of adult diseases. Dr. Chang specializes in managing complex medical conditions with evidence-based approaches.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Management of complex chronic conditions</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Medication management and optimization</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Hospital and specialist coordination</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Adult preventive health screening</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Long-term disease monitoring and optimization</span>
+            </li>
+          </ul>
+          <CallButton text="Schedule an Appointment" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Preventive Care Section */}
+  <section id="preventive-care" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Preventive Care
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            Prevention is the best medicine. Regular wellness visits and health screenings help detect potential health issues early and keep you healthy for the long term.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Annual physical exams and health assessments</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Age-appropriate cancer screenings</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Cardiovascular risk assessment and management</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Laboratory testing and interpretation</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Lifestyle counseling and wellness planning</span>
+            </li>
+          </ul>
+          <CallButton text="Schedule an Appointment" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="preventive" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Chronic Disease Management Section */}
+  <section id="chronic-disease" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="chronic" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Chronic Disease Management
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            Chronic conditions require ongoing, personalized care. Dr. Chang works with you to develop a comprehensive management plan that improves your quality of life and health outcomes.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Diabetes management and blood sugar monitoring</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Hypertension control and monitoring</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Heart disease management and prevention</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Asthma and COPD management</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Thyroid and metabolic disorder management</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-gray-700">Arthritis and pain management</span>
+            </li>
+          </ul>
+          <CallButton text="Schedule an Appointment" size="base" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Immigration Medical Exams */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Immigration Medical Exams
+        </h2>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          Medical examinations for immigration applications, carried out in one
+          visit wherever possible, with results explained to you in English or
+          Mandarin.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Physical examination and medical history review</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Required screening tests and laboratory work</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Vaccination record review, with any missing doses given</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Completed paperwork returned to you for your application</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            Requirements differ by visa and application type. Please call the
+            office before booking so we can confirm which examination and forms
+            your case needs, and what to bring with you.
+          </p>
+        </div>
+        <CallButton text="Call to Confirm Requirements" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* Final CTA Section */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Ready to Get Started?
+      </h2>
+      <p class="text-lg text-gray-700 mb-2">
+        Don't wait to take control of your health.
+      </p>
+      <p class="text-lg text-gray-700 mb-8">
+        Call Dr. Chang today to schedule your appointment or discuss your healthcare needs.
+      </p>
+      <CallButton text="Call Us Now" size="lg" />
+      <p class="text-sm text-gray-600 mt-6">
+        {practice.phone} • {practice.hours.weekday}
+      </p>
+    </div>
+  </section>
+
 </BaseLayout>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  text?: string;
+  className?: string;
+  size?: 'sm' | 'base' | 'lg';
+}
+
+import { practice } from '@/data/practice';
+
+const { text = 'Call Now', className = '', size = 'base' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-6 py-4 text-sm',
+  base: 'px-8 py-4 text-base',
+  lg: 'px-10 py-5 text-lg',
+};
+
+const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
+---
+
+<a
+  href={phoneUrl}
+  class={`inline-block bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors ${sizeClasses[size]} ${className}`}
+>
+  {text}
+</a>

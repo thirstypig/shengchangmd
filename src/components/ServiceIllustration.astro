@@ -1,0 +1,196 @@
+---
+/**
+ * Decorative illustration for a service section.
+ *
+ * Hand-authored SVG rather than photography or AI raster art:
+ *  - scales to any size without a second asset
+ *  - inherits theme colours, so it works in light and dark automatically
+ *  - no external request, no CSP concern, ~1KB instead of ~200KB
+ *  - unmistakably an illustration, so it never reads as a stock-photo stand-in
+ *
+ * Two styles are available so the look can be chosen per site, not per section:
+ *  - `line` — monoline outline on a tinted panel. Quiet, clinical, restrained.
+ *  - `soft` — the same drawing over filled accent shapes. Warmer, friendlier.
+ *
+ * Purely decorative: the section heading already names the service, so these
+ * are aria-hidden rather than given redundant alt text.
+ */
+// Kept on one line: Astro's parser rejects a multi-line union with leading `|`.
+export type ServiceSubject = 'family' | 'internal' | 'preventive' | 'chronic' | 'immigration';
+
+interface Props {
+  subject: ServiceSubject;
+  style?: 'line' | 'soft';
+  class?: string;
+}
+
+const { subject, style = 'soft', class: className = '' } = Astro.props;
+---
+
+<div
+  class={`service-illustration ${style === 'soft' ? 'is-soft' : 'is-line'} ${className}`}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 120 120" role="presentation" focusable="false">
+    {/* Filled accent shapes, drawn under the line work. Only in `soft`. */}
+    {
+      style === 'soft' && (
+        <g class="accent">
+          {subject === 'family' && (
+            <>
+              <circle cx="34" cy="44" r="13" />
+              <circle cx="61" cy="54" r="10" />
+              <circle cx="85" cy="61" r="8" />
+            </>
+          )}
+          {subject === 'internal' && <circle cx="84" cy="60" r="13" />}
+          {subject === 'preventive' && (
+            <path d="M60 22 96 34v26c0 20-14 34-36 40-22-6-36-20-36-40V34Z" />
+          )}
+          {subject === 'chronic' && (
+            <>
+              <rect x="26" y="60" width="10" height="26" rx="3" />
+              <rect x="44" y="48" width="10" height="38" rx="3" />
+              <rect x="62" y="38" width="10" height="48" rx="3" />
+              <rect x="80" y="52" width="10" height="34" rx="3" />
+            </>
+          )}
+          {subject === 'immigration' && <circle cx="80" cy="80" r="15" />}
+        </g>
+      )
+    }
+
+    <g class="ink">
+      {
+        subject === 'family' && (
+          <>
+            {/* Three figures of descending height — the whole family, any age. */}
+            <circle cx="34" cy="44" r="9" />
+            <path d="M21 88v-9a13 13 0 0 1 26 0v9" />
+            <circle cx="61" cy="54" r="7" />
+            <path d="M50 88v-7a11 11 0 0 1 22 0v7" />
+            <circle cx="85" cy="61" r="5.5" />
+            <path d="M76 88v-6a9 9 0 0 1 18 0v6" />
+            <path d="M16 96h88" class="ground" />
+          </>
+        )
+      }
+
+      {
+        subject === 'internal' && (
+          <>
+            {/* Stethoscope. */}
+            <path d="M40 26v20a16 16 0 0 0 32 0V26" />
+            <path d="M33 26h13M66 26h13" />
+            <path d="M56 62v8a15 15 0 0 0 30 0v-2" />
+            <circle cx="84" cy="60" r="9" />
+            <circle cx="84" cy="60" r="3.5" class="dot" />
+          </>
+        )
+      }
+
+      {
+        subject === 'preventive' && (
+          <>
+            {/* Shield with a check — screening and protection. */}
+            <path d="M60 22 96 34v26c0 20-14 34-36 40-22-6-36-20-36-40V34Z" />
+            <path d="M46 59l11 11 20-21" class="check" />
+          </>
+        )
+      }
+
+      {
+        subject === 'chronic' && (
+          <>
+            {/* Tracked measurements over time, trending to steady. */}
+            <path d="M22 24v70h76" class="axes" />
+            <path d="M32 76l16-14 14 9 20-25 14 12" class="trend" />
+            <circle cx="32" cy="76" r="3.5" class="dot" />
+            <circle cx="48" cy="62" r="3.5" class="dot" />
+            <circle cx="62" cy="71" r="3.5" class="dot" />
+            <circle cx="82" cy="46" r="3.5" class="dot" />
+            <circle cx="96" cy="58" r="3.5" class="dot" />
+          </>
+        )
+      }
+
+      {
+        subject === 'immigration' && (
+          <>
+            {/* Completed form with a seal. */}
+            <path d="M32 18h34l20 20v54a4 4 0 0 1-4 4H36a4 4 0 0 1-4-4Z" />
+            <path d="M66 18v20h20" />
+            <path d="M44 52h30M44 63h30M44 74h16" class="rules" />
+            <circle cx="80" cy="80" r="12" class="seal" />
+            <path d="M74 80l4.5 4.5L87 76" class="check" />
+          </>
+        )
+      }
+    </g>
+  </svg>
+</div>
+
+<style>
+  .service-illustration {
+    width: 100%;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border-radius: 1rem;
+    background: var(--surface-accent);
+    padding: 12%;
+  }
+
+  .service-illustration svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .ink {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 3.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ink .ground,
+  .ink .axes,
+  .ink .rules {
+    stroke: var(--brand);
+    opacity: 0.45;
+  }
+
+  .ink .dot,
+  .ink .seal {
+    fill: var(--surface-accent);
+  }
+
+  .ink .trend,
+  .ink .check {
+    stroke-width: 3.75;
+  }
+
+  /* `soft` fills the accent shapes behind the line work in a second tint. */
+  .accent {
+    fill: var(--brand);
+    opacity: 0.16;
+    stroke: none;
+  }
+
+  .is-line {
+    background: var(--surface-sunken);
+  }
+
+  .is-line .ink .dot,
+  .is-line .ink .seal {
+    fill: var(--surface-sunken);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .service-illustration svg {
+      transition: transform 0.3s ease;
+    }
+  }
+</style>

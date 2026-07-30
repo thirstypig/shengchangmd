@@ -1,0 +1,153 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+
+const title = `New Patients | ${practice.doctorName} | San Gabriel, CA`;
+const description = `Welcome to Dr. Chang's practice. Learn how to schedule your first appointment and what to expect.`;
+const canonicalUrl = new URL('/new-patients/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'New Patients', href: '/new-patients/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="en"
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h1>New Patients Welcome</h1>
+        <p>
+          We are currently accepting new patients. Dr. Chang looks forward to meeting you and providing the same quality, personalized care to your family.
+        </p>
+        <h3>How to Schedule</h3>
+        <p>
+          Call our office at <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> during business hours to schedule your appointment. Our staff will answer any questions you have about insurance, appointment availability, and what to bring on your first visit.
+        </p>
+        <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button">
+          Call to Schedule
+        </a>
+      </div>
+      <div class="content-right">
+        <div class="info-box">
+          <h3>What to Bring</h3>
+          <ul>
+            <li>Photo ID</li>
+            <li>Insurance card</li>
+            <li>List of current medications</li>
+            <li>Medical history information</li>
+            <li>Any recent medical records</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .content-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .content-left h1 {
+    font-size: 2rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+
+  .content-left h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem;
+    font-weight: 600;
+  }
+
+  .content-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+
+  .content-left a {
+    color: var(--brand);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .content-left a:hover {
+    text-decoration: underline;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .cta-button:hover {
+    background: var(--brand-strong);
+  }
+
+  .info-box {
+    background: var(--surface-sunken);
+    padding: 1.5rem;
+    border-radius: 2px;
+    border-left: 4px solid var(--brand);
+  }
+
+  .info-box h3 {
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .info-box li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text);
+  }
+
+  .info-box li:before {
+    content: "•";
+    color: var(--brand);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  @media (max-width: 768px) {
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

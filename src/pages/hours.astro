@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+
+const title = `Office Hours | ${practice.doctorName} | San Gabriel, CA`;
+const description = `Office hours and availability for Dr. Chang's family medicine practice in San Gabriel, California.`;
+const canonicalUrl = new URL('/hours/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Hours', href: '/hours/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="en"
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="content-section">
+    <div class="content-left">
+      <h1>Office Hours</h1>
+      <div class="hours-list">
+        <div class="hours-item">
+          <span><strong>Monday – Friday</strong></span>
+          <span>9:00 AM – 12:00 PM</span>
+        </div>
+        <div class="hours-item">
+          <span><strong>Saturday</strong></span>
+          <span>By appointment</span>
+        </div>
+      </div>
+      <p class="hours-note">
+        After 5:00 PM, please leave a message. Calls are returned the next business day.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .content-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-left h1 {
+    font-size: 2rem;
+    margin: 0 0 1.5rem;
+    font-weight: 700;
+  }
+
+  .hours-list {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .hours-item span:last-child {
+    text-align: right;
+    min-width: 120px;
+  }
+
+  .hours-note {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+</style>

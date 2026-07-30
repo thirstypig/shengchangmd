@@ -35,7 +35,10 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
   return {
     code,
     href,
-    name: metadata.nativeName,
+    // Compact label ("EN", "繁體", "简体") — the full names overflowed the
+    // mobile utility bar.
+    name: metadata.shortName,
+    fullName: metadata.nativeName,
     isCurrent: code === currentLocale,
   };
 });
@@ -48,10 +51,9 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
         href={link.href}
         lang={link.code}
         aria-current={link.isCurrent ? 'page' : undefined}
-        class:list={[
-          'language-link',
-          { 'is-current': link.isCurrent },
-        ]}
+        title={link.fullName}
+        aria-label={link.fullName}
+        class:list={['language-link', { 'is-current': link.isCurrent }]}
       >
         {link.name}
       </a>
@@ -62,13 +64,19 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
 <style>
   .language-switcher {
     display: flex;
-    gap: 1rem;
+    gap: 0.125rem;
     font-size: 0.875rem;
   }
 
   .language-link {
+    display: inline-flex;
+    align-items: center;
+    /* 40px tall rather than 48: this is a compact utility strip, and the links
+       still exceed the 24px AAA target-size minimum with room to spare. */
+    min-height: 40px;
+    padding: 0.5rem 0.5rem;
     text-decoration: none;
-    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s;
   }

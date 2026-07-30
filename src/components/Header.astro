@@ -1,0 +1,73 @@
+---
+import Navigation from '@/components/Navigation.astro';
+import MobileNav from '@/components/MobileNav.astro';
+import CallButton from '@/components/CallButton.astro';
+import FontSizeControl from '@/components/FontSizeControl.astro';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+import { practice } from '@/data/practice';
+
+interface Props {
+  locale: string;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+
+const tagline =
+  locale === 'zh-hant' ? '家庭醫學' : locale === 'zh-hans' ? '家庭医学' : 'Family Medicine';
+const callLabel = locale === 'zh-hant' ? '致電' : locale === 'zh-hans' ? '致电' : 'Call Now';
+const homeHref = locale === 'en' ? '/' : `/${locale}/`;
+---
+
+<header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+  {/*
+    Utility bar. Text size and language are accessibility affordances, not
+    navigation — giving them their own row keeps the main bar from overflowing
+    and makes them easier to find, which matters for the older patients who
+    need them most.
+  */}
+  <div class="bg-gray-100 border-b border-gray-200">
+    {/*
+      One row at every width — `nowrap` plus horizontal scroll keeps the
+      language links and text-size buttons on the same line on a 320px phone
+      instead of stacking and eating vertical space above the fold.
+    */}
+    <div
+      class="max-w-container mx-auto px-4 md:px-6 py-1 flex items-center justify-end gap-2 sm:gap-4 flex-nowrap overflow-x-auto"
+    >
+      <FontSizeControl />
+      <LanguageSwitcher currentLocale={locale} {currentPath} />
+      <ThemeToggle {locale} />
+    </div>
+  </div>
+
+  {/* Main bar: identity, navigation, primary call to action. */}
+  <div
+    class="max-w-container mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4 min-h-16"
+  >
+    {/*
+      Name and speciality stack, both at the same size — the speciality is set
+      in the lighter weight and muted colour so it reads as a subtitle without
+      shrinking to unreadable small print.
+    */}
+    <a href={homeHref} class="flex flex-col shrink-0 leading-tight">
+      <span class="text-lg md:text-xl font-serif font-semibold text-primary-600">
+        {practice.doctorName}
+      </span>
+      <span class="text-base md:text-lg font-serif font-normal text-gray-600 whitespace-nowrap">
+        {tagline}
+      </span>
+    </a>
+
+    <Navigation {locale} {currentPath} />
+
+    <div class="flex items-center gap-2 shrink-0">
+      {/* On mobile the sticky bottom bar carries the call CTA, so hide it here. */}
+      <span class="hidden md:block">
+        <CallButton text={callLabel} size="base" />
+      </span>
+      <MobileNav {locale} {currentPath} />
+    </div>
+  </div>
+</header>

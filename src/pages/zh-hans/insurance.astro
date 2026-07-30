@@ -1,0 +1,382 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+
+const title = `保险与支付 | ${practice.doctorName} | 圣盖博加州`;
+const description = `张医生诊所接受的保险计划和灵活的支付选项。了解接受的保险和支付方案。`;
+const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="zh-hans"
+  canonicalUrl={canonicalUrl}
+>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>保险与支付</h1>
+      <p class="hero-subtitle">接受的保险计划和灵活的支付选项</p>
+    </div>
+  </section>
+
+  <!-- Accepted Plans Section -->
+  <section class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h2>接受的保险计划</h2>
+        <p>
+          我们接受大部分主要保险计划。我们直接与您的保险合作，帮助减少您的自付费用。
+        </p>
+        <ul class="insurance-list">
+          <li>Medicare（医疗保险）</li>
+          <li>Medicaid（医疗救助）</li>
+          <li>蓝十字蓝盾 (Blue Cross Blue Shield)</li>
+          <li>安泰保险 (Aetna)</li>
+          <li>信诺保险 (Cigna)</li>
+          <li>联合医疗 (United Healthcare)</li>
+          <li>美国安泰 (Anthem)</li>
+          <li>莫利纳医疗 (Molina Healthcare)</li>
+        </ul>
+        <p class="note">
+          <strong>没有看到您的计划？</strong> 请致电我们 <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> 以验证保障范围。我们可能仍然接受您的计划。
+        </p>
+      </div>
+      <div class="content-right">
+        <div class="info-box">
+          <h3>验证您的保障</h3>
+          <p>
+            在就诊前，请联系我们的办公室验证您的保险福利、自付额和任何所需的授权。
+          </p>
+          <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button">
+            致电验证保障
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Options Section -->
+  <section class="payment-section">
+    <h2>支付选项</h2>
+    <div class="payment-grid">
+      <div class="payment-card">
+        <h3>保险计费</h3>
+        <p>
+          我们直接向您的保险公司计费。您只需要支付您计划中规定的任何自付额、共同保险或免赔额。
+        </p>
+      </div>
+      <div class="payment-card">
+        <h3>自付折扣</h3>
+        <p>
+          没有保险的患者可以获得标准费用的折扣。在就诊时或提前致电询问我们的自付费率。
+        </p>
+      </div>
+      <div class="payment-card">
+        <h3>付款计划</h3>
+        <p>
+          对于较大的余额，我们提供灵活的付款安排。联系我们的办公室讨论适合您情况的付款计划。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions Section -->
+  <section class="questions-section">
+    <div class="questions-content">
+      <h2>有关保险或计费的问题？</h2>
+      <p>
+        我们的知识渊博的员工已准备好回答您关于保险覆盖、计费和支付选项的问题。
+      </p>
+      <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
+        立即致电我们
+      </a>
+      <p class="contact-info">
+        {practice.phone} | {getTranslation('zh-hans', 'hoursWeekday')}
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  /* Hero Section */
+  .hero-section {
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+    color: var(--brand-contrast);
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  /* Content Section */
+  .content-section {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .content-left h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .content-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  /* Carrier names as uniform monochrome cards.
+     Deliberately typographic, not logos: reproducing carrier marks would copy
+     registered trademarks, and on a medical site showing them also implies
+     network participation, which is a contractual claim rather than a design
+     choice. Equal-size cards give the same visual rhythm a logo wall would,
+     with none of that risk. */
+  .insurance-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: grid;
+    /* Auto-fill so every card is the same width whatever the name's length. */
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .insurance-list li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Fixed height is what makes the set read as uniform. */
+    min-height: 4.25rem;
+    padding: 0.75rem 0.875rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    /* Monochrome: one ink colour for the whole wall, no per-brand colour. */
+    filter: grayscale(1);
+  }
+
+  .note {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    background: var(--surface-sunken);
+    padding: 1rem;
+    border-left: 3px solid var(--brand);
+    margin-top: 1rem;
+  }
+
+  .note a {
+    color: var(--brand);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .note a:hover {
+    text-decoration: underline;
+  }
+
+  .info-box {
+    background: var(--surface-sunken);
+    padding: 1.5rem;
+    border-radius: 2px;
+    border-left: 4px solid var(--brand);
+  }
+
+  .info-box h3 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .info-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 1rem;
+  }
+
+  /* Payment Section */
+  .payment-section {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .payment-section h2 {
+    font-size: 1.8rem;
+    margin: 0 0 2rem;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .payment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .payment-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    padding: 2rem;
+    border-radius: 2px;
+    transition: box-shadow 0.2s;
+  }
+
+  .payment-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .payment-card h3 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: var(--brand-strong);
+  }
+
+  .payment-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Questions Section */
+  .questions-section {
+    padding: 3rem 1rem;
+    background: var(--surface-sunken);
+  }
+
+  .questions-content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .questions-section h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .questions-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  /* CTA Buttons */
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .cta-button:hover {
+    background: var(--brand-strong);
+  }
+
+  .cta-button-large {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--brand-strong);
+    color: var(--brand-contrast) !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+    margin: 0 0 1.5rem;
+  }
+
+  .cta-button-large:hover {
+    background: var(--brand-strong);
+  }
+
+  .contact-info {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section h1 {
+      font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .insurance-list {
+      grid-template-columns: 1fr;
+    }
+
+    .content-left h2 {
+      font-size: 1.5rem;
+    }
+
+    .payment-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .payment-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .questions-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -1,434 +1,148 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
-const title = `${practice.doctorName} | 經過認證的家庭醫學醫生 | 聖蓋博，加州`;
-const description = `經過認證的家庭醫學醫生在聖蓋博，加州。張醫生提供全面的家庭醫學和內科服務。現在接受新患者。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
+const locale = 'zh-hant';
+const title = `${practice.doctorName} | 委員會認證家庭醫師 | 加州聖蓋博`;
+const description = `加州聖蓋博的委員會認證家庭醫師。張醫師提供全面的家庭醫學與內科診療，現正接受新患者。`;
+const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  locale="zh-hant"
-  canonicalUrl={canonicalUrl}
->
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">{practice.doctorName}</h1>
-      <p class="hero-credential">經過認證的家庭醫學醫生</p>
-      <p class="hero-location">聖蓋博，加州</p>
-      <p class="hero-languages">
-        說英文和普通話
-      </p>
-      <div class="hero-cta">
-        <a href="tel:(626)573-0055" class="cta-button primary">
-          致電預約
-        </a>
+<BaseLayout {title} {description} {locale} {canonicalUrl}>
+  <HeroSection
+    headline="張勝雄 醫師"
+    subheadline="於聖蓋博及鄰近社區提供全面的家庭醫學與內科診療。委員會認證，看診細心，國語與英語皆可溝通。"
+    {locale}
+    image="/images/dr-sheng-chang.jpg"
+    imageAlt="張勝雄醫師肖像"
+    imageCaption="委員會認證家庭醫師"
+  />
+
+  {/* 診療項目 */}
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        診療項目
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ServiceCard
+          icon="family"
+          title="家庭醫學"
+          description="從預防保健到急性病症治療，為全家人提供全面照護。"
+          href="/zh-hant/services/#family-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="stethoscope"
+          title="內科醫學"
+          description="為成人的複雜病症與慢性疾病提供專業診療與管理。"
+          href="/zh-hant/services/#internal-medicine"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="shield"
+          title="預防保健"
+          description="年度健康檢查、篩檢與保健諮詢，協助您維持健康。"
+          href="/zh-hant/services/#preventive-care"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="chart"
+          title="慢性病管理"
+          description="持續管理糖尿病、高血壓及其他慢性疾病。"
+          href="/zh-hant/services/#chronic-disease"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="document"
+          title="移民體檢"
+          description="辦理移民申請所需的身體檢查，包含必要篩檢與疫苗紀錄審核。"
+          href="/zh-hant/services/#immigration-exams"
+          linkLabel="了解更多"
+        />
       </div>
-      <p class="hero-status">✓ 現在接受新患者</p>
     </div>
   </section>
 
-  <!-- Quick Info Section -->
-  <section class="quick-info">
-    <div class="info-block">
-      <h2>營業時間</h2>
-      <p>星期一至五 上午9:00 至 下午6:00</p>
-      <p>星期六和日休診</p>
-    </div>
+  {/* 專業資格 */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
+        為何選擇張醫師
+      </h2>
 
-    <div class="info-block">
-      <h2>診所位置</h2>
-      <p>
-        <a
-          href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776
-          <span class="external-icon">↗</span>
-        </a>
-      </p>
-    </div>
-  </section>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">委員會認證</h3>
+          <ul class="space-y-4 text-gray-700">
+            {
+              practice.boardCertifications.map((cert) => (
+                <li class="flex gap-3">
+                  <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
+                  <div>
+                    <p class="font-semibold">{cert.specialty}</p>
+                    <p class="text-sm text-gray-600">{cert.board}</p>
+                    <p class="text-xs text-gray-500">認證年份 {cert.firstCertified}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
 
-  <!-- Board Certifications Section -->
-  <section class="certifications">
-    <h2>專科認證</h2>
-    <p class="certification-intro">
-      張醫生擁有兩項美國醫學委員會認證，這在初級保健領域是罕見的組合。
-    </p>
-
-    <div class="certification-cards">
-      {
-        practice.boardCertifications.map((cert) => (
-          <div class="cert-card">
-            <h3>{cert.specialty}</h3>
-            <p class="cert-board">{cert.board}</p>
-            <p class="cert-status">
-              <strong>狀態：</strong> {cert.currentStatus === 'Certified' ? '認證中' : cert.currentStatus}
-            </p>
-            <p class="cert-year">
-              <strong>首次認證：</strong> {cert.firstCertified}
-            </p>
-            {cert.mostRecentCertification && (
-              <p class="cert-renewal">
-                <strong>最近認證：</strong> {cert.mostRecentCertification}
+        <div>
+          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+            資歷與醫院關係
+          </h3>
+          <div class="space-y-6">
+            <div>
+              <p class="font-semibold text-gray-900">醫學教育</p>
+              <p class="text-gray-700">
+                M.D.，{practice.education.school}，{practice.education.year}
               </p>
-            )}
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">合作醫院</p>
+              <ul class="text-gray-700 space-y-1">
+                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">語言</p>
+              <p class="text-gray-700">英語、國語</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">門診時間</p>
+              <p class="text-gray-700">{getTranslation(locale, 'hoursWeekday')}</p>
+              <p class="text-gray-600 text-sm">{getTranslation(locale, 'hoursWeekend')}</p>
+            </div>
+            {
+              practice.acceptingNewPatients && (
+                <div class="bg-primary-50 border border-success rounded-lg p-4">
+                  <p class="text-success font-semibold">
+                    <span aria-hidden="true">✓</span> 現正接受新患者
+                  </p>
+                </div>
+              )
+            }
           </div>
-        ))
-      }
-    </div>
-
-    <p class="certification-note">
-      既是家庭醫學醫生，又是認證病理學家，張醫生對疾病在細胞和組織層面的病理過程有更深入的理解，這有助於提供更周全的臨床護理。
-    </p>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services">
-    <h2>醫療服務</h2>
-    <div class="service-cards">
-      <a href="/zh-hant/services/family-medicine/" class="service-card">
-        <h3>家庭醫學</h3>
-        <p>為各年齡層提供全面的初級保健</p>
-      </a>
-
-      <a href="/zh-hant/services/chronic-disease-management/" class="service-card">
-        <h3>慢性病管理</h3>
-        <p>長期疾病的治療和監測</p>
-      </a>
-
-      <a href="/zh-hant/services/preventive-care/" class="service-card">
-        <h3>預防保健</h3>
-        <p>健康檢查和保健諮詢</p>
-      </a>
-
-      <a href="/zh-hant/services/internal-medicine/" class="service-card">
-        <h3>內科醫學</h3>
-        <p>成人疾病的診斷和治療</p>
-      </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- About Teaser Section -->
-  <section class="about-teaser">
-    <h2>關於張醫生</h2>
-    <p>
-      張醫生是一位經過認證的家庭醫學醫生，具有病理學背景和豐富的臨床經驗。他致力於與患者建立長期的醫患關係，並提供個性化、周全的醫療護理。
-    </p>
-    <a href="/zh-hant/about/" class="button">了解更多</a>
+  {/* 預約 */}
+  <section class="py-16 md:py-24 bg-primary-50">
+    <div class="max-w-container mx-auto px-4 md:px-6 text-center">
+      <h2 class="font-serif text-3xl font-bold mb-6 text-gray-900">準備預約看診？</h2>
+      <p class="text-lg text-gray-700 mb-8">
+        歡迎來電預約，或進一步了解我們的診療項目。
+      </p>
+      <CallButton text="立即致電" size="lg" />
+    </div>
   </section>
 </BaseLayout>
-
-<style>
-  .hero {
-    text-align: center;
-    padding: 2rem 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .hero-content {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-    margin: 0 0 0.5rem;
-    font-weight: 700;
-  }
-
-  .hero-credential {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #4a3f6b;
-    margin: 0 0 0.5rem;
-  }
-
-  .hero-location {
-    font-size: 1.25rem;
-    color: #4a4a4a;
-    margin: 0 0 1rem;
-  }
-
-  .hero-languages {
-    font-size: 1.125rem;
-    color: #4a4a4a;
-    margin: 0 0 1.5rem;
-  }
-
-  .hero-cta {
-    margin: 1.5rem 0;
-  }
-
-  .cta-button {
-    display: inline-flex;
-    padding: 1rem 2rem;
-    background-color: #4a3f6b;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 1.125rem;
-    min-height: 48px;
-    min-width: 48px;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-  }
-
-  .cta-button:hover {
-    background-color: #3d2645;
-  }
-
-  .cta-button:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  .hero-status {
-    font-size: 1rem;
-    color: #4a3f6b;
-    font-weight: 600;
-    margin: 1rem 0 0;
-  }
-
-  .quick-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-    padding: 2rem;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-  }
-
-  .info-block h2 {
-    font-size: 1.25rem;
-    margin-top: 0;
-  }
-
-  .info-block p {
-    margin: 0.5rem 0;
-  }
-
-  .info-block a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  .info-block a:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
-  }
-
-  .external-icon {
-    font-size: 0.75em;
-    margin-left: 0.25rem;
-  }
-
-  .certifications {
-    margin: 3rem 0;
-  }
-
-  .certifications h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .certification-intro {
-    font-size: 1.125rem;
-    max-width: 600px;
-    margin-bottom: 2rem;
-  }
-
-  .certification-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .cert-card {
-    padding: 1.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    background-color: #fafafa;
-  }
-
-  .cert-card h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .cert-board {
-    font-weight: 600;
-    color: #555;
-    margin: 0 0 1rem;
-  }
-
-  .cert-status,
-  .cert-year,
-  .cert-renewal {
-    font-size: 0.95rem;
-    margin: 0.5rem 0;
-    color: #666;
-  }
-
-  .certification-note {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.8;
-    padding: 1.5rem;
-    background-color: #f4f1f7;
-    border-left: 4px solid #4a3f6b;
-    border-radius: 2px;
-  }
-
-  .services {
-    margin: 3rem 0;
-  }
-
-  .services h2 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-  }
-
-  .service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    padding: 1.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s, border-color 0.2s;
-    background-color: #fff;
-  }
-
-  .service-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: #1a1a1a;
-  }
-
-  .service-card:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
-  }
-
-  .service-card h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .service-card p {
-    margin: 0;
-    color: #666;
-    font-size: 0.95rem;
-  }
-
-  .about-teaser {
-    margin: 3rem 0;
-    padding: 2rem;
-    background-color: #f0f8f0;
-    border-radius: 4px;
-  }
-
-  .about-teaser h2 {
-    font-size: 1.75rem;
-    margin-top: 0;
-  }
-
-  .about-teaser p {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #4a3f6b;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    transition: background-color 0.2s;
-  }
-
-  .button:hover {
-    background-color: #3d2645;
-  }
-
-  .button:focus-visible {
-    outline: 2px solid #4a3f6b;
-    outline-offset: 2px;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 480px) {
-    .hero {
-      padding: 1rem 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-title {
-      font-size: 1.5rem;
-    }
-
-    .hero-credential {
-      font-size: 1.25rem;
-    }
-
-    .hero-location {
-      font-size: 1rem;
-    }
-
-    .hero-languages {
-      font-size: 1rem;
-    }
-
-    .cta-button {
-      padding: 0.875rem 1.5rem;
-      font-size: 1rem;
-    }
-
-    .quick-info {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-
-    .certification-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .service-cards {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* CJK Typography for Chinese pages */
-  html[lang="zh-Hant"] {
-    font-size: calc(100% * var(--font-scale, 1));
-  }
-
-  html[lang="zh-Hant"] body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
-    font-size: 1.06rem;
-    line-height: 1.85;
-    letter-spacing: 0.02em;
-  }
-
-  html[lang="zh-Hant"] main {
-    max-width: 24em;
-  }
-</style>

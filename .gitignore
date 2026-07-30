@@ -4,3 +4,10 @@ dist
 .env.local
 .DS_Store
 *.log
+
+# Original photographs supplied by the practice owner. Kept locally for future
+# re-crops, deliberately NOT committed: this repo is public, and the originals
+# include full-resolution personal photographs of the doctor and his wife that
+# were never intended for publication. Only the derived portrait actually used
+# on the site (public/images/dr-sheng-chang.jpg) is committed.
+src-photos/
