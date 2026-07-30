@@ -168,3 +168,72 @@ export function getTranslation(locale: string, key: string): string {
 
   return value || key;
 }
+
+/**
+ * Localised counterparts for the English-only values in `src/data/practice.ts`.
+ *
+ * practice.ts is the single source of truth for the facts, but its strings are
+ * English. Rendering them directly on a Chinese page produced sentences that
+ * code-switched mid-clause — "License Renewed & Current" under a Chinese
+ * heading, "English"/"Mandarin" in the languages list, "Certified" as a status.
+ * Look values up here instead, keyed on the English value so the two cannot
+ * drift apart silently.
+ */
+export const practiceLocalized = {
+  en: {
+    licenseStatus: 'License Renewed & Current',
+    licenseExpires: 'July 31, 2028',
+    languages: ['English', 'Mandarin'],
+    postgraduateTraining: 'Three years of postgraduate training',
+    school: 'National Taiwan University College of Medicine',
+    specialties: {
+      'Family Medicine': 'Family Medicine',
+      'Anatomic Pathology & Clinical Pathology': 'Anatomic Pathology & Clinical Pathology',
+    } as Record<string, string>,
+    boards: {
+      'American Board of Family Medicine': 'American Board of Family Medicine',
+      'American Board of Pathology': 'American Board of Pathology',
+    } as Record<string, string>,
+    certStatus: { Certified: 'Certified' } as Record<string, string>,
+  },
+  'zh-hant': {
+    licenseStatus: '執照已更新，現行有效',
+    licenseExpires: '2028年7月31日',
+    languages: ['英語', '國語'],
+    postgraduateTraining: '三年畢業後醫學訓練',
+    // A Taiwanese institution with an established Chinese name — should never
+    // appear transliterated or in English on a Chinese page.
+    school: '國立臺灣大學醫學院',
+    specialties: {
+      'Family Medicine': '家庭醫學',
+      'Anatomic Pathology & Clinical Pathology': '解剖病理學與臨床病理學',
+    } as Record<string, string>,
+    boards: {
+      'American Board of Family Medicine': '美國家庭醫學專科委員會',
+      'American Board of Pathology': '美國病理學專科委員會',
+    } as Record<string, string>,
+    certStatus: { Certified: '認證有效' } as Record<string, string>,
+  },
+  'zh-hans': {
+    licenseStatus: '执照已续期，现行有效',
+    licenseExpires: '2028年7月31日',
+    languages: ['英语', '普通话'],
+    postgraduateTraining: '三年毕业后医学培训',
+    school: '国立台湾大学医学院',
+    specialties: {
+      'Family Medicine': '家庭医学',
+      'Anatomic Pathology & Clinical Pathology': '解剖病理学与临床病理学',
+    } as Record<string, string>,
+    boards: {
+      'American Board of Family Medicine': '美国家庭医学专科委员会',
+      'American Board of Pathology': '美国病理学专科委员会',
+    } as Record<string, string>,
+    certStatus: { Certified: '认证有效' } as Record<string, string>,
+  },
+};
+
+export function getPracticeLocalized(locale: string) {
+  return (
+    practiceLocalized[locale as keyof typeof practiceLocalized] ?? practiceLocalized.en
+  );
+}

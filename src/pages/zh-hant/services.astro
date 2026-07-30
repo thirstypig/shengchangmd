@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
+import ServiceIllustration from '@components/ServiceIllustration.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
@@ -22,6 +23,7 @@ const locale = 'zh-hant';
     headline="診療項目"
     subheadline="為您的健康需求量身定製的綜合初級保健。張醫生提供全套醫療診療服務，提供個性化、富有同情心的護理。"
     locale={locale}
+    illustration="preventive"
   />
 
   {/* Family Medicine Section */}
@@ -60,11 +62,7 @@ const locale = 'zh-hant';
           <CallButton text="安排就診" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">家庭醫學</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="family" style="soft" />
         </div>
       </div>
     </div>
@@ -75,11 +73,7 @@ const locale = 'zh-hant';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">內科醫學</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="internal" style="soft" />
         </div>
         <div class="order-1 md:order-2">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -152,11 +146,7 @@ const locale = 'zh-hant';
           <CallButton text="安排就診" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">預防保健</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="preventive" style="soft" />
         </div>
       </div>
     </div>
@@ -167,11 +157,7 @@ const locale = 'zh-hant';
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">慢性病管理</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="chronic" style="soft" />
         </div>
         <div class="order-1 md:order-2">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">

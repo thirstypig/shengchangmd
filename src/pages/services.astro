@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
+import ServiceIllustration from '@components/ServiceIllustration.astro';
 import { practice } from '@data/practice';
 
 const title = `Services | ${practice.doctorName} | Family Medicine in San Gabriel, CA`;
@@ -27,6 +28,7 @@ const breadcrumbs = [
     headline="Our Services"
     subheadline="Comprehensive primary care tailored to your health needs. Dr. Chang offers a full range of medical services with personalized, compassionate care."
     locale={locale}
+    illustration="preventive"
   />
 
   {/* Family Medicine Section */}
@@ -65,11 +67,7 @@ const breadcrumbs = [
           <CallButton text="Schedule an Appointment" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">Family Medicine</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="family" style="soft" />
         </div>
       </div>
     </div>
@@ -80,11 +78,7 @@ const breadcrumbs = [
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">Internal Medicine</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="internal" style="soft" />
         </div>
         <div class="order-1 md:order-2">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -157,11 +151,7 @@ const breadcrumbs = [
           <CallButton text="Schedule an Appointment" size="base" />
         </div>
         <div class="flex justify-center items-center">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">Preventive Care</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="preventive" style="soft" />
         </div>
       </div>
     </div>
@@ -172,11 +162,7 @@ const breadcrumbs = [
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="flex justify-center items-center order-2 md:order-1">
-          <div class="w-full aspect-square bg-primary-100 rounded-2xl flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-gray-600 text-sm">Chronic Disease Management</p>
-            </div>
-          </div>
+          <ServiceIllustration subject="chronic" style="soft" />
         </div>
         <div class="order-1 md:order-2">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">

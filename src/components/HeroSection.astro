@@ -1,6 +1,7 @@
 ---
 import CallButton from '@/components/CallButton.astro';
 import { practice } from '@/data/practice';
+import ServiceIllustration from '@/components/ServiceIllustration.astro';
 
 interface Props {
   headline: string;
@@ -11,8 +12,10 @@ interface Props {
   imageAlt?: string;
   /** Caption rendered under the image — used for the doctor's name/credentials. */
   imageCaption?: string;
-  /** 'photo' shows a portrait, 'placeholder' shows a labelled art-direction box. */
-  media?: 'photo' | 'placeholder';
+  /** Render an illustration instead of a photo. Takes precedence over `image`. */
+  illustration?: 'family' | 'internal' | 'preventive' | 'chronic' | 'immigration';
+  /** 'photo' | 'illustration' | 'placeholder'. Inferred from the props given. */
+  media?: 'photo' | 'illustration' | 'placeholder';
 }
 
 const {
@@ -22,7 +25,8 @@ const {
   image,
   imageAlt,
   imageCaption,
-  media = image ? 'photo' : 'placeholder',
+  illustration,
+  media = illustration ? 'illustration' : image ? 'photo' : 'placeholder',
 } = Astro.props;
 
 const t = {
@@ -81,7 +85,11 @@ const t = {
     {/* Media: portrait photo or labelled placeholder */}
     <div class="flex-1 order-1 md:order-2 flex justify-center items-center w-full">
       {
-        media === 'photo' && image ? (
+        media === 'illustration' && illustration ? (
+          <div class="w-full max-w-sm mx-auto">
+            <ServiceIllustration subject={illustration} style="soft" />
+          </div>
+        ) : media === 'photo' && image ? (
           <figure class="text-center">
             {/*
               Source is a 1024px square crop of the formal portrait, so 320px
