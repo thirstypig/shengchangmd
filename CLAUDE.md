@@ -66,7 +66,12 @@ colour.
 - **Immigration medical exams.** Offered as a service, but USCIS Form I-693
   exams may only be performed by a designated civil surgeon. Do not claim
   civil-surgeon designation anywhere without written confirmation.
-- **Doctor's portrait** is 150×150 native (upscaled). Needs a real headshot.
+- **Doctor's portrait** now comes from a real photograph the owner supplied
+  (`src-photos/formal-tighter.jpeg`), cropped to `public/images/dr-sheng-chang.jpg`
+  at 1024×1024. It is a banquet photo, not a studio headshot — fine for now, but
+  a clinical/office portrait would suit the practice better.
+- **A couple crop** exists at `public/images/dr-and-mrs-chang.jpg`. Unused:
+  unconfirmed whether Mrs. Chang is part of the practice.
 
 ## Setup
 
