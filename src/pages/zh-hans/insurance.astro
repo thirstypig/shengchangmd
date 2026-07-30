@@ -5,7 +5,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = `保险与支付 | ${practice.doctorName} | 圣盖博加州`;
 const description = `张医生诊所接受的保险计划和灵活的支付选项。了解接受的保险和支付方案。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hans/insurance/';
+const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
 ---
 
 <BaseLayout

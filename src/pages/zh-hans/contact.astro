@@ -6,7 +6,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = '联系我们 | 张胜雄医生';
 const description = '联系张胜雄医生诊所。在圣盖博加州致电、访问我们的办公室或发送信息。';
-const canonicalUrl = 'https://shengchangmd.com/zh-hans/contact/';
+const canonicalUrl = new URL('/zh-hans/contact/', Astro.site).href;
 ---
 
 <BaseLayout

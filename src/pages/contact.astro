@@ -5,7 +5,7 @@ import { practice } from '@data/practice';
 
 const title = 'Contact Us | Sheng Chang, M.D.';
 const description = 'Contact Dr. Sheng Chang in San Gabriel, California. Call, visit our office, or send a message.';
-const canonicalUrl = 'https://shengchangmd.com/contact/';
+const canonicalUrl = new URL('/contact/', Astro.site).href;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },

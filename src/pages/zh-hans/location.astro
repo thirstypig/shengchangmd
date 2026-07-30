@@ -5,7 +5,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = `门诊时间与位置 | ${practice.doctorName} | 圣盖博加州`;
 const description = `张医生诊所在圣盖博加州的门诊时间、位置、方向和停车信息。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hans/location/';
+const canonicalUrl = new URL('/zh-hans/location/', Astro.site).href;
 ---
 
 <BaseLayout

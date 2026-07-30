@@ -8,7 +8,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
 const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫生的醫療診療服務。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/services/';
+const canonicalUrl = new URL('/zh-hant/services/', Astro.site).href;
 const locale = 'zh-hant';
 ---
 

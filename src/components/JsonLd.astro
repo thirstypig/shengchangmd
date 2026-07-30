@@ -12,13 +12,12 @@ const { locale, pageSchema } = Astro.props;
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  '@id': 'https://shengchangmd.com/#organization',
+  '@id': new URL('/#organization', Astro.site).href,
   name: practice.doctorName,
   description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
-  url: 'https://shengchangmd.com',
-  logo: 'https://shengchangmd.com/logo.svg',
+  url: Astro.site.href.replace(/\/$/, ''),
+  logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
-  email: 'mailto:info@shengchangmd.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '330 W. Las Tunas Drive, Suite 3',
@@ -38,7 +37,7 @@ const localBusinessSchema = {
 const medicalBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'MedicalBusiness',
-  '@id': 'https://shengchangmd.com/#medical-business',
+  '@id': new URL('/#medical-business', Astro.site).href,
   name: practice.doctorName,
   description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
   telephone: practice.phone,
@@ -79,7 +78,7 @@ const medicalBusinessSchema = {
 const doctorSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  '@id': 'https://shengchangmd.com/#doctor',
+  '@id': new URL('/#doctor', Astro.site).href,
   name: practice.doctorName,
   givenName: 'Sheng',
   familyName: 'Chang',
@@ -121,10 +120,9 @@ const doctorSchema = {
 const contactPointSchema = {
   '@context': 'https://schema.org',
   '@type': 'ContactPoint',
-  '@id': 'https://shengchangmd.com/#contact-point',
+  '@id': new URL('/#contact-point', Astro.site).href,
   contactType: 'Patient Services',
   telephone: practice.phone,
-  email: 'mailto:info@shengchangmd.com',
   hoursAvailable: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -144,7 +142,7 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': 'https://shengchangmd.com/services/#family-medicine',
+    '@id': new URL('/services/#family-medicine', Astro.site).href,
     name: 'Family Medicine',
     description: 'Comprehensive family medicine care for patients of all ages, from newborns to seniors. Includes preventive care, acute illness treatment, and chronic disease management.',
     provider: {
@@ -159,7 +157,7 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': 'https://shengchangmd.com/services/#internal-medicine',
+    '@id': new URL('/services/#internal-medicine', Astro.site).href,
     name: 'Internal Medicine',
     description: 'Expert care for complex medical conditions and chronic disease management in adults.',
     provider: {
@@ -174,7 +172,7 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': 'https://shengchangmd.com/services/#preventive-care',
+    '@id': new URL('/services/#preventive-care', Astro.site).href,
     name: 'Preventive Care',
     description: 'Annual physical exams, health screenings, and wellness visits to keep you healthy.',
     provider: {
@@ -189,7 +187,7 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': 'https://shengchangmd.com/services/#chronic-disease-management',
+    '@id': new URL('/services/#chronic-disease-management', Astro.site).href,
     name: 'Chronic Disease Management',
     description: 'Ongoing management of diabetes, hypertension, and other chronic conditions.',
     provider: {

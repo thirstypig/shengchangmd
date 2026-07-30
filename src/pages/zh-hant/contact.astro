@@ -6,7 +6,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = '聯繫我們 | 張勝雄醫生';
 const description = '聯繫張勝雄醫生診所。在聖蓋博加州致電、訪問我們的辦公室或發送信息。';
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/contact/';
+const canonicalUrl = new URL('/zh-hant/contact/', Astro.site).href;
 ---
 
 <BaseLayout

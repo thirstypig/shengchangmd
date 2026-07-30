@@ -9,7 +9,7 @@ import { getTranslation } from '@i18n/locales';
 const locale = 'zh-hant';
 const title = `${practice.doctorName} | 委員會認證家庭醫師 | 加州聖蓋博`;
 const description = `加州聖蓋博的委員會認證家庭醫師。張醫師提供全面的家庭醫學與內科診療，現正接受新患者。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/';
+const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>

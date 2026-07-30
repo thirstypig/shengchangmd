@@ -8,7 +8,7 @@ import { practice } from '@data/practice';
 const locale = 'en';
 const title = `${practice.doctorName} | Board-Certified Family Physician | San Gabriel, CA`;
 const description = `Board-certified family physician in San Gabriel, California. Dr. Chang provides comprehensive family medicine and internal medicine. Now accepting new patients.`;
-const canonicalUrl = 'https://shengchangmd.com/';
+const canonicalUrl = new URL('/', Astro.site).href;
 ---
 
 <BaseLayout

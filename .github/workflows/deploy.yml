@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow the Pages deployment to read the repo and mint an ID token.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; let a newer push supersede a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # `postbuild` runs scripts/verify-css.mjs, which fails the build if the
+      # compiled CSS is missing real Tailwind output. That guard exists because
+      # this site once shipped with zero compiled CSS while the build passed.
+      - run: npm run build
+        env:
+          SITE_URL: https://shengchangmd.bahtzang.com
+          # Omitted deliberately: with this unset the site renders
+          # <meta name="robots" content="noindex, nofollow">. Set it to "true"
+          # only once the practice has confirmed the insurance carriers, the
+          # doctor's Chinese name, and the immigration-exam scope.
+          # ALLOW_INDEXING: "true"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

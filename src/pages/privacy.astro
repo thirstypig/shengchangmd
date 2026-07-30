@@ -2,8 +2,8 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 
 const title = 'Privacy Policy | Sheng Chang, M.D.';
-const description = 'Privacy policy for shengchangmd.com';
-const canonicalUrl = 'https://shengchangmd.com/privacy/';
+const description = 'Privacy policy for the practice website of Sheng Chang, M.D.';
+const canonicalUrl = new URL('/privacy/', Astro.site).href;
 ---
 
 <BaseLayout

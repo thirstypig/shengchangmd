@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 
 const title = `Services | ${practice.doctorName} | Family Medicine in San Gabriel, CA`;
 const description = `Comprehensive family medicine services including chronic disease management, preventive care, and internal medicine. Learn about Dr. Chang's medical services.`;
-const canonicalUrl = 'https://shengchangmd.com/services/';
+const canonicalUrl = new URL('/services/', Astro.site).href;
 const locale = 'en';
 
 const breadcrumbs = [

@@ -17,7 +17,7 @@ const breadcrumbSchema = {
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    item: `https://shengchangmd.com${item.href}`,
+    item: new URL(item.href, Astro.site).href,
   })),
 };
 ---

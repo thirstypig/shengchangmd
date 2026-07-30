@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 
 const title = `Office Hours | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Office hours and availability for Dr. Chang's family medicine practice in San Gabriel, California.`;
-const canonicalUrl = 'https://shengchangmd.com/hours/';
+const canonicalUrl = new URL('/hours/', Astro.site).href;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },

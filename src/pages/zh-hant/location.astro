@@ -5,7 +5,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = `門診時間與位置 | ${practice.doctorName} | 聖蓋博加州`;
 const description = `張醫生診所在聖蓋博加州的門診時間、位置、方向和停車信息。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/location/';
+const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
 ---
 
 <BaseLayout

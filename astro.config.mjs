@@ -2,6 +2,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+// Every canonical URL, sitemap entry, hreflang link and JSON-LD @id derives from
+// this. Override with SITE_URL when the practice's own domain goes live.
+const SITE_URL = process.env.SITE_URL ?? 'https://shengchangmd.bahtzang.com';
+
 const LOCALES = {
   en: 'en-US',
   'zh-hant': 'zh-Hant',
@@ -12,7 +16,7 @@ const LOCALE_KEYS = Object.keys(LOCALES);
 
 export default defineConfig({
   output: 'static',
-  site: 'https://shengchangmd.com',
+  site: SITE_URL,
   server: {
     port: 3120,
   },

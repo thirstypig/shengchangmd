@@ -8,7 +8,7 @@ import { getTranslation } from '@i18n/locales';
 
 const title = `诊疗项目 | ${practice.doctorName} | 圣盖博加州的家庭医学`;
 const description = `综合家庭医学诊疗项目，包括慢性病管理、预防保健和内科医学。了解张医生的医疗诊疗服务。`;
-const canonicalUrl = 'https://shengchangmd.com/zh-hans/services/';
+const canonicalUrl = new URL('/zh-hans/services/', Astro.site).href;
 const locale = 'zh-hans';
 ---
 

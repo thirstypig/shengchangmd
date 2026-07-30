@@ -6,7 +6,7 @@ import { practice } from '@data/practice';
 
 const title = '关于张胜雄医生 | 美国委员会认证的家庭医学医生';
 const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，在圣盖博加州拥有数十年的临床经验。教育、认证和医院从属关系。';
-const canonicalUrl = 'https://shengchangmd.com/zh-hans/about/';
+const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 ---
 
 <BaseLayout

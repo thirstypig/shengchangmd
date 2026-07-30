@@ -6,7 +6,7 @@ import { practice } from '@data/practice';
 
 const title = 'About Dr. Sheng Chang, M.D. | Board-Certified Family Physician';
 const description = 'Learn about Dr. Sheng Chang, M.D., a board-certified family physician with decades of clinical experience in San Gabriel, California. Education, certifications, and hospital affiliations.';
-const canonicalUrl = 'https://shengchangmd.com/about/';
+const canonicalUrl = new URL('/about/', Astro.site).href;
 ---
 
 <BaseLayout

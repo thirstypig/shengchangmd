@@ -6,7 +6,7 @@ import { practice } from '@data/practice';
 
 const title = '關於張勝雄醫生 | 美國委員會認證的家庭醫學醫生';
 const description = '了解張勝雄醫生，美國委員會認證的家庭醫學醫生，在聖蓋博加州擁有數十年的臨床經驗。教育、認證和醫院從屬關係。';
-const canonicalUrl = 'https://shengchangmd.com/zh-hant/about/';
+const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
 ---
 
 <BaseLayout

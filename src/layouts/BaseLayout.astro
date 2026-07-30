@@ -27,8 +27,15 @@ const { title, description, locale, ogImage, canonicalUrl, breadcrumbs, pageSche
 const localeMetadata = locales[locale as keyof typeof locales] || locales['en'];
 const isReviewed = localeMetadata?.reviewed ?? false;
 
+// Search engines are blocked unless ALLOW_INDEXING is explicitly set at build
+// time. Default-closed on purpose: the site currently carries content nobody has
+// confirmed (insurance carriers, the doctor's Chinese name, immigration-exam
+// scope), and a staging URL that gets indexed is hard to un-index.
+const allowIndexing = process.env.ALLOW_INDEXING === 'true';
+const noIndex = !allowIndexing || !isReviewed;
+
 // Set default og:image if not provided
-const finalOgImage = ogImage || 'https://shengchangmd.com/og-image.png';
+const finalOgImage = ogImage || new URL('/og-image.png', Astro.site).href;
 
 const t = (key: string) => getTranslation(locale, key);
 
@@ -59,7 +66,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {!isReviewed && <meta name="robots" content="noindex, nofollow" />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -121,7 +128,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
           '@type': 'ListItem',
           position: index + 1,
           name: item.label,
-          item: `https://shengchangmd.com${item.href}`,
+          item: new URL(item.href, Astro.site).href,
         })),
       })} />
     )}

@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 
 const title = `New Patients | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Welcome to Dr. Chang's practice. Learn how to schedule your first appointment and what to expect.`;
-const canonicalUrl = 'https://shengchangmd.com/new-patients/';
+const canonicalUrl = new URL('/new-patients/', Astro.site).href;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
