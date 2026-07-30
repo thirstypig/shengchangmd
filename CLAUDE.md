@@ -26,6 +26,24 @@ that was rendering with **zero compiled CSS** — Tailwind had never been wired
 into Astro. The same session shipped a fabricated Google Maps embed URL, an
 invented insurance carrier list, and an invented Chinese name for the doctor.
 
+## Colour rule (do not break this)
+
+`--brand` **inverts between themes**: deep red in light mode, light amber in
+dark mode. Therefore:
+
+- **Never** hardcode `black`, `white`, `#000`, `#fff`, or any fixed text colour
+  on a branded or coloured background. It will be legible in one theme and
+  invisible in the other.
+- **Never pin a heading's colour** inside a coloured surface. Headings are
+  `color: inherit` on purpose so the surface decides.
+- Set the surface's own `color` to `--brand-contrast` and let descendants
+  inherit. `--brand-contrast` is defined per theme to be legible on `--brand`.
+
+This caused two real bugs: dark text on the red insurance hero in light mode,
+and light text on the light brand fill in dark mode — both from a single
+`h1…h6 { color: var(--text-strong) }` rule that overrode the hero's own label
+colour.
+
 ## Facts that must come from source, never memory
 
 - Hours, address, phone → `src/data/practice.ts` (single source of truth)

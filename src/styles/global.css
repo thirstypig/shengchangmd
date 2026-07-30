@@ -16,6 +16,19 @@
    Dark mode is opted into by data-theme="dark" on <html>, resolved by an
    inline pre-paint script in BaseLayout so navigation never flashes.
 --------------------------------------------------------------------------- */
+/*
+  COLOUR PAIRING RULE — read before adding any coloured surface.
+
+  Never hardcode `black`, `white`, `#000`, `#fff`, or any fixed text colour on
+  a branded or coloured background, and never pin a heading's colour inside
+  one. --brand inverts between themes: it is a dark red in light mode and a
+  light amber in dark mode. Any label pinned to one end goes invisible at the
+  other.
+
+  Instead: set the surface's own `color` to --brand-contrast (or
+  --text-strong on a neutral surface) and let everything inside inherit it.
+  --brand-contrast is defined per theme to be legible on --brand.
+*/
 :root {
   color-scheme: light;
 
@@ -56,10 +69,12 @@ html[data-theme='dark'] {
 
   --line: #3a2c30;
 
-  /* Lightened so the red keeps AA contrast on dark surfaces; filled buttons
-     flip to a dark label via --brand-contrast. */
-  --brand: #e8a0a8;
-  --brand-strong: #f2bcc1;
+  /* Warm amber, not a lightened red. Tinting the red up for dark surfaces
+     produced a pink that read as a different brand entirely and was hard to
+     get legible text onto. Amber sits complementary to the deep red, measures
+     10.2:1 on the dark surface, and takes a dark label cleanly at 9.6:1. */
+  --brand: #e8b96b;
+  --brand-strong: #f2cd8e;
   --brand-contrast: #24161a;
 
   --secondary: #5cc9c9;
@@ -95,6 +110,13 @@ body {
   }
 }
 
+/* Headings inherit their colour — they must never pin it.
+   A heading inside a coloured surface (a red hero, a filled callout) has to
+   take that surface's label colour. Pinning headings to --text-strong put dark
+   text on the red insurance hero in light mode, and light text on the light
+   brand fill in dark mode: invisible in both. `inherit` means the containing
+   surface always decides, and the default still resolves to --text-strong
+   because <body> sets it. */
 h1,
 h2,
 h3,
@@ -104,7 +126,7 @@ h6 {
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--text-strong);
+  color: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
