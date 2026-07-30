@@ -17,6 +17,7 @@ export interface PracticeInfo {
   licenseExpiresDate: string;
   address: string;
   phone: string;
+  email: string;
   hours: {
     weekday: string;
     weekend: string;
@@ -48,6 +49,7 @@ export const practice: PracticeInfo = {
   licenseExpiresDate: 'July 31, 2028',
   address: '330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776',
   phone: '(626) 573-0055',
+  email: 'shengchangmd@gmail.com',
   hours: {
     weekday: 'Monday–Friday 9:00 AM – 12:00 PM',
     weekend: 'Closed Saturday and Sunday',

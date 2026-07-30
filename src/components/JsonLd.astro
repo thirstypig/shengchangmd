@@ -18,6 +18,7 @@ const localBusinessSchema = {
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
+  email: `mailto:${practice.email}`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: '330 W. Las Tunas Drive, Suite 3',
@@ -41,6 +42,7 @@ const medicalBusinessSchema = {
   name: practice.doctorName,
   description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
   telephone: practice.phone,
+  email: `mailto:${practice.email}`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: '330 W. Las Tunas Drive, Suite 3',
@@ -85,6 +87,7 @@ const doctorSchema = {
   description: 'Board-certified family physician and medical doctor',
   jobTitle: 'Family Physician, Medical Doctor',
   telephone: practice.phone,
+  email: `mailto:${practice.email}`,
   worksFor: {
     '@type': 'Organization',
     name: practice.doctorName,
@@ -123,6 +126,7 @@ const contactPointSchema = {
   '@id': new URL('/#contact-point', Astro.site).href,
   contactType: 'Patient Services',
   telephone: practice.phone,
+  email: `mailto:${practice.email}`,
   hoursAvailable: [
     {
       '@type': 'OpeningHoursSpecification',
