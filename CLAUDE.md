@@ -145,6 +145,15 @@ on push to `main`. DNS is a CNAME on Squarespace: `shengchangmd` →
 link and JSON-LD `@id`. Nothing else should hardcode the domain — pages derive it
 via `new URL(path, Astro.site)`.
 
+**Moving to `shengchangmd.com` is planned but not started.** The domain is
+already registered and a registrar transfer was in progress as of 2026-07-31, so
+DNS could not be edited yet. It is an *apex* domain, which needs four A records
+rather than the single CNAME the current subdomain uses, and the steps have a
+required order. Do not improvise it — follow
+[`docs/runbooks/domain-migration-to-shengchangmd-com.md`](docs/runbooks/domain-migration-to-shengchangmd-com.md),
+and re-verify the registrar and nameservers first, since the transfer changes
+them.
+
 **Crawlers are blocked by default.** The build only emits an indexable page when
 `ALLOW_INDEXING=true`, which the workflow leaves commented out. Do not enable it
 until the insurance carrier list is replaced with the real one. Unreviewed
