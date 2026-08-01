@@ -3,7 +3,7 @@ title: 'Migrating the site from shengchangmd.bahtzang.com to shengchangmd.com'
 date: 2026-07-31
 updated: 2026-08-01
 status: blocked
-blocked_on: 'registrar transfer of shengchangmd.com to Squarespace in progress (pendingTransfer); the GoDaddy zone is still authoritative and does not accept edits'
+blocked_on: 'registrar transfer of shengchangmd.com to Squarespace in progress (pendingTransfer); the GoDaddy zone is still authoritative and does not accept edits. Site is up on the old host.'
 component: DNS / GitHub Pages / astro.config.mjs / deploy.yml
 tags:
   - deployment
@@ -16,40 +16,35 @@ tags:
 
 # Migrating to shengchangmd.com
 
-> **Status: blocked, and the site is currently down.** See "Current state" below
-> before doing anything. A registrar transfer of `shengchangmd.com` from GoDaddy
-> to Squarespace was in `pendingTransfer` as of 2026-08-01. The repo itself is
-> unchanged — `public/CNAME` and `SITE_URL` still name the old host.
+> **Status: blocked; site serving normally on the old host.** A registrar
+> transfer of `shengchangmd.com` from GoDaddy to Squarespace was in
+> `pendingTransfer` as of 2026-08-01, so the migration cannot proceed. The repo
+> is unchanged — `public/CNAME` and `SITE_URL` still name the old host, and the
+> Pages custom domain is back on `shengchangmd.bahtzang.com` with HTTPS enforced.
 
-## Current state (2026-08-01) — read this first
+## The outage of 2026-08-01 — read this before touching Settings → Pages
 
-**The site is unreachable at every URL, deliberately, pending the transfer.**
+**Resolved the same day.** For about an hour the site was unreachable at every
+URL — the old host 404'd, `thirstypig.github.io/shengchangmd/` redirected to the
+broken new host, and `shengchangmd.com` served the GoDaddy parking page (a `200`,
+which looks healthy in a browser and is not).
 
-| URL | Result |
-|-----|--------|
-| `https://shengchangmd.bahtzang.com/` | **404** — no longer the configured custom domain |
-| `https://thirstypig.github.io/shengchangmd/` | 301 → `http://shengchangmd.com/` |
-| `https://shengchangmd.com/` | 200, but it is the **GoDaddy parking page**, not this site |
+Cause: GitHub Pages settings were changed to `cname: shengchangmd.com` ahead of
+the DNS records landing, which un-configured the old host without configuring
+the new one. `https_enforced` flipped to `false` automatically, because no
+certificate existed for the new domain.
 
-GitHub Pages settings were changed to `cname: shengchangmd.com` ahead of the DNS
-records landing, which un-configured the old host without configuring the new
-one. `https_enforced` was automatically set to `false`, because no certificate
-exists for the new domain. GitHub's dashboard shows "improperly configured",
-which is accurate.
+Restored by setting the custom domain back explicitly:
 
-The owner chose on 2026-08-01 to leave it down rather than switch twice. The
-site is `noindex` and not publicly promoted, so exposure is limited.
+```
+gh api -X PUT repos/thirstypig/shengchangmd/pages -f cname='shengchangmd.bahtzang.com'
+gh api -X PUT repos/thirstypig/shengchangmd/pages -F https_enforced=true
+```
 
-**To restore service before the transfer completes:** `public/CNAME` on `main`
-still contains `shengchangmd.bahtzang.com`, so triggering a deploy should reset
-the Pages custom domain from the build artifact. Failing that, set it manually
-in Settings → Pages and re-tick "Enforce HTTPS".
-
-> ⚠️ **Any push to `main` triggers the deploy workflow**, which uploads
-> `public/CNAME` and will therefore probably flip the custom domain back to
-> `shengchangmd.bahtzang.com` on its own. That is a side effect of merging *any*
-> change while this drift exists, including a documentation-only change. Expect
-> it, or land work on a branch without merging.
+Verified after: `200` over HTTPS with real page content, certificate `approved`
+for `shengchangmd.bahtzang.com` through 2026-10-27. The repo is unchanged —
+`public/CNAME` and `SITE_URL` still name the old host — so the migration itself
+has not started.
 
 ## Why this document exists
 
@@ -91,11 +86,31 @@ Setting it to `shengchangmd.com` before DNS resolved un-configured the old host
 — which immediately began returning 404 — while the new host still served the
 registrar's parking page. There was no working URL at all.
 
-Do not touch Settings → Pages during this migration. This repo is
-`build_type: workflow`; the `CNAME` file in the uploaded artifact is the source
-of truth, and the UI writes the same underlying setting without syncing it back
-to the repo. The two then disagree until the next deploy overwrites the UI. Let
-Phase 2 drive the change through `public/CNAME` in a PR, as designed.
+Change it only when DNS already resolves to GitHub. There is no grace period —
+the old host stops working the instant the setting changes.
+
+**`public/CNAME` does not control the custom domain on this repo — verified.**
+An earlier draft of this runbook claimed the `CNAME` file in the build artifact
+was the source of truth and that any deploy would reset the Pages setting from
+it. That was tested on 2026-08-01 and is **false**: a deploy ran to success with
+`public/CNAME` containing `shengchangmd.bahtzang.com` while the Pages setting
+stayed on `shengchangmd.com`, and the site stayed down.
+
+This repo is `build_type: workflow`. On workflow-based Pages, the custom domain
+lives **only** in the repository setting; the artifact's `CNAME` file is inert.
+It is honoured on the legacy branch-based build, which is where the widespread
+"just commit a CNAME file" advice comes from.
+
+Two consequences, both load-bearing for Phase 2:
+
+- Editing `public/CNAME` alone **will not switch the domain**. Phase 2 needs an
+  explicit settings change as a separate step.
+- Conversely, merging to `main` cannot accidentally flip the domain back, so
+  ordinary work is safe to land at any point in this migration.
+
+Keep `public/CNAME` accurate anyway. It costs nothing, it documents intent, and
+it is what would take effect if the deployment method ever reverts to a branch
+build.
 
 ## What was verified on 2026-07-31
 
@@ -145,8 +160,9 @@ it. Reasons: it is shorter for print materials and business cards, and it is
 what a patient types. GitHub Pages issues the `www` → apex redirect
 automatically once both DNS records are correct.
 
-To reverse this, put `www.shengchangmd.com` in `public/CNAME` instead and swap
-the DNS record roles. The rest of the runbook is unchanged.
+To reverse this, set `www.shengchangmd.com` as the Pages custom domain in
+Phase 2b (and in `public/CNAME` for consistency) and swap the DNS record roles.
+The rest of the runbook is unchanged.
 
 ---
 
@@ -251,10 +267,10 @@ dig +short @"$NS" shengchangmd.com SOA        # serial should carry today's date
 The SOA serial is the cheapest proof the zone was actually written. If it still
 shows an old date, the edits did not commit — see "Mistakes already made".
 
-## Phase 2 — repo changes
+## Phase 2 — repo changes, then the settings flip
 
-Four files. Ship as one PR; merging is what triggers the switch, so the merge
-is the cutover moment.
+Four files, shipped as one PR. **Merging is not the cutover** — see Phase 2b.
+The merge only makes the built HTML self-consistent with the new domain.
 
 | File | Line (as of 2026-07-31) | Change |
 |------|------------------------|--------|
@@ -278,6 +294,30 @@ it ships.
 canonical link, every sitemap entry, all hreflang alternates, and the JSON-LD
 `@id`. A migration that fixes `public/CNAME` but not `SITE_URL` produces a site
 that serves at the new domain while declaring the old one canonical.
+
+## Phase 2b — the actual cutover
+
+The Pages custom domain lives in the repository setting, not in `public/CNAME`
+— see "Mistakes already made". Nothing switches until this runs:
+
+```
+gh api -X PUT repos/thirstypig/shengchangmd/pages -f cname='shengchangmd.com'
+```
+
+Or Settings → Pages → Custom domain. **This is the moment the old host starts
+404ing**, so do it only once Phase 1's gate check passes. If DNS is not yet
+correct, this is precisely the failure of 2026-08-01: no working URL at all.
+
+To roll back at any point, put the old host back the same way and re-enable
+HTTPS:
+
+```
+gh api -X PUT repos/thirstypig/shengchangmd/pages -f cname='shengchangmd.bahtzang.com'
+gh api -X PUT repos/thirstypig/shengchangmd/pages -F https_enforced=true
+```
+
+Rollback is near-instant, because the certificate for the old host stays valid
+until 2026-10-27.
 
 ## Phase 3 — HTTPS
 
@@ -313,8 +353,8 @@ failure mode this project has already shipped once in a different form.
 ## What breaks
 
 **`shengchangmd.bahtzang.com` stops serving the site.** GitHub Pages honours
-exactly one custom domain per repository. Once `public/CNAME` names the new
-domain, the old host is no longer recognised.
+exactly one custom domain per repository. The moment Phase 2b sets the Pages
+custom domain to the new host, the old one is no longer recognised.
 
 **It 404s — this is now verified, not predicted.** When the Pages custom domain
 was switched on 2026-08-01, `https://shengchangmd.bahtzang.com/` began returning
