@@ -51,7 +51,15 @@ colour.
 
 ## Facts that must come from source, never memory
 
-- Hours, address, phone → `src/data/practice.ts` (single source of truth)
+- Hours, address, phone → `src/data/practice.ts` (single source of truth). The
+  address lives there as `addressParts`; `practice.address` is derived from it,
+  so the prose address and the JSON-LD `PostalAddress` cannot drift apart.
+- **A fact copied into a second place will drift, and your fix will reach only
+  one copy.** This happened six times in one session on 2026-08-05 — the false
+  Alabama training claim, a fabricated map embed, the insurance carrier list,
+  a hardcoded directions link, the JSON-LD address, and duplicated service
+  names. The fix is to delete the second copy, not to remember it:
+  [write-up](docs/solutions/logic-errors/duplicated-facts-and-partial-fix-propagation.md).
 - Localized copy → `src/i18n/locales.ts`
 - **Never interpolate `practice.*` directly into a `zh-hans`/`zh-hant` page or a
   shared component.** Route it through `getPracticeLocalized()` or
@@ -65,17 +73,24 @@ colour.
   Chinese page after a "no English remains" claim had already been made.
 - Board certifications, licence numbers, education → `src/data/practice.ts`
 - Map URLs → derive from `practice.address`, never hardcode coordinates or
-  Google place IDs
+  Google place IDs. `tests/data/source-integrity.test.ts` fails the build if a
+  place id, a pre-baked embed URL, a latitude/longitude, or the street address
+  or phone number appears anywhere outside `practice.ts`.
 
 ## Known open items requiring the owner's confirmation
 
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
-- **Insurance carriers.** The list on `insurance.astro` was generated, not
-  supplied, and is currently live. The owner is compiling the real list
-  (2026-07-29). Do not enable indexing until it is replaced. No carrier logos:
-  reproducing the marks copies trademarks, and displaying them asserts network
-  participation.
+- **Insurance carriers.** ~~The generated list is live.~~ Removed 2026-08-05.
+  `insurance.astro` had named eight carriers as accepted — Medicare, Medicaid,
+  Blue Cross Blue Shield, Aetna, Cigna, United Healthcare, Anthem, Molina
+  Healthcare — plus "We accept most major insurance plans", and claimed direct
+  billing, self-pay discounts and payment plans. None of it was supplied by the
+  practice. All three locales now say only that the office confirms coverage by
+  phone, which is true whatever the answer turns out to be. **Do not restore a
+  carrier list, or any "most major plans" phrasing, without the real list in
+  writing.** No carrier logos either: reproducing the marks copies trademarks,
+  and displaying them asserts network participation.
 - ~~Immigration medical exams~~ — confirmed 2026-07-29: Dr. Chang is listed in
   the USCIS Find a Doctor locator, i.e. he holds the **civil surgeon
   designation** and may complete **Form I-693**. Recorded as
@@ -136,8 +151,8 @@ needed in version control, make the repo private first.
 ```
 npm install
 npm run dev      # http://localhost:3120
-npm run build    # 22 pages; postbuild runs scripts/verify-css.mjs
-npm test         # 42 vitest tests
+npm run build    # 22 pages; postbuild runs verify-css.mjs + verify-build.mjs
+npm test         # 55 vitest tests
 ```
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
@@ -148,7 +163,15 @@ touching the build config.
 
 ## Tests
 
-`tests/i18n/locale-coverage.test.ts` — 42 tests, run with `npm test`.
+Three files, 55 tests, run with `npm test`:
+
+- `tests/i18n/locale-coverage.test.ts` — the i18n layer
+- `tests/data/source-integrity.test.ts` — guards facts against being stored
+  twice: the address must stay derived from `addressParts`, no file outside
+  `practice.ts` may restate the address or phone, no hardcoded map URLs, place
+  ids or coordinates, and no locale key may be defined without a page reading it
+- `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
+  which `verify-build.mjs` cannot cover because it only ever sees one build
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:
@@ -163,29 +186,51 @@ here, and all of them are for defects that typecheck and build cleanly:
 
 **In CI.** `.github/workflows/deploy.yml` runs `npx tsc --noEmit` then `npm test`
 before the build, so a typecheck or locale regression blocks the deploy rather
-than shipping.
+than shipping. `postbuild` then runs `scripts/verify-css.mjs` and
+`scripts/verify-build.mjs`, which assert against the built output — that a
+referenced asset exists, that the sitemap and the robots meta tag agree, that
+JSON-LD's address matches `practice.ts`, and that no page names the retired
+host. Those are contradiction checks; none of them can be seen from source.
+
+**Every test here was verified by making it fail.** A mutation was introduced
+for each guarded invariant and the expected test confirmed red before being
+restored. This is not ceremony: 15 tests shipped on 2026-08-05 asserting
+`serviceCards` labels that no page rendered, so they could never fail, and
+"42 tests passing" was quoted as evidence several times before anyone noticed.
 
 ## Deployment
 
-Live at **https://shengchangmd.bahtzang.com** via GitHub Pages
+Live at **https://shengchangmd.com** via GitHub Pages
 (`thirstypig/shengchangmd`, public repo). `.github/workflows/deploy.yml` builds
-on push to `main`. DNS is a CNAME on Squarespace: `shengchangmd` →
-`thirstypig.github.io`.
+on push to `main`. DNS is an apex domain on Squarespace nameservers, resolving
+to the four GitHub Pages A records; `www` redirects to the apex. The Let's
+Encrypt certificate covers both names.
 
 `SITE_URL` in the workflow feeds every canonical URL, sitemap entry, hreflang
 link and JSON-LD `@id`. Nothing else should hardcode the domain — pages derive it
 via `new URL(path, Astro.site)`.
 
-**Moving to `shengchangmd.com` is planned but not started.** The domain is
-already registered and a registrar transfer was in progress as of 2026-07-31, so
-DNS could not be edited yet. It is an *apex* domain, which needs four A records
-rather than the single CNAME the current subdomain uses, and the steps have a
-required order. Do not improvise it — follow
-[`docs/runbooks/domain-migration-to-shengchangmd-com.md`](docs/runbooks/domain-migration-to-shengchangmd-com.md),
-and re-verify the registrar and nameservers first, since the transfer changes
-them.
+**The migration from `shengchangmd.bahtzang.com` completed 2026-08-05.** The old
+host now 404s. Two things about that day are worth carrying forward:
 
-**Crawlers are blocked by default.** The build only emits an indexable page when
-`ALLOW_INDEXING=true`, which the workflow leaves commented out. Do not enable it
-until the insurance carrier list is replaced with the real one. Unreviewed
-locales stay `noindex` regardless, driven by `reviewed` in `locales.ts`.
+- The custom domain is a **repository setting**, not `public/CNAME`. Setting it
+  through the web UI also flipped the Pages `build_type` from `workflow` to
+  `legacy`, which started a Jekyll build that failed on every push while the
+  site survived on the last `actions/deploy-pages` artifact. If Pages starts
+  behaving oddly, check `gh api repos/thirstypig/shengchangmd/pages` first.
+- `SITE_URL` was not moved at the same time, so for several hours every
+  canonical URL, sitemap entry and JSON-LD `@id` named a host that 404s.
+  `scripts/verify-build.mjs` now fails the build if any page references the
+  retired host.
+
+History and the 2026-08-01 outage:
+[`docs/runbooks/domain-migration-to-shengchangmd-com.md`](docs/runbooks/domain-migration-to-shengchangmd-com.md).
+
+**Indexing is ON as of 2026-08-05**, via `ALLOW_INDEXING: "true"` in the
+workflow. It drives both the robots meta tag and `src/pages/robots.txt.ts`, so
+the two cannot disagree. Unreviewed locales stay `noindex` regardless, driven by
+`reviewed` in `locales.ts` — which also decides sitemap membership, so a page
+can never be listed and de-indexed at once. **Both Chinese locales are still
+`reviewed: false`**, so two-thirds of the site is not indexed pending a fluent
+reader. Un-indexing is far slower than indexing: anything published here should
+be true first.
