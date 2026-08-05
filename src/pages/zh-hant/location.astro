@@ -6,6 +6,16 @@ import { getTranslation } from '@i18n/locales';
 const title = `門診時間與位置 | ${practice.doctorName} | 聖蓋博加州`;
 const description = `張醫師診所在加州聖蓋博的門診時間、位置與交通方向。`;
 const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
+
+/*
+  Derive the map from practice.address, never hardcode it. The URL previously
+  here was a fabricated `maps/embed?pb=...` string carrying invented Google
+  place ids (…0x1234567890, 4v1234567890) — the exact fabrication CLAUDE.md
+  records. It was fixed on the English page and missed on both Chinese ones,
+  where it stayed live until 2026-08-05.
+*/
+const addressQuery = encodeURIComponent(practice.address);
+const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
 ---
 
 <BaseLayout
@@ -61,7 +71,7 @@ const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
         <!-- Map Placeholder -->
         <div class="map-container">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3306.0542156547!2d-118.09534!3d34.08519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2d5a8f8f8f8f9%3A0x1234567890!2s330%20W%20Las%20Tunas%20Dr%20Suite%203%20San%20Gabriel%20CA%2091776!5e0!3m2!1sen!2sus!4v1234567890"
+            src={mapEmbedUrl}
             width="100%"
             height="400"
             style="border:0;"
