@@ -43,11 +43,25 @@ dark mode. Therefore:
   `color: inherit` on purpose so the surface decides.
 - Set the surface's own `color` to `--brand-contrast` and let descendants
   inherit. `--brand-contrast` is defined per theme to be legible on `--brand`.
+- **A Tailwind palette class is a hardcoded colour too.** `text-primary-700`
+  looks brand-correct and is not — it resolves to a literal hex unless
+  `global.css` redeclares it against a token. Grepping for `#fff` will never
+  find it. Before using a brand-coloured utility, confirm it is on the map in
+  `global.css`, **including its `hover:`/`focus:` forms**, which Tailwind emits
+  at higher specificity and which therefore override the base rule.
 
 This caused two real bugs: dark text on the red insurance hero in light mode,
 and light text on the light brand fill in dark mode — both from a single
 `h1…h6 { color: var(--text-strong) }` rule that overrode the hero's own label
 colour.
+
+It caused three more on 2026-08-05, found in two passes because the first fix
+corrected one entry of the map and not its siblings: every `text-primary-700`
+link site-wide, the contact pages' phone number on hover (1.67:1 — the practice's
+primary call to action, invisible on hover in dark mode), and the active nav
+item's underline. **Verify the computed colour in both themes, and hover in
+both — a resting screenshot in one theme is not evidence.**
+[write-up](docs/solutions/ui-bugs/tailwind-palette-classes-bypass-theme-tokens.md).
 
 ## Facts that must come from source, never memory
 
@@ -120,7 +134,37 @@ colour.
   Nothing was found in `practice.ts`, Healthgrades, Doximity, or search. His ABFM
   certification (1978) postdates his pathology residency (ended 1973), so a family
   practice residency in that gap would fit — but that is a hypothesis. Publish
-  nothing on it without Dr. Chang confirming.
+  nothing on it without Dr. Chang confirming. The Arcadia History Collection's
+  57 records (below) mention it nowhere either — another negative, still not
+  proof of absence.
+- **The Arcadia History Collection, and why its search must never be linked.**
+  The Arcadia Public Library indexes **57 records** naming Dr. Chang at
+  `arcadiahistory.andornot.net`. It is the only *public archival* corroboration
+  this repo has for anything on the About page, and it confirmed the Apr–Jul
+  2003 rotating mayoralty independently of the owner's bio. Two facts came from
+  it and are now live in all three locales: he was the first Chinese-American
+  Arcadia City Council member (1994) and the city's first Chinese-American mayor
+  (2003), both per *Arcadia Weekly*.
+
+  **Link individual permalinks only. Never link the search results.** The same
+  57-record run also indexes a 2003 accusation that he embezzled ~$420,000 from
+  the Access IPA medical group — which he denied, explaining he had moved funds
+  between banks and moved them back, and over which he sued the two accusing
+  doctors for libel — plus a 1994 election-fraud suit a judge dismissed for
+  insufficient evidence. **The archive records no outcome for the embezzlement
+  matter.** Linking the search would put those one click from a patient and give
+  crawlers a path to them. `newspaper31226` additionally calls him Arcadia's
+  first *Asian*-American mayor; that is deliberately off the page as a broader
+  claim resting on one sentence.
+
+  The collection's own terms prohibit reproducing its items in any form without
+  written permission, so its photographs — including a c.1996 portrait and the
+  1995 library groundbreaking — may be linked but never copied into `public/`.
+- **No video of Dr. Chang has ever been found**, in English or Chinese, despite
+  targeted searching. Chinese-language press coverage is likewise near-absent:
+  the only hit for 張勝雄 is zh.wikipedia's Arcadia article listing him among
+  three Chinese council members. 世界日報 / 星島日報 archives from that era are
+  largely unindexed, so this is weak evidence, not a finding.
 - **Two details normalised from the owner's bio text**, both worth confirming:
   "Arcadia city Library" was rendered as *Arcadia Public Library*, and the
   1994–1998 / 2000–2004 council terms are stated as given. The bio also said
@@ -152,7 +196,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev      # http://localhost:3120
 npm run build    # 22 pages; postbuild runs verify-css.mjs + verify-build.mjs
-npm test         # 55 vitest tests
+npm test         # 61 vitest tests
 ```
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
@@ -163,7 +207,7 @@ touching the build config.
 
 ## Tests
 
-Three files, 55 tests, run with `npm test`:
+Four files, 61 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
@@ -172,6 +216,14 @@ Three files, 55 tests, run with `npm test`:
   ids or coordinates, and no locale key may be defined without a page reading it
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
+- `tests/styles/theme-token-coverage.test.ts` — the hand-maintained colour map
+  in `global.css`. Fails if any themed utility class used in a template is not
+  redeclared against a token, **including its `hover:` variant**, which Tailwind
+  emits at higher specificity. Four instances of that omission shipped on
+  2026-08-05; the first three were found by eye, one pass at a time, and the
+  fourth (`hover:bg-primary-50`, a near-white panel under amber text) was found
+  by this test. It also asserts the dark block still redefines `--brand`, since
+  every other assertion here passes if it stops
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:

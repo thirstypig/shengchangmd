@@ -82,11 +82,29 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
               target="_blank"
               rel="noopener noreferrer">Min Mey Chang</a> 共同创办了 Arcadia Chinese Association，协助多来自台湾、英语尚不流利的新移民。该协会也协助移民社区与 Arcadia 市政府及学区沟通。
           </p>
+          {/*
+            两项「首位华裔」记载出自 Arcadia Weekly，由 Arcadia 公共图书馆的
+            Arcadia History Collection 收录。Deep links only — see the full
+            rationale in the English source at src/pages/about.astro, including
+            why the collection's search results must never be linked.
+          */}
           <p class="leading-relaxed">
-            1994 年，张医生竞选 Arcadia 市议员，期望能为移民社区以及整个城市提供更好的服务。他当选并担任两届市议员，任期分别为 1994 至 1998 年及 2000 至 2004 年，并于 2003 年 4 月至 7 月间，即 Arcadia 建市百周年之际，担任轮值市长。
+            1994 年，张医生竞选 Arcadia 市议员，期望能为移民社区以及整个城市提供更好的服务。他当选并担任两届市议员，任期分别为 1994 至 1998 年及 2000 至 2004 年，成为 <a
+              href="https://arcadiahistory.andornot.net/en/permalink/newspaper31226"
+              class="text-primary-700 underline underline-offset-2 hover:no-underline"
+              target="_blank"
+              rel="noopener noreferrer">Arcadia 市议会首位华裔议员</a>。他并于 2003 年 4 月至 7 月间，即 Arcadia 建市百周年之际担任轮值市长，获誉为<a
+              href="https://arcadiahistory.andornot.net/en/permalink/newspaper31744"
+              class="text-primary-700 underline underline-offset-2 hover:no-underline"
+              target="_blank"
+              rel="noopener noreferrer">该市首位华裔市长</a>。
           </p>
           <p class="leading-relaxed">
-            在市议会任职期间，他对 Arcadia 公共图书馆的整修扮演了重要角色，并大力支持新建的 Arcadia 警察总部。
+            在市议会任职期间，他对 <a
+              href="https://arcadiahistory.andornot.net/en/permalink/photographs1491"
+              class="text-primary-700 underline underline-offset-2 hover:no-underline"
+              target="_blank"
+              rel="noopener noreferrer">Arcadia 公共图书馆的整修</a>扮演了重要角色，并大力支持新建的 Arcadia 警察总部。
           </p>
         </div>
       </div>
