@@ -26,23 +26,22 @@ const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
   <section class="content-section">
     <div class="content-container">
       <div class="content-left">
-        <h2>接受的保险计划</h2>
+        <h2>保险与费用</h2>
         <p>
-          我们接受大部分主要保险计划。我们直接与您的保险合作，帮助减少您的自付费用。
+          保障范围取决于您的保险计划，以及您预约的是哪一项服务，因此我们不在此列出计划名称，而是由诊所直接与您确认。请于就诊前来电，我们会与您一起查核您的福利。
         </p>
-        <ul class="insurance-list">
-          <li>Medicare（医疗保险）</li>
-          <li>Medicaid（医疗救助）</li>
-          <li>蓝十字蓝盾 (Blue Cross Blue Shield)</li>
-          <li>安泰 Aetna</li>
-          <li>信诺保险 (Cigna)</li>
-          <li>联合医疗 (United Healthcare)</li>
-          <li>安森 Anthem</li>
-          <li>莫利纳医疗 (Molina Healthcare)</li>
-        </ul>
+        <p>
+          请留意，移民体检、公民入籍考试豁免医疗评估报告及医疗法律报告，通常不在健康保险的给付范围内，因为这些属于行政用途而非治疗。来电时请一并询问，我们会告知您本次就诊的费用。
+        </p>
         <p class="note">
-          <strong>没有看到您的计划？</strong> 请致电我们 <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> 以验证保障范围。我们可能仍然接受您的计划。
+          <strong>来电时请备妥您的保险卡。</strong> 诊所电话：<a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a>。
         </p>
+        {/*
+          A fabricated carrier list and three invented payment claims stood in
+          this page. See the English source at src/pages/insurance.astro for the
+          full account. Nothing here may name a carrier or promise a billing or
+          payment term until the practice supplies them.
+        */}
       </div>
       <div class="content-right">
         <div class="info-box">
@@ -63,21 +62,15 @@ const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
     <h2>支付选项</h2>
     <div class="payment-grid">
       <div class="payment-card">
-        <h3>保险计费</h3>
+        <h3>就诊前</h3>
         <p>
-          我们直接向您的保险公司计费。您只需要支付您计划中规定的任何自付额、共同保险或免赔额。
+          请致电诊所，提供您的保险资料并告知您要预约的服务项目。我们会告诉您哪些项目有给付，以及您预计需要支付的金额。
         </p>
       </div>
       <div class="payment-card">
-        <h3>自付折扣</h3>
+        <h3>自费就诊</h3>
         <p>
-          没有保险的患者可以获得标准费用的折扣。在就诊时或提前致电询问我们的自付费率。
-        </p>
-      </div>
-      <div class="payment-card">
-        <h3>付款计划</h3>
-        <p>
-          对于较大的余额，我们提供灵活的付款安排。联系我们的诊所讨论适合您情况的付款计划。
+          许多患者选择自费，移民与各类报告服务尤其如此。请于来电时询问费用，以免当天有意外。
         </p>
       </div>
     </div>

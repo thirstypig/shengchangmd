@@ -50,19 +50,20 @@ jobs:
           # until then it still named shengchangmd.bahtzang.com, which now 404s,
           # so the live site was declaring a dead host as its canonical URL.
           SITE_URL: https://shengchangmd.com
-          # Omitted deliberately: with this unset the site renders
-          # <meta name="robots" content="noindex, nofollow">.
+          # Enabled 2026-08-05 at the owner's request, after the last invented
+          # content came off the site. All three original blockers are cleared:
+          # the doctor's Chinese name and the immigration-exam scope were
+          # confirmed on 2026-07-29, and the fabricated insurance carrier list
+          # and payment claims were removed on 2026-08-05.
           #
-          # Two of the three original blockers are cleared — the doctor's
-          # Chinese name and the immigration-exam scope were both confirmed by
-          # the owner on 2026-07-29. What remains:
-          #   - the insurance carrier list on insurance.astro, which was
-          #     generated rather than supplied and is still invented
-          #   - the stem cell therapy copy, which is an unconfirmed placeholder
-          # Turning this on publishes both to search engines and to the
-          # assistants that read structured data. Do not set it until they are
-          # resolved.
-          # ALLOW_INDEXING: "true"
+          # This drives both the robots meta tag (BaseLayout) and robots.txt
+          # (src/pages/robots.txt.ts). Unreviewed locales stay noindex
+          # regardless, via `reviewed` in locales.ts — so zh-hant and zh-hans
+          # remain excluded until a fluent reader has checked them.
+          #
+          # Before turning this off again, note that un-indexing is far slower
+          # than indexing. Anything published here should be true first.
+          ALLOW_INDEXING: "true"
 
       - uses: actions/upload-pages-artifact@v3
         with:
