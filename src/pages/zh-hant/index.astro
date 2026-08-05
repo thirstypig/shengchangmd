@@ -4,9 +4,10 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getPracticeLocalized } from '@i18n/locales';
+import { getPracticeLocalized, getTranslation } from '@i18n/locales';
 
 const locale = 'zh-hant';
+const t = (key: string) => getTranslation(locale, key);
 const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 家庭醫學專科醫師 | 加州聖蓋博`;
 const description = `加州聖蓋博的家庭醫學專科醫師，並為美國移民局指定體檢醫師。提供移民醫療服務、公民入籍考試豁免醫療評估報告、醫療法律報告、幹細胞治療與家庭醫學。`;
@@ -32,35 +33,35 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
           icon="document"
-          title="移民醫療服務"
+          title={t(`serviceCards.immigrationExams`)}
           description="由美國移民局指定體檢醫師填寫並密封 Form I-693，包含必要篩檢與疫苗紀錄審核。"
           href="/zh-hant/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="公民入籍考試豁免醫療評估報告"
+          title={t(`serviceCards.citizenshipWaiver`)}
           description="為因醫療原因無法符合英語或公民常識考試要求的入籍申請人填寫 Form N-648。"
           href="/zh-hant/services/#citizenship-waiver"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="chart"
-          title="醫療法律報告"
+          title={t(`serviceCards.medicalLegal`)}
           description="為法律及行政程序撰寫醫療報告與評估。"
           href="/zh-hant/services/#medical-legal"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="stethoscope"
-          title="幹細胞治療"
+          title={t(`serviceCards.stemCell`)}
           description="本診所提供幹細胞治療。歡迎致電了解是否適合您的情況。"
           href="/zh-hant/services/#stem-cell-therapy"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="family"
-          title="家庭醫學"
+          title={t(`serviceCards.familyMedicine`)}
           description="為各年齡層患者提供持續照護，從預防保健到急性病症治療。"
           href="/zh-hant/services/#family-medicine"
           linkLabel="了解更多"

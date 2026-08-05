@@ -4,9 +4,10 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getPracticeLocalized } from '@i18n/locales';
+import { getPracticeLocalized, getTranslation } from '@i18n/locales';
 
 const locale = 'zh-hans';
+const t = (key: string) => getTranslation(locale, key);
 const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 家庭医学专科医生 | 加州圣盖博`;
 const description = `加州圣盖博的家庭医学专科医生，并为美国移民局指定体检医师。提供移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学。`;
@@ -32,35 +33,35 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
           icon="document"
-          title="移民医疗服务"
+          title={t(`serviceCards.immigrationExams`)}
           description="由美国移民局指定体检医师填写并密封 Form I-693，包含必要筛查与疫苗记录审核。"
           href="/zh-hans/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="公民入籍考试豁免医疗评估报告"
+          title={t(`serviceCards.citizenshipWaiver`)}
           description="为因医疗原因无法符合英语或公民常识考试要求的入籍申请人填写 Form N-648。"
           href="/zh-hans/services/#citizenship-waiver"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="chart"
-          title="医疗法律报告"
+          title={t(`serviceCards.medicalLegal`)}
           description="为法律及行政程序撰写医疗报告与评估。"
           href="/zh-hans/services/#medical-legal"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="stethoscope"
-          title="干细胞治疗"
+          title={t(`serviceCards.stemCell`)}
           description="本诊所提供干细胞治疗。欢迎致电了解是否适合您的情况。"
           href="/zh-hans/services/#stem-cell-therapy"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="family"
-          title="家庭医学"
+          title={t(`serviceCards.familyMedicine`)}
           description="为各年龄层患者提供持续照护，从预防保健到急性病症治疗。"
           href="/zh-hans/services/#family-medicine"
           linkLabel="了解更多"

@@ -7,7 +7,7 @@
     "dev": "astro dev --port 3120",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "node scripts/verify-css.mjs",
+    "postbuild": "node scripts/verify-css.mjs && node scripts/verify-build.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

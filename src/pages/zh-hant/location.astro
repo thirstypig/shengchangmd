@@ -16,6 +16,8 @@ const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
 */
 const addressQuery = encodeURIComponent(practice.address);
 const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
+const googleDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
+const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
 ---
 
 <BaseLayout
@@ -78,14 +80,19 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="谷歌地圖顯示張醫師的辦公室位置"
+            title="Google 地圖顯示張醫師診所位置"
           ></iframe>
         </div>
 
-        <!-- Directions Link -->
-        <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776" target="_blank" rel="noopener noreferrer" class="directions-link">
-          查看路線
-        </a>
+        <!-- Directions: one button per maps app, both derived from practice.address -->
+        <div class="directions-group">
+          <a href={googleDirectionsUrl} target="_blank" rel="noopener noreferrer" class="directions-link">
+            Google 地圖導航
+          </a>
+          <a href={appleDirectionsUrl} target="_blank" rel="noopener noreferrer" class="directions-link directions-link-secondary">
+            Apple 地圖導航
+          </a>
+        </div>
 
 
       </div>
@@ -214,21 +221,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
     margin: 0;
   }
 
-  .hours-link-box {
-    text-align: center;
-  }
 
-  .hours-link {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: var(--brand);
-    color: var(--brand-contrast);
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: background 0.2s;
-  }
 
   .hours-link:hover {
     background: var(--brand-strong);
@@ -267,6 +260,17 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
     font-weight: 600;
     text-align: center;
     transition: background 0.2s;
+  }
+  .directions-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .directions-link-secondary {
+    background: var(--surface);
+    color: var(--brand);
+    border: 2px solid var(--brand);
   }
 
   .directions-link:hover {

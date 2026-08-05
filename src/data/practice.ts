@@ -7,11 +7,38 @@ export interface BoardCertification {
   mostRecentCertification?: number;
 }
 
+/**
+ * The address in parts, so that the one-line string and the structured address
+ * in JSON-LD are the same fact rather than two copies of it.
+ *
+ * JsonLd.astro used to hardcode `streetAddress: '330 W. Las Tunas Drive, Suite
+ * 3'` twice, alongside `practice.address` here — three copies that had to be
+ * edited together. Structured data is what Google and assistants read, so a
+ * stale copy there sends patients somewhere the site does not say.
+ */
+export interface AddressParts {
+  street: string;
+  locality: string;
+  region: string;
+  postalCode: string;
+  country: string;
+}
+
+const addressParts: AddressParts = {
+  street: '330 W. Las Tunas Drive, Suite 3',
+  locality: 'San Gabriel',
+  region: 'CA',
+  postalCode: '91776',
+  country: 'US',
+};
+
 export interface PracticeInfo {
   doctorName: string;
   credentials: string;
   npi: string;
+  /** Derived from `addressParts`. Never edit this directly. */
   address: string;
+  addressParts: AddressParts;
   phone: string;
   email: string;
   hours: {
@@ -95,7 +122,8 @@ export const practice: PracticeInfo = {
   doctorName: 'Sheng Chang, M.D., Ph.D.',
   credentials: 'M.D., Ph.D.',
   npi: '1871589903',
-  address: '330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776',
+  address: `${addressParts.street}, ${addressParts.locality}, ${addressParts.region} ${addressParts.postalCode}`,
+  addressParts,
   phone: '(626) 573-0055',
   email: 'shengchangmd@gmail.com',
   hours: {
