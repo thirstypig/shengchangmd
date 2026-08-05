@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Sheng Chang, M.D. — Family Medicine">
+  <!--
+    Referenced by JsonLd.astro as the LocalBusiness `logo`. It previously
+    pointed at /logo.svg, which did not exist and returned 404 on the live site.
+
+    Deliberately the same SC monogram as the inline favicon in BaseLayout, at
+    the same brand colour (#8a2f3c, the light-theme --brand in global.css), so
+    the tab icon and the logo search engines pick up are the same mark.
+
+    The brand colour is hardcoded here on purpose and this is the one place it
+    is allowed: an SVG served as a static file has no access to CSS custom
+    properties, and a share/search logo must render identically wherever it is
+    embedded rather than following a viewer's theme.
+  -->
+  <rect width="512" height="512" rx="96" fill="#8a2f3c"/>
+  <text x="256" y="336" font-size="256" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" fill="#fffdfb" text-anchor="middle">SC</text>
+</svg>

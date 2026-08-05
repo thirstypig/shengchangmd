@@ -31,23 +31,39 @@ const breadcrumbs = [
   <section class="content-section">
     <div class="content-container">
       <div class="content-left">
-        <h2>Accepted Insurance Plans</h2>
+        <h2>Insurance &amp; Coverage</h2>
         <p>
-          We accept most major insurance plans. We work directly with your insurance to help minimize your out-of-pocket costs.
+          Coverage depends on your plan and on which service you are booking, so
+          the office confirms it with you directly rather than listing plans here.
+          Please call before your appointment and we will check your benefits with
+          you.
         </p>
-        <ul class="insurance-list">
-          <li>Medicare</li>
-          <li>Medicaid</li>
-          <li>Blue Cross Blue Shield</li>
-          <li>Aetna</li>
-          <li>Cigna</li>
-          <li>United Healthcare</li>
-          <li>Anthem</li>
-          <li>Molina Healthcare</li>
-        </ul>
+        <p>
+          It is worth knowing that immigration medical examinations, citizenship
+          exam waiver reports and medical-legal reports are often not covered by
+          health insurance, because they are administrative rather than treatment.
+          Ask when you call and we will tell you what your visit will cost.
+        </p>
         <p class="note">
-          <strong>Don't see your plan listed?</strong> Please call us at <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> to verify coverage. We may still accept your plan.
+          <strong>Please have your insurance card to hand when you call.</strong>
+          Reach the office at <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a>.
         </p>
+        {/*
+          A list of eight named carriers stood here — Medicare, Medicaid, Blue
+          Cross Blue Shield, Aetna, Cigna, United Healthcare, Anthem, Molina
+          Healthcare — above the claim "We accept most major insurance plans".
+          None of it was supplied by the practice. It was generated during the
+          original build and shipped, and it stayed live until 2026-08-05.
+
+          That is not a cosmetic defect: a patient who chose this practice
+          because they saw their carrier named could arrive and be turned away,
+          and it is the single item that kept the whole site noindex.
+
+          Do not restore a carrier list, or any "we accept most major plans"
+          phrasing, until the practice supplies the real one in writing. The
+          copy above is deliberately written so it needs no such list to be
+          useful and stays true whatever the answer turns out to be.
+        */}
       </div>
       <div class="content-right">
         <div class="info-box">
@@ -68,23 +84,30 @@ const breadcrumbs = [
     <h2>Payment Options</h2>
     <div class="payment-grid">
       <div class="payment-card">
-        <h3>Insurance Billing</h3>
+        <h3>Before Your Visit</h3>
         <p>
-          We bill your insurance directly. You'll be responsible only for any copay, coinsurance, or deductible as outlined in your plan.
+          Call the office with your insurance details and tell us which service
+          you are booking. We will tell you what is covered and what you can
+          expect to pay.
         </p>
       </div>
       <div class="payment-card">
-        <h3>Self-Pay Discounts</h3>
+        <h3>Paying Without Insurance</h3>
         <p>
-          Patients paying without insurance receive a discount on our standard fees. Ask about our self-pay rates at the time of your visit or call ahead.
+          Many patients pay directly, particularly for immigration and report
+          services. Ask about the fee when you call so there is no surprise on
+          the day.
         </p>
       </div>
-      <div class="payment-card">
-        <h3>Payment Plans</h3>
-        <p>
-          We offer flexible payment arrangements for larger balances. Contact our office to discuss a payment plan that works for your situation.
-        </p>
-      </div>
+      {/*
+        Three cards stood here claiming the practice bills insurance directly,
+        offers self-pay discounts, and offers payment plans for larger balances.
+        None of that was supplied by the practice — all three were generated in
+        the original build, and a patient could easily have relied on any of
+        them. Replaced with copy that promises nothing the office has not
+        confirmed. Restore specifics only when the practice states its actual
+        billing and payment terms.
+      */}
     </div>
   </section>
 
