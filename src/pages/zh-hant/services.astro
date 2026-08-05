@@ -82,7 +82,11 @@ const locale = 'zh-hant';
   {/* 公民入籍考試豁免醫療評估報告 — Form N-648 */}
   <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="citizenship" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           公民入籍考試豁免醫療評估報告
         </h2>
@@ -113,6 +117,7 @@ const locale = 'zh-hant';
           </p>
         </div>
         <CallButton text="來電討論您的案件" size="base" />
+        </div>
       </div>
     </div>
   </section>
@@ -120,7 +125,8 @@ const locale = 'zh-hant';
   {/* 醫療法律報告 */}
   <section id="medical-legal" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           醫療法律報告
         </h2>
@@ -134,6 +140,10 @@ const locale = 'zh-hant';
         </div>
         {/* TODO — 範圍待診所確認，see the English source at src/pages/services.astro */}
         <CallButton text="來電討論報告事宜" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="legal" style="soft" />
+        </div>
       </div>
     </div>
   </section>
@@ -141,7 +151,11 @@ const locale = 'zh-hant';
   {/* 幹細胞治療 — PLACEHOLDER, see src/pages/services.astro */}
   <section id="stem-cell-therapy" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="stemcell" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           幹細胞治療
         </h2>
@@ -162,6 +176,7 @@ const locale = 'zh-hant';
           confirms them.
         */}
         <CallButton text="來電討論幹細胞治療" size="base" />
+        </div>
       </div>
     </div>
   </section>
@@ -170,10 +185,7 @@ const locale = 'zh-hant';
   <section id="family-medicine" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="family" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
+        <div>
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             家庭醫學
           </h2>
@@ -199,6 +211,9 @@ const locale = 'zh-hant';
             </li>
           </ul>
           <CallButton text="預約就診" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="family" style="soft" />
         </div>
       </div>
     </div>

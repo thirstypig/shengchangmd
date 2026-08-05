@@ -5,7 +5,7 @@ import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
 import { getPracticeLocalized } from '@i18n/locales';
 
-const title = '关于张胜雄医生 | 美国委员会认证的家庭医学医生';
+const title = '关于张胜雄医生、博士 | 美国委员会认证的家庭医学医生';
 const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，自 1979 年起在加州圣盖博谷地区行医，并曾担任两届 Arcadia 市议员。';
 const pl = getPracticeLocalized('zh-hans');
 const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
@@ -34,7 +34,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 >
   {/* Hero Section */}
   <HeroSection
-    headline="关于张胜雄医生"
+    headline="关于张胜雄 医生、博士"
     subheadline="美国委员会认证的家庭医学医生，自 1979 年起照护圣盖博谷地区的患者，并曾担任两届 Arcadia 市议员。"
     locale="zh-hans"
     image="/images/dr-sheng-chang.jpg"

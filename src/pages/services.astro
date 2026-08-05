@@ -83,7 +83,11 @@ const breadcrumbs = [
   {/* Citizenship Exam Waiver Medical Evaluation Report — Form N-648 */}
   <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="citizenship" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Citizenship Exam Waiver Medical Evaluation Report
         </h2>
@@ -122,6 +126,7 @@ const breadcrumbs = [
           </p>
         </div>
         <CallButton text="Call to Discuss Your Case" size="base" />
+        </div>
       </div>
     </div>
   </section>
@@ -129,7 +134,8 @@ const breadcrumbs = [
   {/* Medical-Legal Reports */}
   <section id="medical-legal" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Medical-Legal Reports
         </h2>
@@ -158,6 +164,10 @@ const breadcrumbs = [
           specifics here without his confirmation.
         */}
         <CallButton text="Call to Discuss a Report" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="legal" style="soft" />
+        </div>
       </div>
     </div>
   </section>
@@ -165,7 +175,11 @@ const breadcrumbs = [
   {/* Stem Cell Therapy — PLACEHOLDER, see comment below */}
   <section id="stem-cell-therapy" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="stemcell" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Stem Cell Therapy
         </h2>
@@ -204,6 +218,7 @@ const breadcrumbs = [
           the copy is confirmed.
         */}
         <CallButton text="Call to Discuss Stem Cell Therapy" size="base" />
+        </div>
       </div>
     </div>
   </section>
@@ -212,10 +227,7 @@ const breadcrumbs = [
   <section id="family-medicine" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="family" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
+        <div>
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Family Medicine
           </h2>
@@ -241,6 +253,9 @@ const breadcrumbs = [
             </li>
           </ul>
           <CallButton text="Schedule an Appointment" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="family" style="soft" />
         </div>
       </div>
     </div>
