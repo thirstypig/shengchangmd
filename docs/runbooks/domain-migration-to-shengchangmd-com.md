@@ -1,9 +1,10 @@
 ---
 title: 'Migrating the site from shengchangmd.bahtzang.com to shengchangmd.com'
 date: 2026-07-31
-updated: 2026-08-01
-status: blocked
-blocked_on: 'registrar transfer of shengchangmd.com to Squarespace in progress (pendingTransfer); the GoDaddy zone is still authoritative and does not accept edits. Site is up on the old host.'
+updated: 2026-08-05
+status: complete
+completed_on: 2026-08-05
+outcome: 'Live on https://shengchangmd.com. Apex on Squarespace nameservers to the four GitHub Pages A records, www redirecting to apex, a Let''s Encrypt certificate covering both, HTTPS enforced. The old host now 404s.'
 component: DNS / GitHub Pages / astro.config.mjs / deploy.yml
 tags:
   - deployment
@@ -16,11 +17,32 @@ tags:
 
 # Migrating to shengchangmd.com
 
-> **Status: blocked; site serving normally on the old host.** A registrar
-> transfer of `shengchangmd.com` from GoDaddy to Squarespace was in
-> `pendingTransfer` as of 2026-08-01, so the migration cannot proceed. The repo
-> is unchanged — `public/CNAME` and `SITE_URL` still name the old host, and the
-> Pages custom domain is back on `shengchangmd.bahtzang.com` with HTTPS enforced.
+> **Status: complete, 2026-08-05.** The site is live on
+> `https://shengchangmd.com`. The registrar transfer to Squarespace finished,
+> the apex resolves to the four GitHub Pages A records, `www` redirects to the
+> apex, and a Let's Encrypt certificate covering both names was issued at
+> 08:10 UTC on 2026-08-05 with HTTPS enforced. `shengchangmd.bahtzang.com` now
+> 404s.
+>
+> **Two things bit us on cutover day that this runbook did not predict.**
+>
+> 1. Setting the custom domain through the GitHub web UI also flipped the Pages
+>    `build_type` from `workflow` to `legacy` and committed a root `CNAME` file.
+>    A Jekyll build then ran on every push and failed — Jekyll cannot parse
+>    `.astro` frontmatter — while the site stayed up only because the last
+>    `actions/deploy-pages` artifact kept serving. Fix:
+>    `gh api -X PUT repos/thirstypig/shengchangmd/pages -f build_type=workflow`.
+>    Verify with `gh api repos/thirstypig/shengchangmd/pages` after any change
+>    made through Settings → Pages.
+> 2. `SITE_URL` in `deploy.yml` was not moved at the same time, so for several
+>    hours the live site declared `shengchangmd.bahtzang.com` — a host that
+>    404s — as the canonical URL of every page, in the sitemap and in JSON-LD.
+>    `scripts/verify-build.mjs` now fails the build if any page references the
+>    retired host, so this specific mistake cannot ship again.
+>
+> The certificate is worth noting for anyone debugging a "not secure" report:
+> it was issued the morning of cutover, so any visit before 08:10 UTC on
+> 2026-08-05 would have hit a certificate warning legitimately.
 
 ## The outage of 2026-08-01 — read this before touching Settings → Pages
 

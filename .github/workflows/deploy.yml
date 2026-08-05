@@ -32,7 +32,8 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
-      # 42 tests over the i18n layer. They guard defects that typecheck and build
+      # 55 tests over the i18n layer, source integrity and the indexing gate.
+      # They guard defects that typecheck and build
       # cleanly — a practice.ts value with no translation, or a key missing from a
       # locale, either of which puts English or a raw key name in front of a
       # patient. Runs before the build so a locale regression blocks the deploy
