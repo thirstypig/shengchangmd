@@ -120,7 +120,37 @@ colour.
   Nothing was found in `practice.ts`, Healthgrades, Doximity, or search. His ABFM
   certification (1978) postdates his pathology residency (ended 1973), so a family
   practice residency in that gap would fit — but that is a hypothesis. Publish
-  nothing on it without Dr. Chang confirming.
+  nothing on it without Dr. Chang confirming. The Arcadia History Collection's
+  57 records (below) mention it nowhere either — another negative, still not
+  proof of absence.
+- **The Arcadia History Collection, and why its search must never be linked.**
+  The Arcadia Public Library indexes **57 records** naming Dr. Chang at
+  `arcadiahistory.andornot.net`. It is the only *public archival* corroboration
+  this repo has for anything on the About page, and it confirmed the Apr–Jul
+  2003 rotating mayoralty independently of the owner's bio. Two facts came from
+  it and are now live in all three locales: he was the first Chinese-American
+  Arcadia City Council member (1994) and the city's first Chinese-American mayor
+  (2003), both per *Arcadia Weekly*.
+
+  **Link individual permalinks only. Never link the search results.** The same
+  57-record run also indexes a 2003 accusation that he embezzled ~$420,000 from
+  the Access IPA medical group — which he denied, explaining he had moved funds
+  between banks and moved them back, and over which he sued the two accusing
+  doctors for libel — plus a 1994 election-fraud suit a judge dismissed for
+  insufficient evidence. **The archive records no outcome for the embezzlement
+  matter.** Linking the search would put those one click from a patient and give
+  crawlers a path to them. `newspaper31226` additionally calls him Arcadia's
+  first *Asian*-American mayor; that is deliberately off the page as a broader
+  claim resting on one sentence.
+
+  The collection's own terms prohibit reproducing its items in any form without
+  written permission, so its photographs — including a c.1996 portrait and the
+  1995 library groundbreaking — may be linked but never copied into `public/`.
+- **No video of Dr. Chang has ever been found**, in English or Chinese, despite
+  targeted searching. Chinese-language press coverage is likewise near-absent:
+  the only hit for 張勝雄 is zh.wikipedia's Arcadia article listing him among
+  three Chinese council members. 世界日報 / 星島日報 archives from that era are
+  largely unindexed, so this is weak evidence, not a finding.
 - **Two details normalised from the owner's bio text**, both worth confirming:
   "Arcadia city Library" was rendered as *Arcadia Public Library*, and the
   1994–1998 / 2000–2004 council terms are stated as given. The bio also said

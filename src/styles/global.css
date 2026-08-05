@@ -193,7 +193,14 @@ button {
 .text-gray-500 {
   color: var(--text-muted);
 }
-.text-primary-600 {
+/* Both brand text weights map onto --brand so they invert with the theme.
+   text-primary-700 was missing here until 2026-08-05, so every inline link
+   using it — the About page's Arcadia archive citations, the Min Mey Chang
+   link, the contact pages and ServiceCard — rendered as light mode's dark red
+   on dark mode's near-black surface. Tailwind's raw palette is fixed; anything
+   that must stay legible in both themes has to resolve to a token here. */
+.text-primary-600,
+.text-primary-700 {
   color: var(--brand);
 }
 
