@@ -3,8 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `保險與支付 | ${practice.doctorName} | 聖蓋博加州`;
-const description = `張醫師診所接受的保險計畫和靈活的支付選項。了解接受的保險和支付方案。`;
+const title = `保險與支付 | ${practice.doctorName} | 加州聖蓋博`;
+const description = `張醫師診所的保險與費用說明。歡迎來電，我們會與您確認保險給付與就診費用。`;
 const canonicalUrl = new URL('/zh-hant/insurance/', Astro.site).href;
 ---
 
@@ -18,7 +18,7 @@ const canonicalUrl = new URL('/zh-hant/insurance/', Astro.site).href;
   <section class="hero-section">
     <div class="hero-content">
       <h1>保險與支付</h1>
-      <p class="hero-subtitle">接受的保險計畫和靈活的支付選項</p>
+      <p class="hero-subtitle">歡迎來電，我們會與您確認保險給付與費用</p>
     </div>
   </section>
 
@@ -45,12 +45,12 @@ const canonicalUrl = new URL('/zh-hant/insurance/', Astro.site).href;
       </div>
       <div class="content-right">
         <div class="info-box">
-          <h3>驗證您的保障</h3>
+          <h3>確認您的保險給付</h3>
           <p>
-            在就診前，請聯絡我們的辦公室驗證您的保險福利、自付額和任何所需的授權。
+            就診前請先來電本診所，我們會為您確認保險給付、自付額，以及是否需要事前授權。
           </p>
           <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button">
-            致電驗證保障
+            來電確認給付
           </a>
         </div>
       </div>
@@ -79,9 +79,9 @@ const canonicalUrl = new URL('/zh-hant/insurance/', Astro.site).href;
   <!-- Questions Section -->
   <section class="questions-section">
     <div class="questions-content">
-      <h2>有關保險或計費的問題？</h2>
+      <h2>有關保險或帳單的問題？</h2>
       <p>
-        我們的熟悉保險事務的工作人員已準備好回答您關於保險覆蓋、計費和支付選項的問題。
+        本診所工作人員熟悉保險事務，樂意為您解答保險給付、帳單與費用方面的問題。
       </p>
       <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
         立即致電我們

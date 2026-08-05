@@ -5,8 +5,8 @@ import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
 import { getPracticeLocalized } from '@i18n/locales';
 
-const title = '关于张胜雄医生、博士 | 美国委员会认证的家庭医学医生';
-const description = '了解张胜雄医生，美国委员会认证的家庭医学医生，自 1979 年起在加州圣盖博谷地区行医，并曾担任两届 Arcadia 市议员。';
+const title = '关于张胜雄医生（M.D., Ph.D.） | 美国家庭医学专科医生';
+const description = '了解张胜雄医生，美国家庭医学专科医生，自 1979 年起在加州圣盖博谷地区行医，并曾担任两届 Arcadia 市议员。';
 const pl = getPracticeLocalized('zh-hans');
 const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 
@@ -34,12 +34,12 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
 >
   {/* Hero Section */}
   <HeroSection
-    headline="关于张胜雄 医生、博士"
-    subheadline="美国委员会认证的家庭医学医生，自 1979 年起照护圣盖博谷地区的患者，并曾担任两届 Arcadia 市议员。"
+    headline="关于张胜雄 医生（M.D., Ph.D.）"
+    subheadline="美国家庭医学专科医生，自 1979 年起照护圣盖博谷地区的患者，并曾担任两届 Arcadia 市议员。"
     locale="zh-hans"
     image="/images/dr-sheng-chang.jpg"
     imageAlt="张胜雄医生肖像"
-    imageCaption="美国委员会认证的家庭医学医生"
+    imageCaption="美国家庭医学专科医生"
   />
 
   {/* Bio Section */}
@@ -51,7 +51,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
           <p class="leading-relaxed">
-            张胜雄医生于 1979 年移居加州，定居 Arcadia，此后一直在大圣盖博谷地区行医，从事家庭医学。他通过美国家庭医学专科委员会认证，并获美国公民及移民服务局（USCIS）指定为体检医师。
+            张胜雄医生于 1979 年移居加州，定居 Arcadia，此后一直在大圣盖博谷地区行医，从事家庭医学。他通过美国家庭医学专科医师认证，并获美国公民及移民服务局（USCIS）指定为体检医师。
           </p>
           <p class="leading-relaxed">
             张医生曾在 Garfield Medical Center 担任家庭医学科主任，其后出任医务长（Chief of Staff），并曾为该院董事会成员。
@@ -83,10 +83,10 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
               rel="noopener noreferrer">Min Mey Chang</a> 共同创办了 Arcadia Chinese Association，协助多来自台湾、英语尚不流利的新移民。该协会也协助移民社区与 Arcadia 市政府及学区沟通。
           </p>
           <p class="leading-relaxed">
-            1994 年，张医生竞选 Arcadia 市议员，期望能更好地服务移民社区以及整个城市。他当选并担任两届市议员，任期分别为 1994 至 1998 年及 2000 至 2004 年，并于 2003 年 4 月至 7 月间，即 Arcadia 建市百周年之际，担任轮值市长。
+            1994 年，张医生竞选 Arcadia 市议员，期望能为移民社区以及整个城市提供更好的服务。他当选并担任两届市议员，任期分别为 1994 至 1998 年及 2000 至 2004 年，并于 2003 年 4 月至 7 月间，即 Arcadia 建市百周年之际，担任轮值市长。
           </p>
           <p class="leading-relaxed">
-            在市议会任职期间，他对 Arcadia 公共图书馆的整修具有重要影响，并大力支持新建的 Arcadia 警察总部。
+            在市议会任职期间，他对 Arcadia 公共图书馆的整修扮演了重要角色，并大力支持新建的 Arcadia 警察总部。
           </p>
         </div>
       </div>
@@ -97,7 +97,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
   <section class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        执业资格和专业信息
+        执业资格与专业信息
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
@@ -113,7 +113,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             {pl.school}
           </p>
           <p class="text-gray-600 text-sm">
-            毕业于 {practice.education.year}
+            {practice.education.year} 年毕业
           </p>
         </div>
 
@@ -138,7 +138,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
   <section class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        委员会认证
+        专科认证
       </h2>
 
       <div class="grid grid-cols-1 gap-8 max-w-md mx-auto">

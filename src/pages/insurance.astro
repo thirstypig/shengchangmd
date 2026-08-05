@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 
 const title = `Insurance & Payment | ${practice.doctorName} | San Gabriel, CA`;
-const description = `Insurance and payment options for Dr. Chang's medical practice. Learn about accepted plans and flexible payment solutions.`;
+const description = `Insurance and payment for Dr. Chang's practice in San Gabriel, California. Call the office and we will confirm your coverage and what your visit will cost.`;
 const canonicalUrl = new URL('/insurance/', Astro.site).href;
 
 const breadcrumbs = [
@@ -23,7 +23,7 @@ const breadcrumbs = [
   <section class="hero-section">
     <div class="hero-content">
       <h1>Insurance & Payment</h1>
-      <p class="hero-subtitle">Accepted insurance plans and flexible payment options</p>
+      <p class="hero-subtitle">Call the office and we will confirm your coverage and costs with you</p>
     </div>
   </section>
 
@@ -116,7 +116,7 @@ const breadcrumbs = [
     <div class="questions-content">
       <h2>Questions About Insurance or Billing?</h2>
       <p>
-        Our knowledgeable staff is ready to answer your questions about insurance coverage, billing, and payment options.
+        Call the office and we will talk through coverage, billing and what your visit will cost.
       </p>
       <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
         Call Us Today

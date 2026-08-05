@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `门诊时间与位置 | ${practice.doctorName} | 圣盖博加州`;
+const title = `门诊时间与位置 | ${practice.doctorName} | 加州圣盖博`;
 const description = `张医生诊所在加州圣盖博的门诊时间、位置与交通方向。`;
 const canonicalUrl = new URL('/zh-hans/location/', Astro.site).href;
 
@@ -44,7 +44,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
             <span class="time">{getTranslation('zh-hans', 'hoursWeekend')}</span>
           </div>
           <p class="hours-note">
-            下班后的来电可以留言。我们会在门诊时间回复。
+            门诊时间以外来电，欢迎留言。我们会在门诊时间回复。
           </p>
         </div>
 

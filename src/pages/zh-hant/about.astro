@@ -5,8 +5,8 @@ import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
 import { getPracticeLocalized } from '@i18n/locales';
 
-const title = '關於張勝雄醫師、博士 | 美國委員會認證的家庭醫師';
-const description = '了解張勝雄醫師，美國委員會認證的家庭醫師，自 1979 年起在加州聖蓋博谷地區執業，並曾擔任兩屆 Arcadia 市議員。';
+const title = '關於張勝雄醫師（M.D., Ph.D.） | 美國家庭醫學專科醫師';
+const description = '了解張勝雄醫師，美國家庭醫學專科醫師，自 1979 年起在加州聖蓋博谷地區執業，並曾擔任兩屆 Arcadia 市議員。';
 const pl = getPracticeLocalized('zh-hant');
 const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
 
@@ -34,12 +34,12 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
 >
   {/* Hero Section */}
   <HeroSection
-    headline="關於張勝雄 醫師、博士"
-    subheadline="美國委員會認證的家庭醫師，自 1979 年起照護聖蓋博谷地區的患者，並曾擔任兩屆 Arcadia 市議員。"
+    headline="關於張勝雄 醫師（M.D., Ph.D.）"
+    subheadline="美國家庭醫學專科醫師，自 1979 年起照護聖蓋博谷地區的患者，並曾擔任兩屆 Arcadia 市議員。"
     locale="zh-hant"
     image="/images/dr-sheng-chang.jpg"
     imageAlt="張勝雄醫師肖像"
-    imageCaption="美國委員會認證的家庭醫師"
+    imageCaption="美國家庭醫學專科醫師"
   />
 
   {/* Bio Section */}
@@ -51,7 +51,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
           <p class="leading-relaxed">
-            張勝雄醫師於 1979 年移居加州，定居 Arcadia，此後一直在大聖蓋博谷地區執業家庭醫學。他通過美國家庭醫學專科委員會認證，並獲美國公民及移民服務局（USCIS）指定為體檢醫師。
+            張勝雄醫師於 1979 年移居加州，定居 Arcadia，此後一直在大聖蓋博谷地區執業家庭醫學。他通過美國家庭醫學專科醫師認證，並獲美國公民及移民服務局（USCIS）指定為體檢醫師。
           </p>
           <p class="leading-relaxed">
             張醫師曾在 Garfield Medical Center 擔任家庭醫學科主任，其後出任醫務長（Chief of Staff），並曾為該院董事會成員。
@@ -83,10 +83,10 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
               rel="noopener noreferrer">Min Mey Chang</a> 共同創辦了 Arcadia Chinese Association，協助多來自臺灣、英語尚不流利的新移民。該協會也協助移民社區與 Arcadia 市政府及學區溝通。
           </p>
           <p class="leading-relaxed">
-            1994 年，張醫師競選 Arcadia 市議員，期望能更好地服務移民社區以及整個城市。他當選並擔任兩屆市議員，任期分別為 1994 至 1998 年及 2000 至 2004 年，並於 2003 年 4 月至 7 月間，即 Arcadia 建市百週年之際，擔任輪值市長。
+            1994 年，張醫師競選 Arcadia 市議員，期望能為移民社區以及整個城市提供更好的服務。他當選並擔任兩屆市議員，任期分別為 1994 至 1998 年及 2000 至 2004 年，並於 2003 年 4 月至 7 月間，即 Arcadia 建市百週年之際，擔任輪值市長。
           </p>
           <p class="leading-relaxed">
-            在市議會任職期間，他對 Arcadia 公共圖書館的整修具有重要影響，並大力支持新建的 Arcadia 警察總部。
+            在市議會任職期間，他對 Arcadia 公共圖書館的整修扮演了重要角色，並大力支持新建的 Arcadia 警察總部。
           </p>
         </div>
       </div>
@@ -97,7 +97,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
   <section class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        執業資格和專業資訊
+        執業資格與專業資訊
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
@@ -113,7 +113,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
             {pl.school}
           </p>
           <p class="text-gray-600 text-sm">
-            畢業於 {practice.education.year}
+            {practice.education.year} 年畢業
           </p>
         </div>
 
@@ -138,7 +138,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
   <section class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        委員會認證
+        專科認證
       </h2>
 
       <div class="grid grid-cols-1 gap-8 max-w-md mx-auto">
