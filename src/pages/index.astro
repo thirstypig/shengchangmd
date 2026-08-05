@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 
 const locale = 'en';
 const title = `${practice.doctorName} | Board-Certified Family Physician | San Gabriel, CA`;
-const description = `Board-certified family physician in San Gabriel, California. Dr. Chang provides comprehensive family medicine and internal medicine. Now accepting new patients.`;
+const description = `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Immigration medical services, citizenship exam waiver reports, medical-legal reports, stem cell therapy, and family medicine.`;
 const canonicalUrl = new URL('/', Astro.site).href;
 ---
 
@@ -19,11 +19,11 @@ const canonicalUrl = new URL('/', Astro.site).href;
 >
   {/* Hero Section */}
   <HeroSection
-    headline="Meet Dr. Sheng Chang, M.D."
-    subheadline="Comprehensive family medicine and internal medicine care serving San Gabriel and surrounding communities. Board-certified, compassionate, and dedicated to your health."
+    headline="Meet Dr. Sheng Chang, M.D., Ph.D."
+    subheadline="Family medicine serving San Gabriel and surrounding communities. Board-certified, compassionate, and dedicated to your health."
     locale={locale}
     image="/images/dr-sheng-chang.jpg"
-    imageAlt="Portrait of Dr. Sheng Chang, M.D."
+    imageAlt="Portrait of Dr. Sheng Chang"
     imageCaption="Board-Certified Family Physician"
   />
 
@@ -35,95 +35,62 @@ const canonicalUrl = new URL('/', Astro.site).href;
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
-          icon="family"
-          title="Family Medicine"
-          description="Comprehensive care for the whole family, from preventive health to acute illness treatment."
-          href="/services/#family-medicine"
-        />
-        <ServiceCard
-          icon="stethoscope"
-          title="Internal Medicine"
-          description="Expert care for complex medical conditions and chronic disease management in adults."
-          href="/services/#internal-medicine"
+          icon="document"
+          title="Immigration Medical Services"
+          description="Form I-693 completed and sealed by a USCIS-designated civil surgeon, including required screenings and vaccination review."
+          href="/services/#immigration-exams"
         />
         <ServiceCard
           icon="shield"
-          title="Preventive Care"
-          description="Annual physical exams, health screenings, and wellness visits to keep you healthy."
-          href="/services/#preventive-care"
+          title="Citizenship Exam Waiver Medical Evaluation Report"
+          description="Form N-648 certification for naturalisation applicants who cannot meet the English or civics requirements for medical reasons."
+          href="/services/#citizenship-waiver"
         />
         <ServiceCard
           icon="chart"
-          title="Chronic Disease Management"
-          description="Ongoing management of diabetes, hypertension, and other chronic conditions."
-          href="/services/#chronic-disease"
+          title="Medical-Legal Reports"
+          description="Written medical reports and evaluations prepared for legal and administrative matters."
+          href="/services/#medical-legal"
         />
         <ServiceCard
-          icon="document"
-          title="Immigration Medical Exams"
-          description="Medical examinations for immigration applications, including required screenings and vaccination review."
-          href="/services/#immigration-exams"
+          icon="stethoscope"
+          title="Stem Cell Therapy"
+          description="Stem cell therapy is offered at the San Gabriel office. Call to discuss whether it is appropriate for your situation."
+          href="/services/#stem-cell-therapy"
+        />
+        <ServiceCard
+          icon="family"
+          title="Family Medicine"
+          description="Continuing care for patients of all ages, from preventive health to acute illness treatment."
+          href="/services/#family-medicine"
         />
       </div>
     </div>
   </section>
 
-  {/* Trust Section */}
-  <section class="py-16 md:py-24 bg-gray-50">
+  {/*
+    What remains of the old "Why Trust Dr. Chang?" section. The owner removed
+    that heading along with its "Board Certified", "Experience" and hospital
+    affiliations blocks, then asked for the languages list and the
+    accepting-new-patients badge to stay — so they live here on their own,
+    without the credentials framing.
+  */}
+  <section class="py-12 md:py-16 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
-        Why Trust Dr. Chang?
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Credentials */}
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            Board Certified
-          </h3>
-          <ul class="space-y-4 text-gray-700">
-            {practice.boardCertifications.map((cert) => (
-              <li class="flex gap-3">
-                <span class="text-primary-600 font-bold">✓</span>
-                <div>
-                  <p class="font-semibold">{cert.specialty}</p>
-                  <p class="text-sm text-gray-600">{cert.board}</p>
-                  <p class="text-xs text-gray-500">Certified {cert.firstCertified}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+      <div class="flex flex-col md:flex-row md:items-center md:justify-center gap-8 md:gap-16">
+        <div class="text-center md:text-left">
+          <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">
+            Languages Spoken
+          </h2>
+          <p class="text-lg text-gray-700">{practice.languages.join(' · ')}</p>
         </div>
-
-        {/* Education & Affiliations */}
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            Experienced & Affiliated
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <p class="font-semibold text-gray-900">Medical Education</p>
-              <p class="text-gray-700">M.D., {practice.education.school}, {practice.education.year}</p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">Hospital Affiliations</p>
-              <ul class="text-gray-700 space-y-1">
-                {practice.hospitalAffiliations.map((hospital) => (
-                  <li>• {hospital}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">Languages</p>
-              <p class="text-gray-700">{practice.languages.join(', ')}</p>
-            </div>
-            {practice.acceptingNewPatients && (
-              <div class="bg-primary-50 border border-success rounded-lg p-4">
-                <p class="text-success font-semibold">✓ Accepting New Patients</p>
-              </div>
-            )}
+        {practice.acceptingNewPatients && (
+          <div class="bg-white border border-success rounded-lg px-6 py-4 text-center">
+            <p class="text-success font-semibold">
+              <span aria-hidden="true">✓</span> Accepting New Patients
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   </section>

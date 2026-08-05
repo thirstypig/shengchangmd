@@ -2,7 +2,7 @@
 import '@/styles/global.css';
 import { getCollection } from 'astro:content';
 import { practice } from '@data/practice';
-import { locales, getTranslation, getPracticeLocalized } from '@i18n/locales';
+import { locales, getTranslation } from '@i18n/locales';
 import Header from '@components/Header.astro';
 import StickyCallBar from '@components/StickyCallBar.astro';
 import JsonLd from '@components/JsonLd.astro';
@@ -38,7 +38,6 @@ const noIndex = !allowIndexing || !isReviewed;
 const finalOgImage = ogImage || new URL('/og-image.png', Astro.site).href;
 
 const t = (key: string) => getTranslation(locale, key);
-const pl = getPracticeLocalized(locale);
 
 // Privacy and accessibility exist only in English so far; point non-English
 // visitors at the English copy rather than a 404 until they are translated.
@@ -177,11 +176,13 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
           </dl>
         </div>
 
-        <div class="footer-column">
-          <h3>{t('footer.professional')}</h3>
-          <p>{t('footer.license')} {practice.medicalLicenseNumber}</p>
-          <p>{pl.licenseStatus}</p>
-        </div>
+        {/*
+          The footer's "Professional" column was removed 2026-08-05 at the
+          owner's request — it held the California medical licence, and after
+          that came off there was nothing he wanted in its place. The grid is
+          `auto-fit, minmax(250px, 1fr)`, so the remaining columns reflow on
+          their own.
+        */}
 
         <div class="footer-column">
           <h3>{t('footer.legal')}</h3>

@@ -4,8 +4,8 @@ import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
 
-const title = 'About Dr. Sheng Chang, M.D. | Board-Certified Family Physician';
-const description = 'Learn about Dr. Sheng Chang, M.D., a board-certified family physician with decades of clinical experience in San Gabriel, California. Education, certifications, and hospital affiliations.';
+const title = 'About Dr. Sheng Chang, M.D., Ph.D. | Board-Certified Family Physician';
+const description = 'Learn about Dr. Sheng Chang, M.D., Ph.D., a board-certified family physician in San Gabriel, California, who has practised in the San Gabriel Valley since 1979 and served two terms on the Arcadia City Council.';
 const canonicalUrl = new URL('/about/', Astro.site).href;
 ---
 
@@ -17,11 +17,11 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
 >
   {/* Hero Section */}
   <HeroSection
-    headline="About Dr. Sheng Chang, M.D."
-    subheadline="A board-certified family physician with decades of clinical experience dedicated to providing compassionate, comprehensive medical care to patients of all ages in San Gabriel and the surrounding communities."
+    headline="About Dr. Sheng Chang, M.D., Ph.D."
+    subheadline="A board-certified family physician who has cared for patients in the San Gabriel Valley since 1979, and served the City of Arcadia for two terms on its city council."
     locale="en"
     image="/images/dr-sheng-chang.jpg"
-    imageAlt="Portrait of Dr. Sheng Chang, M.D."
+    imageAlt="Portrait of Dr. Sheng Chang"
     imageCaption="Board-Certified Family Physician"
   />
 
@@ -34,13 +34,42 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
           <p class="leading-relaxed">
-            Dr. Sheng Chang brings decades of dedicated clinical experience to his family medicine practice in San Gabriel. His medical career is built on the foundation of rigorous scientific training, combined with a deep commitment to patient-centered care and building long-lasting relationships with his patients.
+            Dr. Sheng Chang moved to California in 1979 and settled in Arcadia, where he has practised as a family physician serving the Greater San Gabriel Valley ever since. He is board-certified by the American Board of Family Medicine and is a USCIS-designated civil surgeon.
           </p>
           <p class="leading-relaxed">
-            As a board-certified family physician, Dr. Chang provides comprehensive primary care for patients of all ages. He specializes in preventive medicine, chronic disease management, and internal medicine, with particular expertise in managing complex medical conditions. His approach emphasizes personalized, thoughtful care tailored to each patient's individual needs, goals, and health status.
+            At Garfield Medical Center, Dr. Chang served as Chair of the Department of Family Practice, later as Chief of Staff, and as a member of the hospital's governing board.
           </p>
           <p class="leading-relaxed">
-            Dr. Chang's clinical philosophy centers on evidence-based medicine, patient education, and the establishment of continuity of care—factors that research shows lead to better health outcomes and greater patient satisfaction. He believes that the best medical care comes from truly understanding each patient's complete health picture and working collaboratively to achieve their health goals.
+            Dr. Chang has remained active in the National Taiwan University Medical College Alumni Association, serving as president of both the local chapter and the national organisation. In 2001 he organised the association's national event at Disneyland.
+          </p>
+          <p class="leading-relaxed">
+            He is also a writer. In 2023 he published a book, <em>Endless Talk</em>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Community & Public Service Section */}
+  <section class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+          Community &amp; Public Service
+        </h2>
+        <div class="prose prose-lg text-gray-700 space-y-6">
+          <p class="leading-relaxed">
+            In 1982, Dr. Chang and his wife, <a
+              href="https://minmeychang.com"
+              class="text-primary-700 underline underline-offset-2 hover:no-underline"
+              target="_blank"
+              rel="noopener noreferrer">Min Mey Chang</a>, founded the Arcadia Chinese Association to help new immigrants — most of them from Taiwan — who did not yet speak English well. The association also helps the immigrant community communicate with the Arcadia city government and the school district.
+          </p>
+          <p class="leading-relaxed">
+            In 1994, Dr. Chang ran for the Arcadia City Council in order to serve the immigrant community and the city as a whole. He was elected to two terms, from 1994 to 1998 and from 2000 to 2004, and served as rotating mayor from April to July 2003, Arcadia's centennial year.
+          </p>
+          <p class="leading-relaxed">
+            During his years on the council, he was influential in the renovation of the Arcadia Public Library and a strong supporter of the new Arcadia police headquarters.
           </p>
         </div>
       </div>
@@ -48,15 +77,15 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
   </section>
 
   {/* Credentials & Languages Section */}
-  <section class="py-16 md:py-24 bg-gray-50">
+  <section class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        Credentials & Professional Information
+        Credentials &amp; Professional Information
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
         {/* Medical Degree */}
-        <div class="bg-white rounded-lg p-8 border border-gray-200">
+        <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
           <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
             Medical Degree
           </h3>
@@ -71,24 +100,8 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
           </p>
         </div>
 
-        {/* Medical License */}
-        <div class="bg-white rounded-lg p-8 border border-gray-200">
-          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
-            California Medical License
-          </h3>
-          <p class="text-gray-700 mb-2">
-            <span class="font-semibold">License #{practice.medicalLicenseNumber}</span>
-          </p>
-          <p class="text-gray-600 text-sm mb-2">
-            {practice.medicalLicenseStatus}
-          </p>
-          <p class="text-gray-600 text-xs">
-            Expires {practice.licenseExpiresDate}
-          </p>
-        </div>
-
         {/* Languages */}
-        <div class="bg-white rounded-lg p-8 border border-gray-200">
+        <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
           <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
             Languages
           </h3>
@@ -104,34 +117,18 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
     </div>
   </section>
 
-  {/* Postgraduate Training Section */}
-  <section class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-900">
-          Postgraduate Training
-        </h2>
-        <div class="bg-primary-50 border-l-4 border-primary-600 p-8 rounded-r-lg">
-          <p class="text-gray-700 mb-3 leading-relaxed">
-            <span class="font-semibold text-gray-900">{practice.education.postgraduateTraining}</span> in family medicine and internal medicine at <span class="font-semibold">{practice.education.residency}</span>, where Dr. Chang developed his clinical expertise and refined his patient-centered approach to comprehensive medical care.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   {/* Board Certifications Section */}
   <section class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-        Board Certifications
+        Board Certification
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 gap-8 max-w-md mx-auto">
         {practice.boardCertifications.map((cert) => (
-          <div class="bg-white rounded-lg p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+          <div class="bg-white rounded-lg p-8 border border-gray-200 shadow-sm">
             <div class="flex items-start gap-4 mb-4">
-              <div class="text-3xl">✓</div>
+              <div class="text-3xl" aria-hidden="true">✓</div>
               <div>
                 <h3 class="font-serif text-xl font-bold text-gray-900">
                   {cert.specialty}
@@ -157,41 +154,9 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
                 <p class="text-gray-600 text-sm">Status</p>
                 <p class="text-gray-900 font-semibold text-success">{cert.currentStatus}</p>
               </div>
-              {cert.maintenanceRequired && (
-                <div class="pt-2 border-t border-gray-200">
-                  <p class="text-xs text-gray-600 italic">Maintenance of Certification (MOC) required</p>
-                </div>
-              )}
             </div>
           </div>
         ))}
-      </div>
-    </div>
-  </section>
-
-  {/* Hospital Affiliations Section */}
-  <section class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="font-serif text-3xl md:text-4xl font-bold mb-12 text-gray-900">
-          Hospital Affiliations
-        </h2>
-
-        <div class="space-y-4">
-          {practice.hospitalAffiliations.map((hospital) => (
-            <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 flex items-start gap-4">
-              <div>
-                <p class="text-gray-900 font-semibold text-lg">{hospital}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <p class="text-gray-700">
-            Dr. Chang maintains active affiliations with these esteemed healthcare institutions, ensuring access to comprehensive hospital services and consultation when needed for his patients.
-          </p>
-        </div>
       </div>
     </div>
   </section>

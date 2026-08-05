@@ -16,7 +16,7 @@
  * are aria-hidden rather than given redundant alt text.
  */
 // Kept on one line: Astro's parser rejects a multi-line union with leading `|`.
-export type ServiceSubject = 'family' | 'internal' | 'preventive' | 'chronic' | 'immigration';
+export type ServiceSubject = 'family' | 'internal' | 'preventive' | 'chronic' | 'immigration' | 'citizenship' | 'legal' | 'stemcell';
 
 interface Props {
   subject: ServiceSubject;
@@ -56,6 +56,20 @@ const { subject, style = 'soft', class: className = '' } = Astro.props;
             </>
           )}
           {subject === 'immigration' && <circle cx="80" cy="80" r="15" />}
+          {subject === 'citizenship' && <circle cx="86" cy="28" r="14" />}
+          {subject === 'legal' && (
+            <>
+              <path d="M20 47a12 12 0 0 0 24 0Z" />
+              <path d="M76 47a12 12 0 0 0 24 0Z" />
+            </>
+          )}
+          {subject === 'stemcell' && (
+            <>
+              <circle cx="50" cy="58" r="23" />
+              <circle cx="86" cy="38" r="11" />
+              <circle cx="88" cy="78" r="14" />
+            </>
+          )}
         </g>
       )
     }
@@ -123,6 +137,51 @@ const { subject, style = 'soft', class: className = '' } = Astro.props;
             <path d="M44 52h30M44 63h30M44 74h16" class="rules" />
             <circle cx="80" cy="80" r="12" class="seal" />
             <path d="M74 80l4.5 4.5L87 76" class="check" />
+          </>
+        )
+      }
+
+      {
+        subject === 'citizenship' && (
+          <>
+            {/* An open book — the English and civics study material — with a
+                certified mark above it. Deliberately a different silhouette
+                from `immigration`, which is already a form with a seal. */}
+            <path d="M60 52c-9-6-20-9-31-9H20v46h9c11 0 22 3 31 9" />
+            <path d="M60 52c9-6 20-9 31-9h9v46h-9c-11 0-22 3-31 9" />
+            <path d="M60 52v46" class="rules" />
+            <circle cx="86" cy="28" r="13" class="seal" />
+            <path d="M80 28l4.5 4.5L92.5 24" class="check" />
+          </>
+        )
+      }
+
+      {
+        subject === 'legal' && (
+          <>
+            {/* Balance scales — the report weighed in a legal proceeding. */}
+            <circle cx="60" cy="26" r="4" class="dot" />
+            <path d="M60 30v66" />
+            <path d="M26 40h68" />
+            <path d="M32 40v7M88 40v7" class="rules" />
+            <path d="M20 47a12 12 0 0 0 24 0Z" />
+            <path d="M76 47a12 12 0 0 0 24 0Z" />
+            <path d="M44 96h32" class="ground" />
+          </>
+        )
+      }
+
+      {
+        subject === 'stemcell' && (
+          <>
+            {/* Cells with visible nuclei, a larger one alongside smaller ones.
+                No claim is being made here — it is a cell, not an outcome. */}
+            <circle cx="50" cy="58" r="23" />
+            <circle cx="50" cy="58" r="8" class="dot" />
+            <circle cx="86" cy="38" r="11" />
+            <circle cx="86" cy="38" r="4" class="dot" />
+            <circle cx="88" cy="78" r="14" />
+            <circle cx="88" cy="78" r="5" class="dot" />
           </>
         )
       }

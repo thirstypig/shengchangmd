@@ -14,7 +14,7 @@ const localBusinessSchema = {
   '@type': 'LocalBusiness',
   '@id': new URL('/#organization', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
@@ -40,7 +40,7 @@ const medicalBusinessSchema = {
   '@type': 'MedicalBusiness',
   '@id': new URL('/#medical-business', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides comprehensive family medicine and internal medicine services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
   address: {
@@ -106,10 +106,6 @@ const doctorSchema = {
       ? `${cert.mostRecentCertification + 10}`
       : undefined,
   })),
-  affiliation: practice.hospitalAffiliations.map((hospital) => ({
-    '@type': 'Organization',
-    name: hospital,
-  })),
   educationDetails: {
     '@type': 'EducationEvent',
     name: `${practice.education.medicalDegree} from ${practice.education.school}`,
@@ -161,9 +157,10 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': new URL('/services/#internal-medicine', Astro.site).href,
-    name: 'Internal Medicine',
-    description: 'Expert care for complex medical conditions and chronic disease management in adults.',
+    '@id': new URL('/services/#immigration-exams', Astro.site).href,
+    name: 'Immigration Medical Services (Form I-693)',
+    description:
+      'Immigration medical examination completed by a USCIS-designated civil surgeon, with Form I-693 sealed for submission with an adjustment of status application.',
     provider: {
       '@type': 'MedicalBusiness',
       name: practice.doctorName,
@@ -176,9 +173,10 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': new URL('/services/#preventive-care', Astro.site).href,
-    name: 'Preventive Care',
-    description: 'Annual physical exams, health screenings, and wellness visits to keep you healthy.',
+    '@id': new URL('/services/#citizenship-waiver', Astro.site).href,
+    name: 'Citizenship Exam Waiver Medical Evaluation Report (Form N-648)',
+    description:
+      'Medical certification for disability exceptions, Form N-648, for naturalisation applicants seeking an exception to the English and civics testing requirements. USCIS decides the request; the physician provides the certification.',
     provider: {
       '@type': 'MedicalBusiness',
       name: practice.doctorName,
@@ -191,9 +189,10 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': new URL('/services/#chronic-disease-management', Astro.site).href,
-    name: 'Chronic Disease Management',
-    description: 'Ongoing management of diabetes, hypertension, and other chronic conditions.',
+    '@id': new URL('/services/#medical-legal', Astro.site).href,
+    name: 'Medical-Legal Reports',
+    description:
+      'Written medical reports and evaluations prepared for legal and administrative proceedings.',
     provider: {
       '@type': 'MedicalBusiness',
       name: practice.doctorName,
@@ -203,6 +202,14 @@ const servicesSchema = [
       name: 'San Gabriel, California',
     },
   },
+  /*
+    Stem cell therapy is deliberately absent from the structured data while the
+    page copy is still an unconfirmed placeholder. Structured data is the part
+    search engines and assistants ingest verbatim, so emitting a MedicalService
+    for a treatment whose type, indications and regulatory basis nobody has
+    supplied would assert a clinical claim the practice has not reviewed. Add it
+    here once services.astro carries confirmed copy.
+  */
 ];
 
 // Combine all schemas

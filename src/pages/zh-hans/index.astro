@@ -4,19 +4,19 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getTranslation, getPracticeLocalized } from '@i18n/locales';
+import { getPracticeLocalized } from '@i18n/locales';
 
 const locale = 'zh-hans';
 const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 委员会认证家庭医生 | 加州圣盖博`;
-const description = `加州圣盖博的委员会认证家庭医生。张医生提供全面的家庭医学与内科诊疗，现正接受新患者。`;
+const description = `加州圣盖博的委员会认证家庭医生，并为美国移民局指定体检医师。提供移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学。`;
 const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>
   <HeroSection
-    headline="张胜雄 医生"
-    subheadline="于圣盖博及邻近社区提供全面的家庭医学与内科诊疗。委员会认证，看诊细心，普通话与英语皆可沟通。"
+    headline="张胜雄 医生、博士"
+    subheadline="于圣盖博及邻近社区提供家庭医学诊疗。委员会认证，看诊细心，以您的健康为念。"
     {locale}
     image="/images/dr-sheng-chang.jpg"
     imageAlt="张胜雄医生肖像"
@@ -31,107 +31,59 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
-          icon="family"
-          title="家庭医学"
-          description="从预防保健到急性病症治疗，为全家人提供全面照护。"
-          href="/zh-hans/services/#family-medicine"
-          linkLabel="了解更多"
-        />
-        <ServiceCard
-          icon="stethoscope"
-          title="内科医学"
-          description="为成人的复杂病症与慢性疾病提供专业诊疗与管理。"
-          href="/zh-hans/services/#internal-medicine"
+          icon="document"
+          title="移民医疗服务"
+          description="由美国移民局指定体检医师填写并密封 Form I-693，包含必要筛检与疫苗记录审核。"
+          href="/zh-hans/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="预防保健"
-          description="年度健康检查、筛检与保健咨询，协助您维持健康。"
-          href="/zh-hans/services/#preventive-care"
+          title="公民入籍考试豁免医疗评估报告"
+          description="为因医疗原因无法符合英语或公民常识考试要求的入籍申请人填写 Form N-648。"
+          href="/zh-hans/services/#citizenship-waiver"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="chart"
-          title="慢性病管理"
-          description="持续管理糖尿病、高血压及其他慢性疾病。"
-          href="/zh-hans/services/#chronic-disease"
+          title="医疗法律报告"
+          description="为法律及行政程序撰写医疗报告与评估。"
+          href="/zh-hans/services/#medical-legal"
           linkLabel="了解更多"
         />
         <ServiceCard
-          icon="document"
-          title="移民体检"
-          description="办理移民申请所需的身体检查，包含必要筛检与疫苗记录审核。"
-          href="/zh-hans/services/#immigration-exams"
+          icon="stethoscope"
+          title="干细胞治疗"
+          description="本诊所提供干细胞治疗。欢迎致电了解是否适合您的情况。"
+          href="/zh-hans/services/#stem-cell-therapy"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="family"
+          title="家庭医学"
+          description="为各年龄层患者提供持续照护，从预防保健到急性病症治疗。"
+          href="/zh-hans/services/#family-medicine"
           linkLabel="了解更多"
         />
       </div>
     </div>
   </section>
 
-  {/* 专业资格 */}
-  <section class="py-16 md:py-24 bg-gray-50">
+  {/* 语言与新患者 — see the note in src/pages/index.astro */}
+  <section class="py-12 md:py-16 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
-      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
-        为何选择张医生
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">委员会认证</h3>
-          <ul class="space-y-4 text-gray-700">
-            {
-              practice.boardCertifications.map((cert) => (
-                <li class="flex gap-3">
-                  <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
-                  <div>
-                    <p class="font-semibold">{pl.specialties[cert.specialty] ?? cert.specialty}</p>
-                    <p class="text-sm text-gray-600">{pl.boards[cert.board] ?? cert.board}</p>
-                    <p class="text-xs text-gray-500">认证年份 {cert.firstCertified}</p>
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
+      <div class="flex flex-col md:flex-row md:items-center md:justify-center gap-8 md:gap-16">
+        <div class="text-center md:text-left">
+          <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">看诊语言</h2>
+          <p class="text-lg text-gray-700">{pl.languages.join(' · ')}</p>
         </div>
-
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            资历与医院关系
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <p class="font-semibold text-gray-900">医学教育</p>
-              <p class="text-gray-700">
-                M.D.，{pl.school}，{practice.education.year}
-              </p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">合作医院</p>
-              <ul class="text-gray-700 space-y-1">
-                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
-              </ul>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">语言</p>
-              <p class="text-gray-700">英语、普通话</p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">门诊时间</p>
-              <p class="text-gray-700">{getTranslation(locale, 'hoursWeekday')}</p>
-              <p class="text-gray-600 text-sm">{getTranslation(locale, 'hoursWeekend')}</p>
-            </div>
-            {
-              practice.acceptingNewPatients && (
-                <div class="bg-primary-50 border border-success rounded-lg p-4">
-                  <p class="text-success font-semibold">
-                    <span aria-hidden="true">✓</span> 现正接受新患者
-                  </p>
-                </div>
-              )
-            }
+        {practice.acceptingNewPatients && (
+          <div class="bg-white border border-success rounded-lg px-6 py-4 text-center">
+            <p class="text-success font-semibold">
+              <span aria-hidden="true">✓</span> 现正接受新患者
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   </section>

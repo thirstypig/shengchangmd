@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 
 const title = `Hours & Location | ${practice.doctorName} | San Gabriel, CA`;
-const description = `Office hours, location, directions, and parking information for Dr. Chang's medical practice in San Gabriel, California.`;
+const description = `Office hours, location, directions for Dr. Chang's medical practice in San Gabriel, California.`;
 const canonicalUrl = new URL('/location/', Astro.site).href;
 
 const breadcrumbs = [
@@ -110,21 +110,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
           </a>
         </div>
 
-        <!-- Address Card -->
-        <div class="address-card">
-          <h2>Address</h2>
-          <p class="address-full">
-            {practice.address}
-          </p>
-        </div>
 
-        <!-- Parking Info -->
-        <div class="parking-box">
-          <h2>Parking</h2>
-          <p>
-            Free parking is available in the building lot. Street parking is also available on Las Tunas Drive and surrounding streets.
-          </p>
-        </div>
       </div>
     </div>
   </section>
@@ -167,9 +153,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   }
 
   .hours-box,
-  .contact-box,
-  .address-card,
-  .parking-box {
+  .contact-box {
     padding: 1.5rem;
     background: var(--surface-sunken);
     border: 1px solid var(--line);
@@ -177,9 +161,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   }
 
   .hours-box h2,
-  .contact-box h2,
-  .address-card h2,
-  .parking-box h2 {
+  .contact-box h2 {
     font-size: 1.2rem;
     margin: 0 0 1rem;
     font-weight: 600;
@@ -342,19 +324,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
     color: var(--brand-strong);
   }
 
-  .address-full {
-    font-size: 1rem;
-    color: var(--text);
-    line-height: 1.8;
-    margin: 0;
-  }
 
-  .parking-box p {
-    font-size: 1rem;
-    color: var(--text);
-    line-height: 1.8;
-    margin: 0;
-  }
 
   /* Responsive */
   @media (max-width: 768px) {

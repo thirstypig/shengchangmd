@@ -45,17 +45,16 @@ export const translations = {
     callOffice: 'Call office',
     serviceCards: {
       familyMedicine: 'Family Medicine',
-      chronicDiseaseManagement: 'Chronic Disease Management',
-      preventiveCare: 'Preventive Care',
-      internalMedicine: 'Internal Medicine',
+      immigrationExams: 'Immigration Medical Services',
+      citizenshipWaiver: 'Citizenship Exam Waiver Medical Evaluation Report',
+      medicalLegal: 'Medical-Legal Reports',
+      stemCell: 'Stem Cell Therapy',
     },
     footer: {
       hours: 'Hours',
       address: 'Address',
       phone: 'Phone',
-      license: 'California Medical License',
       officeInformation: 'Office Information',
-      professional: 'Professional',
       legal: 'Legal',
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
@@ -86,17 +85,16 @@ export const translations = {
     callOffice: '致電診所',
     serviceCards: {
       familyMedicine: '家庭醫學',
-      chronicDiseaseManagement: '慢性病管理',
-      preventiveCare: '預防保健',
-      internalMedicine: '內科醫學',
+      immigrationExams: '移民醫療服務',
+      citizenshipWaiver: '公民入籍考試豁免醫療評估報告',
+      medicalLegal: '醫療法律報告',
+      stemCell: '幹細胞治療',
     },
     footer: {
       hours: '門診時間',
       address: '地址',
       phone: '電話',
-      license: '加州醫療執照',
       officeInformation: '診所資訊',
-      professional: '專業資格',
       legal: '法律',
       rightsReserved: '版權所有。',
       privacy: '隱私政策',
@@ -127,17 +125,16 @@ export const translations = {
     callOffice: '致电诊所',
     serviceCards: {
       familyMedicine: '家庭医学',
-      chronicDiseaseManagement: '慢性病管理',
-      preventiveCare: '预防保健',
-      internalMedicine: '内科医学',
+      immigrationExams: '移民医疗服务',
+      citizenshipWaiver: '公民入籍考试豁免医疗评估报告',
+      medicalLegal: '医疗法律报告',
+      stemCell: '干细胞治疗',
     },
     footer: {
       hours: '门诊时间',
       address: '地址',
       phone: '电话',
-      license: '加州医疗执照',
       officeInformation: '诊所信息',
-      professional: '专业资格',
       legal: '法律',
       rightsReserved: '版权所有。',
       privacy: '隐私政策',
@@ -183,67 +180,53 @@ export function getTranslation(locale: string, key: string): string {
   Deliberately NOT localised, and why — recorded so these stop reading as
   oversights the next time someone audits for English on Chinese pages:
 
-  - `practice.education.residency` ("University of Alabama Hospital") and
-    `practice.hospitalAffiliations` (San Gabriel Valley Medical Center, College
-    Hospital Costa Mesa) are US institutions with no established Chinese name.
-    Patients and USCIS paperwork cite them in English. Translating them would
-    invent a name nobody uses.
-  - `practice.doctorName` ("Sheng Chang, M.D.") stays English in the portrait
+  - `practice.doctorName` ("Sheng Chang, M.D., Ph.D.") stays English in the portrait
     caption beneath the Chinese headline 張勝雄 醫師 — showing both is the point.
   - `education.school` IS localised, because 國立臺灣大學醫學院 is the
     institution's own name, not a translation of the English one.
+  - Form numbers (I-693, N-648) stay as-is in every locale. They are USCIS
+    identifiers, not words; a patient has to write the same string on the form.
 
   The test is not "is it a proper noun" but "does this entity have a real name in
   the target language that readers would expect".
+
+  Entries for `licenseStatus`, `licenseExpires` and `postgraduateTraining` were
+  removed 2026-08-05 along with the source fields in practice.ts. See the comment
+  block there for what was removed and why.
 */
 export const practiceLocalized = {
   en: {
-    licenseStatus: 'License Renewed & Current',
-    licenseExpires: 'July 31, 2028',
-    languages: ['English', 'Mandarin'],
-    postgraduateTraining: 'Three years of postgraduate training',
+    languages: ['English', 'Mandarin', 'Cantonese', 'Spanish', 'Vietnamese'],
     school: 'National Taiwan University College of Medicine',
     specialties: {
       'Family Medicine': 'Family Medicine',
-      'Anatomic Pathology & Clinical Pathology': 'Anatomic Pathology & Clinical Pathology',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': 'American Board of Family Medicine',
-      'American Board of Pathology': 'American Board of Pathology',
     } as Record<string, string>,
     certStatus: { Certified: 'Certified' } as Record<string, string>,
   },
   'zh-hant': {
-    licenseStatus: '執照已更新，現行有效',
-    licenseExpires: '2028年7月31日',
-    languages: ['英語', '國語'],
-    postgraduateTraining: '三年畢業後醫學訓練',
+    languages: ['英語', '國語', '粵語', '西班牙語', '越南語'],
     // A Taiwanese institution with an established Chinese name — should never
     // appear transliterated or in English on a Chinese page.
     school: '國立臺灣大學醫學院',
     specialties: {
       'Family Medicine': '家庭醫學',
-      'Anatomic Pathology & Clinical Pathology': '解剖病理學與臨床病理學',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': '美國家庭醫學專科委員會',
-      'American Board of Pathology': '美國病理學專科委員會',
     } as Record<string, string>,
     certStatus: { Certified: '認證有效' } as Record<string, string>,
   },
   'zh-hans': {
-    licenseStatus: '执照已续期，现行有效',
-    licenseExpires: '2028年7月31日',
-    languages: ['英语', '普通话'],
-    postgraduateTraining: '三年毕业后医学培训',
+    languages: ['英语', '普通话', '粤语', '西班牙语', '越南语'],
     school: '国立台湾大学医学院',
     specialties: {
       'Family Medicine': '家庭医学',
-      'Anatomic Pathology & Clinical Pathology': '解剖病理学与临床病理学',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': '美国家庭医学专科委员会',
-      'American Board of Pathology': '美国病理学专科委员会',
     } as Record<string, string>,
     certStatus: { Certified: '认证有效' } as Record<string, string>,
   },

@@ -82,6 +82,37 @@ colour.
   `practice.civilSurgeon`. Note the term misleads — "civil surgeon" is a USCIS
   designation for licensed physicians of any specialty, not a surgical
   qualification.
+- **The Ph.D. is asserted, not evidenced.** Added 2026-08-05 on Dr. Chang's own
+  say-so, relayed by the owner, after the concern was raised and he confirmed.
+  Nothing else corroborates it: this repo held M.D. only, and his Healthgrades
+  and Doximity profiles list M.D. only. **Institution, field and year are all
+  unknown**, which is why it appears in `doctorName`/`credentials` and
+  deliberately *not* in `education` — putting it there would assert that
+  National Taiwan University granted it. Fill `education` in properly once those
+  three facts arrive.
+- **Stem cell therapy copy is a placeholder and is live.** Added 2026-08-05 at
+  the owner's request, with no detail supplied: the type of product or procedure,
+  the indications, and the regulatory basis are all unknown. The copy on
+  `services.astro` therefore asserts no benefit, indication, success rate or
+  safety claim — it says the service exists and to call. Do not expand it without
+  the owner supplying specifics; the FDA and FTC have both acted on marketing
+  claims for unapproved stem cell products. It is deliberately excluded from the
+  JSON-LD in `JsonLd.astro` for the same reason.
+- **Medical-legal report scope is unconfirmed.** Listed as a service without
+  detail. Unknown whether it covers personal injury, IMEs, disability or workers'
+  comp, who may instruct, and whether testimony is offered.
+- **Wake Forest University.** The owner asked whether Dr. Chang has a connection.
+  Nothing was found in `practice.ts`, Healthgrades, Doximity, or search. His ABFM
+  certification (1978) postdates his pathology residency (ended 1973), so a family
+  practice residency in that gap would fit — but that is a hypothesis. Publish
+  nothing on it without Dr. Chang confirming.
+- **Two details normalised from the owner's bio text**, both worth confirming:
+  "Arcadia city Library" was rendered as *Arcadia Public Library*, and the
+  1994–1998 / 2000–2004 council terms are stated as given. The bio also said
+  "practising Family Medicine since 1997", which contradicted "moved to
+  California in 1979" and the council dates; 1979 was used, matching the
+  February 13, 1979 licence issue date. A rotating mayoralty of April–July 2003
+  is unusually short and is stated as supplied.
 - **Doctor's portrait** comes from a photograph the owner supplied, cropped and
   colour-corrected to `public/images/dr-sheng-chang.jpg` at 1024×1024. It is a
   banquet photo, not a studio headshot — serviceable, but a clinical portrait
@@ -106,7 +137,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev      # http://localhost:3120
 npm run build    # 22 pages; postbuild runs scripts/verify-css.mjs
-npm test         # 27 vitest tests
+npm test         # 42 vitest tests
 ```
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
@@ -117,7 +148,7 @@ touching the build config.
 
 ## Tests
 
-`tests/i18n/locale-coverage.test.ts` — 27 tests, run with `npm test`.
+`tests/i18n/locale-coverage.test.ts` — 42 tests, run with `npm test`.
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:

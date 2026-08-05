@@ -32,7 +32,7 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
-      # 27 tests over the i18n layer. They guard defects that typecheck and build
+      # 42 tests over the i18n layer. They guard defects that typecheck and build
       # cleanly — a practice.ts value with no translation, or a key missing from a
       # locale, either of which puts English or a raw key name in front of a
       # patient. Runs before the build so a locale regression blocks the deploy
@@ -45,11 +45,23 @@ jobs:
       # this site once shipped with zero compiled CSS while the build passed.
       - run: npm run build
         env:
-          SITE_URL: https://shengchangmd.bahtzang.com
+          # Feeds every canonical URL, sitemap entry, hreflang link and JSON-LD
+          # @id. Moved to the apex on 2026-08-05 with the domain migration —
+          # until then it still named shengchangmd.bahtzang.com, which now 404s,
+          # so the live site was declaring a dead host as its canonical URL.
+          SITE_URL: https://shengchangmd.com
           # Omitted deliberately: with this unset the site renders
-          # <meta name="robots" content="noindex, nofollow">. Set it to "true"
-          # only once the practice has confirmed the insurance carriers, the
-          # doctor's Chinese name, and the immigration-exam scope.
+          # <meta name="robots" content="noindex, nofollow">.
+          #
+          # Two of the three original blockers are cleared — the doctor's
+          # Chinese name and the immigration-exam scope were both confirmed by
+          # the owner on 2026-07-29. What remains:
+          #   - the insurance carrier list on insurance.astro, which was
+          #     generated rather than supplied and is still invented
+          #   - the stem cell therapy copy, which is an unconfirmed placeholder
+          # Turning this on publishes both to search engines and to the
+          # assistants that read structured data. Do not set it until they are
+          # resolved.
           # ALLOW_INDEXING: "true"
 
       - uses: actions/upload-pages-artifact@v3
