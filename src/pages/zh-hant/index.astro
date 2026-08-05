@@ -31,38 +31,38 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
-          icon="family"
-          title="家庭醫學"
-          description="從預防保健到急性病症治療，為全家人提供全面照護。"
-          href="/zh-hant/services/#family-medicine"
-          linkLabel="了解更多"
-        />
-        <ServiceCard
-          icon="stethoscope"
-          title="內科醫學"
-          description="為成人的複雜病症與慢性疾病提供專業診療與管理。"
-          href="/zh-hant/services/#internal-medicine"
+          icon="document"
+          title="移民體檢"
+          description="由美國移民局指定體檢醫師填寫並密封 Form I-693，包含必要篩檢與疫苗紀錄審核。"
+          href="/zh-hant/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="預防保健"
-          description="年度健康檢查、篩檢與保健諮詢，協助您維持健康。"
-          href="/zh-hant/services/#preventive-care"
+          title="公民入籍考試醫療豁免證明"
+          description="為因醫療原因無法符合英語或公民常識考試要求的入籍申請人填寫 Form N-648。"
+          href="/zh-hant/services/#citizenship-waiver"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="chart"
-          title="慢性病管理"
-          description="持續管理糖尿病、高血壓及其他慢性疾病。"
-          href="/zh-hant/services/#chronic-disease"
+          title="醫療法律報告"
+          description="為法律及行政程序撰寫醫療報告與評估。"
+          href="/zh-hant/services/#medical-legal"
           linkLabel="了解更多"
         />
         <ServiceCard
-          icon="document"
-          title="移民體檢"
-          description="辦理移民申請所需的身體檢查，包含必要篩檢與疫苗紀錄審核。"
-          href="/zh-hant/services/#immigration-exams"
+          icon="stethoscope"
+          title="幹細胞治療"
+          description="歡迎致電診所，了解此項治療是否適合您的情況及其內容。"
+          href="/zh-hant/services/#stem-cell-therapy"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="family"
+          title="家庭醫學"
+          description="為各年齡層患者提供持續照護，從預防保健到急性病症治療。"
+          href="/zh-hant/services/#family-medicine"
           linkLabel="了解更多"
         />
       </div>
@@ -97,7 +97,7 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
 
         <div>
           <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            資歷與醫院關係
+            資歷
           </h3>
           <div class="space-y-6">
             <div>
@@ -107,11 +107,15 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
               </p>
             </div>
             <div>
-              <p class="font-semibold text-gray-900">合作醫院</p>
-              <ul class="text-gray-700 space-y-1">
-                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
-              </ul>
+              <p class="font-semibold text-gray-900">在聖蓋博谷執業</p>
+              <p class="text-gray-700">自 1979 年起</p>
             </div>
+            {practice.civilSurgeon && (
+              <div>
+                <p class="font-semibold text-gray-900">移民體檢</p>
+                <p class="text-gray-700">美國移民局指定體檢醫師</p>
+              </div>
+            )}
             <div>
               <p class="font-semibold text-gray-900">語言</p>
               <p class="text-gray-700">英語、國語</p>

@@ -31,38 +31,38 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
-          icon="family"
-          title="家庭医学"
-          description="从预防保健到急性病症治疗，为全家人提供全面照护。"
-          href="/zh-hans/services/#family-medicine"
-          linkLabel="了解更多"
-        />
-        <ServiceCard
-          icon="stethoscope"
-          title="内科医学"
-          description="为成人的复杂病症与慢性疾病提供专业诊疗与管理。"
-          href="/zh-hans/services/#internal-medicine"
+          icon="document"
+          title="移民体检"
+          description="由美国移民局指定体检医师填写并密封 Form I-693，包含必要筛检与疫苗记录审核。"
+          href="/zh-hans/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="预防保健"
-          description="年度健康检查、筛检与保健咨询，协助您维持健康。"
-          href="/zh-hans/services/#preventive-care"
+          title="公民入籍考试医疗豁免证明"
+          description="为因医疗原因无法符合英语或公民常识考试要求的入籍申请人填写 Form N-648。"
+          href="/zh-hans/services/#citizenship-waiver"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="chart"
-          title="慢性病管理"
-          description="持续管理糖尿病、高血压及其他慢性疾病。"
-          href="/zh-hans/services/#chronic-disease"
+          title="医疗法律报告"
+          description="为法律及行政程序撰写医疗报告与评估。"
+          href="/zh-hans/services/#medical-legal"
           linkLabel="了解更多"
         />
         <ServiceCard
-          icon="document"
-          title="移民体检"
-          description="办理移民申请所需的身体检查，包含必要筛检与疫苗记录审核。"
-          href="/zh-hans/services/#immigration-exams"
+          icon="stethoscope"
+          title="干细胞治疗"
+          description="欢迎致电诊所，了解此项治疗是否适合您的情况及其内容。"
+          href="/zh-hans/services/#stem-cell-therapy"
+          linkLabel="了解更多"
+        />
+        <ServiceCard
+          icon="family"
+          title="家庭医学"
+          description="为各年龄层患者提供持续照护，从预防保健到急性病症治疗。"
+          href="/zh-hans/services/#family-medicine"
           linkLabel="了解更多"
         />
       </div>
@@ -97,7 +97,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
 
         <div>
           <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            资历与医院关系
+            资历
           </h3>
           <div class="space-y-6">
             <div>
@@ -107,11 +107,15 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
               </p>
             </div>
             <div>
-              <p class="font-semibold text-gray-900">合作医院</p>
-              <ul class="text-gray-700 space-y-1">
-                {practice.hospitalAffiliations.map((hospital) => <li>• {hospital}</li>)}
-              </ul>
+              <p class="font-semibold text-gray-900">在圣盖博谷行医</p>
+              <p class="text-gray-700">自 1979 年起</p>
             </div>
+            {practice.civilSurgeon && (
+              <div>
+                <p class="font-semibold text-gray-900">移民体检</p>
+                <p class="text-gray-700">美国移民局指定体检医师</p>
+              </div>
+            )}
             <div>
               <p class="font-semibold text-gray-900">语言</p>
               <p class="text-gray-700">英语、普通话</p>

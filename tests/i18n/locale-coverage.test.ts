@@ -145,8 +145,6 @@ describe('practiceLocalized covers every value in practice.ts', () => {
     const hasHan = (s: string) => /[一-鿿]/.test(s);
     for (const locale of TARGET_LOCALES) {
       const pl = practiceLocalized[locale];
-      expect(hasHan(pl.licenseStatus), `${locale} licenseStatus`).toBe(true);
-      expect(hasHan(pl.postgraduateTraining), `${locale} postgraduateTraining`).toBe(true);
       expect(hasHan(pl.school), `${locale} school`).toBe(true);
       for (const lang of pl.languages) {
         expect(hasHan(lang), `${locale} language label "${lang}"`).toBe(true);
@@ -160,14 +158,44 @@ describe('practiceLocalized covers every value in practice.ts', () => {
     }
   });
 
-  it('formats the licence expiry date per locale rather than reusing English', () => {
-    // practice.licenseExpiresDate is "July 31, 2028". Rendering that on a
-    // Chinese page is the leak this whole layer exists to prevent.
+  // The licence-expiry test that lived here was removed on 2026-08-05 with the
+  // licence fields themselves. It guarded practice.licenseExpiresDate leaking
+  // onto a Chinese page as "July 31, 2028"; there is no such field any more, so
+  // the test had nothing left to assert. See the comment block in practice.ts.
+});
+
+describe('service card labels are complete in every locale', () => {
+  // The services page was narrowed on 2026-08-05 and these keys all changed at
+  // once. A key present in `en` but missing from a Chinese locale makes
+  // getTranslation return the key itself, so a patient sees the literal string
+  // "serviceCards.citizenshipWaiver" where a service name should be.
+  const SERVICE_KEYS = [
+    'familyMedicine',
+    'immigrationExams',
+    'citizenshipWaiver',
+    'medicalLegal',
+    'stemCell',
+  ] as const;
+
+  for (const locale of LOCALES) {
+    for (const key of SERVICE_KEYS) {
+      it(`${locale} has a label for serviceCards.${key}`, () => {
+        const value = getTranslation(locale, `serviceCards.${key}`);
+        expect(value, `${locale} serviceCards.${key} fell through to the key`).not.toBe(
+          `serviceCards.${key}`,
+        );
+        expect(value.length).toBeGreaterThan(0);
+      });
+    }
+  }
+
+  it('gives the Chinese locales actual Chinese service labels', () => {
+    const hasHan = (s: string) => /[一-鿿]/.test(s);
     for (const locale of TARGET_LOCALES) {
-      expect(practiceLocalized[locale].licenseExpires).not.toBe(
-        practice.licenseExpiresDate,
-      );
-      expect(practiceLocalized[locale].licenseExpires).toMatch(/年.*月.*日/);
+      for (const key of SERVICE_KEYS) {
+        const value = getTranslation(locale, `serviceCards.${key}`);
+        expect(hasHan(value), `${locale} serviceCards.${key} = "${value}"`).toBe(true);
+      }
     }
   });
 });
@@ -178,7 +206,7 @@ describe('getPracticeLocalized', () => {
   });
 
   it('falls back to en for an unknown locale', () => {
-    // Every caller immediately dereferences the result (pl.licenseStatus), so
+    // Every caller immediately dereferences the result (pl.school), so
     // returning undefined would throw during the static build.
     expect(getPracticeLocalized('fr')).toBe(practiceLocalized.en);
     expect(getPracticeLocalized('')).toBe(practiceLocalized.en);

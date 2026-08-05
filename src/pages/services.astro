@@ -6,7 +6,7 @@ import ServiceIllustration from '@components/ServiceIllustration.astro';
 import { practice } from '@data/practice';
 
 const title = `Services | ${practice.doctorName} | Family Medicine in San Gabriel, CA`;
-const description = `Comprehensive family medicine services including chronic disease management, preventive care, and internal medicine. Learn about Dr. Chang's medical services.`;
+const description = `Immigration medical examinations (Form I-693), citizenship test medical waivers (Form N-648), medical-legal reports, stem cell therapy, and family medicine in San Gabriel, California.`;
 const canonicalUrl = new URL('/services/', Astro.site).href;
 const locale = 'en';
 
@@ -26,223 +26,222 @@ const breadcrumbs = [
   {/* Hero Section */}
   <HeroSection
     headline="Our Services"
-    subheadline="Comprehensive primary care tailored to your health needs. Dr. Chang offers a full range of medical services with personalized, compassionate care."
+    subheadline="Immigration medical examinations, citizenship test medical waivers, medical-legal reports, stem cell therapy, and family medicine — with results explained to you in English or Mandarin."
     locale={locale}
-    illustration="preventive"
+    illustration="immigration"
   />
+
+  {/* Immigration Medical Exams */}
+  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Immigration Medical Exams
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            Dr. Chang is a <strong>USCIS-designated civil surgeon</strong>, authorised
+            to complete <strong>Form I-693</strong> for adjustment of status. Exams are
+            carried out in one visit wherever possible, with results explained to you
+            in English or Mandarin.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">Physical examination and medical history review</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">Required screening tests and laboratory work</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">Vaccination record review, with any missing doses given</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">Form I-693 completed and sealed for submission with your application</span>
+            </li>
+          </ul>
+          <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+            <p class="text-gray-700">
+              Requirements differ by visa and application type. Please call the
+              office before booking so we can confirm which examination and forms
+              your case needs, and what to bring with you — including your
+              vaccination records and photo identification.
+            </p>
+          </div>
+          <CallButton text="Call to Confirm Requirements" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="immigration" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Citizenship Test Medical Waiver — Form N-648 */}
+  <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Citizenship Test Medical Waiver
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Some applicants for naturalisation cannot meet the English language or
+          civics testing requirements because of a medical condition. As a licensed
+          physician, Dr. Chang can complete <strong>Form N-648</strong>, the Medical
+          Certification for Disability Exceptions, which asks a doctor to describe
+          the condition and how it prevents the applicant from meeting those
+          requirements.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Review of your medical history and existing records</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Examination and clinical assessment of the condition</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Form N-648 completed and certified for submission with Form N-400</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+            <span class="text-gray-700">Explanation of the findings in English or Mandarin</span>
+          </li>
+        </ul>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            Please note: the certification is a medical opinion, not a decision.
+            <strong>USCIS decides whether to grant the exception</strong>, and it may
+            still interview the applicant. Bring any records relating to your
+            condition to the appointment so they can be considered.
+          </p>
+        </div>
+        <CallButton text="Call to Discuss Your Case" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* Medical-Legal Reports */}
+  <section id="medical-legal" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Medical-Legal Reports
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Dr. Chang prepares written medical reports for legal and administrative
+          matters, drawing on decades of clinical practice. Reports are based on an
+          examination and a review of the relevant records, and are written to be
+          read by people outside medicine.
+        </p>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            Requirements vary considerably depending on who has asked for the report
+            and what it must address. Please call the office to discuss your matter,
+            what records you can provide, and the timeline you are working to.
+          </p>
+        </div>
+        {/*
+          TODO — owner to confirm scope before this section is finalised. The
+          practice owner listed "medical legal report" as a service without
+          specifying the type. Deliberately written in general terms because the
+          particulars are unknown: whether this covers personal injury
+          evaluations, independent medical examinations, disability or workers'
+          compensation assessments, or records review only; whether Dr. Chang
+          accepts instructions from attorneys, insurers, or patients directly;
+          and whether he provides deposition or trial testimony. Do not add
+          specifics here without his confirmation.
+        */}
+        <CallButton text="Call to Discuss a Report" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* Stem Cell Therapy — PLACEHOLDER, see comment below */}
+  <section id="stem-cell-therapy" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Stem Cell Therapy
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Dr. Chang offers stem cell therapy at the San Gabriel office. Whether it is
+          appropriate for you depends on your medical history and what you are hoping
+          to treat, so this is a conversation to have in person rather than a decision
+          to make from a web page.
+        </p>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            Please call the office to discuss whether this treatment is suitable for
+            your situation, what it involves, and what it costs.
+          </p>
+        </div>
+        {/*
+          PLACEHOLDER — do not treat this copy as final, and do not expand it
+          without the owner supplying the specifics.
+
+          The owner asked for stem cell therapy to be added and emphasised, but
+          provided no detail: the type of product or procedure (autologous cells,
+          PRP, exosomes, or something else), the indications it is offered for,
+          and the regulatory basis on which it is provided are all unknown here.
+
+          This copy is deliberately claim-free. It states that the service exists
+          and directs the reader to call. It asserts no benefit, no indication, no
+          success rate, and no safety claim, because inventing any of those on a
+          physician's site would be both a fabrication and an advertising
+          liability. The FDA and FTC have both taken enforcement action over
+          marketing claims for unapproved stem cell products, and California's
+          medical board regulates physician advertising, so the wording here
+          should be reviewed by the practice before any claim is added.
+
+          Also note: this service is intentionally absent from the structured data
+          in src/components/JsonLd.astro for the same reason. Add it there when
+          the copy is confirmed.
+        */}
+        <CallButton text="Call to Discuss Stem Cell Therapy" size="base" />
+      </div>
+    </div>
+  </section>
 
   {/* Family Medicine Section */}
   <section id="family-medicine" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div>
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="family" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Family Medicine
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            Family medicine is the foundation of comprehensive healthcare. Dr. Chang provides personalized care for patients of all ages, from newborns to seniors, treating the whole person within their family context.
+            Dr. Chang continues to provide family medicine care for patients of all ages, treating the whole person within their family context.
           </p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
               <span class="text-gray-700">Comprehensive physical exams and health assessments</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
               <span class="text-gray-700">Acute illness diagnosis and treatment</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
               <span class="text-gray-700">Routine immunizations and vaccinations</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Minor surgical procedures and wound care</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
               <span class="text-gray-700">Coordination of specialty care when needed</span>
             </li>
           </ul>
           <CallButton text="Schedule an Appointment" size="base" />
         </div>
-        <div class="flex justify-center items-center">
-          <ServiceIllustration subject="family" style="soft" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Internal Medicine Section */}
-  <section id="internal-medicine" class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="internal" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Internal Medicine
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            Internal medicine focuses on the prevention, diagnosis, and treatment of adult diseases. Dr. Chang specializes in managing complex medical conditions with evidence-based approaches.
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Management of complex chronic conditions</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Medication management and optimization</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Hospital and specialist coordination</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Adult preventive health screening</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Long-term disease monitoring and optimization</span>
-            </li>
-          </ul>
-          <CallButton text="Schedule an Appointment" size="base" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Preventive Care Section */}
-  <section id="preventive-care" class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div>
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Preventive Care
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            Prevention is the best medicine. Regular wellness visits and health screenings help detect potential health issues early and keep you healthy for the long term.
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Annual physical exams and health assessments</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Age-appropriate cancer screenings</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Cardiovascular risk assessment and management</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Laboratory testing and interpretation</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Lifestyle counseling and wellness planning</span>
-            </li>
-          </ul>
-          <CallButton text="Schedule an Appointment" size="base" />
-        </div>
-        <div class="flex justify-center items-center">
-          <ServiceIllustration subject="preventive" style="soft" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Chronic Disease Management Section */}
-  <section id="chronic-disease" class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="chronic" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Chronic Disease Management
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            Chronic conditions require ongoing, personalized care. Dr. Chang works with you to develop a comprehensive management plan that improves your quality of life and health outcomes.
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Diabetes management and blood sugar monitoring</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Hypertension control and monitoring</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Heart disease management and prevention</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Asthma and COPD management</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Thyroid and metabolic disorder management</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">Arthritis and pain management</span>
-            </li>
-          </ul>
-          <CallButton text="Schedule an Appointment" size="base" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Immigration Medical Exams */}
-  <section id="immigration-exams" class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="max-w-3xl">
-        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Immigration Medical Exams
-        </h2>
-        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-          Dr. Chang is a <strong>USCIS-designated civil surgeon</strong>, authorised
-          to complete <strong>Form I-693</strong> for adjustment of status. Exams are
-          carried out in one visit wherever possible, with results explained to you
-          in English or Mandarin.
-        </p>
-        <ul class="space-y-3 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">Physical examination and medical history review</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">Required screening tests and laboratory work</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">Vaccination record review, with any missing doses given</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">Form I-693 completed and sealed for submission with your application</span>
-          </li>
-        </ul>
-        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
-          <p class="text-gray-700">
-            Requirements differ by visa and application type. Please call the
-            office before booking so we can confirm which examination and forms
-            your case needs, and what to bring with you — including your
-            vaccination records and photo identification.
-          </p>
-        </div>
-        <CallButton text="Call to Confirm Requirements" size="base" />
       </div>
     </div>
   </section>
@@ -253,11 +252,8 @@ const breadcrumbs = [
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
         Ready to Get Started?
       </h2>
-      <p class="text-lg text-gray-700 mb-2">
-        Don't wait to take control of your health.
-      </p>
       <p class="text-lg text-gray-700 mb-8">
-        Call Dr. Chang today to schedule your appointment or discuss your healthcare needs.
+        Call the office to schedule an appointment or to confirm what your case needs before you book.
       </p>
       <CallButton text="Call Us Now" size="lg" />
       <p class="text-sm text-gray-600 mt-6">

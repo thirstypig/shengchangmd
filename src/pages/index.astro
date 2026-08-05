@@ -35,34 +35,34 @@ const canonicalUrl = new URL('/', Astro.site).href;
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
-          icon="family"
-          title="Family Medicine"
-          description="Comprehensive care for the whole family, from preventive health to acute illness treatment."
-          href="/services/#family-medicine"
-        />
-        <ServiceCard
-          icon="stethoscope"
-          title="Internal Medicine"
-          description="Expert care for complex medical conditions and chronic disease management in adults."
-          href="/services/#internal-medicine"
+          icon="document"
+          title="Immigration Medical Exams"
+          description="Form I-693 completed and sealed by a USCIS-designated civil surgeon, including required screenings and vaccination review."
+          href="/services/#immigration-exams"
         />
         <ServiceCard
           icon="shield"
-          title="Preventive Care"
-          description="Annual physical exams, health screenings, and wellness visits to keep you healthy."
-          href="/services/#preventive-care"
+          title="Citizenship Test Medical Waiver"
+          description="Form N-648 certification for naturalisation applicants who cannot meet the English or civics requirements for medical reasons."
+          href="/services/#citizenship-waiver"
         />
         <ServiceCard
           icon="chart"
-          title="Chronic Disease Management"
-          description="Ongoing management of diabetes, hypertension, and other chronic conditions."
-          href="/services/#chronic-disease"
+          title="Medical-Legal Reports"
+          description="Written medical reports and evaluations prepared for legal and administrative matters."
+          href="/services/#medical-legal"
         />
         <ServiceCard
-          icon="document"
-          title="Immigration Medical Exams"
-          description="Medical examinations for immigration applications, including required screenings and vaccination review."
-          href="/services/#immigration-exams"
+          icon="stethoscope"
+          title="Stem Cell Therapy"
+          description="Call the office to discuss whether this treatment is suitable for your situation and what it involves."
+          href="/services/#stem-cell-therapy"
+        />
+        <ServiceCard
+          icon="family"
+          title="Family Medicine"
+          description="Continuing care for patients of all ages, from preventive health to acute illness treatment."
+          href="/services/#family-medicine"
         />
       </div>
     </div>
@@ -98,7 +98,7 @@ const canonicalUrl = new URL('/', Astro.site).href;
         {/* Education & Affiliations */}
         <div>
           <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            Experienced & Affiliated
+            Experience
           </h3>
           <div class="space-y-6">
             <div>
@@ -106,13 +106,15 @@ const canonicalUrl = new URL('/', Astro.site).href;
               <p class="text-gray-700">M.D., {practice.education.school}, {practice.education.year}</p>
             </div>
             <div>
-              <p class="font-semibold text-gray-900">Hospital Affiliations</p>
-              <ul class="text-gray-700 space-y-1">
-                {practice.hospitalAffiliations.map((hospital) => (
-                  <li>• {hospital}</li>
-                ))}
-              </ul>
+              <p class="font-semibold text-gray-900">Practising in the San Gabriel Valley</p>
+              <p class="text-gray-700">Since 1979</p>
             </div>
+            {practice.civilSurgeon && (
+              <div>
+                <p class="font-semibold text-gray-900">Immigration Medical Exams</p>
+                <p class="text-gray-700">USCIS-designated civil surgeon</p>
+              </div>
+            )}
             <div>
               <p class="font-semibold text-gray-900">Languages</p>
               <p class="text-gray-700">{practice.languages.join(', ')}</p>

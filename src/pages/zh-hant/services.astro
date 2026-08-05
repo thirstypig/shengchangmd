@@ -7,9 +7,19 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
-const description = `綜合家庭醫學診療項目，包括慢性病管理、預防保健和內科醫學。了解張醫師的醫療診療服務。`;
+const description = `移民體檢（Form I-693）、公民入籍考試醫療豁免證明（Form N-648）、醫療法律報告、幹細胞治療與家庭醫學。`;
 const canonicalUrl = new URL('/zh-hant/services/', Astro.site).href;
 const locale = 'zh-hant';
+
+/*
+  USCIS form numbers (I-693, N-648) stay in English in every locale — a patient
+  has to write the same string on the form. See src/i18n/locales.ts.
+
+  Translated here without a native reviewer; zh-hant is `reviewed: false`, so
+  these pages render noindex. Do not flip that flag until a fluent reader has
+  checked this page — particularly the stem cell section, whose English source
+  is itself an unconfirmed placeholder.
+*/
 ---
 
 <BaseLayout
@@ -21,217 +31,175 @@ const locale = 'zh-hant';
   {/* Hero Section */}
   <HeroSection
     headline="診療項目"
-    subheadline="為您的健康需求量身定製的綜合初級保健。張醫師提供全套醫療診療服務，提供個人化、富有同情心的護理。"
+    subheadline="移民體檢、公民入籍考試醫療豁免證明、醫療法律報告、幹細胞治療與家庭醫學，並以國語或英語為您說明結果。"
     locale={locale}
-    illustration="preventive"
+    illustration="immigration"
   />
-
-  {/* Family Medicine Section */}
-  <section id="family-medicine" class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div>
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            家庭醫學
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            家庭醫學是綜合醫療保健的基礎。張醫師為各個年齡段的患者提供個人化護理，從新生兒到老年人，從家庭的角度提供全人照護。
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">綜合體檢和健康評估</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">急性病診斷和治療</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">常規疫苗接種和免疫</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">小型手術和傷口護理</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">需要時的專科護理協調</span>
-            </li>
-          </ul>
-          <CallButton text="安排就診" size="base" />
-        </div>
-        <div class="flex justify-center items-center">
-          <ServiceIllustration subject="family" style="soft" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Internal Medicine Section */}
-  <section id="internal-medicine" class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="internal" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            內科醫學
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            內科醫學專注於成人疾病的預防、診斷和治療。張醫師擅長用循證方法管理複雜的醫療狀況。
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">複雜慢性病的管理</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">藥物管理和優化</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">醫院和專科醫師協調</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">成人預防健康檢查</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">長期疾病監測和優化</span>
-            </li>
-          </ul>
-          <CallButton text="安排就診" size="base" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Preventive Care Section */}
-  <section id="preventive-care" class="py-16 md:py-24 bg-white">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div>
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            預防保健
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            預防勝於治療。定期保健訪問和健康檢查有助於早期發現潛在健康問題，長期保持您的健康。
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">年度體檢和健康評估</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">適齡癌症篩查</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">心血管風險評估和管理</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">實驗室檢查和解釋</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">生活方式諮詢和健康規劃</span>
-            </li>
-          </ul>
-          <CallButton text="安排就診" size="base" />
-        </div>
-        <div class="flex justify-center items-center">
-          <ServiceIllustration subject="preventive" style="soft" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Chronic Disease Management Section */}
-  <section id="chronic-disease" class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex justify-center items-center order-2 md:order-1">
-          <ServiceIllustration subject="chronic" style="soft" />
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            慢性病管理
-          </h2>
-          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            慢性病需要持續、個人化的護理。張醫師與您合作，制定綜合管理方案，改善您的生活品質和健康狀況。
-          </p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">糖尿病管理和血糖監測</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">高血壓控制和監測</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">心臟病管理和預防</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">氣喘和慢性阻塞性肺病管理</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">甲狀腺和代謝紊亂管理</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-primary-600 font-bold text-xl flex-shrink-0">✓</span>
-              <span class="text-gray-700">關節炎和疼痛管理</span>
-            </li>
-          </ul>
-          <CallButton text="安排就診" size="base" />
-        </div>
-      </div>
-    </div>
-  </section>
 
   {/* 移民體檢 */}
   <section id="immigration-exams" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            移民體檢
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            張醫師為<strong>美國移民局指定的體檢醫師（civil surgeon）</strong>，可辦理身分調整所需的 <strong>Form I-693</strong> 體檢。盡可能一次看診完成，並以國語或英語為您說明結果。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">身體檢查與病史審閱</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">必要的篩檢項目與抽血檢驗</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">疫苗紀錄審核，並補接種缺少的疫苗</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">填妥並密封 Form I-693，供您隨申請一併遞交</span>
+            </li>
+          </ul>
+          <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+            <p class="text-gray-700">
+              各類簽證與申請的要求並不相同。預約前請先來電，我們會確認您的案件需要哪一種體檢與表格，並提醒您攜帶疫苗紀錄與照片身分證件。
+            </p>
+          </div>
+          <CallButton text="來電確認所需項目" size="base" />
+        </div>
+        <div class="flex justify-center items-center">
+          <ServiceIllustration subject="immigration" style="soft" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 公民入籍考試醫療豁免證明 — Form N-648 */}
+  <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          移民體檢
+          公民入籍考試醫療豁免證明
         </h2>
-        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-          張醫師為<strong>美國移民局指定的公共衛生醫師（civil surgeon）</strong>，可辦理身分調整所需的 <strong>I-693 表</strong>體檢。盡可能一次看診完成，並以國語或英語為您說明結果。
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          部分入籍申請人因身體或精神狀況，無法符合英語或公民常識考試的要求。張醫師身為執業醫師，可填寫 <strong>Form N-648</strong>（身心障礙豁免醫療證明），由醫師說明該狀況，以及它如何使申請人無法符合上述要求。
         </p>
         <ul class="space-y-3 mb-8">
           <li class="flex items-start gap-3">
             <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">身體檢查與病史審閱</span>
+            <span class="text-gray-700">審閱您的病史與現有病歷</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">必要的篩檢項目與抽血檢驗</span>
+            <span class="text-gray-700">針對該狀況進行檢查與臨床評估</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">疫苗紀錄審核，並補接種缺少的疫苗</span>
+            <span class="text-gray-700">填妥並簽署 Form N-648，供您隨 Form N-400 一併遞交</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
-            <span class="text-gray-700">填妥並密封 I-693 表，供您隨申請一併遞交</span>
+            <span class="text-gray-700">以國語或英語為您說明評估結果</span>
           </li>
         </ul>
         <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
           <p class="text-gray-700">
-            各類簽證與申請的要求並不相同。預約前請先來電，我們會確認您的案件需要哪一種體檢與表格，並提醒您攜帶疫苗紀錄與照片身分證件。
+            請注意：本證明為醫療意見，並非核准決定。<strong>是否給予豁免由美國移民局決定</strong>，該局仍可能安排面談。請於就診時攜帶與您狀況相關的病歷，以供評估參考。
           </p>
         </div>
-        <CallButton text="來電確認所需項目" size="base" />
+        <CallButton text="來電討論您的案件" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* 醫療法律報告 */}
+  <section id="medical-legal" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          醫療法律報告
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          張醫師以數十年的臨床經驗，為法律與行政事務撰寫醫療報告。報告依據親自檢查與相關病歷審閱撰寫，並以非醫學背景者也能讀懂的方式書寫。
+        </p>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            報告的要求會因委託方與需處理的事項而有相當差異。請來電討論您的案件、可提供的病歷，以及您預計的時程。
+          </p>
+        </div>
+        {/* TODO — 範圍待診所確認，see the English source at src/pages/services.astro */}
+        <CallButton text="來電討論報告事宜" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* 幹細胞治療 — PLACEHOLDER, see src/pages/services.astro */}
+  <section id="stem-cell-therapy" class="py-16 md:py-24 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          幹細胞治療
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          張醫師於聖蓋博診所提供幹細胞治療。這項治療是否適合您，取決於您的病史與希望處理的問題，因此適合當面討論，而不宜僅憑網頁資訊決定。
+        </p>
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <p class="text-gray-700">
+            歡迎致電診所，了解這項治療是否適合您的情況、治療內容以及費用。
+          </p>
+        </div>
+        {/*
+          PLACEHOLDER — 內容尚未由診所確認。This mirrors the English source at
+          src/pages/services.astro, which carries the full explanation: the type
+          of product, the indications, and the regulatory basis were all
+          unsupplied, so this copy deliberately asserts no benefit, indication,
+          success rate or safety claim. Do not add any until the practice
+          confirms them.
+        */}
+        <CallButton text="來電討論幹細胞治療" size="base" />
+      </div>
+    </div>
+  </section>
+
+  {/* 家庭醫學 */}
+  <section id="family-medicine" class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex justify-center items-center order-2 md:order-1">
+          <ServiceIllustration subject="family" style="soft" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            家庭醫學
+          </h2>
+          <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            張醫師持續為各年齡層的患者提供家庭醫學照護，從家庭的整體脈絡照顧每一位病人。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">全面身體檢查與健康評估</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">急性病症的診斷與治療</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">例行預防接種與疫苗</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary-600 font-bold text-xl flex-shrink-0" aria-hidden="true">✓</span>
+              <span class="text-gray-700">必要時協助轉介專科並協調照護</span>
+            </li>
+          </ul>
+          <CallButton text="預約就診" size="base" />
+        </div>
       </div>
     </div>
   </section>
@@ -242,11 +210,8 @@ const locale = 'zh-hant';
       <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
         準備好開始了嗎？
       </h2>
-      <p class="text-lg text-gray-700 mb-2">
-        別再等待，現在就開始掌握您的健康。
-      </p>
       <p class="text-lg text-gray-700 mb-8">
-        立即致電張醫師預約就診或討論您的醫療保健需求。
+        歡迎致電診所預約就診，或在預約前先來電確認您的案件需要哪些項目。
       </p>
       <CallButton text="立即致電我們" size="lg" />
       <p class="text-sm text-gray-600 mt-6">

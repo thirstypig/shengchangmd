@@ -11,10 +11,6 @@ export interface PracticeInfo {
   doctorName: string;
   credentials: string;
   npi: string;
-  medicalLicenseNumber: string;
-  medicalLicenseStatus: string;
-  licenseIssuedDate: string;
-  licenseExpiresDate: string;
   address: string;
   phone: string;
   email: string;
@@ -34,10 +30,7 @@ export interface PracticeInfo {
     medicalDegree: string;
     school: string;
     year: number;
-    postgraduateTraining: string;
-    residency: string;
   };
-  hospitalAffiliations: string[];
   practiceAreas: {
     primary: string[];
     secondary: string[];
@@ -46,14 +39,49 @@ export interface PracticeInfo {
   boardCertifications: BoardCertification[];
 }
 
+/*
+  Removed 2026-08-05 at the owner's request, recorded here so the removals do
+  not read as data loss the next time someone audits this file:
+
+  - `medicalLicenseNumber` ('A 33409'), `medicalLicenseStatus`,
+    `licenseIssuedDate` ('February 13, 1979') and `licenseExpiresDate`
+    ('July 31, 2028'). The owner asked for the licence number off the site as
+    non-essential. The issue date is still the best evidence for when Dr. Chang
+    began practising in California, which is why it is preserved in this note.
+  - `hospitalAffiliations` (San Gabriel Valley Medical Center, College Hospital
+    Costa Mesa).
+  - The American Board of Pathology certification in Anatomic Pathology &
+    Clinical Pathology, first certified 1973.
+
+  POSTGRADUATE TRAINING — deliberately not rendered, and this matters.
+
+  The site previously claimed "Three years of postgraduate training in family
+  medicine and internal medicine at University of Alabama Hospital". The
+  "family medicine and internal medicine" part was false. Per his Doximity
+  profile (https://www.doximity.com/pub/sheng-chang-md), the actual record is:
+
+    University of Chicago (NorthShore) — Transitional Year internship, 1969–1970
+    University of Alabama Medical Center — Residency, Pathology (Anatomic and
+      Clinical), 1970–1973
+
+  The 1970–1973 dates corroborate the 1973 pathology board certification. Since
+  the owner asked for pathology removed from the site, rendering this training
+  would reintroduce exactly what he asked to take down — so it is recorded here
+  and shown nowhere. If he later wants his Alabama training on the page, it must
+  be described as a pathology residency, not family medicine.
+
+  UNRESOLVED: the owner asked whether there is a Wake Forest University
+  connection. Nothing was found in this file, on Healthgrades, on Doximity, or
+  in a targeted search. His American Board of Family Medicine certification
+  dates to 1978, five years after the pathology residency ended, so a family
+  practice residency in that gap would fit — but that is a hypothesis, not a
+  finding, and nothing may be published on it without Dr. Chang confirming it.
+*/
+
 export const practice: PracticeInfo = {
   doctorName: 'Sheng Chang, M.D.',
   credentials: 'M.D.',
   npi: '1871589903',
-  medicalLicenseNumber: 'A 33409',
-  medicalLicenseStatus: 'License Renewed & Current',
-  licenseIssuedDate: 'February 13, 1979',
-  licenseExpiresDate: 'July 31, 2028',
   address: '330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776',
   phone: '(626) 573-0055',
   email: 'shengchangmd@gmail.com',
@@ -67,16 +95,10 @@ export const practice: PracticeInfo = {
     medicalDegree: 'M.D.',
     school: 'National Taiwan University College of Medicine',
     year: 1967,
-    postgraduateTraining: 'Three years of postgraduate training',
-    residency: 'University of Alabama Hospital',
   },
-  hospitalAffiliations: [
-    'San Gabriel Valley Medical Center',
-    'College Hospital Costa Mesa',
-  ],
   practiceAreas: {
     primary: ['Family Medicine'],
-    secondary: ['General Practice', 'Internal Medicine'],
+    secondary: ['General Practice'],
   },
   languages: ['English', 'Mandarin'],
   boardCertifications: [
@@ -87,13 +109,6 @@ export const practice: PracticeInfo = {
       currentStatus: 'Certified',
       maintenanceRequired: true,
       mostRecentCertification: 2026,
-    },
-    {
-      board: 'American Board of Pathology',
-      specialty: 'Anatomic Pathology & Clinical Pathology',
-      firstCertified: 1973,
-      currentStatus: 'Certified',
-      maintenanceRequired: false,
     },
   ],
 };
