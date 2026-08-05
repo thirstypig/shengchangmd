@@ -1,6 +1,29 @@
 ---
 import { practice } from '@data/practice';
 
+/*
+  The postal address is derived from practice.addressParts, not restated here.
+  Two copies of `streetAddress: '330 W. Las Tunas Drive, Suite 3'` used to sit
+  in this file alongside practice.address, so the address a patient reads and
+  the address Google indexes could drift apart.
+
+  `geo` was removed on 2026-08-05. It carried latitude 34.0853, longitude
+  -118.1085 — hardcoded, never derived from anything, and never verified by
+  anyone. CLAUDE.md lists invented map coordinates among this site's original
+  fabrications, and structured-data geo is what a search engine uses to place a
+  pin on a map: wrong coordinates send a patient to the wrong building.
+  Omitting it is safe — Google geocodes `address` on its own. Restore geo only
+  with coordinates someone has actually confirmed against the office.
+*/
+const postalAddress = {
+  '@type': 'PostalAddress',
+  streetAddress: practice.addressParts.street,
+  addressLocality: practice.addressParts.locality,
+  addressRegion: practice.addressParts.region,
+  postalCode: practice.addressParts.postalCode,
+  addressCountry: practice.addressParts.country,
+};
+
 interface Props {
   locale: string;
   pageSchema?: Record<string, unknown>;
@@ -19,19 +42,7 @@ const localBusinessSchema = {
   logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '330 W. Las Tunas Drive, Suite 3',
-    addressLocality: 'San Gabriel',
-    addressRegion: 'CA',
-    postalCode: '91776',
-    addressCountry: 'US',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 34.0853,
-    longitude: -118.1085,
-  },
+  address: postalAddress,
 };
 
 // MedicalBusiness Schema
@@ -43,19 +54,7 @@ const medicalBusinessSchema = {
   description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '330 W. Las Tunas Drive, Suite 3',
-    addressLocality: 'San Gabriel',
-    addressRegion: 'CA',
-    postalCode: '91776',
-    addressCountry: 'US',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 34.0853,
-    longitude: -118.1085,
-  },
+  address: postalAddress,
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

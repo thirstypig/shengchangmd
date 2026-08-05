@@ -4,8 +4,10 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const locale = 'en';
+const t = (key: string) => getTranslation(locale, key);
 const title = `${practice.doctorName} | Board-Certified Family Physician | San Gabriel, CA`;
 const description = `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Immigration medical services, citizenship exam waiver reports, medical-legal reports, stem cell therapy, and family medicine.`;
 const canonicalUrl = new URL('/', Astro.site).href;
@@ -36,31 +38,31 @@ const canonicalUrl = new URL('/', Astro.site).href;
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
           icon="document"
-          title="Immigration Medical Services"
+          title={t(`serviceCards.immigrationExams`)}
           description="Form I-693 completed and sealed by a USCIS-designated civil surgeon, including required screenings and vaccination review."
           href="/services/#immigration-exams"
         />
         <ServiceCard
           icon="shield"
-          title="Citizenship Exam Waiver Medical Evaluation Report"
+          title={t(`serviceCards.citizenshipWaiver`)}
           description="Form N-648 certification for naturalisation applicants who cannot meet the English or civics requirements for medical reasons."
           href="/services/#citizenship-waiver"
         />
         <ServiceCard
           icon="chart"
-          title="Medical-Legal Reports"
+          title={t(`serviceCards.medicalLegal`)}
           description="Written medical reports and evaluations prepared for legal and administrative matters."
           href="/services/#medical-legal"
         />
         <ServiceCard
           icon="stethoscope"
-          title="Stem Cell Therapy"
+          title={t(`serviceCards.stemCell`)}
           description="Stem cell therapy is offered at the San Gabriel office. Call to discuss whether it is appropriate for your situation."
           href="/services/#stem-cell-therapy"
         />
         <ServiceCard
           icon="family"
-          title="Family Medicine"
+          title={t(`serviceCards.familyMedicine`)}
           description="Continuing care for patients of all ages, from preventive health to acute illness treatment."
           href="/services/#family-medicine"
         />

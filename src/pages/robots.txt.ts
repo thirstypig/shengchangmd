@@ -24,8 +24,11 @@ import type { APIRoute } from 'astro';
  */
 export const GET: APIRoute = ({ site }) => {
   const allowIndexing = process.env.ALLOW_INDEXING === 'true';
-  const base = site ?? new URL('https://shengchangmd.com');
-  const sitemap = new URL('/sitemap-index.xml', base).href;
+  // `site` is always set from astro.config.mjs. Failing loudly beats a
+  // hardcoded fallback: a second copy of the domain here is exactly what this
+  // file exists to remove.
+  if (!site) throw new Error('robots.txt: Astro `site` is unset; check astro.config.mjs');
+  const sitemap = new URL('/sitemap-index.xml', site).href;
 
   const body = allowIndexing
     ? `# Indexing is enabled for this build.
