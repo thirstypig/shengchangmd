@@ -193,15 +193,42 @@ button {
 .text-gray-500 {
   color: var(--text-muted);
 }
-/* Both brand text weights map onto --brand so they invert with the theme.
-   text-primary-700 was missing here until 2026-08-05, so every inline link
-   using it — the About page's Arcadia archive citations, the Min Mey Chang
-   link, the contact pages and ServiceCard — rendered as light mode's dark red
-   on dark mode's near-black surface. Tailwind's raw palette is fixed; anything
-   that must stay legible in both themes has to resolve to a token here. */
+/* Every brand-coloured utility that reaches the page must resolve to a token
+   here. Tailwind's raw palette is fixed and does not invert, so anything left
+   off this list keeps light mode's deep red on dark mode's near-black surface.
+
+   All four rules below were missing on 2026-08-05 and were found in two
+   passes, which is the lesson worth keeping:
+
+     .text-primary-700          19 links, incl. the About page's archive
+                                citations and the Min Mey Chang link
+     .hover:text-primary-700    the contact pages' phone number — the practice's
+                                primary call to action — plus ServiceCard.
+                                #6f2531 on #1d1719 is 1.67:1, invisible, and it
+                                only appears on hover so nothing catches it
+     .border-primary-600        the active nav item's underline and the contact
+                                pages' outlined button
+
+   The first pass added only .text-primary-700 and declared the job done. The
+   hover and border siblings were the same defect one specificity level up, and
+   a fix that lands on one entry of a mapping list while its siblings keep the
+   raw value is exactly the partial-fix propagation documented in
+   docs/solutions/logic-errors/duplicated-facts-and-partial-fix-propagation.md.
+
+   Before adding a brand-coloured utility to a template, add it here too — and
+   check the variant forms (hover:, focus:), which Tailwind emits at higher
+   specificity and which therefore override the base rule. */
 .text-primary-600,
 .text-primary-700 {
   color: var(--brand);
+}
+.hover\:text-primary-600:hover,
+.hover\:text-primary-700:hover {
+  color: var(--brand-strong);
+}
+
+.border-primary-600 {
+  border-color: var(--brand);
 }
 
 .border-gray-200,

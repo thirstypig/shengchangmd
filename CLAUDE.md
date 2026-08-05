@@ -43,11 +43,25 @@ dark mode. Therefore:
   `color: inherit` on purpose so the surface decides.
 - Set the surface's own `color` to `--brand-contrast` and let descendants
   inherit. `--brand-contrast` is defined per theme to be legible on `--brand`.
+- **A Tailwind palette class is a hardcoded colour too.** `text-primary-700`
+  looks brand-correct and is not — it resolves to a literal hex unless
+  `global.css` redeclares it against a token. Grepping for `#fff` will never
+  find it. Before using a brand-coloured utility, confirm it is on the map in
+  `global.css`, **including its `hover:`/`focus:` forms**, which Tailwind emits
+  at higher specificity and which therefore override the base rule.
 
 This caused two real bugs: dark text on the red insurance hero in light mode,
 and light text on the light brand fill in dark mode — both from a single
 `h1…h6 { color: var(--text-strong) }` rule that overrode the hero's own label
 colour.
+
+It caused three more on 2026-08-05, found in two passes because the first fix
+corrected one entry of the map and not its siblings: every `text-primary-700`
+link site-wide, the contact pages' phone number on hover (1.67:1 — the practice's
+primary call to action, invisible on hover in dark mode), and the active nav
+item's underline. **Verify the computed colour in both themes, and hover in
+both — a resting screenshot in one theme is not evidence.**
+[write-up](docs/solutions/ui-bugs/tailwind-palette-classes-bypass-theme-tokens.md).
 
 ## Facts that must come from source, never memory
 
