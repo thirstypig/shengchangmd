@@ -194,10 +194,17 @@ needed in version control, make the repo private first.
 
 ```
 npm install
-npm run dev      # http://localhost:3120
-npm run build    # 22 pages; postbuild runs verify-css.mjs + verify-build.mjs
-npm test         # 61 vitest tests
+npm run dev                          # http://localhost:3120
+ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
+npm test                             # 61 vitest tests
 ```
+
+**`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
+is set only in `.github/workflows/deploy.yml`, so without it every reviewed page
+is built `noindex` while the sitemap still lists it — and `verify-build.mjs`
+correctly refuses a build whose sitemap and robots meta contradict each other.
+It reports all ten English pages, which reads alarmingly like a real regression.
+Pass the variable to reproduce what CI actually does.
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
 styles and the theme in `src/styles/global.css`. Design tokens live in
