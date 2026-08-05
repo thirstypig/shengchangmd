@@ -231,6 +231,15 @@ button {
   border-color: var(--brand);
 }
 
+/* The outlined button on the contact pages. Its base .bg-primary-50 is mapped
+   below, but the hover variant was not, so hovering it in dark mode flashed
+   raw #fdf5f4 — a near-white panel under amber text. Found by the test in
+   tests/styles/theme-token-coverage.test.ts, which is the fourth instance of
+   this defect and the first one a human did not have to notice. */
+.hover\:bg-primary-50:hover {
+  background-color: var(--surface-accent);
+}
+
 .border-gray-200,
 .border-gray-300 {
   border-color: var(--line);

@@ -54,13 +54,18 @@ In light mode they were correct. In dark mode they rendered as **`#8a2f3c` on
 readable, and the pre-existing Min Mey Chang link in the same paragraph had
 been failing this way for as long as it had existed.
 
-Three separate classes were affected, and they were found in **two passes**:
+**Four** separate classes were affected, and they were found in **three
+passes** — two by eye, one by the test written at the end of this document:
 
-| Class | Uses | Where it shows | Measured in dark mode |
-|---|---|---|---|
-| `.text-primary-700` | 19 | About page archive citations, the Min Mey Chang link, contact pages, `ServiceCard` | `#8a2f3c` on `#1d1719` |
-| `.hover:text-primary-700` | 4 | **the contact pages' phone number** — the practice's primary call to action — and `ServiceCard` | `#6f2531` on `#1d1719` = **1.67:1** |
-| `.border-primary-600` | 4 | the active nav item's underline in `Navigation.astro`, the contact pages' outlined button | `#8a2f3c` border on near-black |
+| Class | Uses | Where it shows | Measured in dark mode | Found by |
+|---|---|---|---|---|
+| `.text-primary-700` | 19 | About page archive citations, the Min Mey Chang link, contact pages, `ServiceCard` | `#8a2f3c` on `#1d1719` | eye |
+| `.hover:text-primary-700` | 4 | **the contact pages' phone number** — the practice's primary call to action — and `ServiceCard` | `#6f2531` on `#1d1719` = **1.67:1** | audit script |
+| `.border-primary-600` | 4 | the active nav item's underline in `Navigation.astro`, the contact pages' outlined button | `#8a2f3c` border on near-black | audit script |
+| `.hover:bg-primary-50` | 3 | that same outlined button, on hover | near-white `#fdf5f4` panel under amber text | **the test** |
+
+Each pass declared the job done. That is the point of the entry below on
+auditing the list rather than the entry you noticed.
 
 The hover case is the worst of the three and was the last one found. On a dark
 surface the link sat at a correct amber `#e8b96b`, and **moving the pointer
@@ -221,24 +226,54 @@ without clicking through the UI. A single-theme screenshot is not evidence
 about a two-theme system, and a resting screenshot is not evidence about hover.
 This defect needed all four combinations to be fully visible.
 
-### A candidate test — not yet written
+### The regression guard — `tests/styles/theme-token-coverage.test.ts`
 
-The natural regression guard is a unit test that parses every `*.astro` file
-for brand-coloured utility classes, parses `global.css` for the selectors it
-redeclares, and fails on any class used but not mapped — variants included.
+Written the same day, after this write-up first recorded it as future work.
+It parses every `*.astro` file for themed utility classes, parses `global.css`
+for the selectors it redeclares, and fails on any class used but not mapped.
 
-It is deliberately **not** added here yet. This repo's rule is that every test
-must be verified by making it fail before it is trusted, after 15 tests once
-shipped asserting a data structure no page rendered. Writing the test is a
-separate piece of work that has to include mutating `global.css` to confirm
-the test goes red.
+**It immediately found a fourth instance nobody had noticed:**
+`hover:bg-primary-50` on the contact pages' outlined button, which flashed a
+raw `#fdf5f4` near-white panel under amber text on hover in dark mode. Three
+instances had been found by eye across two passes; the fourth was found by the
+list being checked instead of the entry someone happened to see.
 
-The test would need to handle, at minimum:
+Four things the test has to get right, all of them learned by getting them
+wrong first:
 
-- variant prefixes (`hover:`, `focus:`, `md:`) as distinct selectors
-- gradient stop utilities (`from-*`, `via-*`, `to-*`), which the first audit missed
-- the `html[data-theme='dark']` nested block, which maps some classes only for dark
-- classes that legitimately need no mapping because their value is theme-neutral
+- **Variant prefixes are distinct selectors.** The template writes
+  `hover:text-primary-700`; the stylesheet writes
+  `.hover\:text-primary-700:hover`. The test normalises the escape and the
+  trailing pseudo-class, then asserts separately that *if a base class is
+  mapped, its hover variant is too* — the specific gap that survived the
+  first fix.
+- **There is more than one `html[data-theme='dark']` block.** The tokens live
+  in the first, the class overrides in a later one. Reading only the first made
+  the test report `border-primary-200`/`300` as unmapped when they are handled.
+  It found that bug in itself on its first run.
+- **A literal inside a dark block is legitimate.** That block is theme-specific
+  by construction, so requiring `var(--…)` there produces false positives.
+- **Gradient stops count.** `from-primary-50` and `to-white` carry colour and
+  are mapped; a `text|bg|border`-only pattern silently ignores them.
+
+`text-white` is the single allowlisted exception, with the reason recorded
+inline: it is only ever applied alongside `bg-primary-600`, whose mapped rule
+sets `color: var(--brand-contrast)` and is emitted later in the stylesheet, so
+the label tracks the fill at equal specificity. That is load-bearing source
+order rather than an explicit guarantee, and it is the next thing here likely
+to break.
+
+Two tests exist purely so the suite cannot pass vacuously — one asserting the
+template scan found classes, one asserting the CSS parse found a map. Without
+them, a regex that stops matching turns every other assertion green.
+
+**Verified by making it fail**, per this repo's rule, across eight mutations:
+dropping each of the three mapped classes, adding an unmapped class to a
+template, removing `--brand` from the dark block, typo-ing a token name, and
+breaking each of the two parsers. One mutation appeared to pass and had not
+actually been applied — a shell escaping error meant the `perl` substitution
+never matched. **A mutation that does not change the file proves nothing; check
+that the edit landed before believing the result.**
 
 ### Keep the rule next to the map
 

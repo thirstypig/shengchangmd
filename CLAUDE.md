@@ -196,7 +196,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev      # http://localhost:3120
 npm run build    # 22 pages; postbuild runs verify-css.mjs + verify-build.mjs
-npm test         # 55 vitest tests
+npm test         # 61 vitest tests
 ```
 
 Tailwind v4 is wired via `@tailwindcss/vite` in `astro.config.mjs`, with global
@@ -207,7 +207,7 @@ touching the build config.
 
 ## Tests
 
-Three files, 55 tests, run with `npm test`:
+Four files, 61 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
@@ -216,6 +216,14 @@ Three files, 55 tests, run with `npm test`:
   ids or coordinates, and no locale key may be defined without a page reading it
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
+- `tests/styles/theme-token-coverage.test.ts` — the hand-maintained colour map
+  in `global.css`. Fails if any themed utility class used in a template is not
+  redeclared against a token, **including its `hover:` variant**, which Tailwind
+  emits at higher specificity. Four instances of that omission shipped on
+  2026-08-05; the first three were found by eye, one pass at a time, and the
+  fourth (`hover:bg-primary-50`, a near-white panel under amber text) was found
+  by this test. It also asserts the dark block still redefines `--brand`, since
+  every other assertion here passes if it stops
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:
