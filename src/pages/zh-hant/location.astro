@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `門診時間與位置 | ${practice.doctorName} | 聖蓋博加州`;
+const title = `門診時間與位置 | ${practice.doctorName} | 加州聖蓋博`;
 const description = `張醫師診所在加州聖蓋博的門診時間、位置與交通方向。`;
 const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
 
@@ -44,7 +44,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
             <span class="time">{getTranslation('zh-hant', 'hoursWeekend')}</span>
           </div>
           <p class="hours-note">
-            下班後的來電可以留言。我們會在門診時間回復。
+            門診時間以外來電，歡迎留言。我們會在門診時間回覆。
           </p>
         </div>
 
@@ -84,7 +84,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`
 
         <!-- Directions Link -->
         <a href="https://maps.google.com/?q=330+W.+Las+Tunas+Drive,+Suite+3,+San+Gabriel,+CA+91776" target="_blank" rel="noopener noreferrer" class="directions-link">
-          獲取路線
+          查看路線
         </a>
 
 

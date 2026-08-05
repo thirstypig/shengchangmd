@@ -197,7 +197,7 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
 
       <div class="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} {practice.doctorName}. {t('footer.rightsReserved')}
+          &copy; {new Date().getFullYear()} {practice.doctorName.replace(/\.$/, '')}. {t('footer.rightsReserved')}
         </p>
       </div>
     </footer>
