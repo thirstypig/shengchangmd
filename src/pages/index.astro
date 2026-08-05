@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 
 const locale = 'en';
 const title = `${practice.doctorName} | Board-Certified Family Physician | San Gabriel, CA`;
-const description = `Board-certified family physician in San Gabriel, California. Dr. Chang provides comprehensive family medicine and internal medicine. Now accepting new patients.`;
+const description = `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Immigration medical services, citizenship exam waiver reports, medical-legal reports, stem cell therapy, and family medicine.`;
 const canonicalUrl = new URL('/', Astro.site).href;
 ---
 
@@ -20,7 +20,7 @@ const canonicalUrl = new URL('/', Astro.site).href;
   {/* Hero Section */}
   <HeroSection
     headline="Meet Dr. Sheng Chang, M.D."
-    subheadline="Comprehensive family medicine and internal medicine care serving San Gabriel and surrounding communities. Board-certified, compassionate, and dedicated to your health."
+    subheadline="Family medicine serving San Gabriel and surrounding communities. Board-certified, compassionate, and dedicated to your health."
     locale={locale}
     image="/images/dr-sheng-chang.jpg"
     imageAlt="Portrait of Dr. Sheng Chang, M.D."
@@ -36,13 +36,13 @@ const canonicalUrl = new URL('/', Astro.site).href;
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
           icon="document"
-          title="Immigration Medical Exams"
+          title="Immigration Medical Services"
           description="Form I-693 completed and sealed by a USCIS-designated civil surgeon, including required screenings and vaccination review."
           href="/services/#immigration-exams"
         />
         <ServiceCard
           icon="shield"
-          title="Citizenship Test Medical Waiver"
+          title="Citizenship Exam Waiver Medical Evaluation Report"
           description="Form N-648 certification for naturalisation applicants who cannot meet the English or civics requirements for medical reasons."
           href="/services/#citizenship-waiver"
         />
@@ -55,7 +55,7 @@ const canonicalUrl = new URL('/', Astro.site).href;
         <ServiceCard
           icon="stethoscope"
           title="Stem Cell Therapy"
-          description="Call the office to discuss whether this treatment is suitable for your situation and what it involves."
+          description="Stem cell therapy is offered at the San Gabriel office. Call to discuss whether it is appropriate for your situation."
           href="/services/#stem-cell-therapy"
         />
         <ServiceCard
@@ -68,67 +68,15 @@ const canonicalUrl = new URL('/', Astro.site).href;
     </div>
   </section>
 
-  {/* Trust Section */}
-  <section class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
-        Why Trust Dr. Chang?
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Credentials */}
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            Board Certified
-          </h3>
-          <ul class="space-y-4 text-gray-700">
-            {practice.boardCertifications.map((cert) => (
-              <li class="flex gap-3">
-                <span class="text-primary-600 font-bold">✓</span>
-                <div>
-                  <p class="font-semibold">{cert.specialty}</p>
-                  <p class="text-sm text-gray-600">{cert.board}</p>
-                  <p class="text-xs text-gray-500">Certified {cert.firstCertified}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Education & Affiliations */}
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            Experience
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <p class="font-semibold text-gray-900">Medical Education</p>
-              <p class="text-gray-700">M.D., {practice.education.school}, {practice.education.year}</p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">Practising in the San Gabriel Valley</p>
-              <p class="text-gray-700">Since 1979</p>
-            </div>
-            {practice.civilSurgeon && (
-              <div>
-                <p class="font-semibold text-gray-900">Immigration Medical Exams</p>
-                <p class="text-gray-700">USCIS-designated civil surgeon</p>
-              </div>
-            )}
-            <div>
-              <p class="font-semibold text-gray-900">Languages</p>
-              <p class="text-gray-700">{practice.languages.join(', ')}</p>
-            </div>
-            {practice.acceptingNewPatients && (
-              <div class="bg-primary-50 border border-success rounded-lg p-4">
-                <p class="text-success font-semibold">✓ Accepting New Patients</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  {/*
+    The "Why Trust Dr. Chang?" section was removed 2026-08-05 at the owner's
+    request, along with its "Board Certified", "Experience" and hospital
+    affiliations blocks. Two things went with it that he did not name: the
+    languages list and the "Accepting New Patients" badge. Languages still
+    appear on the About page; the accepting-new-patients state still drives
+    `acceptsNewPatients` in the JSON-LD. Re-add a slim strip here if either is
+    wanted back on the homepage.
+  */}
 
   {/* Quick Contact CTA */}
   <section class="py-16 md:py-24 bg-primary-50">

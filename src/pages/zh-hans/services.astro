@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `诊疗项目 | ${practice.doctorName} | 圣盖博加州的家庭医学`;
-const description = `移民体检（Form I-693）、公民入籍考试医疗豁免证明（Form N-648）、医疗法律报告、干细胞治疗与家庭医学。`;
+const description = `移民医疗服务（Form I-693）、公民入籍考试豁免医疗评估报告（Form N-648）、医疗法律报告、干细胞治疗与家庭医学。`;
 const canonicalUrl = new URL('/zh-hans/services/', Astro.site).href;
 const locale = 'zh-hans';
 
@@ -31,18 +31,18 @@ const locale = 'zh-hans';
   {/* Hero Section */}
   <HeroSection
     headline="诊疗项目"
-    subheadline="移民体检、公民入籍考试医疗豁免证明、医疗法律报告、干细胞治疗与家庭医学，并以普通话或英语为您说明结果。"
+    subheadline="移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学，并以普通话或英语为您说明结果。"
     locale={locale}
     illustration="immigration"
   />
 
-  {/* 移民体检 */}
+  {/* 移民医疗服务 */}
   <section id="immigration-exams" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div>
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            移民体检
+            移民医疗服务
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
             张医生为<strong>美国移民局指定的体检医师（civil surgeon）</strong>，可办理身份调整所需的 <strong>Form I-693</strong> 体检。尽可能一次就诊完成，并以普通话或英语为您说明结果。
@@ -79,12 +79,12 @@ const locale = 'zh-hans';
     </div>
   </section>
 
-  {/* 公民入籍考试医疗豁免证明 — Form N-648 */}
+  {/* 公民入籍考试豁免医疗评估报告 — Form N-648 */}
   <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          公民入籍考试医疗豁免证明
+          公民入籍考试豁免医疗评估报告
         </h2>
         <p class="text-lg text-gray-700 mb-6 leading-relaxed">
           部分入籍申请人因身体或精神状况，无法符合英语或公民常识考试的要求。张医生身为执业医师，可填写 <strong>Form N-648</strong>（身心障碍豁免医疗证明），由医师说明该状况，以及它如何使申请人无法符合上述要求。

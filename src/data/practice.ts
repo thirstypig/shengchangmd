@@ -100,7 +100,10 @@ export const practice: PracticeInfo = {
     primary: ['Family Medicine'],
     secondary: ['General Practice'],
   },
-  languages: ['English', 'Mandarin'],
+  // Supplied by the owner 2026-08-05. This is a claim about what the office can
+  // actually serve a patient in, not about Dr. Chang alone — if a language here
+  // depends on a particular staff member being present, it should come off.
+  languages: ['English', 'Mandarin', 'Cantonese', 'Spanish', 'Vietnamese'],
   boardCertifications: [
     {
       board: 'American Board of Family Medicine',

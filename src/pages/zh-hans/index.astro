@@ -4,19 +4,17 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
-import { getTranslation, getPracticeLocalized } from '@i18n/locales';
 
 const locale = 'zh-hans';
-const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 委员会认证家庭医生 | 加州圣盖博`;
-const description = `加州圣盖博的委员会认证家庭医生。张医生提供全面的家庭医学与内科诊疗，现正接受新患者。`;
+const description = `加州圣盖博的委员会认证家庭医生，并为美国移民局指定体检医师。提供移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学。`;
 const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>
   <HeroSection
     headline="张胜雄 医生"
-    subheadline="于圣盖博及邻近社区提供全面的家庭医学与内科诊疗。委员会认证，看诊细心，普通话与英语皆可沟通。"
+    subheadline="于圣盖博及邻近社区提供家庭医学诊疗。委员会认证，看诊细心，并提供多语言服务。"
     {locale}
     image="/images/dr-sheng-chang.jpg"
     imageAlt="张胜雄医生肖像"
@@ -32,14 +30,14 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ServiceCard
           icon="document"
-          title="移民体检"
+          title="移民医疗服务"
           description="由美国移民局指定体检医师填写并密封 Form I-693，包含必要筛检与疫苗记录审核。"
           href="/zh-hans/services/#immigration-exams"
           linkLabel="了解更多"
         />
         <ServiceCard
           icon="shield"
-          title="公民入籍考试医疗豁免证明"
+          title="公民入籍考试豁免医疗评估报告"
           description="为因医疗原因无法符合英语或公民常识考试要求的入籍申请人填写 Form N-648。"
           href="/zh-hans/services/#citizenship-waiver"
           linkLabel="了解更多"
@@ -54,7 +52,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
         <ServiceCard
           icon="stethoscope"
           title="干细胞治疗"
-          description="欢迎致电诊所，了解此项治疗是否适合您的情况及其内容。"
+          description="本诊所提供干细胞治疗。欢迎致电了解是否适合您的情况。"
           href="/zh-hans/services/#stem-cell-therapy"
           linkLabel="了解更多"
         />
@@ -69,76 +67,11 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
     </div>
   </section>
 
-  {/* 专业资格 */}
-  <section class="py-16 md:py-24 bg-gray-50">
-    <div class="max-w-container mx-auto px-4 md:px-6">
-      <h2 class="font-serif text-3xl font-bold text-center mb-12 text-gray-900">
-        为何选择张医生
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">委员会认证</h3>
-          <ul class="space-y-4 text-gray-700">
-            {
-              practice.boardCertifications.map((cert) => (
-                <li class="flex gap-3">
-                  <span class="text-primary-600 font-bold" aria-hidden="true">✓</span>
-                  <div>
-                    <p class="font-semibold">{pl.specialties[cert.specialty] ?? cert.specialty}</p>
-                    <p class="text-sm text-gray-600">{pl.boards[cert.board] ?? cert.board}</p>
-                    <p class="text-xs text-gray-500">认证年份 {cert.firstCertified}</p>
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
-            资历
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <p class="font-semibold text-gray-900">医学教育</p>
-              <p class="text-gray-700">
-                M.D.，{pl.school}，{practice.education.year}
-              </p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">在圣盖博谷行医</p>
-              <p class="text-gray-700">自 1979 年起</p>
-            </div>
-            {practice.civilSurgeon && (
-              <div>
-                <p class="font-semibold text-gray-900">移民体检</p>
-                <p class="text-gray-700">美国移民局指定体检医师</p>
-              </div>
-            )}
-            <div>
-              <p class="font-semibold text-gray-900">语言</p>
-              <p class="text-gray-700">英语、普通话</p>
-            </div>
-            <div>
-              <p class="font-semibold text-gray-900">门诊时间</p>
-              <p class="text-gray-700">{getTranslation(locale, 'hoursWeekday')}</p>
-              <p class="text-gray-600 text-sm">{getTranslation(locale, 'hoursWeekend')}</p>
-            </div>
-            {
-              practice.acceptingNewPatients && (
-                <div class="bg-primary-50 border border-success rounded-lg p-4">
-                  <p class="text-success font-semibold">
-                    <span aria-hidden="true">✓</span> 现正接受新患者
-                  </p>
-                </div>
-              )
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    {/*
+    「为何选择张医生」整段于 2026-08-05 依诊所要求移除，包含委员会认证、资历
+    与合作医院。The languages list and the accepting-new-patients badge went
+    with it — see the note in src/pages/index.astro.
+  */}
 
   {/* 预约 */}
   <section class="py-16 md:py-24 bg-primary-50">

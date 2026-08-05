@@ -45,8 +45,8 @@ export const translations = {
     callOffice: 'Call office',
     serviceCards: {
       familyMedicine: 'Family Medicine',
-      immigrationExams: 'Immigration Medical Exams',
-      citizenshipWaiver: 'Citizenship Test Medical Waiver',
+      immigrationExams: 'Immigration Medical Services',
+      citizenshipWaiver: 'Citizenship Exam Waiver Medical Evaluation Report',
       medicalLegal: 'Medical-Legal Reports',
       stemCell: 'Stem Cell Therapy',
     },
@@ -88,8 +88,8 @@ export const translations = {
     callOffice: '致電診所',
     serviceCards: {
       familyMedicine: '家庭醫學',
-      immigrationExams: '移民體檢',
-      citizenshipWaiver: '公民入籍考試醫療豁免證明',
+      immigrationExams: '移民醫療服務',
+      citizenshipWaiver: '公民入籍考試豁免醫療評估報告',
       medicalLegal: '醫療法律報告',
       stemCell: '幹細胞治療',
     },
@@ -131,8 +131,8 @@ export const translations = {
     callOffice: '致电诊所',
     serviceCards: {
       familyMedicine: '家庭医学',
-      immigrationExams: '移民体检',
-      citizenshipWaiver: '公民入籍考试医疗豁免证明',
+      immigrationExams: '移民医疗服务',
+      citizenshipWaiver: '公民入籍考试豁免医疗评估报告',
       medicalLegal: '医疗法律报告',
       stemCell: '干细胞治疗',
     },
@@ -205,7 +205,7 @@ export function getTranslation(locale: string, key: string): string {
 */
 export const practiceLocalized = {
   en: {
-    languages: ['English', 'Mandarin'],
+    languages: ['English', 'Mandarin', 'Cantonese', 'Spanish', 'Vietnamese'],
     school: 'National Taiwan University College of Medicine',
     specialties: {
       'Family Medicine': 'Family Medicine',
@@ -216,7 +216,7 @@ export const practiceLocalized = {
     certStatus: { Certified: 'Certified' } as Record<string, string>,
   },
   'zh-hant': {
-    languages: ['英語', '國語'],
+    languages: ['英語', '國語', '粵語', '西班牙語', '越南語'],
     // A Taiwanese institution with an established Chinese name — should never
     // appear transliterated or in English on a Chinese page.
     school: '國立臺灣大學醫學院',
@@ -229,7 +229,7 @@ export const practiceLocalized = {
     certStatus: { Certified: '認證有效' } as Record<string, string>,
   },
   'zh-hans': {
-    languages: ['英语', '普通话'],
+    languages: ['英语', '普通话', '粤语', '西班牙语', '越南语'],
     school: '国立台湾大学医学院',
     specialties: {
       'Family Medicine': '家庭医学',

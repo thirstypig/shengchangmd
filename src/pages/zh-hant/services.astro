@@ -7,7 +7,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `診療項目 | ${practice.doctorName} | 聖蓋博加州的家庭醫學`;
-const description = `移民體檢（Form I-693）、公民入籍考試醫療豁免證明（Form N-648）、醫療法律報告、幹細胞治療與家庭醫學。`;
+const description = `移民醫療服務（Form I-693）、公民入籍考試豁免醫療評估報告（Form N-648）、醫療法律報告、幹細胞治療與家庭醫學。`;
 const canonicalUrl = new URL('/zh-hant/services/', Astro.site).href;
 const locale = 'zh-hant';
 
@@ -31,18 +31,18 @@ const locale = 'zh-hant';
   {/* Hero Section */}
   <HeroSection
     headline="診療項目"
-    subheadline="移民體檢、公民入籍考試醫療豁免證明、醫療法律報告、幹細胞治療與家庭醫學，並以國語或英語為您說明結果。"
+    subheadline="移民醫療服務、公民入籍考試豁免醫療評估報告、醫療法律報告、幹細胞治療與家庭醫學，並以國語或英語為您說明結果。"
     locale={locale}
     illustration="immigration"
   />
 
-  {/* 移民體檢 */}
+  {/* 移民醫療服務 */}
   <section id="immigration-exams" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div>
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            移民體檢
+            移民醫療服務
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
             張醫師為<strong>美國移民局指定的體檢醫師（civil surgeon）</strong>，可辦理身分調整所需的 <strong>Form I-693</strong> 體檢。盡可能一次看診完成，並以國語或英語為您說明結果。
@@ -79,12 +79,12 @@ const locale = 'zh-hant';
     </div>
   </section>
 
-  {/* 公民入籍考試醫療豁免證明 — Form N-648 */}
+  {/* 公民入籍考試豁免醫療評估報告 — Form N-648 */}
   <section id="citizenship-waiver" class="py-16 md:py-24 bg-gray-50">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          公民入籍考試醫療豁免證明
+          公民入籍考試豁免醫療評估報告
         </h2>
         <p class="text-lg text-gray-700 mb-6 leading-relaxed">
           部分入籍申請人因身體或精神狀況，無法符合英語或公民常識考試的要求。張醫師身為執業醫師，可填寫 <strong>Form N-648</strong>（身心障礙豁免醫療證明），由醫師說明該狀況，以及它如何使申請人無法符合上述要求。

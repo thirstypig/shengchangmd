@@ -14,7 +14,7 @@ const localBusinessSchema = {
   '@type': 'LocalBusiness',
   '@id': new URL('/#organization', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical examinations, and medical report services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical services, and medical report services.`,
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
@@ -40,7 +40,7 @@ const medicalBusinessSchema = {
   '@type': 'MedicalBusiness',
   '@id': new URL('/#medical-business', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical examinations, and medical report services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
   address: {
@@ -158,7 +158,7 @@ const servicesSchema = [
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
     '@id': new URL('/services/#immigration-exams', Astro.site).href,
-    name: 'Immigration Medical Examination (Form I-693)',
+    name: 'Immigration Medical Services (Form I-693)',
     description:
       'Immigration medical examination completed by a USCIS-designated civil surgeon, with Form I-693 sealed for submission with an adjustment of status application.',
     provider: {
@@ -174,7 +174,7 @@ const servicesSchema = [
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
     '@id': new URL('/services/#citizenship-waiver', Astro.site).href,
-    name: 'Citizenship Test Medical Waiver (Form N-648)',
+    name: 'Citizenship Exam Waiver Medical Evaluation Report (Form N-648)',
     description:
       'Medical certification for disability exceptions, Form N-648, for naturalisation applicants seeking an exception to the English and civics testing requirements. USCIS decides the request; the physician provides the certification.',
     provider: {
