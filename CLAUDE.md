@@ -82,6 +82,14 @@ colour.
   `practice.civilSurgeon`. Note the term misleads — "civil surgeon" is a USCIS
   designation for licensed physicians of any specialty, not a surgical
   qualification.
+- **The Ph.D. is asserted, not evidenced.** Added 2026-08-05 on Dr. Chang's own
+  say-so, relayed by the owner, after the concern was raised and he confirmed.
+  Nothing else corroborates it: this repo held M.D. only, and his Healthgrades
+  and Doximity profiles list M.D. only. **Institution, field and year are all
+  unknown**, which is why it appears in `doctorName`/`credentials` and
+  deliberately *not* in `education` — putting it there would assert that
+  National Taiwan University granted it. Fill `education` in properly once those
+  three facts arrive.
 - **Stem cell therapy copy is a placeholder and is live.** Added 2026-08-05 at
   the owner's request, with no detail supplied: the type of product or procedure,
   the indications, and the regulatory basis are all unknown. The copy on

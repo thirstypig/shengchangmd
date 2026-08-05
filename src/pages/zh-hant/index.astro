@@ -4,8 +4,10 @@ import HeroSection from '@components/HeroSection.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
+import { getPracticeLocalized } from '@i18n/locales';
 
 const locale = 'zh-hant';
+const pl = getPracticeLocalized(locale);
 const title = `${practice.doctorName} | 委員會認證家庭醫師 | 加州聖蓋博`;
 const description = `加州聖蓋博的委員會認證家庭醫師，並為美國移民局指定體檢醫師。提供移民醫療服務、公民入籍考試豁免醫療評估報告、醫療法律報告、幹細胞治療與家庭醫學。`;
 const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
@@ -67,11 +69,24 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
     </div>
   </section>
 
-    {/*
-    「為何選擇張醫師」整段於 2026-08-05 依診所要求移除，包含委員會認證、資歷
-    與合作醫院。The languages list and the accepting-new-patients badge went
-    with it — see the note in src/pages/index.astro.
-  */}
+  {/* 語言與新患者 — see the note in src/pages/index.astro */}
+  <section class="py-12 md:py-16 bg-gray-50">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-center gap-8 md:gap-16">
+        <div class="text-center md:text-left">
+          <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">看診語言</h2>
+          <p class="text-lg text-gray-700">{pl.languages.join(' · ')}</p>
+        </div>
+        {practice.acceptingNewPatients && (
+          <div class="bg-white border border-success rounded-lg px-6 py-4 text-center">
+            <p class="text-success font-semibold">
+              <span aria-hidden="true">✓</span> 現正接受新患者
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
 
   {/* 預約 */}
   <section class="py-16 md:py-24 bg-primary-50">

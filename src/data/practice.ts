@@ -78,9 +78,22 @@ export interface PracticeInfo {
   finding, and nothing may be published on it without Dr. Chang confirming it.
 */
 
+/*
+  The Ph.D. is asserted by Dr. Chang himself, relayed through the site owner on
+  2026-08-05, and is recorded on that authority alone. It is NOT corroborated by
+  anything else this repo has seen: practice.ts previously held M.D. only, and
+  his Healthgrades and Doximity profiles both list M.D. only, with no doctoral
+  degree. The concern was raised with the owner and he confirmed the request.
+
+  The awarding institution, field and year are all unknown. That is why the
+  Ph.D. appears only in `doctorName`/`credentials` and deliberately NOT in
+  `education`, which records the National Taiwan University M.D. — attaching the
+  Ph.D. there would assert that NTU granted it, which nobody has said. Fill in
+  `education` properly once Dr. Chang supplies the institution, field and year.
+*/
 export const practice: PracticeInfo = {
-  doctorName: 'Sheng Chang, M.D.',
-  credentials: 'M.D.',
+  doctorName: 'Sheng Chang, M.D., Ph.D.',
+  credentials: 'M.D., Ph.D.',
   npi: '1871589903',
   address: '330 W. Las Tunas Drive, Suite 3, San Gabriel, CA 91776',
   phone: '(626) 573-0055',

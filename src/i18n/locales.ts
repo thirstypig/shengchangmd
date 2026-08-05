@@ -54,10 +54,7 @@ export const translations = {
       hours: 'Hours',
       address: 'Address',
       phone: 'Phone',
-      boardCertified: 'Board Certified in Family Medicine',
-      civilSurgeon: 'USCIS-designated civil surgeon',
       officeInformation: 'Office Information',
-      professional: 'Professional',
       legal: 'Legal',
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
@@ -97,10 +94,7 @@ export const translations = {
       hours: '門診時間',
       address: '地址',
       phone: '電話',
-      boardCertified: '家庭醫學專科認證',
-      civilSurgeon: '美國移民局指定體檢醫師',
       officeInformation: '診所資訊',
-      professional: '專業資格',
       legal: '法律',
       rightsReserved: '版權所有。',
       privacy: '隱私政策',
@@ -140,10 +134,7 @@ export const translations = {
       hours: '门诊时间',
       address: '地址',
       phone: '电话',
-      boardCertified: '家庭医学专科认证',
-      civilSurgeon: '美国移民局指定体检医师',
       officeInformation: '诊所信息',
-      professional: '专业资格',
       legal: '法律',
       rightsReserved: '版权所有。',
       privacy: '隐私政策',
@@ -189,7 +180,7 @@ export function getTranslation(locale: string, key: string): string {
   Deliberately NOT localised, and why — recorded so these stop reading as
   oversights the next time someone audits for English on Chinese pages:
 
-  - `practice.doctorName` ("Sheng Chang, M.D.") stays English in the portrait
+  - `practice.doctorName` ("Sheng Chang, M.D., Ph.D.") stays English in the portrait
     caption beneath the Chinese headline 張勝雄 醫師 — showing both is the point.
   - `education.school` IS localised, because 國立臺灣大學醫學院 is the
     institution's own name, not a translation of the English one.

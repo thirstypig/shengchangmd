@@ -14,7 +14,7 @@ const localBusinessSchema = {
   '@type': 'LocalBusiness',
   '@id': new URL('/#organization', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical services, and medical report services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
   telephone: practice.phone,
@@ -40,7 +40,7 @@ const medicalBusinessSchema = {
   '@type': 'MedicalBusiness',
   '@id': new URL('/#medical-business', Astro.site).href,
   name: practice.doctorName,
-  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(', M.D.', '')} provides family medicine, immigration medical services, and medical report services.`,
+  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
   address: {

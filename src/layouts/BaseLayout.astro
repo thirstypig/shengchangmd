@@ -176,11 +176,13 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
           </dl>
         </div>
 
-        <div class="footer-column">
-          <h3>{t('footer.professional')}</h3>
-          <p>{t('footer.boardCertified')}</p>
-          {practice.civilSurgeon && <p>{t('footer.civilSurgeon')}</p>}
-        </div>
+        {/*
+          The footer's "Professional" column was removed 2026-08-05 at the
+          owner's request — it held the California medical licence, and after
+          that came off there was nothing he wanted in its place. The grid is
+          `auto-fit, minmax(250px, 1fr)`, so the remaining columns reflow on
+          their own.
+        */}
 
         <div class="footer-column">
           <h3>{t('footer.legal')}</h3>
