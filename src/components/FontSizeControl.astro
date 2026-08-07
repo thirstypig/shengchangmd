@@ -39,7 +39,12 @@ const t = (key: string) => getTranslation(locale, key);
     +
   </button>
 
-  <div class="font-size-announcement" aria-live="polite" aria-atomic="true"></div>
+  <div
+    class="font-size-announcement"
+    data-label={t('textSize')}
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
 </div>
 
 <style>
@@ -144,7 +149,7 @@ const t = (key: string) => getTranslation(locale, key);
       '.font-size-announcement',
     ) as HTMLElement;
     if (announcement) {
-      announcement.textContent = `Text size: ${label}`;
+      announcement.textContent = `${announcement.dataset.label}: ${label}`;
     }
   }
 
