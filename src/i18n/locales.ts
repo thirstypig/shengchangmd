@@ -1,3 +1,5 @@
+import { practice } from '@data/practice';
+
 export interface LocaleMetadata {
   code: string;
   name: string;
@@ -61,7 +63,7 @@ export const translations = {
       accessibility: 'Accessibility Statement',
     },
     notFound: 'Page not found',
-    hoursWeekday: 'Monday–Friday 9:00 AM – 12:00 PM',
+    hoursWeekday: practice.hours.weekday,
     hoursWeekend: 'Closed Saturday and Sunday',
     home: 'Home',
     about: 'About',
@@ -101,7 +103,7 @@ export const translations = {
       accessibility: '無障礙說明',
     },
     notFound: '頁面未找到',
-    hoursWeekday: '週一至週五 上午9:00 – 中午12:00',
+    hoursWeekday: '週一至週五 上午9:00 – 下午1:00',
     hoursWeekend: '週六、週日休診',
     home: '首頁',
     about: '關於我們',
@@ -141,7 +143,7 @@ export const translations = {
       accessibility: '无障碍说明',
     },
     notFound: '页面未找到',
-    hoursWeekday: '周一至周五 上午9:00 – 中午12:00',
+    hoursWeekday: '周一至周五 上午9:00 – 下午1:00',
     hoursWeekend: '周六、周日休诊',
     home: '首页',
     about: '关于我们',

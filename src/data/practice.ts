@@ -127,7 +127,10 @@ export const practice: PracticeInfo = {
   phone: '(626) 573-0055',
   email: 'shengchangmd@gmail.com',
   hours: {
-    weekday: 'Monday–Friday 9:00 AM – 12:00 PM',
+    // 9:00 AM – 1:00 PM confirmed by the practice owner 2026-08-06. This is the
+    // only English copy: locales.ts derives its `en` value from here, and
+    // tests/data/source-integrity.test.ts fails if any other file states it.
+    weekday: 'Monday–Friday 9:00 AM – 1:00 PM',
     weekend: 'Closed Saturday and Sunday',
   },
   acceptingNewPatients: true,
