@@ -1,4 +1,8 @@
-import { practice } from '@data/practice';
+// Relative, NOT the @data alias. astro.config.mjs imports this module while
+// loading its own config, before Vite registers path aliases, so an aliased
+// import here fails the build with "Unable to load your Astro config" — while
+// tsc and vitest both still pass, because they resolve aliases from tsconfig.
+import { practice } from '../data/practice';
 
 export interface LocaleMetadata {
   code: string;
