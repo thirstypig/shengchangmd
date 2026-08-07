@@ -24,16 +24,15 @@ const breadcrumbs = [
       <h1>Office Hours</h1>
       <div class="hours-list">
         <div class="hours-item">
-          <span><strong>Monday – Friday</strong></span>
-          <span>9:00 AM – 12:00 PM</span>
+          <span>{practice.hours.weekday}</span>
         </div>
         <div class="hours-item">
-          <span><strong>Saturday</strong></span>
-          <span>By appointment</span>
+          <span>{practice.hours.weekend}</span>
         </div>
       </div>
       <p class="hours-note">
-        After 5:00 PM, please leave a message. Calls are returned the next business day.
+        If you call when the office is closed, please leave a message. Calls are
+        returned the next business day.
       </p>
     </div>
   </section>
@@ -59,15 +58,10 @@ const breadcrumbs = [
 
   .hours-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 2rem;
     margin-bottom: 1rem;
     line-height: 1.6;
-  }
-
-  .hours-item span:last-child {
-    text-align: right;
-    min-width: 120px;
   }
 
   .hours-note {
