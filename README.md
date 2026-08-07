@@ -1,76 +1,79 @@
-# Projects — James Chang
+# shengchangmd
 
-Personal workspace containing all active and archived projects. Each folder is a self-contained product.
+Static website for a family medicine practice in San Gabriel, California.
 
----
+**Live at [shengchangmd.com](https://shengchangmd.com)** — built with Astro 5,
+deployed to GitHub Pages on every push to `main`.
 
-## Active Projects
+The site is trilingual: English, Traditional Chinese (`zh-hant`) and Simplified
+Chinese (`zh-hans`). **Both Chinese locales are currently `noindex`**, pending
+review by a fluent reader — see `reviewed` in `src/i18n/locales.ts`, which
+controls both the robots meta tag and sitemap membership so a page can never be
+listed and de-indexed at the same time.
 
-| Folder                | Product / Domain              | Stack                          | Status   |
-|-----------------------|-------------------------------|--------------------------------|----------|
-| `thefantasticleagues` | thefantasticleagues.com       | React + Vite / Node + Express  | Active   |
-| `bbq-judge`           | thejudgetool.com              | Next.js / Node API             | Active   |
-| `ktv-singer`          | ktv app + server              | React Native / Express + WS    | Active   |
-| `tastemakers`         | tastemakersapp.com            | Next.js / Laravel / iOS / Android | Active |
-| `alephco.io`          | alephco.io                    | React + Vite + Express (unified) / Static | Active |
-| `bahtzang-trader`     | bahtzang.com                  | Next.js 14 / FastAPI (Python)  | Active   |
-| `tabledrop`           | tabledrop app                 | Next.js (Turborepo monorepo)   | Active   |
-| `jameschang.co`       | jameschang.co                 | Static HTML/CSS                | Active   |
-| `thirstypig`          | thirstypig content site       | Astro                          | Active   |
-| `cooper-stack3`       | internal tool                 | React / Express                | Occasional |
-| `vouch`               | vouch app                     | Next.js 16 / Supabase          | Active   |
-| `spar`                | spar.bahtzang.com (staging)   | Next.js 16 / Retell + Stripe   | Active   |
-
----
-
-## Port Registry
-
-**See [MASTER-PORTS.md](./MASTER-PORTS.md) for the full registry** — reserved blocks, conventions, conflict-check script, and Claude context prompt.
-
-**See [PORTS.md](./PORTS.md) for the quick-reference table.**
-
-Each project folder contains its own:
-- `MASTER-PORTS.md` — full global registry (byte-identical copy of this root file)
-- `PORTS.md` — port assignments for that project only
-
-### Port Summary
-
-| Project                     | Frontend | API  | WS   | PG   | Redis |
-|-----------------------------|----------|------|------|------|-------|
-| thefantasticleagues (app)   | 3010     | 4010 | —    | 5442 | 6381  |
-| thefantasticleagues (www)   | 3011     | —    | —    | —    | —     |
-| bbq-judge (app)             | 3030     | 4030 | —    | 5444 | 6383  |
-| bbq-judge (www)             | 3031     | —    | —    | —    | —     |
-| ktv-singer                  | 3040     | 4040 | 8040 | —    | 6385  |
-| tastemakers (web)           | 3050     | —    | —    | —    | —     |
-| tastemakers (backend)       | —        | 4050 | —    | 5446 | 6384  |
-| alephco.io (app, unified)   | —        | 4060 | —    | —    | —     |
-| alephco.io (www, static)    | 3060     | —    | —    | —    | —     |
-| bahtzang-trader (frontend)  | 3070     | —    | —    | —    | —     |
-| bahtzang-trader (backend)   | —        | 4070 | —    | —    | —     |
-| tabledrop                   | 3080     | —    | —    | 5448 | 6387  |
-| jameschang.co               | 3090     | —    | —    | —    | —     |
-| thirstypig                  | 4321     | —    | —    | —    | —     |
-| cooper-stack3               | —        | 4100 | —    | —    | —     |
-| vouch                       | 3020     | —    | —    | —    | —     |
-| spar                        | 3110     | —    | —    | —    | —     |
-| **FUTURE-2** (reserved)     | 3120     | 4120 | —    | 5450 | 6389  |
-| **FUTURE-3** (reserved)     | 3130     | 4130 | —    | 5451 | 6390  |
-
----
-
-## Quick Conflict Check
+## Setup
 
 ```bash
-lsof -i -P -n | grep LISTEN | grep -E '3010|3011|3020|3030|3031|3040|3050|3060|3070|3080|3090|3110|4010|4030|4040|4050|4051|4060|4070|4100|4321|5442|5444|5445|5446|5448|6381|6383|6384|6385|6387|8040|24680|24681'
+npm install
+npm run dev                          # http://localhost:3120
+npm test                             # 64 tests
+ALLOW_INDEXING=true npm run build    # 22 pages
 ```
 
----
+**`npm run build` on its own fails locally, and that is expected.**
+`ALLOW_INDEXING` is set only in `.github/workflows/deploy.yml`. Without it every
+reviewed page builds `noindex` while the sitemap still lists it, and
+`scripts/verify-build.mjs` correctly refuses a build whose sitemap and robots
+meta contradict each other. It reports all ten English pages, which reads like a
+real regression and is not. Pass the variable to reproduce what CI does.
 
-## Conventions
+## Where things live
 
-- Each product owns a **10-port block**: e.g., thefantasticleagues owns 3010–3019 (frontend) and 4010–4019 (API).
-- `-www` marketing sites share the same block as the `-app`, offset by 1.
-- PG ports start at 5442 (+1 per product). Redis at 6381 (+1 per product).
-- Claim a **FUTURE** slot before creating a new product — never freelance a port number.
-- When retiring a product, mark its block `AVAILABLE` in `MASTER-PORTS.md` for 30 days before reclaiming.
+| What | Where |
+|---|---|
+| Practice facts — hours, address, phone, credentials | `src/data/practice.ts` |
+| Localized copy and Chinese translations | `src/i18n/locales.ts` |
+| Pages | `src/pages/`, with `zh-hant/` and `zh-hans/` alongside |
+| Design tokens and the theme colour map | `tailwind.config.ts`, `src/styles/global.css` |
+| Tests | `tests/` |
+
+`src/data/practice.ts` is the single source of truth for every practice fact.
+The one-line address is derived from `addressParts` so the prose address and the
+JSON-LD `PostalAddress` cannot drift apart, and a test fails the build if the
+street address or phone number appears anywhere else in `src/`.
+
+## Checks
+
+CI runs `npx tsc --noEmit`, then `npm test`, then the build. `postbuild` runs
+two scripts that assert against the built output rather than the source:
+
+- `scripts/verify-css.mjs` — fails if the compiled CSS lacks real Tailwind
+  output. This exists because the site once rendered with **zero compiled CSS**
+  while a report claimed "52/52 audits passed".
+- `scripts/verify-build.mjs` — checks that referenced assets exist, that the
+  sitemap and robots meta agree, that JSON-LD's address matches `practice.ts`,
+  and that no page references the retired host.
+
+The test suite is deliberately narrow. Every test guards a regression that has
+actually happened in this repo, and every one was verified by making it fail
+before it was trusted.
+
+## Before you change anything
+
+Read **[`CLAUDE.md`](CLAUDE.md)**. It is the working agreement for this repo and
+it is not boilerplate — it records specific failures that shipped here and the
+rules that exist because of them. The three that catch people out:
+
+- **`--brand` inverts between light and dark themes.** Never hardcode a colour
+  or a Tailwind palette class on a branded surface, and check `hover:`/`focus:`
+  variants too — they are emitted at higher specificity.
+- **Never invent factual content.** Not credentials, insurance carriers, hours,
+  addresses, map coordinates or URLs. This is a real medical practice; wrong
+  information on it has real consequences. Unknown facts get a marked
+  placeholder.
+- **An English copy change is not finished until it reaches both Chinese
+  locales**, in Taiwan Mandarin. See
+  [`.claude/skills/trilingual-content/SKILL.md`](.claude/skills/trilingual-content/SKILL.md).
+
+Longer write-ups of past failures live in `docs/solutions/`, and operational
+history in `docs/runbooks/`.
