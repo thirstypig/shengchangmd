@@ -91,6 +91,36 @@ both — a resting screenshot in one theme is not evidence.**
   place id, a pre-baked embed URL, a latitude/longitude, or the street address
   or phone number appears anywhere outside `practice.ts`.
 
+## Trilingual content: English changes are not done until Chinese is done
+
+**Any user-facing English string change — page copy, headings, button labels,
+`aria-label`, `alt`, meta descriptions — lands in `zh-hant` and `zh-hans` in the
+same commit.** Full guidance, including the Taiwan vocabulary tables, is in
+[`.claude/skills/trilingual-content/SKILL.md`](.claude/skills/trilingual-content/SKILL.md).
+Read it before touching copy.
+
+Two things from it that are easy to get wrong:
+
+- **Do not skip the translation because you are not fluent.** A baseline test had
+  an agent decline with "the wording should come from you or a fluent reviewer
+  rather than me inventing the phrasing." That sounds responsible and is not:
+  `reviewed: false` already keeps both Chinese locales `noindex`, and that gate —
+  not your abstention — is the safety mechanism. An English-only change makes the
+  Chinese page *actively wrong* rather than merely incomplete: if English gains
+  "we do not accept walk-ins" and Chinese does not, silence tells a Chinese
+  reader they may walk in. Translate it, flag it for review, do not omit it.
+  The one real exception is a proper noun with no supplied Chinese name —
+  guessing at those characters invents a fact.
+- **Both Chinese locales use Taiwan Mandarin, in both scripts.** Simplified here
+  means Taiwan wording in simplified characters, not mainland wording. Never
+  `信息`/`网络`/`软件`/`视频`/`数据`; use `资讯`/`网路`/`软体`/`影片`/`资料`.
+  **Never write `健保`** — that is Taiwan's National Health Insurance, which does
+  not operate in California. Use full-width punctuation.
+
+This exists because six English `aria-label`s rendered on all 12 Chinese pages
+for months — the strings a screen-reader user actually hears — while four of them
+had translations sitting in `locales.ts` that nothing read.
+
 ## Known open items requiring the owner's confirmation
 
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
