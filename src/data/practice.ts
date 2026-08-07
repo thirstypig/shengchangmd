@@ -42,6 +42,10 @@ export interface PracticeInfo {
   phone: string;
   email: string;
   hours: {
+    /** 24-hour, the format JSON-LD's openingHoursSpecification requires. */
+    opens: string;
+    closes: string;
+    /** Derived from `opens`/`closes`. Never edit this directly. */
     weekday: string;
     weekend: string;
   };
@@ -118,6 +122,25 @@ export interface PracticeInfo {
   Ph.D. there would assert that NTU granted it, which nobody has said. Fill in
   `education` properly once Dr. Chang supplies the institution, field and year.
 */
+/**
+ * '09:00' -> '9:00 AM', '13:00' -> '1:00 PM'.
+ *
+ * The office hours were stored in SEVEN places before 2026-08-06: practice.ts,
+ * three locales, hours.astro, and twice in JsonLd.astro. The JSON-LD pair used
+ * 24-hour format, so they survived a correction that fixed every visible page —
+ * leaving the site telling patients 1:00 PM while telling Google noon. Deriving
+ * the display string from the same two values makes that split impossible.
+ */
+function to12Hour(time: string): string {
+  const [h, m] = time.split(':').map(Number);
+  const period = h < 12 ? 'AM' : 'PM';
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12}:${String(m).padStart(2, '0')} ${period}`;
+}
+
+const hoursOpens = '09:00';
+const hoursCloses = '13:00';
+
 export const practice: PracticeInfo = {
   doctorName: 'Sheng Chang, M.D., Ph.D.',
   credentials: 'M.D., Ph.D.',
@@ -127,7 +150,10 @@ export const practice: PracticeInfo = {
   phone: '(626) 573-0055',
   email: 'shengchangmd@gmail.com',
   hours: {
-    weekday: 'Monday–Friday 9:00 AM – 12:00 PM',
+    // 9:00 AM – 1:00 PM confirmed by the practice owner 2026-08-06.
+    opens: hoursOpens,
+    closes: hoursCloses,
+    weekday: `Monday–Friday ${to12Hour(hoursOpens)} – ${to12Hour(hoursCloses)}`,
     weekend: 'Closed Saturday and Sunday',
   },
   acceptingNewPatients: true,

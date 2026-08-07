@@ -99,6 +99,68 @@ describe('map URLs are derived, never hardcoded', () => {
   });
 });
 
+describe('office hours are stored once and translated, never restated', () => {
+  const DATA_FILE = 'data/practice.ts';
+
+  /** Every run of digits, in order: '9:00 AM – 1:00 PM' -> ['9','00','1','00'] */
+  const clockDigits = (s: string) => s.match(/\d+/g) ?? [];
+
+  it('no file other than practice.ts states a clock time', () => {
+    // Shipped: the weekday hours lived in practice.ts, in locales.ts (en), and
+    // as a bare literal in hours.astro — three English copies of one fact. The
+    // scaffold said 6:00 PM, it was corrected to 12:00 PM, and the owner then
+    // confirmed 1:00 PM. Each correction had to find every copy, and /hours/
+    // was missed both times.
+    //
+    // This deliberately does NOT compare the time to practice.hours.weekday.
+    // An earlier version did, and it passed while hours.astro still read
+    // "9:00 AM – 12:00 PM" — a copy only becomes dangerous once it has drifted,
+    // so matching against the current value excuses exactly the defect that
+    // matters. Chinese locale strings use 上午/下午 and no AM/PM, and are
+    // checked for digit parity by the test below.
+    //
+    // This rule is deliberately broad: it flags ANY Latin-script clock time in
+    // src/ outside practice.ts, not just office hours, so an unrelated future
+    // sentence like "arrive before your 2:00 PM appointment" will also fail
+    // here. A narrower rule is what let the stale copy through in the first
+    // place. If that happens, narrow this rule deliberately rather than
+    // widening practice.ts to mean something it doesn't.
+    const offenders = FILES.filter(
+      (f) => rel(f) !== DATA_FILE && /\d{1,2}:\d{2}\s*(AM|PM)/i.test(code(f)),
+    );
+    expect(
+      offenders.map(rel),
+      'states a clock time outside practice.ts — if this is prose and not the office hours, narrow this rule deliberately',
+    ).toEqual([]);
+  });
+
+  it('no file other than practice.ts hardcodes a 24-hour opening time', () => {
+    // Shipped: JsonLd.astro held opens '09:00' / closes '12:00' at two sites,
+    // rendered on every page in every locale by BaseLayout. The AM/PM guard
+    // above cannot see them — they carry no meridiem — so a correction that
+    // fixed all five visible copies still left the structured data that Google,
+    // Apple Maps and voice assistants read saying the office closed at noon.
+    const offenders = FILES.filter(
+      (f) => rel(f) !== DATA_FILE && /\b(opens|closes)\s*:\s*['"`]\d{1,2}:\d{2}/.test(code(f)),
+    );
+    expect(offenders.map(rel), 'hardcodes a 24-hour opening time').toEqual([]);
+  });
+
+  it('every locale states the same clock times as practice.ts', () => {
+    // A Chinese translation is not a duplicate fact, but it can still drift.
+    // Comparing digits rather than text lets the wording differ while the times
+    // cannot: '上午9:00 – 下午1:00' and 'Monday–Friday 9:00 AM – 1:00 PM' both
+    // yield ['9','00','1','00'].
+    const expected = clockDigits(practice.hours.weekday);
+    expect(expected.length, 'practice.hours.weekday states no times').toBeGreaterThan(0);
+
+    for (const [locale, t] of Object.entries(translations)) {
+      expect(clockDigits((t as { hoursWeekday: string }).hoursWeekday), `${locale}.hoursWeekday`)
+        .toEqual(expected);
+    }
+  });
+});
+
 describe('locale data is actually consumed by a page', () => {
   it('every serviceCards key is read by at least one page', () => {
     // This test exists because of a mistake made while fixing the others.
