@@ -2,13 +2,21 @@
 // Font size control: three buttons (−, A, +) to control --font-scale CSS variable
 // Must read localStorage before first paint to avoid flash of wrong size
 // This is the only client-side JavaScript on the site.
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const t = (key: string) => getTranslation(locale, key);
 ---
 
 <div class="font-size-control">
   <button
     class="font-size-btn"
     id="decrease-text"
-    aria-label="Decrease text size"
+    aria-label={t('decreaseTextSize')}
     aria-disabled="false"
   >
     −
@@ -17,7 +25,7 @@
   <button
     class="font-size-btn font-size-reset"
     id="reset-text"
-    aria-label="Reset text size"
+    aria-label={t('resetTextSize')}
   >
     A
   </button>
@@ -25,7 +33,7 @@
   <button
     class="font-size-btn"
     id="increase-text"
-    aria-label="Increase text size"
+    aria-label={t('increaseTextSize')}
     aria-disabled="false"
   >
     +

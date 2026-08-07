@@ -45,6 +45,7 @@ export const translations = {
     increaseTextSize: 'Increase text size',
     textSize: 'Text size',
     toggleTheme: 'Switch between light and dark theme',
+    toggleNavigation: 'Toggle navigation menu',
     language: 'Language',
     changeLanguage: 'Change language',
     contactUs: 'Contact us',
@@ -65,6 +66,14 @@ export const translations = {
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
       accessibility: 'Accessibility Statement',
+      // Non-empty on purpose, even though English readers never see it:
+      // getTranslation() does `value || key`, so an empty string here is
+      // falsy and falls through to returning the literal key
+      // "footer.englishOnly" — confirmed by building and grepping dist/,
+      // which rendered that literal text on every English page. BaseLayout
+      // guards this key behind `locale !== 'en'` instead, so this value is
+      // never actually rendered; it exists only so the key isn't empty.
+      englishOnly: '(English)',
     },
     notFound: 'Page not found',
     hoursWeekday: practice.hours.weekday,
@@ -86,6 +95,7 @@ export const translations = {
     textSize: '文字大小',
     changeLanguage: '更改語言',
     toggleTheme: '切換淺色或深色主題',
+    toggleNavigation: '開啟或關閉導覽選單',
     language: '語言',
     contactUs: '聯絡我們',
     callOffice: '致電診所',
@@ -105,6 +115,7 @@ export const translations = {
       rightsReserved: '版權所有。',
       privacy: '隱私政策',
       accessibility: '無障礙說明',
+      englishOnly: '（英文）',
     },
     notFound: '頁面未找到',
     hoursWeekday: '週一至週五 上午9:00 – 下午1:00',
@@ -126,6 +137,7 @@ export const translations = {
     textSize: '文字大小',
     changeLanguage: '更改语言',
     toggleTheme: '切换浅色或深色主题',
+    toggleNavigation: '打开或关闭导航菜单',
     language: '语言',
     contactUs: '联络我们',
     callOffice: '致电诊所',
@@ -145,6 +157,7 @@ export const translations = {
       rightsReserved: '版权所有。',
       privacy: '隐私政策',
       accessibility: '无障碍说明',
+      englishOnly: '（英文）',
     },
     notFound: '页面未找到',
     hoursWeekday: '周一至周五 上午9:00 – 下午1:00',
