@@ -16,12 +16,12 @@ by whom, and on what evidence.
 
 ## What is wrong on the live site right now
 
-### Office hours are wrong, and stored five times
+### Office hours are wrong, and stored seven times
 
 The owner states hours are **9:00 AM – 1:00 PM, Monday to Friday**. The site
 says 9:00 AM – 12:00 PM.
 
-The same fact is stored in five places, none of which derives from another:
+The same fact is stored in seven places, none of which derives from another:
 
 | Location | Current value |
 |---|---|
@@ -30,8 +30,19 @@ The same fact is stored in five places, none of which derives from another:
 | `src/i18n/locales.ts:104` (zh-hant) | `週一至週五 上午9:00 – 中午12:00` |
 | `src/i18n/locales.ts:144` (zh-hans) | `周一至周五 上午9:00 – 中午12:00` |
 | `src/pages/hours.astro:28` | `9:00 AM – 12:00 PM` (bare literal) |
+| `src/components/JsonLd.astro:62-63` | `opens: '09:00'`, `closes: '12:00'` (24-hour, MedicalBusiness's `openingHoursSpecification`) |
+| `src/components/JsonLd.astro:129-130` | `opens: '09:00'`, `closes: '12:00'` (24-hour, ContactPoint's `hoursAvailable`) |
 
-Three of those are English. This is the exact failure documented in
+The original count of five, above, missed both `JsonLd.astro` sites: they
+store the hour in 24-hour format with no AM/PM, so they read differently from
+the other five copies even though they encode the same fact, and a first pass
+looking for `AM`/`PM` literals walked right past them. `JsonLd.astro` is
+rendered by `BaseLayout.astro` on every page in every locale, and is the
+structured data Google's hours panel, Apple Maps and voice assistants read —
+so these two copies reach a patient who never loads the site, and are the ones
+most likely to actually mislead someone.
+
+Three of the first five are English. This is the exact failure documented in
 `docs/solutions/logic-errors/duplicated-facts-and-partial-fix-propagation.md`,
 and `tests/data/source-integrity.test.ts` does not catch it — that test guards
 the street address and the phone number, not the hours.
