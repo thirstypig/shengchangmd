@@ -272,3 +272,10 @@ lesson is narrower and worth stating plainly: **demo scaffolding on a
 production medical site is a live defect, not a placeholder.** Nothing in a
 build can detect "this button lies" — only reading what the handler does when a
 user presses it.
+- [`green-checks-that-cannot-see-the-defect.md`](green-checks-that-cannot-see-the-defect.md)
+  — the office hours turned out to be a seventh instance of this pattern, stored
+  in **seven** places including two 24-hour literals in `JsonLd.astro`. It adds a
+  failure mode this document does not have: a guard *existed*, went red first,
+  and was still defeated — because it compared each copy against the current
+  value of the source, so correcting the source turned the guard green while the
+  stale copy stayed wrong.

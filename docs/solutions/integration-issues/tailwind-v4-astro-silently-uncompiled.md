@@ -262,3 +262,10 @@ artifact nobody had looked at.**
 - `scripts/verify-css.mjs` — the guard described above
 - Follow-up styling commits, only possible once CSS compiled: `26a8c6c`,
   `72573e6`, `b08f93a`
+- [`green-checks-that-cannot-see-the-defect.md`](../logic-errors/green-checks-that-cannot-see-the-defect.md)
+  — a second `astro.config.mjs` trap of a different kind. Not a plugin that was
+  never registered, but the config file's own import graph resolving path
+  aliases differently from the rest of the toolchain: `tsc` and `vitest` both
+  resolve `@data/*` and stay green while `npm run build` cannot load its config
+  at all. The same "exit-code success is not output correctness" lesson, one
+  layer earlier.
