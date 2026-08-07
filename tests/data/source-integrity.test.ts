@@ -99,6 +99,44 @@ describe('map URLs are derived, never hardcoded', () => {
   });
 });
 
+describe('office hours are stored once and translated, never restated', () => {
+  const DATA_FILE = 'data/practice.ts';
+
+  /** Every run of digits, in order: '9:00 AM – 1:00 PM' -> ['9','00','1','00'] */
+  const clockDigits = (s: string) => s.match(/\d+/g) ?? [];
+
+  it('no file other than practice.ts hardcodes the opening times', () => {
+    // Shipped: the same weekday hours lived in practice.ts, in locales.ts (en),
+    // and as a bare literal in hours.astro. Three English copies of one fact.
+    // The scaffold said 9:00 AM - 6:00 PM, it was corrected to 12:00 PM, and the
+    // owner then confirmed the real hours are 1:00 PM. Each correction had to
+    // find every copy, and the /hours/ page was missed.
+    const times = clockDigits(practice.hours.weekday).join(':');
+    const offenders = FILES.filter((f) => {
+      if (rel(f) === DATA_FILE) return false;
+      const c = code(f);
+      // Only flag Latin-script clock times; Chinese locale strings are
+      // translations of this fact and are checked separately below.
+      return /\d{1,2}:\d{2}\s*(AM|PM)/i.test(c) && clockDigits(c).join(':').includes(times);
+    });
+    expect(offenders.map(rel), 'hardcodes the weekday hours').toEqual([]);
+  });
+
+  it('every locale states the same clock times as practice.ts', () => {
+    // A Chinese translation is not a duplicate fact, but it can still drift.
+    // Comparing digits rather than text lets the wording differ while the times
+    // cannot: '上午9:00 – 下午1:00' and 'Monday–Friday 9:00 AM – 1:00 PM' both
+    // yield ['9','00','1','00'].
+    const expected = clockDigits(practice.hours.weekday);
+    expect(expected.length, 'practice.hours.weekday states no times').toBeGreaterThan(0);
+
+    for (const [locale, t] of Object.entries(translations)) {
+      expect(clockDigits((t as { hoursWeekday: string }).hoursWeekday), `${locale}.hoursWeekday`)
+        .toEqual(expected);
+    }
+  });
+});
+
 describe('locale data is actually consumed by a page', () => {
   it('every serviceCards key is read by at least one page', () => {
     // This test exists because of a mistake made while fixing the others.
