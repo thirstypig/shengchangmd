@@ -1,5 +1,5 @@
 ---
-import { locales } from '@i18n/locales';
+import { locales, getTranslation } from '@i18n/locales';
 
 interface Props {
   currentLocale: string;
@@ -44,7 +44,7 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
 });
 ---
 
-<nav class="language-switcher" aria-label="Language selection">
+<nav class="language-switcher" aria-label={getTranslation(currentLocale, 'changeLanguage')}>
   {
     localeLinks.map((link) => (
       <a

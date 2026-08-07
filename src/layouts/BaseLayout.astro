@@ -39,8 +39,17 @@ const finalOgImage = ogImage || new URL('/og-image.png', Astro.site).href;
 
 const t = (key: string) => getTranslation(locale, key);
 
+// getTranslation() falls back to returning the key itself for a falsy
+// (e.g. empty-string) value, so the "(English)" marker on the privacy/
+// accessibility links can't just be an empty string for `en` — it has to be
+// suppressed here instead, for English readers only.
+const englishOnlyMarker = locale === 'en' ? '' : t('footer.englishOnly');
+
 // Privacy and accessibility exist only in English so far; point non-English
 // visitors at the English copy rather than a 404 until they are translated.
+// The links below are marked with hreflang="en" and an inline
+// footer.englishOnly label so a Chinese reader isn't surprised to land on an
+// English-only page.
 const legalPrefix = '';
 
 const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
@@ -187,9 +196,15 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
         <div class="footer-column">
           <h3>{t('footer.legal')}</h3>
           <ul>
-            <li><a href={`${legalPrefix}/privacy/`}>{t('footer.privacy')}</a></li>
             <li>
-              <a href={`${legalPrefix}/accessibility/`}>{t('footer.accessibility')}</a>
+              <a href={`${legalPrefix}/privacy/`} hreflang="en">
+                {t('footer.privacy')}{englishOnlyMarker}
+              </a>
+            </li>
+            <li>
+              <a href={`${legalPrefix}/accessibility/`} hreflang="en">
+                {t('footer.accessibility')}{englishOnlyMarker}
+              </a>
             </li>
           </ul>
         </div>

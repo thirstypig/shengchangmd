@@ -24,7 +24,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
   <button
     id="mobile-menu-toggle"
     class="p-3 text-gray-700 hover:text-primary-600"
-    aria-label="Toggle navigation menu"
+    aria-label={getTranslation(locale, 'toggleNavigation')}
     aria-expanded="false"
     aria-controls="mobile-menu"
   >
