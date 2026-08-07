@@ -105,21 +105,23 @@ describe('office hours are stored once and translated, never restated', () => {
   /** Every run of digits, in order: '9:00 AM – 1:00 PM' -> ['9','00','1','00'] */
   const clockDigits = (s: string) => s.match(/\d+/g) ?? [];
 
-  it('no file other than practice.ts hardcodes the opening times', () => {
-    // Shipped: the same weekday hours lived in practice.ts, in locales.ts (en),
-    // and as a bare literal in hours.astro. Three English copies of one fact.
-    // The scaffold said 9:00 AM - 6:00 PM, it was corrected to 12:00 PM, and the
-    // owner then confirmed the real hours are 1:00 PM. Each correction had to
-    // find every copy, and the /hours/ page was missed.
-    const times = clockDigits(practice.hours.weekday).join(':');
-    const offenders = FILES.filter((f) => {
-      if (rel(f) === DATA_FILE) return false;
-      const c = code(f);
-      // Only flag Latin-script clock times; Chinese locale strings are
-      // translations of this fact and are checked separately below.
-      return /\d{1,2}:\d{2}\s*(AM|PM)/i.test(c) && clockDigits(c).join(':').includes(times);
-    });
-    expect(offenders.map(rel), 'hardcodes the weekday hours').toEqual([]);
+  it('no file other than practice.ts states a clock time', () => {
+    // Shipped: the weekday hours lived in practice.ts, in locales.ts (en), and
+    // as a bare literal in hours.astro — three English copies of one fact. The
+    // scaffold said 6:00 PM, it was corrected to 12:00 PM, and the owner then
+    // confirmed 1:00 PM. Each correction had to find every copy, and /hours/
+    // was missed both times.
+    //
+    // This deliberately does NOT compare the time to practice.hours.weekday.
+    // An earlier version did, and it passed while hours.astro still read
+    // "9:00 AM – 12:00 PM" — a copy only becomes dangerous once it has drifted,
+    // so matching against the current value excuses exactly the defect that
+    // matters. Chinese locale strings use 上午/下午 and no AM/PM, and are
+    // checked for digit parity by the test below.
+    const offenders = FILES.filter(
+      (f) => rel(f) !== DATA_FILE && /\d{1,2}:\d{2}\s*(AM|PM)/i.test(code(f)),
+    );
+    expect(offenders.map(rel), 'states a clock time outside practice.ts').toEqual([]);
   });
 
   it('every locale states the same clock times as practice.ts', () => {
