@@ -59,8 +59,8 @@ const medicalBusinessSchema = {
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '12:00',
+      opens: practice.hours.opens,
+      closes: practice.hours.closes,
     },
   ],
   availableLanguage: practice.languages,
@@ -126,8 +126,8 @@ const contactPointSchema = {
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '12:00',
+      opens: practice.hours.opens,
+      closes: practice.hours.closes,
     },
   ],
   areaServed: {
