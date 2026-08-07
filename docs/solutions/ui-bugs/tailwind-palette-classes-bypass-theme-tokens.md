@@ -295,3 +295,8 @@ next person deletes one as redundant.
   `white`, `#000`, `#fff` on branded surfaces. This defect is the same class of
   problem wearing a palette-class name, which that rule's wording does not
   currently catch.
+- [`green-checks-that-cannot-see-the-defect.md`](../logic-errors/green-checks-that-cannot-see-the-defect.md)
+  — generalises this document's "make the check fail before trusting it"
+  discipline beyond theme guards, and records its limit: one guard there *did*
+  fail first and was still invalid, because it was made to fail against a value
+  that later moved. Failing once is necessary, not sufficient.

@@ -304,3 +304,8 @@ that pages and UI strings *existed*, which is a different claim.
   clean report over the actual output
 - `CLAUDE.md` — carries the rule that `practice.*` must never be interpolated
   directly into a localised page or shared component
+- [`green-checks-that-cannot-see-the-defect.md`](green-checks-that-cannot-see-the-defect.md)
+  — a sibling defect in this same file. `getTranslation`'s `return value || key`
+  treats a legitimately-empty locale value as missing and renders the raw key to
+  the user; and this suite's "no empty values" assertion iterates only
+  `['zh-hant', 'zh-hans']`, so `en` is structurally outside what it can see.
