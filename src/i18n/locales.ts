@@ -182,7 +182,13 @@ export function getTranslation(locale: string, key: string): string {
     value = value?.[k];
   }
 
-  return value || key;
+  // `??`, not `||`. An empty string is a legitimate translated value — a marker
+  // that should be blank in one locale and present in others — and `||` treats
+  // it as absent, returning the key. That shipped: a footer key with an empty
+  // `en` value rendered the literal text "footer.englishOnly" on every English
+  // page while npm test stayed green. `?.[k]` only ever yields undefined for a
+  // missing key, never '', so `??` still falls back correctly for real misses.
+  return value ?? key;
 }
 
 /**

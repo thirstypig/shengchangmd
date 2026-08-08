@@ -226,7 +226,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 61 vitest tests
+npm test                             # 70 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -244,9 +244,22 @@ touching the build config.
 
 ## Tests
 
-Four files, 61 tests, run with `npm test`:
+Five files, 70 tests, run with `npm test`:
 
-- `tests/i18n/locale-coverage.test.ts` — the i18n layer
+- `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
+  `getTranslation` returns an empty string **as-is** rather than treating it as
+  missing, and that no locale leaves a value empty — **including `en`**. The
+  emptiness check used to iterate the two Chinese locales only, so `en` was
+  structurally outside what it could see, and a footer key with an empty English
+  value made `getTranslation`'s old `return value || key` render the literal text
+  `footer.englishOnly` on every English page
+- `tests/i18n/shared-component-labels.test.ts` — no shared component may carry a
+  literal `aria-label`, `title`, `alt` or `data-label`. A literal there cannot
+  vary by locale, so it renders English on every Chinese page. Six shipped that
+  way and reached screen-reader users on all 12 Chinese pages; four of the six
+  had translations sitting unused in `locales.ts`. The test matches literals and
+  ignores `{expressions}`, so it flags the defect by construction rather than by
+  trying to detect English
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
   twice: the address must stay derived from `addressParts`, no file outside
   `practice.ts` may restate the address or phone, no hardcoded map URLs, place
