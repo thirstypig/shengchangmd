@@ -35,6 +35,9 @@ const addressParts: AddressParts = {
 export interface PracticeInfo {
   doctorName: string;
   credentials: string;
+  /** California licence. Restored 2026-08-06; see the comment block below. */
+  medicalLicenseNumber: string;
+  medicalLicenseStatus: string;
   npi: string;
   /** Derived from `addressParts`. Never edit this directly. */
   address: string;
@@ -61,6 +64,8 @@ export interface PracticeInfo {
     medicalDegree: string;
     school: string;
     year: number;
+    /** Each entry is one appointment, most recent last. */
+    postgraduateTraining: string[];
   };
   practiceAreas: {
     primary: string[];
@@ -71,35 +76,23 @@ export interface PracticeInfo {
 }
 
 /*
-  Removed 2026-08-05 at the owner's request, recorded here so the removals do
-  not read as data loss the next time someone audits this file:
+  Removed 2026-08-05 at the owner's request, then PARTIALLY RESTORED on
+  2026-08-06 when he supplied the same facts again. Recorded here so neither the
+  removal nor the restoration reads as an accident:
 
-  - `medicalLicenseNumber` ('A 33409'), `medicalLicenseStatus`,
-    `licenseIssuedDate` ('February 13, 1979') and `licenseExpiresDate`
-    ('July 31, 2028'). The owner asked for the licence number off the site as
-    non-essential. The issue date is still the best evidence for when Dr. Chang
-    began practising in California, which is why it is preserved in this note.
+  RESTORED 2026-08-06 — the licence number, the American Board of Pathology
+  certification, and the postgraduate training below. All three are now live.
+
+  STILL REMOVED, deliberately:
+  - `licenseExpiresDate` ('July 31, 2028'). A published expiry date goes stale
+    silently and nobody will be watching the site the day it does.
   - `hospitalAffiliations` (San Gabriel Valley Medical Center, College Hospital
     Costa Mesa).
-  - The American Board of Pathology certification in Anatomic Pathology &
-    Clinical Pathology, first certified 1973.
 
-  POSTGRADUATE TRAINING — deliberately not rendered, and this matters.
-
-  The site previously claimed "Three years of postgraduate training in family
-  medicine and internal medicine at University of Alabama Hospital". The
-  "family medicine and internal medicine" part was false. Per his Doximity
-  profile (https://www.doximity.com/pub/sheng-chang-md), the actual record is:
-
-    University of Chicago (NorthShore) — Transitional Year internship, 1969–1970
-    University of Alabama Medical Center — Residency, Pathology (Anatomic and
-      Clinical), 1970–1973
-
-  The 1970–1973 dates corroborate the 1973 pathology board certification. Since
-  the owner asked for pathology removed from the site, rendering this training
-  would reintroduce exactly what he asked to take down — so it is recorded here
-  and shown nowhere. If he later wants his Alabama training on the page, it must
-  be described as a pathology residency, not family medicine.
+  `licenseIssuedDate` was 'February 13, 1979'. It stays unpublished but is
+  preserved here: it is the best evidence for when Dr. Chang began practising in
+  California, and it is why the site says 1979 rather than the 1997 his own bio
+  text gives.
 
   UNRESOLVED: the owner asked whether there is a Wake Forest University
   connection. Nothing was found in this file, on Healthgrades, on Doximity, or
@@ -144,6 +137,8 @@ const hoursCloses = '13:00';
 export const practice: PracticeInfo = {
   doctorName: 'Sheng Chang, M.D., Ph.D.',
   credentials: 'M.D., Ph.D.',
+  medicalLicenseNumber: 'A 33409',
+  medicalLicenseStatus: 'Active',
   npi: '1871589903',
   address: `${addressParts.street}, ${addressParts.locality}, ${addressParts.region} ${addressParts.postalCode}`,
   addressParts,
@@ -162,6 +157,16 @@ export const practice: PracticeInfo = {
     medicalDegree: 'M.D.',
     school: 'National Taiwan University College of Medicine',
     year: 1967,
+    // Source: Dr. Chang's Doximity profile
+    // (https://www.doximity.com/pub/sheng-chang-md). The site previously
+    // claimed "three years of postgraduate training in family medicine and
+    // internal medicine at University of Alabama Hospital" — the "family
+    // medicine and internal medicine" part was false. It was a pathology
+    // residency, and it is labelled as one here.
+    postgraduateTraining: [
+      'Transitional Year internship, University of Chicago (NorthShore), 1969–1970',
+      'Residency in Anatomic and Clinical Pathology, University of Alabama Medical Center, 1970–1973',
+    ],
   },
   practiceAreas: {
     primary: ['Family Medicine'],
@@ -179,6 +184,21 @@ export const practice: PracticeInfo = {
       currentStatus: 'Certified',
       maintenanceRequired: true,
       mostRecentCertification: 2026,
+    },
+    {
+      board: 'American Board of Pathology',
+      // NOT independently verified. This specialty label comes from the
+      // original scaffold, which is known to contain fabricated content
+      // (see CLAUDE.md). The owner's 2026-08-06 message says only
+      // "American Board of Pathology (ABP)". The 1973 date IS corroborated:
+      // Dr. Chang's Doximity profile puts his pathology residency at
+      // 1970–1973. Confirm the exact specialty wording with him.
+      specialty: 'Anatomic Pathology & Clinical Pathology',
+      firstCertified: 1973,
+      currentStatus: 'Certified',
+      // Lifetime certificate. ABP did not issue time-limited certificates
+      // until 2006, so there is no maintenance cycle for a 1973 certification.
+      maintenanceRequired: false,
     },
   ],
 };
