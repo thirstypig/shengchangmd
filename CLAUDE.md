@@ -123,8 +123,22 @@ had translations sitting in `locales.ts` that nothing read.
 
 ## Known open items requiring the owner's confirmation
 
+**A batch of facts arrived from the owner on 2026-08-06.** Phase 1 (hours) is
+live; the rest is planned and **not yet implemented** — see
+[`docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md`](docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md)
+and its design doc. Supplied and still unpublished: the licence number `A 33409`,
+the American Board of Pathology certification, the Alabama pathology residency,
+the patient scope limits, the accepted coverage types, and four biography facts.
+**The scope limits are the most consequential thing on that list** — the site
+still says nothing about seeing adults only, no patients under 18, and no
+gynaecology or obstetrics.
+
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
+- ~~Office hours~~ — **9:00 AM – 1:00 PM confirmed by the owner 2026-08-06** and
+  live. The site had said 12:00 PM, and before that the scaffold said 6:00 PM.
+  `practice.ts` now holds `opens`/`closes` in 24-hour form as the single source
+  and derives the display string; three tests guard it.
 - **Insurance carriers.** ~~The generated list is live.~~ Removed 2026-08-05.
   `insurance.astro` had named eight carriers as accepted — Medicare, Medicaid,
   Blue Cross Blue Shield, Aetna, Cigna, United Healthcare, Anthem, Molina
@@ -135,6 +149,17 @@ had translations sitting in `locales.ts` that nothing read.
   carrier list, or any "most major plans" phrasing, without the real list in
   writing.** No carrier logos either: reproducing the marks copies trademarks,
   and displaying them asserts network participation.
+
+  **Update 2026-08-06: the owner supplied coverage in writing, and it is
+  different in kind.** It names plan **types**, not carriers — Original Medicare
+  (the red, white and blue card), Medi-Cal (the white card), HMO, PPO, private
+  insurance and cash. That meets the bar set above. It is **not yet published**;
+  Phase 3 of the plan adds it, each item qualified by a note that the office
+  confirms whether your specific plan is contracted. That qualifier is
+  load-bearing: "HMO" and "PPO" name plan structures, not networks, so an
+  unqualified list would mislead a patient whose HMO has no contract here —
+  the same harm the fabricated list could have caused. **The prohibition on
+  carrier names, carrier logos and "most major plans" stands unchanged.**
 - ~~Immigration medical exams~~ — confirmed 2026-07-29: Dr. Chang is listed in
   the USCIS Find a Doctor locator, i.e. he holds the **civil surgeon
   designation** and may complete **Form I-693**. Recorded as
@@ -144,7 +169,11 @@ had translations sitting in `locales.ts` that nothing read.
 - **The Ph.D. is asserted, not evidenced.** Added 2026-08-05 on Dr. Chang's own
   say-so, relayed by the owner, after the concern was raised and he confirmed.
   Nothing else corroborates it: this repo held M.D. only, and his Healthgrades
-  and Doximity profiles list M.D. only. **Institution, field and year are all
+  and Doximity profiles list M.D. only. **The owner's own detailed credentials
+  list of 2026-08-06 also omits it** — it names ABFM, ABP and the National Taiwan
+  University medical degree, and no doctorate. That was raised with the site
+  owner on 2026-08-07 and he chose to leave it live. Recorded, not re-litigated;
+  do not raise it again unless new evidence appears. **Institution, field and year are all
   unknown**, which is why it appears in `doctorName`/`credentials` and
   deliberately *not* in `education` — putting it there would assert that
   National Taiwan University granted it. Fill `education` in properly once those
@@ -259,7 +288,8 @@ Five files, 70 tests, run with `npm test`:
   way and reached screen-reader users on all 12 Chinese pages; four of the six
   had translations sitting unused in `locales.ts`. The test matches literals and
   ignores `{expressions}`, so it flags the defect by construction rather than by
-  trying to detect English
+  trying to detect English. Both of the above are written up in
+  [`docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md`](docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md)
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
   twice: the address must stay derived from `addressParts`, no file outside
   `practice.ts` may restate the address or phone, no hardcoded map URLs, place
