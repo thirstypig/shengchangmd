@@ -162,18 +162,41 @@ describe('office hours are stored once and translated, never restated', () => {
 });
 
 describe('locale data is actually consumed by a page', () => {
-  it('every serviceCards key is read by at least one page', () => {
-    // This test exists because of a mistake made while fixing the others.
-    // Fifteen tests were added asserting serviceCards labels existed in every
-    // locale. They passed, and they measured nothing: the homepage cards used
-    // hardcoded strings, so no page read serviceCards at all. A test that
-    // cannot fail for a real reason is worse than no test, because "42 passing"
-    // then gets quoted as evidence.
-    const keys = Object.keys(translations.en.serviceCards);
-    expect(keys.length).toBeGreaterThan(0);
+  // This suite exists because of a mistake made while fixing the others.
+  // Fifteen tests were added asserting serviceCards labels existed in every
+  // locale. They passed, and they measured nothing: the homepage cards used
+  // hardcoded strings, so no page read serviceCards at all. A test that
+  // cannot fail for a real reason is worse than no test, because "42 passing"
+  // then gets quoted as evidence.
+  //
+  // Every nested block in `translations.en` is checked, not a hand-listed few.
+  // The original version named `serviceCards` explicitly, so `patientScope` and
+  // `coverage` were added on 2026-08-07 completely outside what it could see —
+  // the same shape as the emptiness check that iterated only the two Chinese
+  // locales and left `en` structurally invisible. Deriving the block list from
+  // the data means the next block added is covered without anyone remembering.
+  const NESTED_BLOCKS = Object.entries(translations.en)
+    .filter(([, v]) => v !== null && typeof v === 'object' && !Array.isArray(v))
+    .map(([name]) => name);
 
-    const allCode = FILES.map(code).join('\n');
-    const unread = keys.filter((k) => !allCode.includes(`serviceCards.${k}`));
-    expect(unread, 'defined in locales.ts but rendered by no page').toEqual([]);
+  it('finds the nested blocks to check', () => {
+    // Guards the derivation itself: if a refactor flattens translations, the
+    // loop below would silently check nothing and still pass.
+    expect(NESTED_BLOCKS).toEqual(
+      expect.arrayContaining(['serviceCards', 'patientScope', 'coverage', 'footer']),
+    );
+  });
+
+  describe.each(NESTED_BLOCKS)('%s', (block) => {
+    it('every key is read by at least one page', () => {
+      const keys = Object.keys(
+        translations.en[block as keyof typeof translations.en] as Record<string, unknown>,
+      );
+      expect(keys.length).toBeGreaterThan(0);
+
+      const allCode = FILES.map(code).join('\n');
+      const unread = keys.filter((k) => !allCode.includes(`${block}.${k}`));
+      expect(unread, `defined in locales.ts but rendered by no page`).toEqual([]);
+    });
   });
 });
