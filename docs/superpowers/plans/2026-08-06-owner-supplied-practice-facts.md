@@ -8,6 +8,28 @@
 
 **Tech Stack:** Astro 5 (static), TypeScript, Tailwind v4 via `@tailwindcss/vite`, Vitest.
 
+## Status as of 2026-08-07
+
+| Phase | State |
+|---|---|
+| 1 — Office hours | **Shipped and live.** PR #16. Verified on production: `/hours/` reads 9:00 AM – 1:00 PM, homepage JSON-LD carries `"closes":"13:00"`, both Chinese location pages read 下午1:00. |
+| 2 — Credentials | **Not started.** Licence `A 33409`, ABP certification, Alabama pathology residency. |
+| 3 — Patient scope and insurance | **Not started.** The highest-value item in the batch: the site still says nothing about adults only, no patients under 18, no gynaecology or obstetrics. |
+| 4 — Biography | **Not started.** Tainan, the 1968 marriage, arrival in the USA in 1969, ACA founding presidency 1982–1990. |
+
+Phase 1 cost ten commits for one number, three of them fixing guards written
+during the correction. The hours turned out to be stored in **seven** places,
+not the five this plan originally counted — the two extra were 24-hour literals
+in `JsonLd.astro`, invisible to an AM/PM-shaped guard and read by Google rather
+than by patients. Full write-up:
+[`docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md`](../../solutions/logic-errors/green-checks-that-cannot-see-the-defect.md).
+
+Two things landed that this plan did not anticipate, both merged: six English
+accessibility labels were translated across all 12 Chinese pages (PR #17), and
+`getTranslation`'s `||` fallback was fixed so an empty locale value no longer
+renders as its own key (PR #22). The test count is now **70**, not the 61 this
+plan assumed; adjust the expected numbers in Phases 2–4 accordingly.
+
 ## Global Constraints
 
 Copied verbatim from `docs/superpowers/specs/2026-08-06-owner-supplied-practice-facts-design.md` and `CLAUDE.md`. Every task's requirements include this section.
