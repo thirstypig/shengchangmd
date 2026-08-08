@@ -224,7 +224,7 @@ export const translations = {
       hours: '门诊时间',
       address: '地址',
       phone: '电话',
-      officeInformation: '诊所信息',
+      officeInformation: '诊所资讯',
       legal: '法律',
       rightsReserved: '版权所有。',
       privacy: '隐私政策',
