@@ -143,7 +143,12 @@ const servicesSchema = [
     '@type': 'MedicalService',
     '@id': new URL('/services/#family-medicine', Astro.site).href,
     name: 'Family Medicine',
-    description: 'Comprehensive family medicine care for patients of all ages, from newborns to seniors. Includes preventive care, acute illness treatment, and chronic disease management.',
+    // "for patients of all ages, from newborns to seniors" until 2026-08-07.
+    // The practice sees adults only - no patients under 18 - per the owner's
+    // written scope of 2026-08-06. Structured data is what Google, Apple Maps
+    // and voice assistants read, so a stale claim here reaches a parent who
+    // never opens the page.
+    description: 'Comprehensive family medicine care for adults, including preventive care, acute illness treatment, and chronic disease management.',
     provider: {
       '@type': 'MedicalBusiness',
       name: practice.doctorName,

@@ -78,7 +78,14 @@ const { subject, style = 'soft', class: className = '' } = Astro.props;
       {
         subject === 'family' && (
           <>
-            {/* Three figures of descending height — the whole family, any age. */}
+            {/*
+              Three abstract figures of descending height. The comment here used
+              to read "the whole family, any age", which is no longer true: the
+              practice sees adults only, no patients under 18 (owner's written
+              scope, 2026-08-06). The figures are unlabelled and read as adults
+              of differing height, so the art is left as-is — but if it ever
+              reads as a child to someone, it should change. Flagged 2026-08-07.
+            */}
             <circle cx="34" cy="44" r="9" />
             <path d="M21 88v-9a13 13 0 0 1 26 0v9" />
             <circle cx="61" cy="54" r="7" />
