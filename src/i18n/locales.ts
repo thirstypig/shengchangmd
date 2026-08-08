@@ -215,9 +215,12 @@ export function getTranslation(locale: string, key: string): string {
   The test is not "is it a proper noun" but "does this entity have a real name in
   the target language that readers would expect".
 
-  Entries for `licenseStatus`, `licenseExpires` and `postgraduateTraining` were
-  removed 2026-08-05 along with the source fields in practice.ts. See the comment
-  block there for what was removed and why.
+  `licenseStatus` was restored 2026-08-06 alongside the source field in
+  practice.ts. `licenseExpires` stays removed. `postgraduateTraining` is
+  rendered in English on the Chinese pages for now — institution names
+  ("University of Alabama Medical Center") have no established Chinese form
+  here, and inventing one would be worse than leaving it. Revisit with a
+  fluent reader.
 */
 export const practiceLocalized = {
   en: {
@@ -225,11 +228,14 @@ export const practiceLocalized = {
     school: 'National Taiwan University College of Medicine',
     specialties: {
       'Family Medicine': 'Family Medicine',
+      'Anatomic Pathology & Clinical Pathology': 'Anatomic Pathology & Clinical Pathology',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': 'American Board of Family Medicine',
+      'American Board of Pathology': 'American Board of Pathology',
     } as Record<string, string>,
     certStatus: { Certified: 'Certified' } as Record<string, string>,
+    licenseStatus: { Active: 'Active' } as Record<string, string>,
   },
   'zh-hant': {
     languages: ['英語', '國語', '粵語', '西班牙語', '越南語'],
@@ -238,22 +244,28 @@ export const practiceLocalized = {
     school: '國立臺灣大學醫學院',
     specialties: {
       'Family Medicine': '家庭醫學',
+      'Anatomic Pathology & Clinical Pathology': '解剖病理學與臨床病理學',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': '美國家庭醫學專科委員會',
+      'American Board of Pathology': '美國病理學專科委員會',
     } as Record<string, string>,
     certStatus: { Certified: '認證有效' } as Record<string, string>,
+    licenseStatus: { Active: '有效' } as Record<string, string>,
   },
   'zh-hans': {
     languages: ['英语', '普通话', '粤语', '西班牙语', '越南语'],
     school: '国立台湾大学医学院',
     specialties: {
       'Family Medicine': '家庭医学',
+      'Anatomic Pathology & Clinical Pathology': '解剖病理学与临床病理学',
     } as Record<string, string>,
     boards: {
       'American Board of Family Medicine': '美国家庭医学专科委员会',
+      'American Board of Pathology': '美国病理学专科委员会',
     } as Record<string, string>,
     certStatus: { Certified: '认证有效' } as Record<string, string>,
+    licenseStatus: { Active: '有效' } as Record<string, string>,
   },
 };
 
