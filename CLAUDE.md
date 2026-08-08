@@ -86,6 +86,12 @@ both — a resting screenshot in one theme is not evidence.**
   of the defect — that is what found a hardcoded English skip link on every
   Chinese page after a "no English remains" claim had already been made.
 - Board certifications, licence numbers, education → `src/data/practice.ts`
+- **Publishing a fact does not remove the claim that contradicts it.** Before
+  adding any constraint or limit, grep for its *negation* — in all three locales
+  and in `JsonLd.astro`. Phase 3 of the 2026-08-06 batch published "we do not see
+  patients under 18" onto a site that asserted "patients of all ages" in seven
+  places, including "from newborns to seniors" in the structured data Google
+  reads. No test can catch that: both sentences are well-formed on their own.
 - Map URLs → derive from `practice.address`, never hardcode coordinates or
   Google place IDs. `tests/data/source-integrity.test.ts` fails the build if a
   place id, a pre-baked embed URL, a latitude/longitude, or the street address
@@ -123,15 +129,23 @@ had translations sitting in `locales.ts` that nothing read.
 
 ## Known open items requiring the owner's confirmation
 
-**A batch of facts arrived from the owner on 2026-08-06.** Phase 1 (hours) is
-live; the rest is planned and **not yet implemented** — see
+**The batch of facts that arrived from the owner on 2026-08-06 is now fully
+published** — all four phases of
 [`docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md`](docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md)
-and its design doc. Supplied and still unpublished: the licence number `A 33409`,
-the American Board of Pathology certification, the Alabama pathology residency,
-the patient scope limits, the accepted coverage types, and four biography facts.
-**The scope limits are the most consequential thing on that list** — the site
-still says nothing about seeing adults only, no patients under 18, and no
-gynaecology or obstetrics.
+shipped on 2026-08-07 (PRs #16, #24, #25, #26) and were verified against
+production, not against a local build. Live: the licence `A 33409`, the American
+Board of Pathology certification, the Alabama pathology residency, the patient
+scope limits, the six coverage types, and the four biography facts.
+
+**The lesson from Phase 3, which applies to every future content change:
+publishing a fact does not remove the claim that contradicts it.** The plan
+described Phase 3 as publishing the scope limits. The site said the opposite in
+**seven** places across all three locales — "patients of all ages", and in
+`JsonLd.astro` "from newborns to seniors", which is what Google and voice
+assistants read. Shipping the plan as written would have put "we do not see
+patients under 18" and "patients of all ages" on the same page. No test catches
+this; both sentences are individually well-formed. **Grep for the negation of
+what you are about to publish, in every locale and in the structured data.**
 
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
@@ -153,13 +167,31 @@ gynaecology or obstetrics.
   **Update 2026-08-06: the owner supplied coverage in writing, and it is
   different in kind.** It names plan **types**, not carriers — Original Medicare
   (the red, white and blue card), Medi-Cal (the white card), HMO, PPO, private
-  insurance and cash. That meets the bar set above. It is **not yet published**;
-  Phase 3 of the plan adds it, each item qualified by a note that the office
-  confirms whether your specific plan is contracted. That qualifier is
-  load-bearing: "HMO" and "PPO" name plan structures, not networks, so an
-  unqualified list would mislead a patient whose HMO has no contract here —
-  the same harm the fabricated list could have caused. **The prohibition on
-  carrier names, carrier logos and "most major plans" stands unchanged.**
+  insurance and cash. That meets the bar set above, and it went **live on
+  2026-08-07** (PR #25) on all three insurance pages. Each item is qualified by
+  a note that the office confirms whether your specific plan is contracted.
+  **That qualifier is load-bearing — do not tidy it away or move it below the
+  fold.** "HMO" and "PPO" name plan structures, not networks, so an unqualified
+  list would mislead a patient whose HMO has no contract here — the same harm
+  the fabricated list could have caused. **The prohibition on carrier names,
+  carrier logos and "most major plans" stands unchanged**, and is verified
+  absent from the live HTML.
+
+  The `.insurance-list` CSS that styled the fabricated carriers as a monochrome
+  logo wall was deleted at the same time. It had outlived its list by a year —
+  defined in all three insurance pages, referenced by no markup in any of them.
+  Dead style is not neutral here: a logo-wall rule sitting ready in the file
+  invites someone to fill it, and the thing it wants is the carrier list.
+  `.coverage-list` replaces it and is deliberately a plain list, because plan
+  types are not brands and should not carry a logo wall's visual weight.
+- **The ABP specialty wording is live and unverified.** "Anatomic Pathology &
+  Clinical Pathology" now renders on all three About pages. That exact phrasing
+  comes from the **original scaffold**, which is the same source that fabricated
+  the map embed and the carrier list. The owner's 2026-08-06 message says only
+  "American Board of Pathology (ABP)". The **1973 date is corroborated** — his
+  Doximity profile puts the pathology residency at 1970–1973 — but the specialty
+  label is not. **Ask Dr. Chang for the exact wording on the certificate.**
+  Flagged in a comment in `practice.ts`.
 - ~~Immigration medical exams~~ — confirmed 2026-07-29: Dr. Chang is listed in
   the USCIS Find a Doctor locator, i.e. he holds the **civil surgeon
   designation** and may complete **Form I-693**. Recorded as
@@ -255,7 +287,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 70 vitest tests
+npm test                             # 74 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -273,7 +305,7 @@ touching the build config.
 
 ## Tests
 
-Five files, 70 tests, run with `npm test`:
+Five files, 74 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -293,7 +325,12 @@ Five files, 70 tests, run with `npm test`:
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
   twice: the address must stay derived from `addressParts`, no file outside
   `practice.ts` may restate the address or phone, no hardcoded map URLs, place
-  ids or coordinates, and no locale key may be defined without a page reading it
+  ids or coordinates, and no locale key may be defined without a page reading it.
+  That last rule used to name `serviceCards` explicitly, so `patientScope` and
+  `coverage` were structurally outside what it could see when they were added on
+  2026-08-07 — the same shape as the emptiness check that iterated only the two
+  Chinese locales. It now derives the block list from `translations.en` itself,
+  so the next block added is covered without anyone remembering
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
 - `tests/styles/theme-token-coverage.test.ts` — the hand-maintained colour map

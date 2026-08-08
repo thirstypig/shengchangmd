@@ -8,14 +8,34 @@
 
 **Tech Stack:** Astro 5 (static), TypeScript, Tailwind v4 via `@tailwindcss/vite`, Vitest.
 
-## Status as of 2026-08-07
+## Status as of 2026-08-07 — ALL FOUR PHASES SHIPPED
 
 | Phase | State |
 |---|---|
 | 1 — Office hours | **Shipped and live.** PR #16. Verified on production: `/hours/` reads 9:00 AM – 1:00 PM, homepage JSON-LD carries `"closes":"13:00"`, both Chinese location pages read 下午1:00. |
-| 2 — Credentials | **Not started.** Licence `A 33409`, ABP certification, Alabama pathology residency. |
-| 3 — Patient scope and insurance | **Not started.** The highest-value item in the batch: the site still says nothing about adults only, no patients under 18, no gynaecology or obstetrics. |
-| 4 — Biography | **Not started.** Tainan, the 1968 marriage, arrival in the USA in 1969, ACA founding presidency 1982–1990. |
+| 2 — Credentials | **Shipped and live.** PR #24. Licence `A 33409`, ABP certification, and both postgraduate appointments render on all three About pages. Verified on production. |
+| 3 — Patient scope and insurance | **Shipped and live.** PR #25. Adults 18+, no under-18s, no GYN/OB on all three services pages and `/new-patients/`; the six coverage types with their qualifier on all three insurance pages. Verified on production. |
+| 4 — Biography | **Shipped and live.** PR #26. Tainan, NTU 1967, the 1968 marriage, arrival 1969, ACA founding presidency 1982–1990. Verified on production. |
+
+**Phase 3 was half again as large as this plan described, and the missing half
+was the dangerous one.** The plan treated it as *publishing* the scope limits.
+The site simultaneously claimed the opposite — "patients of all ages" — in
+**seven** places across all three locales, including `JsonLd.astro`'s "from
+newborns to seniors", which is what Google and voice assistants read. Publishing
+the limit without removing the claim would have put both sentences on the same
+page. No test can catch that: each sentence is well-formed on its own. The only
+thing that finds it is grepping for the **negation** of what you are about to
+publish. Do that on every future content phase.
+
+Two pre-existing defects were found in passing and fixed separately (PR #27):
+the Simplified pages used the mainland word 信息 in four places where the
+Traditional pages correctly used 資訊, and the Simplified contact page had not
+been rewritten when the Traditional one was.
+
+The test count is now **74**. `tests/data/source-integrity.test.ts` no longer
+hand-lists `serviceCards`; it derives the block list from `translations.en`, so
+`patientScope`, `coverage` and anything added later are covered without anyone
+remembering to extend it. Both mutations were run and confirmed red first.
 
 Phase 1 cost ten commits for one number, three of them fixing guards written
 during the correction. The hours turned out to be stored in **seven** places,
