@@ -50,6 +50,16 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
           专业背景
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
+          {/*
+            Early life supplied by the owner 2026-08-06. Publish NO number of
+            years in practice — see the English source at src/pages/about.astro
+            for why. His sons and grandsons are deliberately absent.
+            国立台湾大学医学院 is taken from practiceLocalized.school rather than
+            written out again, so the institution's name lives in one place.
+          */}
+          <p class="leading-relaxed">
+            张医生成长于台湾台南，1967 年毕业于{pl.school}。他于 1968 年与夫人 Min Mey Chang 结婚，并于 1969 年赴美。
+          </p>
           <p class="leading-relaxed">
             张胜雄医生于 1979 年移居加州，定居 Arcadia，此后一直在大圣盖博谷地区行医，从事家庭医学。他通过美国家庭医学专科医师认证，并获美国公民及移民服务局（USCIS）指定为体检医师。
           </p>
@@ -57,7 +67,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
             张医生曾在 Garfield Medical Center 担任家庭医学科主任，其后出任医务长（Chief of Staff），并曾为该院董事会成员。
           </p>
           <p class="leading-relaxed">
-            张医生长期活跃于国立台湾大学医学院校友会，曾任该会地方分会会长及全国总会会长。2001 年，他在迪士尼乐园主办了该会的全国性活动。
+            张医生长期活跃于{pl.school}校友会，曾任该会地方分会会长及全国总会会长。2001 年，他在迪士尼乐园主办了该会的全国性活动。
           </p>
           <p class="leading-relaxed">
             他也喜爱写作，并于 2023 年出版了一本著作《Endless Talk》。
@@ -80,7 +90,7 @@ const canonicalUrl = new URL('/zh-hans/about/', Astro.site).href;
               href="https://minmeychang.com"
               class="text-primary-700 underline underline-offset-2 hover:no-underline"
               target="_blank"
-              rel="noopener noreferrer">Min Mey Chang</a> 共同创办了 Arcadia Chinese Association，协助多来自台湾、英语尚不流利的新移民。该协会也协助移民社区与 Arcadia 市政府及学区沟通。
+              rel="noopener noreferrer">Min Mey Chang</a> 共同创办了 Arcadia Chinese Association，协助多来自台湾、英语尚不流利的新移民。他自 1982 年至 1990 年担任创会会长。该协会也协助移民社区与 Arcadia 市政府及学区沟通。
           </p>
           {/*
             两项「首位华裔」记载出自 Arcadia Weekly，由 Arcadia 公共图书馆的
