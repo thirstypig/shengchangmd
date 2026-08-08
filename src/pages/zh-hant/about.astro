@@ -133,6 +133,16 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
           <p class="text-gray-600 text-sm">
             {practice.education.year} 年畢業
           </p>
+          {/*
+            用語待確認：住院醫師訓練機構名稱暫以英文呈現。「University of Alabama
+            Medical Center」等機構在此無通行的中文名稱，自行翻譯等同捏造。
+            See the note in src/i18n/locales.ts. Revisit with a fluent reader.
+          */}
+          <ul class="mt-4 space-y-2 border-t border-gray-200 pt-4">
+            {practice.education.postgraduateTraining.map((t) => (
+              <li class="text-gray-600 text-sm">{t}</li>
+            ))}
+          </ul>
         </div>
 
         {/* Languages */}
@@ -148,6 +158,19 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
             ))}
           </ul>
         </div>
+
+        {/* Medical Licence */}
+        <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
+          <h3 class="font-serif text-xl font-bold mb-4 text-gray-900">
+            加州醫師執照
+          </h3>
+          <p class="text-gray-700 mb-2">
+            <span class="font-semibold">{practice.medicalLicenseNumber}</span>
+          </p>
+          <p class="text-gray-600 text-sm">
+            {pl.licenseStatus[practice.medicalLicenseStatus] ?? practice.medicalLicenseStatus}
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -159,7 +182,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
         專科認證
       </h2>
 
-      <div class="grid grid-cols-1 gap-8 max-w-md mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
         {practice.boardCertifications.map((cert) => (
           <div class="bg-white rounded-lg p-8 border border-gray-200 shadow-sm">
             <div class="flex items-start gap-4 mb-4">
