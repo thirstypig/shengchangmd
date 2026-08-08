@@ -33,6 +33,20 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
           Professional Background
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
+          {/*
+            Early life supplied by the owner 2026-08-06. Publish NO number of
+            years in practice: his text says both "since 1997" and "for 40
+            years" while also saying he moved to California in 1979, and the
+            site uses 1979, backed by his 13 February 1979 licence issue date.
+            1979 to 2026 is 47 years. Any figure contradicts one of his own
+            statements, so state none.
+
+            His sons and grandsons are deliberately absent. They have not
+            consented to appearing on a public, indexed medical site.
+          */}
+          <p class="leading-relaxed">
+            Dr. Chang was raised in Tainan, Taiwan, and graduated from National Taiwan University College of Medicine in 1967. He married Min Mey Chang in 1968 and came to the United States in 1969.
+          </p>
           <p class="leading-relaxed">
             Dr. Sheng Chang moved to California in 1979 and settled in Arcadia, where he has practised as a family physician serving the Greater San Gabriel Valley ever since. He is board-certified by the American Board of Family Medicine and is a USCIS-designated civil surgeon.
           </p>
@@ -63,7 +77,7 @@ const canonicalUrl = new URL('/about/', Astro.site).href;
               href="https://minmeychang.com"
               class="text-primary-700 underline underline-offset-2 hover:no-underline"
               target="_blank"
-              rel="noopener noreferrer">Min Mey Chang</a>, founded the Arcadia Chinese Association to help new immigrants — most of them from Taiwan — who did not yet speak English well. The association also helps the immigrant community communicate with the Arcadia city government and the school district.
+              rel="noopener noreferrer">Min Mey Chang</a>, founded the Arcadia Chinese Association to help new immigrants — most of them from Taiwan — who did not yet speak English well. He served as its founding president from 1982 to 1990. The association also helps the immigrant community communicate with the Arcadia city government and the school district.
           </p>
           {/*
             The two "first Chinese-American" claims below are the only facts on

@@ -50,6 +50,16 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
           專業背景
         </h2>
         <div class="prose prose-lg text-gray-700 space-y-6">
+          {/*
+            Early life supplied by the owner 2026-08-06. Publish NO number of
+            years in practice — see the English source at src/pages/about.astro
+            for why. His sons and grandsons are deliberately absent.
+            國立臺灣大學醫學院 is taken from practiceLocalized.school rather than
+            written out again, so the institution's name lives in one place.
+          */}
+          <p class="leading-relaxed">
+            張醫師成長於臺灣臺南，1967 年畢業於{pl.school}。他於 1968 年與夫人 Min Mey Chang 結婚，並於 1969 年赴美。
+          </p>
           <p class="leading-relaxed">
             張勝雄醫師於 1979 年移居加州，定居 Arcadia，此後一直在大聖蓋博谷地區執業家庭醫學。他通過美國家庭醫學專科醫師認證，並獲美國公民及移民服務局（USCIS）指定為體檢醫師。
           </p>
@@ -57,7 +67,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
             張醫師曾在 Garfield Medical Center 擔任家庭醫學科主任，其後出任醫務長（Chief of Staff），並曾為該院董事會成員。
           </p>
           <p class="leading-relaxed">
-            張醫師長期活躍於國立臺灣大學醫學院校友會，曾任該會地方分會會長及全國總會會長。2001 年，他在迪士尼樂園主辦了該會的全國性活動。
+            張醫師長期活躍於{pl.school}校友會，曾任該會地方分會會長及全國總會會長。2001 年，他在迪士尼樂園主辦了該會的全國性活動。
           </p>
           <p class="leading-relaxed">
             他也喜愛寫作，並於 2023 年出版了一本著作《Endless Talk》。
@@ -80,7 +90,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
               href="https://minmeychang.com"
               class="text-primary-700 underline underline-offset-2 hover:no-underline"
               target="_blank"
-              rel="noopener noreferrer">Min Mey Chang</a> 共同創辦了 Arcadia Chinese Association，協助多來自臺灣、英語尚不流利的新移民。該協會也協助移民社區與 Arcadia 市政府及學區溝通。
+              rel="noopener noreferrer">Min Mey Chang</a> 共同創辦了 Arcadia Chinese Association，協助多來自臺灣、英語尚不流利的新移民。他自 1982 年至 1990 年擔任創會會長。該協會也協助移民社區與 Arcadia 市政府及學區溝通。
           </p>
           {/*
             兩項「首位華裔」記載出自 Arcadia Weekly，由 Arcadia 公共圖書館的
