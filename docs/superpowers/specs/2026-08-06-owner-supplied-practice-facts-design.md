@@ -54,8 +54,20 @@ incompletely.
 
 ### `/hours/` carries two further defects
 
-`/hours/` is linked from `PageNav.astro:12` and from `location.astro:73`. It is
-reachable and indexed.
+`/hours/` is linked from `location.astro:73` and is listed in the sitemap, so it
+is reachable and indexed.
+
+> **Correction, 2026-08-07.** This paragraph originally read "linked from
+> `PageNav.astro:12` and from `location.astro:73`", and repeated that claim in
+> the PR that merged this work. **`/hours/` is not in the site navigation.**
+> `Navigation.astro` and `MobileNav.astro` link home, about, services,
+> insurance, location and contact. `PageNav.astro` was dead code — imported by
+> nothing — and has since been deleted. A `grep` for `/hours/` found a file
+> named like a nav component, and that was read as proof the code runs. The
+> defects below were real and the page is genuinely reachable; only the
+> "linked from the main nav" claim was false, and it overstated the severity.
+> Written up as instance 5 in
+> [`green-checks-that-cannot-see-the-defect.md`](../../solutions/logic-errors/green-checks-that-cannot-see-the-defect.md).
 
 1. **It contradicts the footer on its own page.** The page body says
    *"Saturday — By appointment"* (`hours.astro:31-33`). The footer rendered by

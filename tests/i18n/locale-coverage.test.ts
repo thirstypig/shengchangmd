@@ -105,6 +105,43 @@ describe('getTranslation', () => {
   it('returns the key itself for an unknown locale rather than throwing', () => {
     expect(getTranslation('fr', 'home')).toBe('home');
   });
+
+  it('returns an empty string as-is, rather than treating it as missing', () => {
+    // Shipped 2026-08-06. A new footer key used '' as its English value so that
+    // English readers would see no marker. getTranslation ended in
+    // `return value || key`, and '' is falsy — so it returned the KEY, and every
+    // English page rendered the literal text "footer.englishOnly" in its footer.
+    //
+    // npm test was green throughout: the "no empty or whitespace-only values"
+    // assertion above iterates TARGET_LOCALES, which is the two Chinese locales
+    // only, so `en` was never in scope. It was found by grepping dist/.
+    //
+    // This asserts the function, not any particular key, so it does not depend
+    // on a real key staying empty. `??` distinguishes "absent" from "empty";
+    // `||` cannot. See docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md
+    const probe = '__empty_value_probe__';
+    const en = translations.en as unknown as Record<string, unknown>;
+    en[probe] = '';
+    try {
+      expect(getTranslation('en', probe)).toBe('');
+    } finally {
+      delete en[probe];
+    }
+  });
+});
+
+describe('no locale leaves a value empty, including en', () => {
+  // The suite above checks emptiness for TARGET_LOCALES only. `en` being out of
+  // scope is what let the empty `footer.englishOnly` through. The invariant is
+  // true for the whole domain, so iterate the whole domain.
+  for (const locale of LOCALES) {
+    it(`${locale} has no empty or whitespace-only values`, () => {
+      const blanks = keyPaths(translations[locale] as Record<string, unknown>).filter(
+        (k) => String(getTranslation(locale, k)).trim() === '',
+      );
+      expect(blanks, 'empty values render as the key itself').toEqual([]);
+    });
+  }
 });
 
 describe('practiceLocalized covers every value in practice.ts', () => {
