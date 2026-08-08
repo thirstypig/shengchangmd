@@ -24,8 +24,20 @@ const breadcrumbs = [
       <div class="content-left">
         <h1>New Patients Welcome</h1>
         <p>
-          We are currently accepting new patients. Dr. Chang looks forward to meeting you and providing the same quality, personalized care to your family.
+          We are currently accepting new patients. Dr. Chang looks forward to meeting you and providing the same quality, personalized care he has offered his patients for decades.
         </p>
+        {/*
+          Who we see — scope limits supplied by the practice owner 2026-08-06.
+          Placed before "How to Schedule" on purpose: someone about to phone for
+          an appointment should learn the limits before they dial, not after.
+        */}
+        <h3>Who we see</h3>
+        <ul>
+          <li>Adults aged 18 and over</li>
+          <li>Seniors aged 65 and over</li>
+          <li>We do not see patients under 18. Please ask us and we will point you to a paediatric practice.</li>
+          <li>We do not provide gynaecology or obstetric care.</li>
+        </ul>
         <h3>How to Schedule</h3>
         <p>
           Call our office at <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`}>{practice.phone}</a> during business hours to schedule your appointment. Our staff will answer any questions you have about insurance, appointment availability, and what to bring on your first visit.

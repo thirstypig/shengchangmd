@@ -31,6 +31,31 @@ const breadcrumbs = [
     illustration="immigration"
   />
 
+  {/*
+    Who we see — scope limits supplied by the practice owner 2026-08-06.
+    Placed above the service descriptions on purpose: a patient needs to learn
+    the practice does not see their child before reading three service
+    descriptions, not after.
+  */}
+  <section id="who-we-see" class="py-12 bg-gray-50 border-b border-gray-200">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+          Who we see
+        </h2>
+        <ul class="space-y-3 text-gray-700">
+          <li>Adults aged 18 and over</li>
+          <li>Seniors aged 65 and over</li>
+          <li>We do not see patients under 18. Please ask us and we will point you to a paediatric practice.</li>
+          <li>We do not provide gynaecology or obstetric care.</li>
+        </ul>
+        <p class="mt-6 text-gray-700">
+          We refer to specialists where it is indicated. Some referrals need prior authorisation from your plan, and we will tell you if yours does.
+        </p>
+      </div>
+    </div>
+  </section>
+
   {/* Immigration Medical Services */}
   <section id="immigration-exams" class="py-16 md:py-24 bg-white">
     <div class="max-w-container mx-auto px-4 md:px-6">
@@ -191,8 +216,9 @@ const breadcrumbs = [
         </p>
         <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
           <p class="text-gray-700">
-            Please call the office to discuss whether this treatment is suitable for
-            your situation, what it involves, and what it costs.
+            Stem cell therapy is by appointment only. Please call the office to
+            discuss whether this treatment is suitable for your situation, what it
+            involves, and what it costs.
           </p>
         </div>
         {/*
@@ -232,7 +258,7 @@ const breadcrumbs = [
             Family Medicine
           </h2>
           <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-            Dr. Chang continues to provide family medicine care for patients of all ages, treating the whole person within their family context.
+            Dr. Chang continues to provide family medicine care for adult patients, treating the whole person within the context of their life and family.
           </p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-start gap-3">
