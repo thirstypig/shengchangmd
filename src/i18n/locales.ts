@@ -57,6 +57,36 @@ export const translations = {
       medicalLegal: 'Medical-Legal Reports',
       stemCell: 'Stem Cell Therapy',
     },
+    // Patient scope and accepted coverage, both supplied in writing by the
+    // practice owner on 2026-08-06.
+    //
+    // `confirmNote` is load-bearing and must render with the coverage list, not
+    // below the fold. "HMO" and "PPO" name plan STRUCTURES, not networks, so an
+    // unqualified list would mislead a patient whose HMO has no contract here -
+    // the same harm as the fabricated eight-carrier list removed on 2026-08-05.
+    // Carrier names, carrier logos and "most major plans" phrasing stay banned.
+    patientScope: {
+      heading: 'Who we see',
+      adults: 'Adults aged 18 and over',
+      seniors: 'Seniors aged 65 and over',
+      noMinors:
+        'We do not see patients under 18. Please ask us and we will point you to a paediatric practice.',
+      noObGyn: 'We do not provide gynaecology or obstetric care.',
+      referrals:
+        'We refer to specialists where it is indicated. Some referrals need prior authorisation from your plan, and we will tell you if yours does.',
+      stemCellAppointment: 'Stem cell therapy is by appointment only.',
+    },
+    coverage: {
+      heading: 'Coverage we work with',
+      confirmNote:
+        'Plan names are not the whole picture — whether your particular plan is contracted with this office depends on the network. Call before your visit with your card to hand and we will confirm it and tell you what you will pay.',
+      medicare: 'Medicare (the red, white and blue card)',
+      mediCal: 'Medi-Cal (the white card)',
+      hmo: 'HMO plans',
+      ppo: 'PPO plans',
+      privateInsurance: 'Private insurance',
+      cash: 'Cash and self-pay',
+    },
     footer: {
       hours: 'Hours',
       address: 'Address',
@@ -106,6 +136,27 @@ export const translations = {
       medicalLegal: '醫療法律報告',
       stemCell: '幹細胞治療',
     },
+    patientScope: {
+      heading: '看診對象',
+      adults: '18 歲以上成人',
+      seniors: '65 歲以上長者',
+      noMinors: '本診所不看 18 歲以下患者。歡迎來電，我們可為您介紹兒科診所。',
+      noObGyn: '本診所不提供婦科及產科服務。',
+      referrals:
+        '如有需要，我們會轉介專科醫師。部分轉介需保險公司事先核准，屆時我們會告知您。',
+      stemCellAppointment: '幹細胞治療採預約制。',
+    },
+    coverage: {
+      heading: '合作的保險與付款方式',
+      confirmNote:
+        '保險名稱並非全部——您的保險方案是否與本診所簽約，取決於網路內容。就診前請攜保險卡來電，我們會為您確認並說明費用。',
+      medicare: 'Medicare（紅白藍卡）',
+      mediCal: 'Medi-Cal（白卡）',
+      hmo: 'HMO 保險',
+      ppo: 'PPO 保險',
+      privateInsurance: '私人保險',
+      cash: '現金自費',
+    },
     footer: {
       hours: '門診時間',
       address: '地址',
@@ -147,6 +198,27 @@ export const translations = {
       citizenshipWaiver: '公民入籍考试豁免医疗评估报告',
       medicalLegal: '医疗法律报告',
       stemCell: '干细胞治疗',
+    },
+    patientScope: {
+      heading: '看诊对象',
+      adults: '18 岁以上成人',
+      seniors: '65 岁以上长者',
+      noMinors: '本诊所不看 18 岁以下患者。欢迎来电，我们可为您介绍儿科诊所。',
+      noObGyn: '本诊所不提供妇科及产科服务。',
+      referrals:
+        '如有需要，我们会转介专科医师。部分转介需保险公司事先核准，届时我们会告知您。',
+      stemCellAppointment: '干细胞治疗采预约制。',
+    },
+    coverage: {
+      heading: '合作的保险与付款方式',
+      confirmNote:
+        '保险名称并非全部——您的保险方案是否与本诊所签约，取决于网路内容。就诊前请携保险卡来电，我们会为您确认并说明费用。',
+      medicare: 'Medicare（红白蓝卡）',
+      mediCal: 'Medi-Cal（白卡）',
+      hmo: 'HMO 保险',
+      ppo: 'PPO 保险',
+      privateInsurance: '私人保险',
+      cash: '现金自费',
     },
     footer: {
       hours: '门诊时间',
