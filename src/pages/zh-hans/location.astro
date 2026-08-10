@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `门诊时间与位置 | ${practice.doctorName} | 加州圣盖博`;
-const description = `张医生诊所在加州圣盖博的门诊时间、位置与交通方向。`;
+const description = `张医师诊所在加州圣盖博的门诊时间、位置与交通方向。`;
 const canonicalUrl = new URL('/zh-hans/location/', Astro.site).href;
 
 /*
@@ -52,7 +52,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
 
         <!-- Contact Info -->
         <div class="contact-box">
-          <h2>联系我们</h2>
+          <h2>联络我们</h2>
           <div class="contact-item">
             <span class="label">电话</span>
             <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="contact-link">
@@ -80,7 +80,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Google 地图显示张医生诊所位置"
+            title="Google 地图显示张医师诊所位置"
           ></iframe>
         </div>
 

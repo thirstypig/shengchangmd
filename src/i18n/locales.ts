@@ -292,7 +292,7 @@ export function getTranslation(locale: string, key: string): string {
   oversights the next time someone audits for English on Chinese pages:
 
   - `practice.doctorName` ("Sheng Chang, M.D., Ph.D.") stays English in the portrait
-    caption beneath the Chinese headline 張勝雄 醫師 — showing both is the point.
+    caption beneath the Chinese headline 張勝雄醫師 — showing both is the point.
   - `education.school` IS localised, because 國立臺灣大學醫學院 is the
     institution's own name, not a translation of the English one.
   - Form numbers (I-693, N-648) stay as-is in every locale. They are USCIS

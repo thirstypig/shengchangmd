@@ -1059,5 +1059,10 @@ Expected: `1` from each of the first two; the last must print nothing before the
 - The Ph.D.'s institution, field and year remain unknown. His own 2026-08-06 credentials list names ABFM, ABP and the NTU medical degree, and no doctorate. The owner chose to leave it live.
 - Stem cell specifics — product, indications, regulatory basis — still not supplied.
 - Medical-legal report scope still unconfirmed beyond "general".
-- The Arcadia archive photograph is blocked pending written permission from ref247@ArcadiaCA.gov.
+- The Arcadia archive photographs are blocked pending written permission from
+  ref247@ArcadiaCA.gov. **The owner emailed them on or before 2026-08-09 and we
+  are waiting on a reply.** Nothing to do until it arrives; the images are
+  deferred by his decision, not forgotten. Until written permission is in hand,
+  the collection's items may be **linked by permalink but never copied into
+  `public/`** — that is the collection's own term, not a caution of ours.
 - `postgraduateTraining` renders in English on the Chinese pages. Revisit with a fluent reader.

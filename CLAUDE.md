@@ -255,6 +255,10 @@ what you are about to publish, in every locale and in the structured data.**
   The collection's own terms prohibit reproducing its items in any form without
   written permission, so its photographs — including a c.1996 portrait and the
   1995 library groundbreaking — may be linked but never copied into `public/`.
+  **The owner emailed `ref247@ArcadiaCA.gov` on or before 2026-08-09 and is
+  awaiting a reply.** The images are deferred until it arrives; that is his
+  decision, not an oversight. The prohibition on copying stands until written
+  permission is actually in hand — an unanswered request is not permission.
 - **No video of Dr. Chang has ever been found**, in English or Chinese, despite
   targeted searching. Chinese-language press coverage is likewise near-absent:
   the only hit for 張勝雄 is zh.wikipedia's Arcadia article listing him among

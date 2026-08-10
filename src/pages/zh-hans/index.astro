@@ -9,19 +9,19 @@ import { getPracticeLocalized, getTranslation } from '@i18n/locales';
 const locale = 'zh-hans';
 const t = (key: string) => getTranslation(locale, key);
 const pl = getPracticeLocalized(locale);
-const title = `${practice.doctorName} | 家庭医学专科医生 | 加州圣盖博`;
-const description = `加州圣盖博的家庭医学专科医生，并为美国移民局指定体检医师。提供移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学。`;
+const title = `${practice.doctorName} | 家庭医学专科医师 | 加州圣盖博`;
+const description = `加州圣盖博的家庭医学专科医师，并为美国移民局指定体检医师。提供移民医疗服务、公民入籍考试豁免医疗评估报告、医疗法律报告、干细胞治疗与家庭医学。`;
 const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>
   <HeroSection
-    headline="张胜雄 医生（M.D., Ph.D.）"
-    subheadline="于圣盖博及邻近社区提供家庭医学诊疗。具家庭医学专科医生资格，看诊细心，以您的健康为念。"
+    headline="张胜雄医师（M.D., Ph.D.）"
+    subheadline="于圣盖博及邻近社区提供家庭医学诊疗。具家庭医学专科医师资格，看诊细心，以您的健康为念。"
     {locale}
     image="/images/dr-sheng-chang.jpg"
-    imageAlt="张胜雄医生肖像"
-    imageCaption="家庭医学专科医生"
+    imageAlt="张胜雄医师肖像"
+    imageCaption="家庭医学专科医师"
   />
 
   {/* 诊疗项目 */}

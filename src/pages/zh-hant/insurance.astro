@@ -86,7 +86,7 @@ const locale = 'zh-hant';
       <div class="payment-card">
         <h3>自費就診</h3>
         <p>
-          許多患者選擇自費，移民與各類報告服務尤其如此。請於來電時詢問費用，以免當天有意外。
+          許多患者選擇自費，移民與各類報告服務尤其如此。請於來電時詢問費用，以免當天出現預期之外的支出。
         </p>
       </div>
     </div>
@@ -97,7 +97,14 @@ const locale = 'zh-hant';
     <div class="questions-content">
       <h2>有關保險或帳單的問題？</h2>
       <p>
-        本診所工作人員熟悉保險事務，樂意為您解答保險給付、帳單與費用方面的問題。
+        {/*
+          Was "本診所工作人員熟悉保險事務，樂意為您解答…" — an assertion that the
+          staff are knowledgeable about insurance, which the English source has
+          never claimed. A competence claim nobody supplied is the same class of
+          problem as the fabricated carrier list, just smaller. Now matches the
+          English: call, and we will go through it with you.
+        */}
+        歡迎來電，我們會與您說明保險給付、帳單與就診費用。
       </p>
       <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
         立即致電我們

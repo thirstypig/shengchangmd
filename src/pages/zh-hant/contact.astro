@@ -41,7 +41,13 @@ const canonicalUrl = new URL('/zh-hant/contact/', Astro.site).href;
               致電我們
             </h2>
             <p class="text-gray-600 mb-4">
-              最快的聯絡方式是通過電話。我們很樂意回答您的問題並安排預約。
+              {/*
+                通過 in Taiwan usage means "to pass" (a test, a law). "Via
+                phone" is 透過, but the sentence reads better without it.
+                Note 通過...認證 elsewhere on this page IS correct - that is
+                "passed certification" - so do not sweep for the word.
+              */}
+              來電是最快的聯絡方式。我們很樂意回答您的問題並為您安排預約。
             </p>
             <a href={`tel:+1${practice.phone.replace(/\D/g, '')}`} class="inline-block">
               <div class="text-2xl md:text-3xl font-bold text-primary-600 hover:text-primary-700 transition-colors mb-6">
