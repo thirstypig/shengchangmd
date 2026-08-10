@@ -324,7 +324,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 74 vitest tests
+npm test                             # 101 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -342,7 +342,7 @@ touching the build config.
 
 ## Tests
 
-Five files, 74 tests, run with `npm test`:
+Six files, 101 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -368,6 +368,16 @@ Five files, 74 tests, run with `npm test`:
   2026-08-07 — the same shape as the emptiness check that iterated only the two
   Chinese locales. It now derives the block list from `translations.en` itself,
   so the next block added is covered without anyone remembering
+- `tests/i18n/taiwan-register.test.ts` — both Chinese locales stay Taiwan
+  Mandarin. Two assertions, and the second is the one that matters. A banned-word
+  table catches known mainland forms; **cross-locale parity** requires the Taiwan
+  form's count in `zh-hant` to equal its simplified twin's count in `zh-hans`,
+  which needs no vocabulary knowledge and so catches words nobody listed. That
+  distinction is not theoretical: a wordlist sweep let `医生` through 31 times,
+  and the sweep that fixed `医生` let seven further concepts through. Its corpus
+  is the locale-forked pages **plus** each locale's subtree of `locales.ts` —
+  `普通话` hid in `practiceLocalized.languages` and rendered under the homepage
+  看诊语言 heading, invisible to a pages-only sweep
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
 - `tests/styles/theme-token-coverage.test.ts` — the hand-maintained colour map
