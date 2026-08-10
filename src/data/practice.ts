@@ -187,12 +187,18 @@ export const practice: PracticeInfo = {
     },
     {
       board: 'American Board of Pathology',
-      // NOT independently verified. This specialty label comes from the
-      // original scaffold, which is known to contain fabricated content
-      // (see CLAUDE.md). The owner's 2026-08-06 message says only
-      // "American Board of Pathology (ABP)". The 1973 date IS corroborated:
-      // Dr. Chang's Doximity profile puts his pathology residency at
-      // 1970–1973. Confirm the exact specialty wording with him.
+      // CONFIRMED BY DR. CHANG 2026-08-09, relayed by the owner, who put the
+      // question to him directly. Approved as it stands — do not re-raise.
+      //
+      // The provenance is kept because it is unusual and worth knowing: this
+      // specialty label originated in the ORIGINAL SCAFFOLD, the same source
+      // that produced the fabricated map embed and carrier list, and it was
+      // flagged here as unverified from 2026-08-07 until the confirmation.
+      // It happened to be right. That is luck, not evidence, and it is not a
+      // reason to trust the scaffold's other output.
+      //
+      // The 1973 date is independently corroborated: Dr. Chang's Doximity
+      // profile puts his pathology residency at 1970–1973.
       specialty: 'Anatomic Pathology & Clinical Pathology',
       firstCertified: 1973,
       currentStatus: 'Certified',

@@ -514,6 +514,12 @@ Extend `education` with:
 
 Add the second board certification to `boardCertifications`:
 
+> **Superseded 2026-08-09.** The comment in the snippet below says the specialty
+> wording is unverified and asks for it to be confirmed. It since was —
+> Dr. Chang approved it as it stands. The live comment in `practice.ts` records
+> the confirmation; this block is left as written for the historical record.
+> **Do not copy this comment forward.**
+
 ```typescript
     {
       board: 'American Board of Pathology',
@@ -1055,10 +1061,16 @@ Expected: `1` from each of the first two; the last must print nothing before the
 
 ## Open items this plan does not resolve
 
-- The ABP specialty wording ("Anatomic Pathology & Clinical Pathology") is scaffold-derived and unverified. Ask Dr. Chang.
-- The Ph.D.'s institution, field and year remain unknown. His own 2026-08-06 credentials list names ABFM, ABP and the NTU medical degree, and no doctorate. The owner chose to leave it live.
-- Stem cell specifics — product, indications, regulatory basis — still not supplied.
-- Medical-legal report scope still unconfirmed beyond "general".
+- ~~The ABP specialty wording~~ — **confirmed by Dr. Chang 2026-08-09**, approved
+  as it stands. Do not re-raise. Note it originated in the scaffold and happened
+  to be right; that is luck, not a reason to trust the scaffold elsewhere.
+- The Ph.D.'s institution, field and year remain unknown. His own 2026-08-06 credentials list names ABFM, ABP and the NTU medical degree, and no doctorate. The owner chose to leave it live. **Recorded, not to be re-litigated.**
+- ~~Stem cell specifics~~ — **asked 2026-08-09; nothing changes.** He approved
+  the copy. He did **not** supply the product, indications or regulatory basis,
+  so those are still unknown here and the "do not expand" rule is now permanent
+  rather than pending. There is nothing to expand it from.
+- ~~Medical-legal report scope~~ — **asked 2026-08-09; stays general.** The
+  particulars remain unsupplied and unpublished. Do not add them.
 - The Arcadia archive photographs are blocked pending written permission from
   ref247@ArcadiaCA.gov. **The owner emailed them on or before 2026-08-09 and we
   are waiting on a reply.** Nothing to do until it arrives; the images are
