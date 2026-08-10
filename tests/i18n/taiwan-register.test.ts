@@ -137,12 +137,19 @@ interface RegisterTerm {
  * project's own vocabulary table names. Adding a row is cheap; deleting one
  * needs a reason.
  *
- * DELIBERATELY ABSENT: 項目/项目. The skill's table gives 專案/专案 for "project"
- * and marks 項目 as the mainland form, but this site uses 項目 to mean "item"
- * — 診療項目, 篩檢項目 — which is ordinary Taiwan usage, and both locales use it
- * identically. A banned-word rule is context-blind and would fire ten times per
- * locale on correct copy. The skill's table is a translator's guide; only rows
- * that are wrong in EVERY context belong in a lint rule.
+ * DELIBERATELY ABSENT: 項目/项目. Both trilingual skills mark 項目 as the mainland
+ * form — for "project" (專案) and "programme of study" (課程). This site uses it
+ * in neither sense: 診療項目, 篩檢項目, 服務項目 all mean "item", which is
+ * ordinary Taiwan medical usage.
+ *
+ * VERIFIED, not assumed, on 2026-08-10 against .tw sources: 診療項目 is the
+ * heading used by 衛生福利部苗栗醫院 (a Ministry of Health and Welfare hospital)
+ * and appears as a formal term throughout the Taiwan Medical Association's
+ * National Health Insurance payment-standard document
+ * (tma.tw/files/meeting/N201981685840_002.pdf), alongside many Taiwanese
+ * clinics. A banned-word rule is context-blind and would fire ten times per
+ * locale on correct copy. The skills' tables are translator's guides; only rows
+ * wrong in EVERY context belong in a lint rule.
  */
 const REGISTER: RegisterTerm[] = [
   {
