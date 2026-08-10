@@ -6,6 +6,7 @@ import FontSizeControl from '@/components/FontSizeControl.astro';
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import { practice } from '@/data/practice';
+import { getTranslation } from '@i18n/locales';
 
 interface Props {
   locale: string;
@@ -14,9 +15,15 @@ interface Props {
 
 const { locale, currentPath } = Astro.props;
 
-const tagline =
-  locale === 'zh-hant' ? '家庭醫學' : locale === 'zh-hans' ? '家庭医学' : 'Family Medicine';
-const callLabel = locale === 'zh-hant' ? '致電' : locale === 'zh-hans' ? '致电' : 'Call Now';
+/*
+  These two used to be inline ternaries holding their own Chinese, which put a
+  second translation system beside locales.ts and hid it from both i18n guards —
+  a ternary is not an object map, so even a search shaped for the other two
+  components missed this file. It renders on every page in every locale, which
+  made it the worst of the three. Moved 2026-08-10.
+*/
+const tagline = getTranslation(locale, 'header.tagline');
+const callLabel = getTranslation(locale, 'header.callLabel');
 const homeHref = locale === 'en' ? '/' : `/${locale}/`;
 ---
 

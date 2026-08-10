@@ -257,12 +257,13 @@ reader's call, and it is what currently keeps unreviewed Chinese out of search.
 - 健保 anywhere
 - ASCII `,` `(` `)` `:` inside a Chinese sentence
 - `{practice.something}` inside a `zh-hant`/`zh-hans` page
-- **Chinese anywhere in `src/components/` or `src/layouts/`.** Three components
-  hold their own translations parallel to `locales.ts` — `HeroSection.astro`,
-  `StickyCallBar.astro` and `Header.astro` — and that is where 医生 survived a
-  sweep of the pages. `Header` uses ternaries rather than an object map, so it
-  was missed twice. Search for the *shape*, Chinese outside the translation
-  layer, never for the syntax.
+- **Chinese anywhere in `src/components/` or `src/layouts/`.** Every translation
+  belongs in `locales.ts`, read with `getTranslation(locale, key)`. Three
+  components once held their own — `HeroSection.astro`, `StickyCallBar.astro`,
+  `Header.astro` — and that is where 医生 survived a sweep of the pages. `Header`
+  used ternaries rather than an object map, so it was missed twice. Fixed
+  2026-08-10; do not start a second translation layer again. Search for the
+  *shape*, Chinese outside the translation layer, never for the syntax.
 
 **And the most important one: do not verify against this list.** It is a
 starting point, not a test. Two sweeps in a row verified against it, reported
