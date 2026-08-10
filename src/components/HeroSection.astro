@@ -34,8 +34,20 @@ const {
 
   This is a SECOND translation system, parallel to src/i18n/locales.ts, and it
   has already drifted: zh-hans said 医生 while zh-hant and all 12 pages said
-  醫師/医师. Two other shared components do the same — StickyCallBar.astro, and
-  the comment in LanguageSwitcher.astro.
+  醫師/医师.
+
+  CORRECTED 2026-08-09. An earlier version of this comment named
+  LanguageSwitcher.astro as a second offender. That was wrong — its only CJK is
+  in a comment, and its labels come from locales.ts metadata. The actual second
+  and third offenders are StickyCallBar.astro (an object map like this one) and
+  Header.astro, which does the same thing with ternaries:
+
+    const tagline = locale === 'zh-hant' ? '家庭醫學' : locale === 'zh-hans' ? …
+
+  Header was missed precisely because it is not an object literal, and it is the
+  worst of the three: it renders on EVERY page in EVERY locale. Anything hunting
+  for these must search for the shape — Chinese prose living outside the
+  translation layer — not for a locale-keyed object.
 
   Nothing guards these. tests/i18n/locale-coverage.test.ts only reads
   `translations` in locales.ts, so a key missing or drifted here is invisible to

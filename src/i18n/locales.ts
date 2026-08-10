@@ -340,7 +340,7 @@ export const practiceLocalized = {
     licenseStatus: { Active: '有效' } as Record<string, string>,
   },
   'zh-hans': {
-    languages: ['英语', '普通话', '粤语', '西班牙语', '越南语'],
+    languages: ['英语', '国语', '粤语', '西班牙语', '越南语'],
     school: '国立台湾大学医学院',
     specialties: {
       'Family Medicine': '家庭医学',

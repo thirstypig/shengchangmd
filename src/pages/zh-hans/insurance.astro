@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `保险与支付 | ${practice.doctorName} | 加州圣盖博`;
-const description = `张医师诊所的保险与费用说明。欢迎来电，我们会与您确认保险范围与就诊费用。`;
+const description = `张医师诊所的保险与费用说明。欢迎来电，我们会与您确认保险给付与就诊费用。`;
 const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
 const locale = 'zh-hans';
 ---
@@ -19,7 +19,7 @@ const locale = 'zh-hans';
   <section class="hero-section">
     <div class="hero-content">
       <h1>保险与支付</h1>
-      <p class="hero-subtitle">欢迎来电，我们会与您确认保险范围与费用</p>
+      <p class="hero-subtitle">欢迎来电，我们会与您确认保险给付与费用</p>
     </div>
   </section>
 
@@ -61,12 +61,12 @@ const locale = 'zh-hans';
       </div>
       <div class="content-right">
         <div class="info-box">
-          <h3>确认您的保险范围</h3>
+          <h3>确认您的保险给付</h3>
           <p>
-            就诊前请先来电本诊所，我们会为您确认保险范围、自付额，以及是否需要事先授权。
+            就诊前请先来电本诊所，我们会为您确认保险给付、自付额，以及是否需要事前授权。
           </p>
           <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button">
-            来电确认范围
+            来电确认给付
           </a>
         </div>
       </div>

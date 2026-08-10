@@ -124,8 +124,28 @@ Two things from it that are easy to get wrong:
 - **Both Chinese locales use Taiwan Mandarin, in both scripts.** Simplified here
   means Taiwan wording in simplified characters, not mainland wording. Never
   `信息`/`网络`/`软件`/`视频`/`数据`; use `资讯`/`网路`/`软体`/`影片`/`资料`.
+  Also never `医生`/`联系`/`普通话`/`身份`/`筛查`/`记录`; use
+  `医师`/`联络`/`国语`/`身分`/`筛检`/`纪录`.
   **Never write `健保`** — that is Taiwan's National Health Insurance, which does
   not operate in California. Use full-width punctuation.
+- **Do not verify Chinese against that word list.** It is a starting point, not a
+  test, and checking against it returns a confident green while the same defect
+  class sits in words nobody listed. That happened twice: a sweep verified "no
+  信息/网络/软件/视频/移动/质量/数据/健保" and shipped with **31 instances of
+  `医生`**; the sweep that fixed `医生` shipped with seven more concepts drifted,
+  including `普通话` rendering under the homepage heading 看诊语言.
+  **Use cross-locale parity instead** — for each concept, the Taiwan form's count
+  in `zh-hant` must equal its simplified twin's count in `zh-hans`. Any
+  inequality means one locale says something the other does not, whatever the
+  word is and whether or not anyone thought to list it. Script and full account:
+  [write-up](docs/solutions/logic-errors/simplified-is-a-script-not-a-dialect.md).
+- **A shared component must not contain Chinese.** `HeroSection.astro`,
+  `StickyCallBar.astro` and `Header.astro` each carry their own translations
+  parallel to `locales.ts`, and that is where `医生` survived a sweep of the
+  pages. Neither i18n test can see them: `locale-coverage` imports `translations`,
+  and `shared-component-labels` matches literal attributes, not string maps.
+  `Header.astro` uses ternaries rather than an object, so it was missed twice —
+  search for the *shape* (Chinese outside the translation layer), not the syntax.
 
 This exists because six English `aria-label`s rendered on all 12 Chinese pages
 for months — the strings a screen-reader user actually hears — while four of them
