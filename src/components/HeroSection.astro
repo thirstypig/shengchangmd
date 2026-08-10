@@ -2,6 +2,7 @@
 import CallButton from '@/components/CallButton.astro';
 import { practice } from '@/data/practice';
 import ServiceIllustration from '@/components/ServiceIllustration.astro';
+import { getTranslation } from '@i18n/locales';
 
 interface Props {
   headline: string;
@@ -30,62 +31,28 @@ const {
 } = Astro.props;
 
 /*
-  KNOWN STRUCTURAL PROBLEM, recorded 2026-08-09 rather than fixed.
+  These four strings used to live in a private locale map here — a second
+  translation system beside src/i18n/locales.ts. It drifted: this file said
+  医生 while zh-hant and all 12 pages said 醫師/医师, and it survived a sweep of
+  the pages because the sweep read the pages and locales.ts, not this object.
 
-  This is a SECOND translation system, parallel to src/i18n/locales.ts, and it
-  has already drifted: zh-hans said 医生 while zh-hant and all 12 pages said
-  醫師/医师.
+  Neither i18n guard could see it. locale-coverage reads `translations`, so a
+  key that never reached locales.ts was outside it; shared-component-labels
+  matches literal aria-label/title/alt/data-label attributes, and these were
+  object properties.
 
-  CORRECTED 2026-08-09. An earlier version of this comment named
-  LanguageSwitcher.astro as a second offender. That was wrong — its only CJK is
-  in a comment, and its labels come from locales.ts metadata. The actual second
-  and third offenders are StickyCallBar.astro (an object map like this one) and
-  Header.astro, which does the same thing with ternaries:
+  Moved into locales.ts 2026-08-10 under `hero`. They are now covered by every
+  existing guard for free, including taiwan-register cross-locale parity.
 
-    const tagline = locale === 'zh-hant' ? '家庭醫學' : locale === 'zh-hans' ? …
-
-  Header was missed precisely because it is not an object literal, and it is the
-  worst of the three: it renders on EVERY page in EVERY locale. Anything hunting
-  for these must search for the shape — Chinese prose living outside the
-  translation layer — not for a locale-keyed object.
-
-  Nothing guards these. tests/i18n/locale-coverage.test.ts only reads
-  `translations` in locales.ts, so a key missing or drifted here is invisible to
-  it. tests/i18n/shared-component-labels.test.ts only matches literal
-  aria-label/title/alt/data-label attributes, and these are a string map.
-
-  The right fix is to move these into locales.ts so there is one mechanism, and
-  then the existing guards cover them for free. Left alone here because that is
-  a refactor rather than a wording correction. Do not add more keys to this
-  object in the meantime.
+  The old object carried a `?? en` fallback for an unrecognised locale.
+  getTranslation returns the key itself in that case, matching the six shared
+  components that already use it. Only en/zh-hant/zh-hans are ever passed.
 */
 const t = {
-  en: {
-    cta: 'Call Us Today',
-    placeholder: 'Photograph placeholder',
-    boardCertified: 'Board-Certified Family Physician',
-    acceptingPatients: 'Accepting new patients',
-  },
-  'zh-hant': {
-    cta: '立即致電',
-    placeholder: '照片預留位置',
-    boardCertified: '家庭醫學專科醫師',
-    acceptingPatients: '現正接受新患者',
-  },
-  'zh-hans': {
-    cta: '立即致电',
-    placeholder: '照片预留位置',
-    // 医师, not 医生. Taiwan formal medical register, matching zh-hant above
-    // and every page. This drifted because HeroSection keeps its own locale
-    // map instead of reading locales.ts — see the note above this object.
-    boardCertified: '家庭医学专科医师',
-    acceptingPatients: '现正接受新患者',
-  },
-}[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
-  cta: 'Call Us Today',
-  placeholder: 'Photograph placeholder',
-  boardCertified: 'Board-Certified Family Physician',
-  acceptingPatients: 'Accepting new patients',
+  cta: getTranslation(locale, 'hero.cta'),
+  placeholder: getTranslation(locale, 'hero.placeholder'),
+  boardCertified: getTranslation(locale, 'hero.boardCertified'),
+  acceptingPatients: getTranslation(locale, 'hero.acceptingPatients'),
 };
 ---
 

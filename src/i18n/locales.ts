@@ -113,6 +113,40 @@ export const translations = {
       // never actually rendered; it exists only so the key isn't empty.
       englishOnly: '(English)',
     },
+    /*
+      Moved out of the shared components 2026-08-10. HeroSection.astro,
+      StickyCallBar.astro and Header.astro each kept their own locale map here,
+      a second translation system beside this one — and it had already drifted:
+      HeroSection said 医生 while every page said 醫師/医师, and it survived a
+      sweep of the pages because the sweep read the pages and this file.
+
+      Neither i18n guard could see them. locale-coverage reads `translations`,
+      so a key that never reached this file was outside it; shared-component-
+      labels matches literal aria-label/title/alt/data-label attributes, and
+      those were object properties. Header used ternaries rather than an object,
+      so it was missed twice more.
+
+      Living here, they are covered by every existing guard for free — including
+      taiwan-register's cross-locale parity, which reads this file.
+
+      `stickyCall.aria` carries a {phone} placeholder rather than the number
+      itself. source-integrity fails the build if the office phone appears
+      anywhere outside practice.ts, and it is right to.
+    */
+    hero: {
+      cta: 'Call Us Today',
+      placeholder: 'Photograph placeholder',
+      boardCertified: 'Board-Certified Family Physician',
+      acceptingPatients: 'Accepting new patients',
+    },
+    stickyCall: {
+      label: 'Call for an appointment',
+      aria: 'Call {phone} for an appointment',
+    },
+    header: {
+      tagline: 'Family Medicine',
+      callLabel: 'Call Now',
+    },
     notFound: 'Page not found',
     hoursWeekday: practice.hours.weekday,
     hoursWeekend: 'Closed Saturday and Sunday',
@@ -179,6 +213,20 @@ export const translations = {
       accessibility: '無障礙說明',
       englishOnly: '（英文）',
     },
+    hero: {
+      cta: '立即致電',
+      placeholder: '照片預留位置',
+      boardCertified: '家庭醫學專科醫師',
+      acceptingPatients: '現正接受新患者',
+    },
+    stickyCall: {
+      label: '電話預約',
+      aria: '致電 {phone} 預約看診',
+    },
+    header: {
+      tagline: '家庭醫學',
+      callLabel: '致電',
+    },
     notFound: '頁面未找到',
     hoursWeekday: '週一至週五 上午9:00 – 下午1:00',
     hoursWeekend: '週六、週日休診',
@@ -244,6 +292,20 @@ export const translations = {
       privacy: '隐私政策',
       accessibility: '无障碍说明',
       englishOnly: '（英文）',
+    },
+    hero: {
+      cta: '立即致电',
+      placeholder: '照片预留位置',
+      boardCertified: '家庭医学专科医师',
+      acceptingPatients: '现正接受新患者',
+    },
+    stickyCall: {
+      label: '电话预约',
+      aria: '致电 {phone} 预约看诊',
+    },
+    header: {
+      tagline: '家庭医学',
+      callLabel: '致电',
     },
     notFound: '页面未找到',
     hoursWeekday: '周一至周五 上午9:00 – 下午1:00',

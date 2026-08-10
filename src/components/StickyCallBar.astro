@@ -8,6 +8,7 @@
  * the viewport on small screens, where the thumb already rests.
  */
 import { practice } from '@/data/practice';
+import { getTranslation } from '@i18n/locales';
 
 interface Props {
   locale: string;
@@ -15,16 +16,18 @@ interface Props {
 
 const { locale } = Astro.props;
 
+/*
+  Was a private locale map, a second translation system beside locales.ts.
+  Moved 2026-08-10; see the note above the `hero` block there.
+
+  The aria label keeps the phone number OUT of locales.ts and substitutes it
+  here. source-integrity fails the build if the office number appears anywhere
+  outside practice.ts, and that rule is worth more than the convenience of
+  storing the finished sentence.
+*/
 const t = {
-  en: {
-    label: 'Call for an appointment',
-    aria: `Call ${practice.phone} for an appointment`,
-  },
-  'zh-hant': { label: '電話預約', aria: `致電 ${practice.phone} 預約看診` },
-  'zh-hans': { label: '电话预约', aria: `致电 ${practice.phone} 预约看诊` },
-}[locale as 'en' | 'zh-hant' | 'zh-hans'] ?? {
-  label: 'Call for an appointment',
-  aria: `Call ${practice.phone} for an appointment`,
+  label: getTranslation(locale, 'stickyCall.label'),
+  aria: getTranslation(locale, 'stickyCall.aria').replace('{phone}', practice.phone),
 };
 
 const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
