@@ -1055,9 +1055,24 @@ Expected: `1` from each of the first two; the last must print nothing before the
 
 ## Post-merge: update the project record
 
-- [ ] Update `CLAUDE.md`: hours are 9–1; the licence and ABP certification are restored and why; the insurance page now lists plan types on written owner instruction, with the carrier prohibition intact; the ABP specialty wording awaits confirmation.
-- [ ] Write `docs/solutions/logic-errors/` entry for the five-copy hours defect — it is the same shape as the existing duplicated-facts write-up but the first instance caught by a test rather than by eye.
-- [ ] Confirm https://shengchangmd.com/hours/ reads 1:00 PM after the Phase 1 deploy.
+- [x] Update `CLAUDE.md` — done across PRs #28, #31 and #32. Hours, the licence,
+      the ABP certification and the plan-type coverage are all recorded, with the
+      carrier prohibition intact. The last clause of this item is now obsolete:
+      the ABP specialty wording no longer "awaits confirmation" — Dr. Chang
+      confirmed it 2026-08-09.
+- [x] Write the `docs/solutions/logic-errors/` entry for the hours defect — it is
+      [`green-checks-that-cannot-see-the-defect.md`](../../solutions/logic-errors/green-checks-that-cannot-see-the-defect.md),
+      which covers the hours as one of five green checks rather than as its own
+      write-up. That framing turned out to be the more useful one.
+- [x] Confirm https://shengchangmd.com/hours/ reads 1:00 PM — **verified on
+      production 2026-08-10**, twice on the page.
+
+Two further write-ups came out of the work this plan started, neither anticipated
+by it:
+[`publishing-a-fact-does-not-remove-its-contradiction.md`](../../solutions/logic-errors/publishing-a-fact-does-not-remove-its-contradiction.md)
+and
+[`simplified-is-a-script-not-a-dialect.md`](../../solutions/logic-errors/simplified-is-a-script-not-a-dialect.md).
+The test count is now **101**, not the 74 this plan last recorded.
 
 ## Open items this plan does not resolve
 
