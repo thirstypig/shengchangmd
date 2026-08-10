@@ -94,6 +94,20 @@ const canonicalUrl = new URL('/', Astro.site).href;
           </div>
         )}
       </div>
+      {/*
+        The scope limit qualifies the badge above, and it sits on the homepage
+        rather than only on /services/ because the badge is where someone
+        decides to call. Read from patientScope so it cannot drift from the full
+        list it summarises.
+      */}
+      <p class="mt-6 text-center text-gray-700">
+        {t(`patientScope.summary`)}{' '}
+        <a
+          href="/services/#who-we-see"
+          class="text-primary-700 underline underline-offset-2 hover:no-underline"
+          >{t(`patientScope.linkLabel`)}</a
+        >
+      </p>
     </div>
   </section>
 
