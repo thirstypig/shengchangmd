@@ -247,7 +247,7 @@ const REGISTER: RegisterTerm[] = [
   { gloss: 'appointment', hant: '預約', hans: '预约', banned: {}, why: 'Parity only.' },
   { gloss: 'clinic hours', hant: '門診', hans: '门诊', banned: {}, why: 'Parity only.' },
   { gloss: 'to attend clinic', hant: '看診', hans: '看诊', banned: {}, why: 'Parity only — zh-hans once said 就诊 in a sentence where zh-hant said 看診.' },
-  { gloss: 'prior (authorisation)', hant: '事前', hans: '事前', banned: {}, why: 'Parity only — zh-hans once said 事先授权 against 事前授權.' },
+  { gloss: 'prior (authorization)', hant: '事前', hans: '事前', banned: {}, why: 'Parity only — zh-hans once said 事先授权 against 事前授權.' },
 ];
 
 /**

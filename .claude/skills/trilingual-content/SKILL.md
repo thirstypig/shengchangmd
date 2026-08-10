@@ -58,7 +58,7 @@ has no settled Chinese form, translate the sentence and leave a
 out.
 
 **The one real exception:** proper nouns with no established Chinese name. See
-"What stays in English" below. Guessing at characters for an organisation's name
+"What stays in English" below. Guessing at characters for an organization's name
 invents a fact, which is a different failure and a worse one.
 
 ## Taiwan vs mainland vocabulary
@@ -107,7 +107,7 @@ forms are now spelled out in both scripts so they can be searched for.
 | screening | 篩檢 | 筛检 | ~~篩查~~ / ~~筛查~~ |
 | record (noun, e.g. 疫苗紀錄) | 紀錄 | 纪录 | ~~記錄~~ / ~~记录~~ |
 | insurance benefit / coverage | 給付 | 给付 | |
-| prior authorisation | 事前授權 | 事前授权 | ~~事先~~ |
+| prior authorization | 事前授權 | 事前授权 | ~~事先~~ |
 | clinic | 診所 | 诊所 | |
 | to see a doctor | 看診 | 看诊 | |
 | appointment | 預約 | 预约 | |
@@ -172,7 +172,7 @@ throw — it prints an English board name mid-Chinese-sentence.
 
 Translate the sentence around them, not these:
 
-- **Organisations and institutions with no supplied Chinese name.** Garfield
+- **Organizations and institutions with no supplied Chinese name.** Garfield
   Medical Center, Arcadia Chinese Association. They have Chinese names in local
   usage, but none were supplied by the owner, and choosing characters invents a
   name. `src/pages/zh-hant/about.astro` documents this.

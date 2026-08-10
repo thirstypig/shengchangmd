@@ -195,8 +195,8 @@ describe('practiceLocalized covers every value in practice.ts', () => {
     }
   });
 
-  // The licence-expiry test that lived here was removed on 2026-08-05 with the
-  // licence fields themselves. It guarded practice.licenseExpiresDate leaking
+  // The license-expiry test that lived here was removed on 2026-08-05 with the
+  // license fields themselves. It guarded practice.licenseExpiresDate leaking
   // onto a Chinese page as "July 31, 2028"; there is no such field any more, so
   // the test had nothing left to assert. See the comment block in practice.ts.
 });
