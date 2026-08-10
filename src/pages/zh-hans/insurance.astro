@@ -4,7 +4,7 @@ import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
 const title = `保险与支付 | ${practice.doctorName} | 加州圣盖博`;
-const description = `张医生诊所的保险与费用说明。欢迎来电，我们会与您确认保险范围与就诊费用。`;
+const description = `张医师诊所的保险与费用说明。欢迎来电，我们会与您确认保险范围与就诊费用。`;
 const canonicalUrl = new URL('/zh-hans/insurance/', Astro.site).href;
 const locale = 'zh-hans';
 ---
@@ -86,7 +86,7 @@ const locale = 'zh-hans';
       <div class="payment-card">
         <h3>自费就诊</h3>
         <p>
-          许多患者选择自费，移民与各类报告服务尤其如此。请于来电时询问费用，以免当天有意外。
+          许多患者选择自费，移民与各类报告服务尤其如此。请于来电时询问费用，以免当天出现预期之外的支出。
         </p>
       </div>
     </div>
@@ -97,7 +97,8 @@ const locale = 'zh-hans';
     <div class="questions-content">
       <h2>有关保险或账单的问题？</h2>
       <p>
-        本诊所工作人员熟悉保险事务，乐意为您解答保险范围、账单与费用方面的问题。
+        {/* Removed an unsupplied staff-competence claim — see zh-hant/insurance.astro. */}
+        欢迎来电，我们会与您说明保险给付、账单与就诊费用。
       </p>
       <a href={`tel:${practice.phone.replace(/[^\d]/g, '')}`} class="cta-button-large">
         立即致电我们
