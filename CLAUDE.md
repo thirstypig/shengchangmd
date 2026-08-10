@@ -31,35 +31,35 @@ Full write-up, including which prior reports are void:
 `npm run build` now runs `scripts/verify-css.mjs` via `postbuild`, which fails
 the build if the compiled CSS lacks real Tailwind output.
 
-## Colour rule (do not break this)
+## Color rule (do not break this)
 
 `--brand` **inverts between themes**: deep red in light mode, light amber in
 dark mode. Therefore:
 
-- **Never** hardcode `black`, `white`, `#000`, `#fff`, or any fixed text colour
-  on a branded or coloured background. It will be legible in one theme and
+- **Never** hardcode `black`, `white`, `#000`, `#fff`, or any fixed text color
+  on a branded or colored background. It will be legible in one theme and
   invisible in the other.
-- **Never pin a heading's colour** inside a coloured surface. Headings are
+- **Never pin a heading's color** inside a colored surface. Headings are
   `color: inherit` on purpose so the surface decides.
 - Set the surface's own `color` to `--brand-contrast` and let descendants
   inherit. `--brand-contrast` is defined per theme to be legible on `--brand`.
-- **A Tailwind palette class is a hardcoded colour too.** `text-primary-700`
+- **A Tailwind palette class is a hardcoded color too.** `text-primary-700`
   looks brand-correct and is not — it resolves to a literal hex unless
   `global.css` redeclares it against a token. Grepping for `#fff` will never
-  find it. Before using a brand-coloured utility, confirm it is on the map in
+  find it. Before using a brand-colored utility, confirm it is on the map in
   `global.css`, **including its `hover:`/`focus:` forms**, which Tailwind emits
   at higher specificity and which therefore override the base rule.
 
 This caused two real bugs: dark text on the red insurance hero in light mode,
 and light text on the light brand fill in dark mode — both from a single
 `h1…h6 { color: var(--text-strong) }` rule that overrode the hero's own label
-colour.
+color.
 
 It caused three more on 2026-08-05, found in two passes because the first fix
 corrected one entry of the map and not its siblings: every `text-primary-700`
 link site-wide, the contact pages' phone number on hover (1.67:1 — the practice's
 primary call to action, invisible on hover in dark mode), and the active nav
-item's underline. **Verify the computed colour in both themes, and hover in
+item's underline. **Verify the computed color in both themes, and hover in
 both — a resting screenshot in one theme is not evidence.**
 [write-up](docs/solutions/ui-bugs/tailwind-palette-classes-bypass-theme-tokens.md).
 
@@ -85,7 +85,7 @@ both — a resting screenshot in one theme is not evidence.**
   strings you just fixed proves only that you fixed them. Search for the *shape*
   of the defect — that is what found a hardcoded English skip link on every
   Chinese page after a "no English remains" claim had already been made.
-- Board certifications, licence numbers, education → `src/data/practice.ts`
+- Board certifications, license numbers, education → `src/data/practice.ts`
 - **Publishing a fact does not remove the claim that contradicts it.** Before
   adding any constraint or limit, grep for its *negation* — in all three locales
   and in `JsonLd.astro`. Phase 3 of the 2026-08-06 batch published "we do not see
@@ -164,7 +164,7 @@ had translations sitting in `locales.ts` that nothing read.
 published** — all four phases of
 [`docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md`](docs/superpowers/plans/2026-08-06-owner-supplied-practice-facts.md)
 shipped on 2026-08-07 (PRs #16, #24, #25, #26) and were verified against
-production, not against a local build. Live: the licence `A 33409`, the American
+production, not against a local build. Live: the license `A 33409`, the American
 Board of Pathology certification, the Alabama pathology residency, the patient
 scope limits, the six coverage types, and the four biography facts.
 
@@ -303,12 +303,12 @@ what you are about to publish, in every locale and in the structured data.**
 - **Two details normalised from the owner's bio text**, both worth confirming:
   "Arcadia city Library" was rendered as *Arcadia Public Library*, and the
   1994–1998 / 2000–2004 council terms are stated as given. The bio also said
-  "practising Family Medicine since 1997", which contradicted "moved to
+  "practicing Family Medicine since 1997", which contradicted "moved to
   California in 1979" and the council dates; 1979 was used, matching the
-  February 13, 1979 licence issue date. A rotating mayoralty of April–July 2003
+  February 13, 1979 license issue date. A rotating mayoralty of April–July 2003
   is unusually short and is stated as supplied.
 - **Doctor's portrait** comes from a photograph the owner supplied, cropped and
-  colour-corrected to `public/images/dr-sheng-chang.jpg` at 1024×1024. It is a
+  color-corrected to `public/images/dr-sheng-chang.jpg` at 1024×1024. It is a
   banquet photo, not a studio headshot — serviceable, but a clinical portrait
   would suit the practice better.
 - **A crop of Dr. and Mrs. Chang** exists at
@@ -387,7 +387,7 @@ Six files, 101 tests, run with `npm test`:
   看诊语言 heading, invisible to a pages-only sweep
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
-- `tests/styles/theme-token-coverage.test.ts` — the hand-maintained colour map
+- `tests/styles/theme-token-coverage.test.ts` — the hand-maintained color map
   in `global.css`. Fails if any themed utility class used in a template is not
   redeclared against a token, **including its `hover:` variant**, which Tailwind
   emits at higher specificity. Four instances of that omission shipped on

@@ -34,7 +34,7 @@ real regression and is not. Pass the variable to reproduce what CI does.
 | Practice facts — hours, address, phone, credentials | `src/data/practice.ts` |
 | Localized copy and Chinese translations | `src/i18n/locales.ts` |
 | Pages | `src/pages/`, with `zh-hant/` and `zh-hans/` alongside |
-| Design tokens and the theme colour map | `tailwind.config.ts`, `src/styles/global.css` |
+| Design tokens and the theme color map | `tailwind.config.ts`, `src/styles/global.css` |
 | Tests | `tests/` |
 
 `src/data/practice.ts` is the single source of truth for every practice fact.
@@ -64,7 +64,7 @@ Read **[`CLAUDE.md`](CLAUDE.md)**. It is the working agreement for this repo and
 it is not boilerplate — it records specific failures that shipped here and the
 rules that exist because of them. The three that catch people out:
 
-- **`--brand` inverts between light and dark themes.** Never hardcode a colour
+- **`--brand` inverts between light and dark themes.** Never hardcode a color
   or a Tailwind palette class on a branded surface, and check `hover:`/`focus:`
   variants too — they are emitted at higher specificity.
 - **Never invent factual content.** Not credentials, insurance carriers, hours,

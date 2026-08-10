@@ -70,10 +70,10 @@ export const translations = {
       adults: 'Adults aged 18 and over',
       seniors: 'Seniors aged 65 and over',
       noMinors:
-        'We do not see patients under 18. Please ask us and we will point you to a paediatric practice.',
-      noObGyn: 'We do not provide gynaecology or obstetric care.',
+        'We do not see patients under 18. Please ask us and we will point you to a pediatric practice.',
+      noObGyn: 'We do not provide gynecology or obstetric care.',
       referrals:
-        'We refer to specialists where it is indicated. Some referrals need prior authorisation from your plan, and we will tell you if yours does.',
+        'We refer to specialists where it is indicated. Some referrals need prior authorization from your plan, and we will tell you if yours does.',
       stemCellAppointment: 'Stem cell therapy is by appointment only.',
       // Compact form for the homepage, where it qualifies the "Accepting New
       // Patients" badge. The badge is an invitation, and the invitation is the
@@ -81,7 +81,7 @@ export const translations = {
       // and "accepting new patients" has already decided to call. The full list
       // stays on /services/#who-we-see, linked.
       summary:
-        'We see adults 18 and over. We do not see patients under 18, and we do not provide gynaecology or obstetric care.',
+        'We see adults 18 and over. We do not see patients under 18, and we do not provide gynecology or obstetric care.',
       linkLabel: 'Who we see',
     },
     coverage: {
@@ -340,7 +340,7 @@ export function getTranslation(locale: string, key: string): string {
 }
 
 /**
- * Localised counterparts for the English-only values in `src/data/practice.ts`.
+ * Localized counterparts for the English-only values in `src/data/practice.ts`.
  *
  * practice.ts is the single source of truth for the facts, but its strings are
  * English. Rendering them directly on a Chinese page produced sentences that
@@ -350,12 +350,12 @@ export function getTranslation(locale: string, key: string): string {
  * drift apart silently.
  */
 /*
-  Deliberately NOT localised, and why — recorded so these stop reading as
+  Deliberately NOT localized, and why — recorded so these stop reading as
   oversights the next time someone audits for English on Chinese pages:
 
   - `practice.doctorName` ("Sheng Chang, M.D., Ph.D.") stays English in the portrait
     caption beneath the Chinese headline 張勝雄醫師 — showing both is the point.
-  - `education.school` IS localised, because 國立臺灣大學醫學院 is the
+  - `education.school` IS localized, because 國立臺灣大學醫學院 is the
     institution's own name, not a translation of the English one.
   - Form numbers (I-693, N-648) stay as-is in every locale. They are USCIS
     identifiers, not words; a patient has to write the same string on the form.

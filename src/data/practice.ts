@@ -35,7 +35,7 @@ const addressParts: AddressParts = {
 export interface PracticeInfo {
   doctorName: string;
   credentials: string;
-  /** California licence. Restored 2026-08-06; see the comment block below. */
+  /** California license. Restored 2026-08-06; see the comment block below. */
   medicalLicenseNumber: string;
   medicalLicenseStatus: string;
   npi: string;
@@ -54,7 +54,7 @@ export interface PracticeInfo {
   };
   acceptingNewPatients: boolean;
   /**
-   * USCIS-designated civil surgeon, authorised to complete Form I-693 for
+   * USCIS-designated civil surgeon, authorized to complete Form I-693 for
    * adjustment of status. Confirmed 2026-07-29 via the USCIS Find a Doctor
    * locator. Note: "civil surgeon" is a USCIS designation for licensed
    * physicians of any specialty, not a surgical qualification.
@@ -80,7 +80,7 @@ export interface PracticeInfo {
   2026-08-06 when he supplied the same facts again. Recorded here so neither the
   removal nor the restoration reads as an accident:
 
-  RESTORED 2026-08-06 — the licence number, the American Board of Pathology
+  RESTORED 2026-08-06 — the license number, the American Board of Pathology
   certification, and the postgraduate training below. All three are now live.
 
   STILL REMOVED, deliberately:
@@ -90,7 +90,7 @@ export interface PracticeInfo {
     Costa Mesa).
 
   `licenseIssuedDate` was 'February 13, 1979'. It stays unpublished but is
-  preserved here: it is the best evidence for when Dr. Chang began practising in
+  preserved here: it is the best evidence for when Dr. Chang began practicing in
   California, and it is why the site says 1979 rather than the 1997 his own bio
   text gives.
 

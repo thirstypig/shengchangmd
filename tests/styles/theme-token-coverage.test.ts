@@ -4,7 +4,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /**
- * Guards the hand-maintained colour map in global.css.
+ * Guards the hand-maintained color map in global.css.
  *
  * global.css does not restyle templates. It re-points Tailwind's fixed palette
  * classes at theme-aware custom properties by redeclaring them later in the
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
  * The failure mode is omission, and it is silent: the class still works, it
  * just stops being theme-aware. Nothing throws, nothing fails to compile, and
  * tsc, the other 55 tests, verify-css.mjs and verify-build.mjs all pass with it
- * shipped, because none of them resolves a computed colour.
+ * shipped, because none of them resolves a computed color.
  *
  * Four instances shipped on 2026-08-05, found in three separate passes:
  *
@@ -43,9 +43,9 @@ const SRC = join(ROOT, 'src');
 const GLOBAL_CSS = join(SRC, 'styles/global.css');
 
 /**
- * Palette families whose colour must move with the theme. `primary` is the
+ * Palette families whose color must move with the theme. `primary` is the
  * brand; `gray` carries body text and surfaces; `white` appears as a literal
- * surface and ring colour. Semantic families (success, info) are included
+ * surface and ring color. Semantic families (success, info) are included
  * because they are mapped the same way.
  */
 const THEMED = 'primary|gray|white|black|success|info';
@@ -71,7 +71,7 @@ function templateCode(file: string): string {
 }
 
 /**
- * Every colour utility used in a template, mapped to the files using it.
+ * Every color utility used in a template, mapped to the files using it.
  * Reads class="…", class={`…`} and the string literals inside class={…}
  * expressions, which is how Navigation.astro applies its active state.
  */
@@ -133,7 +133,7 @@ const COLOUR_PROPERTY =
   /(?:^|[\s;{])(?:color|background-color|border-color|--tw-ring-color|--tw-gradient-(?:from|to))\s*:/;
 
 /**
- * Class names global.css redeclares with a colour, split by whether the value
+ * Class names global.css redeclares with a color, split by whether the value
  * is a token. `.hover\:text-primary-700:hover` is recorded as the template
  * would write it: `hover:text-primary-700`.
  */
@@ -176,14 +176,14 @@ const EXEMPT = new Map<string, string>([
     // later in the stylesheet, so it wins at equal specificity and the label
     // tracks the fill. Verified in the compiled CSS: .text-white{color:#fff}
     // at ~13k, .bg-primary-600{…color:var(--brand-contrast)} at ~20k.
-    'always paired with bg-primary-600, whose mapped rule sets the label colour and is emitted later',
+    'always paired with bg-primary-600, whose mapped rule sets the label color and is emitted later',
   ],
 ]);
 
 describe('every themed utility class used in a template is mapped in global.css', () => {
   const used = usedUtilities();
 
-  it('finds the colour utilities actually in use, so the test cannot pass vacuously', () => {
+  it('finds the color utilities actually in use, so the test cannot pass vacuously', () => {
     // If the template scanner silently stops matching, every assertion below
     // passes against an empty set. This is the guard against that.
     expect(used.size).toBeGreaterThan(15);
@@ -205,7 +205,7 @@ describe('every themed utility class used in a template is mapped in global.css'
 
     expect(
       unmapped,
-      'These classes keep light mode\'s colour in dark mode. Add them to the map in ' +
+      'These classes keep light mode\'s color in dark mode. Add them to the map in ' +
         'src/styles/global.css, or to EXEMPT here with a reason why they are already correct.'
     ).toEqual([]);
   });
@@ -243,7 +243,7 @@ describe('the tokens the map depends on are defined for both themes', () => {
 
   it('redefines the theme-dependent brand tokens inside the dark block', () => {
     // --brand inverting is the whole premise. If the dark block stops
-    // redefining it, every mapped class quietly renders light mode's colour
+    // redefining it, every mapped class quietly renders light mode's color
     // and this file's other tests still pass.
     const dark = darkBlock();
     for (const token of ['--brand', '--brand-strong', '--brand-contrast', '--text', '--surface']) {

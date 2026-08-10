@@ -44,7 +44,7 @@ const {
   Moved into locales.ts 2026-08-10 under `hero`. They are now covered by every
   existing guard for free, including taiwan-register cross-locale parity.
 
-  The old object carried a `?? en` fallback for an unrecognised locale.
+  The old object carried a `?? en` fallback for an unrecognized locale.
   getTranslation returns the key itself in that case, matching the six shared
   components that already use it. Only en/zh-hant/zh-hans are ever passed.
 */
