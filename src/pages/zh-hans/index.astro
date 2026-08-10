@@ -86,6 +86,15 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
           </div>
         )}
       </div>
+      {/* 看诊对象 — qualifies the badge above. See src/pages/index.astro. */}
+      <p class="mt-6 text-center text-gray-700">
+        {t(`patientScope.summary`)}{' '}
+        <a
+          href="/zh-hans/services/#who-we-see"
+          class="text-primary-700 underline underline-offset-2 hover:no-underline"
+          >{t(`patientScope.linkLabel`)}</a
+        >
+      </p>
     </div>
   </section>
 

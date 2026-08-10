@@ -75,6 +75,14 @@ export const translations = {
       referrals:
         'We refer to specialists where it is indicated. Some referrals need prior authorisation from your plan, and we will tell you if yours does.',
       stemCellAppointment: 'Stem cell therapy is by appointment only.',
+      // Compact form for the homepage, where it qualifies the "Accepting New
+      // Patients" badge. The badge is an invitation, and the invitation is the
+      // exact place the limit has to appear: a parent reading "family medicine"
+      // and "accepting new patients" has already decided to call. The full list
+      // stays on /services/#who-we-see, linked.
+      summary:
+        'We see adults 18 and over. We do not see patients under 18, and we do not provide gynaecology or obstetric care.',
+      linkLabel: 'Who we see',
     },
     coverage: {
       heading: 'Coverage we work with',
@@ -145,6 +153,9 @@ export const translations = {
       referrals:
         '如有需要，我們會轉介專科醫師。部分轉介需保險公司事先核准，屆時我們會告知您。',
       stemCellAppointment: '幹細胞治療採預約制。',
+      summary:
+        '本診所看診對象為 18 歲以上成人，不看 18 歲以下患者，亦不提供婦科及產科服務。',
+      linkLabel: '看診對象說明',
     },
     coverage: {
       heading: '合作的保險與付款方式',
@@ -208,6 +219,9 @@ export const translations = {
       referrals:
         '如有需要，我们会转介专科医师。部分转介需保险公司事先核准，届时我们会告知您。',
       stemCellAppointment: '干细胞治疗采预约制。',
+      summary:
+        '本诊所看诊对象为 18 岁以上成人，不看 18 岁以下患者，亦不提供妇科及产科服务。',
+      linkLabel: '看诊对象说明',
     },
     coverage: {
       heading: '合作的保险与付款方式',
