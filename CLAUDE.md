@@ -91,7 +91,11 @@ both — a resting screenshot in one theme is not evidence.**
   and in `JsonLd.astro`. Phase 3 of the 2026-08-06 batch published "we do not see
   patients under 18" onto a site that asserted "patients of all ages" in seven
   places, including "from newborns to seniors" in the structured data Google
-  reads. No test can catch that: both sentences are well-formed on their own.
+  reads. No test can catch that: both sentences are well-formed on their own, so
+  there is no invariant to assert — the search term has to come from imagining
+  what the site might already say. `JsonLd.astro` is not a page and will not turn
+  up in a page-by-page review; check it explicitly every time.
+  [write-up, with worked examples for walk-ins, telehealth and cash-only](docs/solutions/logic-errors/publishing-a-fact-does-not-remove-its-contradiction.md).
 - Map URLs → derive from `practice.address`, never hardcode coordinates or
   Google place IDs. `tests/data/source-integrity.test.ts` fails the build if a
   place id, a pre-baked embed URL, a latitude/longitude, or the street address
