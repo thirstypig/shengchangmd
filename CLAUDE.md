@@ -139,13 +139,20 @@ Two things from it that are easy to get wrong:
   inequality means one locale says something the other does not, whatever the
   word is and whether or not anyone thought to list it. Script and full account:
   [write-up](docs/solutions/logic-errors/simplified-is-a-script-not-a-dialect.md).
-- **A shared component must not contain Chinese.** `HeroSection.astro`,
-  `StickyCallBar.astro` and `Header.astro` each carry their own translations
-  parallel to `locales.ts`, and that is where `医生` survived a sweep of the
-  pages. Neither i18n test can see them: `locale-coverage` imports `translations`,
-  and `shared-component-labels` matches literal attributes, not string maps.
-  `Header.astro` uses ternaries rather than an object, so it was missed twice —
-  search for the *shape* (Chinese outside the translation layer), not the syntax.
+- **A shared component must not contain Chinese.** All translations live in
+  `src/i18n/locales.ts` and are read with `getTranslation(locale, key)`. Do not
+  start a second one.
+
+  This is a rule because it happened: `HeroSection.astro`, `StickyCallBar.astro`
+  and `Header.astro` each carried their own locale map, and that is where `医生`
+  survived the sweep that fixed 31 instances elsewhere — the sweep read the pages
+  and `locales.ts`, not those objects. Neither i18n test could see them either
+  (`locale-coverage` imports `translations`; `shared-component-labels` matches
+  literal attributes, not string maps), and `Header` used ternaries rather than
+  an object, so even a search shaped for the other two skipped it. **Resolved
+  2026-08-10** — all eight strings moved into `locales.ts`, rendered output
+  byte-identical, and reintroducing either defect now fails the suite.
+  Search for the *shape* (Chinese outside the translation layer), not the syntax.
 
 This exists because six English `aria-label`s rendered on all 12 Chinese pages
 for months — the strings a screen-reader user actually hears — while four of them

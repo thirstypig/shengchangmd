@@ -228,7 +228,21 @@ cross-check it against the English.
 false` on both Chinese locales remains the actual safety mechanism. A green suite
 makes that easier to forget.
 
-## The structural hazard, still open
+## The structural hazard — RESOLVED 2026-08-10
+
+> **Update.** Everything in this section describes the state before the fix. All
+> eight strings moved into `locales.ts` on 2026-08-10. The rendered output was
+> byte-identical across all 22 pages, the suite went **101 → 104 tests with no
+> test written** — `source-integrity` derives its locale-consumed check from the
+> nested blocks of `translations.en`, so the three new blocks each picked up a
+> guard automatically — and reintroducing either defect now fails: the
+> `HeroSection` one on *two* assertions (banned vocabulary and cross-locale
+> parity), the `Header` one on banned vocabulary. Both were previously invisible
+> to the entire suite, which was demonstrated first by putting a mainland word
+> in `Header` and watching 101 tests and the build pass.
+>
+> The section is kept as written because the reasoning is the useful part.
+
 
 Three shared components carry their **own** translations, parallel to
 `locales.ts`:
