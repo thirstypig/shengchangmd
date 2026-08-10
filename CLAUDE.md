@@ -188,14 +188,14 @@ what you are about to publish, in every locale and in the structured data.**
   invites someone to fill it, and the thing it wants is the carrier list.
   `.coverage-list` replaces it and is deliberately a plain list, because plan
   types are not brands and should not carry a logo wall's visual weight.
-- **The ABP specialty wording is live and unverified.** "Anatomic Pathology &
-  Clinical Pathology" now renders on all three About pages. That exact phrasing
-  comes from the **original scaffold**, which is the same source that fabricated
-  the map embed and the carrier list. The owner's 2026-08-06 message says only
-  "American Board of Pathology (ABP)". The **1973 date is corroborated** — his
-  Doximity profile puts the pathology residency at 1970–1973 — but the specialty
-  label is not. **Ask Dr. Chang for the exact wording on the certificate.**
-  Flagged in a comment in `practice.ts`.
+- ~~ABP specialty wording~~ — **confirmed by Dr. Chang 2026-08-09**, relayed by
+  the owner, who put the question to him directly. "Anatomic Pathology &
+  Clinical Pathology" is approved as it stands. **Do not re-raise.** Worth
+  keeping in mind, though: that phrasing originated in the **original scaffold**
+  — the same source that fabricated the map embed and the carrier list — and it
+  happened to be right. That is luck, not evidence, and it is not a reason to
+  trust the scaffold's other output. The 1973 date is separately corroborated by
+  Doximity.
 - ~~Immigration medical exams~~ — confirmed 2026-07-29: Dr. Chang is listed in
   the USCIS Find a Doctor locator, i.e. he holds the **civil surgeon
   designation** and may complete **Form I-693**. Recorded as
@@ -214,17 +214,26 @@ what you are about to publish, in every locale and in the structured data.**
   deliberately *not* in `education` — putting it there would assert that
   National Taiwan University granted it. Fill `education` in properly once those
   three facts arrive.
-- **Stem cell therapy copy is a placeholder and is live.** Added 2026-08-05 at
-  the owner's request, with no detail supplied: the type of product or procedure,
-  the indications, and the regulatory basis are all unknown. The copy on
-  `services.astro` therefore asserts no benefit, indication, success rate or
-  safety claim — it says the service exists and to call. Do not expand it without
-  the owner supplying specifics; the FDA and FTC have both acted on marketing
-  claims for unapproved stem cell products. It is deliberately excluded from the
-  JSON-LD in `JsonLd.astro` for the same reason.
-- **Medical-legal report scope is unconfirmed.** Listed as a service without
-  detail. Unknown whether it covers personal injury, IMEs, disability or workers'
-  comp, who may instruct, and whether testimony is offered.
+- **Stem cell therapy copy is minimal, live, and now confirmed as sufficient.**
+  Dr. Chang was asked on 2026-08-09 and the answer was that nothing changes. The
+  copy on `services.astro` therefore stays exactly as it is: it says the service
+  exists, that it is by appointment only, and to call. It asserts no benefit,
+  indication, success rate or safety claim, and it is deliberately excluded from
+  the JSON-LD in `JsonLd.astro`.
+
+  **Read that confirmation precisely. He approved the copy; he did not supply
+  the specifics.** The type of product or procedure, the indications and the
+  regulatory basis are *still unknown here*. So the prohibition is unchanged and
+  is now permanent rather than pending: **do not expand this section.** There is
+  nothing to expand it from, and the FDA and FTC have both acted on marketing
+  claims for unapproved stem cell products. "The owner said the copy is fine"
+  is not a source for a claim the copy does not make.
+- **Medical-legal report scope: confirmed general, 2026-08-09.** Dr. Chang was
+  asked and the answer was that nothing changes, so the deliberately general
+  wording stands. It remains unknown — and unpublished — whether the service
+  covers personal injury, IMEs, disability or workers' comp, who may instruct,
+  and whether testimony is offered. Do not add any of that; none of it was
+  supplied. The `TODO` in `services.astro` is resolved as "stays general".
 - **Wake Forest University.** The owner asked whether Dr. Chang has a connection.
   Nothing was found in `practice.ts`, Healthgrades, Doximity, or search. His ABFM
   certification (1978) postdates his pathology residency (ended 1973), so a family
