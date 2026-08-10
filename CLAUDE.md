@@ -101,6 +101,30 @@ both — a resting screenshot in one theme is not evidence.**
   place id, a pre-baked embed URL, a latitude/longitude, or the street address
   or phone number appears anywhere outside `practice.ts`.
 
+## The English here is AMERICAN English
+
+The practice is in San Gabriel, California. Patients file USCIS forms, carry
+Medi-Cal cards, and see American physicians. Write `pediatric`, `gynecology`,
+`authorization`, `naturalization`, `license`, `practiced`, `organization`,
+`color`, `center`.
+
+This is a rule because the whole site was written in British English for two
+weeks and nobody noticed until the owner did — eighteen occurrences live,
+including `paediatric` and `gynaecology` in the patient-scope copy and a heading
+reading "California Medical **Licence**" two lines from a data field named
+`medicalLicenseNumber`. **Every one was a correctly-spelled English word**, so
+typecheck, the build, 104 tests and every review passed.
+
+`tests/i18n/american-english.test.ts` guards it now. **That test is a word list
+and is weaker than it looks** — BrE and AmE differ word by word with no derivable
+rule, unlike the Chinese locales, where cross-locale parity gives a structural
+invariant. When something slips past it, add the word; do not conclude the guard
+works. Its `-isation` pattern is the one part that catches words nobody listed.
+
+Comments and docs follow the same standard, not for their own sake but because
+the next writer mimics the surrounding style — which is exactly how the site
+became consistent and consistently wrong.
+
 ## Trilingual content: English changes are not done until Chinese is done
 
 **Any user-facing English string change — page copy, headings, button labels,
@@ -331,7 +355,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 101 vitest tests
+npm test                             # 162 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -349,7 +373,7 @@ touching the build config.
 
 ## Tests
 
-Six files, 101 tests, run with `npm test`:
+Seven files, 162 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
