@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getTranslation } from '@i18n/locales';
+
+/*
+ * Mirrors src/pages/hours.astro. Until 2026-08-20 that page existed only in
+ * English while BaseLayout advertised zh-Hant and zh-Hans alternates for it,
+ * both of which 404'd.
+ *
+ * The hours themselves come from getTranslation, never practice.hours — those
+ * are English strings ("Monday–Friday 9:00 AM – 1:00 PM") and interpolating
+ * them here would switch language mid-page.
+ */
+
+const locale = 'zh-hant';
+const title = '門診時間 | 張勝雄醫師';
+const description = '張勝雄醫師家庭醫學診所的門診時間。加州聖蓋博。';
+const canonicalUrl = new URL('/zh-hant/hours/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: getTranslation(locale, 'home'), href: '/zh-hant/' },
+  { label: getTranslation(locale, 'footer.hours'), href: '/zh-hant/hours/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="content-section">
+    <div class="content-left">
+      <h1>門診時間</h1>
+      <div class="hours-list">
+        <div class="hours-item">
+          <span>{getTranslation(locale, 'hoursWeekday')}</span>
+        </div>
+        <div class="hours-item">
+          <span>{getTranslation(locale, 'hoursWeekend')}</span>
+        </div>
+      </div>
+      <p class="hours-note">
+        門診時間以外來電，請留言。我們會於下一個工作日回覆。
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .content-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-left h1 {
+    font-size: 2rem;
+    margin: 0 0 1.5rem;
+    font-weight: 700;
+  }
+
+  .hours-list {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hours-item {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .hours-note {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+</style>

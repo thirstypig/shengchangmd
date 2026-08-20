@@ -1,0 +1,178 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+
+/*
+ * Mirrors src/pages/new-patients.astro. That page existed only in English while
+ * BaseLayout advertised zh-Hant and zh-Hans alternates for it, both 404.
+ *
+ * The "who we see" list is read from locales.ts rather than written out here.
+ * Those exact sentences are the practice's scope limits, supplied by the owner
+ * on 2026-08-06, and they already exist as patientScope.* keys. Restating them
+ * in a page would be a second copy of a fact, and the next correction would
+ * reach only one of them.
+ */
+
+const locale = 'zh-hant';
+const title = '新患者 | 張勝雄醫師';
+const description = '歡迎來到張勝雄醫師的診所。瞭解如何預約初診，以及初診當天需要攜帶的資料。';
+const canonicalUrl = new URL('/zh-hant/new-patients/', Astro.site).href;
+const telHref = `tel:${practice.phone.replace(/[^\d]/g, '')}`;
+
+const breadcrumbs = [
+  { label: getTranslation(locale, 'home'), href: '/zh-hant/' },
+  { label: '新患者', href: '/zh-hant/new-patients/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="content-section">
+    <div class="content-container">
+      <div class="content-left">
+        <h1>歡迎新患者</h1>
+        <p>
+          本診所現正接受新患者。張醫師期待與您見面，延續他數十年來為患者提供的優質而貼心的照護。
+        </p>
+        {/*
+          看診對象 — 先於「如何預約」出現，與英文版一致：即將來電預約的人，
+          應該在撥號前而非撥號後知道本診所的看診範圍。
+        */}
+        <h3>{getTranslation(locale, 'patientScope.heading')}</h3>
+        <ul>
+          <li>{getTranslation(locale, 'patientScope.adults')}</li>
+          <li>{getTranslation(locale, 'patientScope.seniors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noMinors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noObGyn')}</li>
+        </ul>
+        <h3>如何預約</h3>
+        <p>
+          請於門診時間來電 <a href={telHref}>{practice.phone}</a> 預約看診。本診所人員將回答您有關保險、可預約時段，以及初診當天應攜帶物品的任何問題。
+        </p>
+        <a href={telHref} class="cta-button">
+          來電預約
+        </a>
+      </div>
+      <div class="content-right">
+        <div class="info-box">
+          <h3>請攜帶</h3>
+          <ul>
+            <li>附照片的身分證件</li>
+            <li>保險卡</li>
+            <li>目前服用的藥物清單</li>
+            <li>病史資料</li>
+            <li>近期的病歷紀錄</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .content-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .content-left h1 {
+    font-size: 2rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+
+  .content-left h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem;
+    font-weight: 600;
+  }
+
+  .content-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+
+  .content-left a {
+    color: var(--brand);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .content-left a:hover {
+    text-decoration: underline;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand-fill);
+    color: var(--on-brand-fill) !important;
+    text-decoration: none !important;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .cta-button:hover {
+    background: var(--brand-fill-strong);
+  }
+
+  .info-box {
+    background: var(--surface-sunken);
+    padding: 1.5rem;
+    border-radius: 2px;
+    border-left: 4px solid var(--brand);
+  }
+
+  .info-box h3 {
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .info-box li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text);
+  }
+
+  .info-box li:before {
+    content: "•";
+    color: var(--brand);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  @media (max-width: 768px) {
+    .content-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
