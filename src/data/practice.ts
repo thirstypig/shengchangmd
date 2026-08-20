@@ -34,6 +34,13 @@ const addressParts: AddressParts = {
 
 export interface PracticeInfo {
   doctorName: string;
+  /**
+   * The name without the doctorate, for places where the full credential
+   * string is too long or too loud — the header wordmark and the home page
+   * headline. Derived from the same base as `doctorName` so the two cannot
+   * drift; do not write it out by hand.
+   */
+  doctorNameShort: string;
   credentials: string;
   /** California license. Restored 2026-08-06; see the comment block below. */
   medicalLicenseNumber: string;
@@ -134,8 +141,18 @@ function to12Hour(time: string): string {
 const hoursOpens = '09:00';
 const hoursCloses = '13:00';
 
+/*
+  One base name, two renderings. The owner asked on 2026-08-19 for the header
+  and the home page headline to drop the doctorate and read "Sheng Chang, M.D.",
+  while the About page, every page title, the OG card and all nine JSON-LD
+  fields keep the full form. Deriving both from `doctorBaseName` is what stops
+  that becoming two hand-maintained copies of the same name.
+*/
+const doctorBaseName = 'Sheng Chang';
+
 export const practice: PracticeInfo = {
-  doctorName: 'Sheng Chang, M.D., Ph.D.',
+  doctorName: `${doctorBaseName}, M.D., Ph.D.`,
+  doctorNameShort: `${doctorBaseName}, M.D.`,
   credentials: 'M.D., Ph.D.',
   medicalLicenseNumber: 'A 33409',
   medicalLicenseStatus: 'Active',
