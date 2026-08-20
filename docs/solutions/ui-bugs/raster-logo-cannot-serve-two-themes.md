@@ -277,4 +277,6 @@ placeholder, and that is why.
 - [green-checks-that-cannot-see-the-defect](../logic-errors/green-checks-that-cannot-see-the-defect.md)
   — why a full green suite said nothing about this.
 
-Shipped in `e984d05`, on branch `redesign-dililaw-direction`.
+Shipped in `e984d05`, merged to `main` in PR #37 and live on shengchangmd.com
+since 2026-08-20. Verified against production: the mask returns HTTP 200 and
+both `--seal` values are present in the served stylesheet.

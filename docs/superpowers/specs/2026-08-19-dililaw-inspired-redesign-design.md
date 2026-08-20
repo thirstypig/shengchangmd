@@ -1,7 +1,11 @@
 # Design: a dililaw.com-inspired redesign
 
 **Date:** 2026-08-19
-**Status:** design approved in conversation; chop and photographs deferred by the owner
+**Status:** shipped to production 2026-08-20 in PR #37, partially. Palette, chop,
+navigation, buttons and the naming change are live. The footer surface, the
+charcoal band, the favicon and the services regrouping are NOT done. The chop
+was deferred when this was written and the owner supplied it on 2026-08-19;
+photographs are still outstanding.
 **Requested by:** the site owner, relaying a reference site he wants the practice to resemble
 
 ## Goal
@@ -50,7 +54,7 @@ theme or text-size control.
 | How literally to mimic the palette | Achromatic surfaces, one red accent | Owner |
 | Stem cell therapy section | Keep exactly as-is | Owner |
 | Logo direction | Square name chop | Owner |
-| Chop script, layout, impression | **Deferred** | Owner, 2026-08-19 |
+| Chop script, layout, impression | **Resolved** — owner supplied the real 篆書 seal | Owner, 2026-08-19 |
 | Logo script for all locales | Traditional `張` everywhere | Owner |
 | Typeface | Keep Georgia + system sans; **no web fonts** | Delegated to me |
 | Charcoal band | Every page, not home only | Owner |
