@@ -252,7 +252,7 @@ export const translations = {
     changeLanguage: '更改语言',
     toggleTheme: '切换浅色或深色主题',
     primaryNavigation: '主要导览',
-    toggleNavigation: '打开或关闭导航菜单',
+    toggleNavigation: '开启或关闭导览选单',
     language: '语言',
     contactUs: '联络我们',
     callOffice: '致电诊所',

@@ -353,3 +353,91 @@ describe('the two Chinese locales are one body of copy in two scripts', () => {
     },
   );
 });
+
+/**
+ * The parity table above is described as structural, and it is — but its DOMAIN
+ * is still a hand-maintained list of concepts, so it inherits one level up the
+ * exact weakness it was built to remove. It missed 導覽/選單: zh-hans said
+ * 打开或关闭导航菜单 where zh-hant said 開啟或關閉導覽選單, i.e. mainland 导航
+ * and 菜单 (in Taiwan 菜單 is a restaurant menu) in an aria-label — the text a
+ * screen-reader user hears. 198 tests passed either way.
+ *
+ * This assertion needs no table at all. The two locales are one body of copy in
+ * two scripts, so pairing them by key and zipping character by character yields
+ * a Traditional-to-Simplified map DERIVED from the corpus. A traditional
+ * character always has exactly one simplified counterpart, so if the corpus
+ * shows one mapping to two different characters, the two locales used different
+ * WORDS at that position. 覽 mapped to 览 in one string and 航 in another.
+ *
+ * Its coverage grows with the corpus rather than with anyone's memory, which is
+ * the property the table lacks. It is not complete: a character that occurs
+ * once has nothing to contradict, which is why 選 -> 菜 slipped past it while
+ * 覽 -> 航 did not. Complete would need a real conversion table, which is not
+ * available offline here.
+ */
+const flattenStrings = (value: unknown, prefix = ''): [string, string][] =>
+  typeof value === 'string'
+    ? [[prefix, value]]
+    : Object.entries(value as Record<string, unknown>).flatMap(([k, v]) =>
+        flattenStrings(v, prefix ? `${prefix}.${k}` : k),
+      );
+
+/** 著 is the one character with two legitimate simplified forms (着 / 著). */
+const MULTI_FORM_EXEMPT = new Set(['著']);
+
+describe('a Traditional-to-Simplified map derived from the copy itself', () => {
+  const hant = new Map(
+    flattenStrings(translations['zh-hant']).concat(flattenStrings(practiceLocalized['zh-hant'])),
+  );
+  const hans = new Map(
+    flattenStrings(translations['zh-hans']).concat(flattenStrings(practiceLocalized['zh-hans'])),
+  );
+
+  it('pairs every keyed string at equal length, so the zip below is valid', () => {
+    const unalignable = [...hant.keys()]
+      .filter((k) => hans.has(k))
+      .filter((k) => [...hant.get(k)!].length !== [...hans.get(k)!].length)
+      .map((k) => `${k}: zh-hant ${[...hant.get(k)!].length} chars, zh-hans ${[...hans.get(k)!].length}`);
+    expect(
+      unalignable,
+      'Script conversion is one character to one character, so a length difference ' +
+        'for the same key means the two locales are not the same sentence. It also ' +
+        'silently removes that key from the conflict check below, so this is ' +
+        'asserted rather than skipped.',
+    ).toEqual([]);
+  });
+
+  it('never maps one traditional character to two different simplified ones', () => {
+    const seen = new Map<string, Map<string, string[]>>();
+    for (const [key, traditional] of hant) {
+      const simplified = hans.get(key);
+      if (simplified === undefined) continue;
+      const a = [...traditional];
+      const b = [...simplified];
+      if (a.length !== b.length) continue;
+      a.forEach((ch, i) => {
+        if (!/[\u4e00-\u9fff]/.test(ch) || MULTI_FORM_EXEMPT.has(ch)) return;
+        if (!seen.has(ch)) seen.set(ch, new Map());
+        const targets = seen.get(ch)!;
+        if (!targets.has(b[i])) targets.set(b[i], []);
+        targets.get(b[i])!.push(key);
+      });
+    }
+
+    const conflicts = [...seen.entries()]
+      .filter(([, targets]) => targets.size > 1)
+      .map(
+        ([ch, targets]) =>
+          `${ch} -> ` +
+          [...targets.entries()].map(([to, keys]) => `${to} (${keys.join(', ')})`).join('  vs  '),
+      );
+
+    expect(
+      conflicts,
+      'One traditional character resolved to two different simplified characters, ' +
+        'so at that position the two locales say different words. Read both ' +
+        'strings and make them the same sentence; do not exempt the character ' +
+        'unless it genuinely has two simplified forms.',
+    ).toEqual([]);
+  });
+});
