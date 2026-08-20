@@ -1,16 +1,29 @@
 ---
+/**
+ * The practice's primary call to action.
+ *
+ * `text` is REQUIRED on purpose. It used to default to the English string
+ * 'Call Now', which is a literal English default in a shared component — the
+ * same shape as the six aria-labels that rendered English on all twelve
+ * Chinese pages for months. No caller currently relies on the default (checked
+ * against the built output, not just the source), so making it required costs
+ * nothing today and turns the next omission into a typecheck error instead of
+ * a silent leak. tests/i18n/shared-component-labels.test.ts cannot see default
+ * prop values, so the type is the only guard available here.
+ */
 interface Props {
-  text?: string;
+  text: string;
   className?: string;
   size?: 'sm' | 'base' | 'lg';
+  variant?: 'filled' | 'ghost';
 }
 
 import { practice } from '@/data/practice';
 
-const { text = 'Call Now', className = '', size = 'base' } = Astro.props;
+const { text, className = '', size = 'base', variant = 'ghost' } = Astro.props;
 
 const sizeClasses = {
-  sm: 'px-6 py-4 text-sm',
+  sm: 'px-6 py-3 text-sm',
   base: 'px-8 py-4 text-base',
   lg: 'px-10 py-5 text-lg',
 };
@@ -18,9 +31,62 @@ const sizeClasses = {
 const phoneUrl = `tel:+1${practice.phone.replace(/\D/g, '')}`;
 ---
 
-<a
-  href={phoneUrl}
-  class={`inline-block bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors ${sizeClasses[size]} ${className}`}
->
+<a href={phoneUrl} class={`call-button call-button-${variant} ${sizeClasses[size]} ${className}`}>
   {text}
 </a>
+
+<style>
+  /* dililaw.com has no filled buttons anywhere — every call to action is an
+     outlined rule with uppercase letterspaced type. Following that here is not
+     only faithful to the reference, it solves a real problem: a filled button
+     is a large area of --brand, and in dark mode --brand is a light rose that
+     reads as pink when it covers that much surface. As a border and a label it
+     reads as the brand. The contrast is better too: the ghost treatment is
+     8.23:1 in light and 8.40:1 in dark, both AAA, where a single non-inverting
+     red fill topped out at 5.71:1 for its label. */
+  .call-button {
+    display: inline-block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .call-button-ghost {
+    background: none;
+    border: 1px solid var(--brand);
+    color: var(--brand);
+  }
+  .call-button-ghost:hover,
+  .call-button-ghost:focus-visible {
+    background-color: var(--brand);
+    color: var(--brand-contrast);
+    border-color: var(--brand);
+  }
+
+  /* Filled stays available for a CTA sitting on a fixed-dark surface, where a
+     ghost outline would compete with the surface's own edge. Its label tracks
+     the fill via --brand-contrast, which is defined per theme to be legible on
+     --brand — never a hardcoded white. */
+  .call-button-filled {
+    background-color: var(--brand);
+    color: var(--brand-contrast);
+    border: 1px solid var(--brand);
+  }
+  .call-button-filled:hover,
+  .call-button-filled:focus-visible {
+    background-color: var(--brand-strong);
+    border-color: var(--brand-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .call-button {
+      transition: none;
+    }
+  }
+</style>
