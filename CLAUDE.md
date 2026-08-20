@@ -33,8 +33,30 @@ the build if the compiled CSS lacks real Tailwind output.
 
 ## Color rule (do not break this)
 
-`--brand` **inverts between themes**: deep red in light mode, light amber in
-dark mode. Therefore:
+`--brand` **changes value between themes** — deep red `#8a2f3c` in light, a
+lighter red `#e0a4ad` in dark. It used to swing red to **amber**, a 46 degree
+hue change, and that swing is behind every contrast failure recorded below.
+Since 2026-08-19 the hue holds and only lightness moves;
+`tests/styles/contrast.test.ts` fails if the gap exceeds 25 degrees.
+
+**Text and fill are separate tokens, and this is the subtle one.** `--brand`
+has to be *light* in dark mode so it is legible as text on a dark page. A large
+area *filled* with that same light value reads as a pink tint, not as the
+brand — which is exactly what a full-width hero did. So:
+
+- `--brand` / `--brand-strong` — foreground. Inverts.
+- `--brand-fill` / `--brand-fill-strong` / `--on-brand-fill` — filled surfaces:
+  heroes, filled buttons, the sticky call bar. **Does not invert.**
+- `--surface-dark` / `--surface-deep` / `--on-dark` — the charcoal bands. Dark
+  in *both* themes, so `--on-dark` is white in both. That is the one place a
+  fixed light foreground is correct here, because the surface does not invert
+  either.
+- `--seal` — the name chop's cinnabar. Its own ink, deliberately not `--brand`.
+
+**No contrast check can catch a fill/text confusion.** The pink hero measured
+8.32:1 and passed everything. It was found by looking at the page.
+
+Therefore:
 
 - **Never** hardcode `black`, `white`, `#000`, `#fff`, or any fixed text color
   on a branded or colored background. It will be legible in one theme and
@@ -54,6 +76,14 @@ This caused two real bugs: dark text on the red insurance hero in light mode,
 and light text on the light brand fill in dark mode — both from a single
 `h1…h6 { color: var(--text-strong) }` rule that overrode the hero's own label
 color.
+
+The same hero produced a third on 2026-08-19, and it is the one worth studying
+because **nothing could see it**: filled with `--brand`, it became a pale pink
+banner in dark mode at a perfectly legible 8.32:1. Two sites were fixed, then a
+grep for the *shape* rather than for what had just been changed found **37 more
+across eight files**. Splitting `--brand-fill` out of `--brand` is the fix.
+[write-up](docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md)
+covers the related asset problem.
 
 It caused three more on 2026-08-05, found in two passes because the first fix
 corrected one entry of the map and not its siblings: every `text-primary-700`
@@ -334,7 +364,25 @@ what you are about to publish, in every locale and in the structured data.**
 - **Doctor's portrait** comes from a photograph the owner supplied, cropped and
   color-corrected to `public/images/dr-sheng-chang.jpg` at 1024×1024. It is a
   banquet photo, not a studio headshot — serviceable, but a clinical portrait
-  would suit the practice better.
+  would suit the practice better. **As of 2026-08-20 it is on the About pages
+  only**; the owner asked for the name chop in the home page hero instead.
+- ~~Practice logo~~ — **the owner supplied Dr. Chang's real 篆書 name chop on
+  2026-08-19 and it is live**: 張 in the full-height left column, 勝 above 雄 on
+  the right. It ships as a 44 KB alpha mask painted with `--seal`, so one file
+  serves both themes. The original photograph is in gitignored `src-photos/`.
+  Do not replace it with a per-theme pair of PNGs — that is the duplicated-fact
+  defect, and the reasoning is in
+  [`docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md`](docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md).
+- **The favicon is still the placeholder `SC` square**, and it cannot use the
+  mask technique — a favicon is a real image file and cannot take a custom
+  property. It needs two exported PNGs behind
+  `media="(prefers-color-scheme: dark)"`, or one color that works on both
+  browser chromes. Outstanding.
+- **Hero photographs are still missing.** The owner is sourcing them. Heroes
+  fall back to flat `--surface-dark` and the home page uses the chop
+  (`media="chop"`), so nothing is blocked; swapping in a photograph is one prop.
+  Slots: home 2400×1200, about/services/location 2400×1000. Anything with an
+  identifiable patient needs written permission.
 - **A crop of Dr. and Mrs. Chang** exists at
   `src-photos/dr-and-mrs-chang-crop.jpg`. Unused, and deliberately not in
   `public/` — anything there is served publicly, and whether Mrs. Chang has a
@@ -355,7 +403,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 194 vitest tests
+npm test                             # 198 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -373,7 +421,7 @@ touching the build config.
 
 ## Tests
 
-Nine files, 194 tests, run with `npm test`:
+Nine files, 198 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -426,8 +474,11 @@ Nine files, 194 tests, run with `npm test`:
   change hue between themes**. The old palette swung deep red to amber, a 46
   degree gap, and every contrast failure recorded here traces back to reasoning
   about one theme's brand while looking at the other's. Anything past 25 degrees
-  fails. `--seal`, the name chop, gets its own assertions — legibility, hue
-  stability, and that it has not been quietly pointed at `--brand`
+  fails. `--seal`, the name chop, and `--brand-fill`, the non-inverting filled
+  surface, each get their own assertions. `--brand-fill`'s include that it is
+  *darker than its own label* — a fill lighter than the text on it is the
+  signature of pointing it back at `--brand`, which is what turned the
+  insurance hero pink
 - `tests/assets/css-referenced-assets.test.ts` — every `url()` in a stylesheet
   or a scoped `<style>` block resolves to a real file in `public/`.
   `verify-build.mjs` sounds like it covers this and does not: it reads

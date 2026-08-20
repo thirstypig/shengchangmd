@@ -16,7 +16,7 @@ listed and de-indexed at the same time.
 ```bash
 npm install
 npm run dev                          # http://localhost:3120
-npm test                             # 162 tests
+npm test                             # 198 tests
 ALLOW_INDEXING=true npm run build    # 22 pages
 ```
 
@@ -52,7 +52,10 @@ two scripts that assert against the built output rather than the source:
   while a report claimed "52/52 audits passed".
 - `scripts/verify-build.mjs` — checks that referenced assets exist, that the
   sitemap and robots meta agree, that JSON-LD's address matches `practice.ts`,
-  and that no page references the retired host.
+  and that no page references the retired host. Note "referenced assets" means
+  `<img src>`, `<script src>` and `<link href>` in the built HTML — it does not
+  read CSS, so `url()` references are covered by
+  `tests/assets/css-referenced-assets.test.ts` instead.
 
 The test suite is deliberately narrow. Every test guards a regression that has
 actually happened in this repo, and every one was verified by making it fail
@@ -64,9 +67,12 @@ Read **[`CLAUDE.md`](CLAUDE.md)**. It is the working agreement for this repo and
 it is not boilerplate — it records specific failures that shipped here and the
 rules that exist because of them. The three that catch people out:
 
-- **`--brand` inverts between light and dark themes.** Never hardcode a color
-  or a Tailwind palette class on a branded surface, and check `hover:`/`focus:`
-  variants too — they are emitted at higher specificity.
+- **Brand color is split between text and fill, and they behave differently.**
+  `--brand` changes value between themes; `--brand-fill` deliberately does not.
+  Never hardcode a color or a Tailwind palette class on a branded surface, and
+  check `hover:`/`focus:` variants too — they are emitted at higher
+  specificity. A contrast check will not catch a fill/text confusion: the bug
+  that prompted the split measured 8.32:1 and looked pink.
 - **Never invent factual content.** Not credentials, insurance carriers, hours,
   addresses, map coordinates or URLs. This is a real medical practice; wrong
   information on it has real consequences. Unknown facts get a marked
