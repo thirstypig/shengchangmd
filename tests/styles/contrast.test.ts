@@ -110,6 +110,42 @@ describe('--brand keeps its hue between themes', () => {
   });
 });
 
+describe('--seal, the name chop, stays legible and stays cinnabar', () => {
+  /*
+    The seal is painted onto an alpha mask via background-color, so --seal is
+    the only thing deciding whether the practice's mark is visible. It is a
+    non-text graphic, which WCAG 1.4.11 puts at 3:1, but it is held to 4.5
+    here for two reasons: it is the primary identity mark, and it renders at
+    44px in the header where the thin seal-script strokes lose effective
+    contrast well before the arithmetic does.
+
+    As supplied, the artwork could not meet this at all — its darkest ink was
+    2.34:1 on the dark ground and its paper 15.78:1. See
+    docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md
+  */
+
+  it('clears 4.5:1 on the surface it sits on, in both themes', () => {
+    expect(contrast(LIGHT['--seal'], LIGHT['--surface'])).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DARK['--seal'], DARK['--surface'])).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('stays one ink at two lightnesses rather than two colors', () => {
+    // A chop is cinnabar. Lightening it for the dark ground is fine; letting it
+    // wander to a different hue would make the mark read as a recolored logo,
+    // which is the same mistake --brand made when it swung red to amber.
+    expect(hueGap(LIGHT['--seal'], DARK['--seal'])).toBeLessThan(25);
+  });
+
+  it('is not silently the same value as --brand', () => {
+    // If someone "tidies up" by pointing --seal at --brand, the seal becomes
+    // burgundy in light and a pale rose in dark — and at that lightness the
+    // mark reads pink rather than stamped. This is a deliberate design split,
+    // so it gets an assertion rather than a comment.
+    expect(LIGHT['--seal']).not.toBe(LIGHT['--brand']);
+    expect(DARK['--seal']).not.toBe(DARK['--brand']);
+  });
+});
+
 describe('every foreground/background pair the design relies on clears AAA', () => {
   const PAIRS: Array<[string, string, string]> = [
     ['brand on surface', '--brand', '--surface'],
