@@ -5,6 +5,7 @@ import CallButton from '@/components/CallButton.astro';
 import FontSizeControl from '@/components/FontSizeControl.astro';
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
+import Logo from '@/components/Logo.astro';
 import { practice } from '@/data/practice';
 import { getTranslation } from '@i18n/locales';
 
@@ -58,12 +59,15 @@ const homeHref = locale === 'en' ? '/' : `/${locale}/`;
       in the lighter weight and muted color so it reads as a subtitle without
       shrinking to unreadable small print.
     */}
-    <a href={homeHref} class="flex flex-col shrink-0 leading-tight">
-      <span class="text-lg md:text-xl font-serif font-semibold text-primary-600">
-        {practice.doctorName}
-      </span>
-      <span class="text-base md:text-lg font-serif font-normal text-gray-600 whitespace-nowrap">
-        {tagline}
+    <a href={homeHref} class="flex items-center gap-3 shrink-0 leading-tight">
+      <Logo {locale} size={44} />
+      <span class="flex flex-col">
+        <span class="text-lg md:text-xl font-serif font-semibold text-primary-600">
+          {practice.doctorName}
+        </span>
+        <span class="text-base md:text-lg font-serif font-normal text-gray-600 whitespace-nowrap">
+          {tagline}
+        </span>
       </span>
     </a>
 

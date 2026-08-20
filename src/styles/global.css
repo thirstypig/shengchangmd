@@ -51,6 +51,13 @@
   --brand-strong: #6f2531;
   --brand-contrast: #ffffff;
 
+  /* The seal. Cinnabar, not --brand: a name chop is an artifact with its own
+     traditional ink color, and forcing it to the UI's burgundy would make it
+     look like a recolored logo rather than a seal. Like --brand it keeps its
+     hue between themes and moves only lightness — 5.40:1 on white, 5.24:1 on
+     the dark ground, both well past the 3:1 WCAG asks of a non-text graphic. */
+  --seal: #c1392b;
+
   /* Dark in BOTH themes. See the exception in the rule above. */
   --surface-dark: #3f3f3f;
   --surface-deep: #34313b;
@@ -95,6 +102,8 @@ html[data-theme='dark'] {
   --brand: #e0a4ad;
   --brand-strong: #eec3c9;
   --brand-contrast: #26161a;
+
+  --seal: #e0685a;
 
   --surface-dark: #2c2b31;
   --surface-deep: #34313b;

@@ -1,0 +1,75 @@
+---
+/**
+ * The practice mark: Dr. Chang's name chop, 張勝雄.
+ *
+ * The artwork is a real 篆書 (seal script) 朱文 seal supplied by the owner on
+ * 2026-08-19 — red characters and border on paper, which is the impression a
+ * physical chop actually leaves. 張 occupies the full-height left column with
+ * 勝 above 雄 on the right, which is the arrangement the owner specified.
+ *
+ * WHY IT IS A MASK AND NOT AN <img>.
+ * The supplied file is a photograph of a stamped seal: 1254x1254, 2.8 MB, on
+ * cream paper with no alpha. Three things were wrong with using it directly:
+ *
+ *   - the cream ground measures 15.78:1 against the dark header, so it would
+ *     have shown as a glaring light square in dark mode
+ *   - its darkest ink is 2.34:1 on that same ground, under the 3:1 WCAG asks
+ *     of a non-text graphic
+ *   - 2.8 MB for a mark that renders at 40px
+ *
+ * public/images/chop-mask.png is the seal reduced to an alpha channel: paper
+ * transparent, ink opaque, the eroded stroke edges preserved as partial alpha
+ * rather than thresholded into jaggies. Painting that mask with a token gives
+ * one 43 KB file that is correct in both themes and keeps the texture of the
+ * original stamp.
+ *
+ * The threshold was measured, not guessed: paper grain tops out at 0.061
+ * inkiness and the strokes sit at 0.6-0.8, so the cut is at 0.10.
+ *
+ * THE ORIGINAL lives in src-photos/, which is gitignored. Only the derived
+ * mask is committed, the same rule the doctor's portrait follows.
+ */
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+  size?: number;
+}
+
+const { locale, size = 40 } = Astro.props;
+const label = getTranslation(locale, 'logoAlt');
+---
+
+<span class="chop" role="img" aria-label={label} style={`--chop-size:${size}px`}></span>
+
+<style>
+  .chop {
+    display: block;
+    flex-shrink: 0;
+    width: var(--chop-size, 40px);
+    height: var(--chop-size, 40px);
+
+    /* The mask carries the shape; --seal carries the color, so the mark is
+       cinnabar on white and a lifted cinnabar on charcoal without a second
+       file. Never set a background-image here — that would bake one theme's
+       ink into the artwork. */
+    background-color: var(--seal);
+    -webkit-mask-image: url('/images/chop-mask.png');
+    mask-image: url('/images/chop-mask.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  /* If mask-image is unsupported, the span above is an empty colored block —
+     worse than nothing next to a wordmark. Hide it rather than show a red
+     square; the wordmark beside it already names the practice. */
+  @supports not ((-webkit-mask-image: url('')) or (mask-image: url(''))) {
+    .chop {
+      display: none;
+    }
+  }
+</style>
