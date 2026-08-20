@@ -20,15 +20,74 @@ const navItems = [
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
 ---
 
-<nav class="hidden md:flex items-center gap-8">
-  {navItems.map((item) => (
-    <a
-      href={item.href}
-      class={`text-gray-700 hover:text-primary-600 transition-colors font-medium ${
-        isActive(item.href) ? 'text-primary-600 border-b-2 border-primary-600' : ''
-      }`}
-    >
-      {item.label}
-    </a>
-  ))}
+<nav class="hidden md:flex items-center" aria-label={getTranslation(locale, 'primaryNavigation')}>
+  {
+    navItems.map((item) => (
+      <a
+        href={item.href}
+        class:list={['nav-link', { 'nav-link-active': isActive(item.href) }]}
+        aria-current={isActive(item.href) ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    ))
+  }
 </nav>
+
+<style>
+  /* dililaw.com sets its navigation at 12px uppercase on 1px of tracking. The
+     small size is the point: the nav recedes so the hero carries the page.
+
+     It also buys back the horizontal room the name chop takes. At the previous
+     1rem sentence case, adding a 44px mark pushed "Hours & Location" onto a
+     second line.
+
+     Colors come from tokens directly rather than from Tailwind palette classes.
+     A palette class here is what left the active underline resolving to raw
+     #8a2f3c on a dark surface on 2026-08-05; a scoped rule against a token
+     cannot repeat that, because there is no Tailwind rule to fall back to. */
+  nav {
+    gap: clamp(0.9rem, 1.9vw, 1.75rem);
+  }
+
+  .nav-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--brand);
+  }
+
+  .nav-link-active {
+    color: var(--brand);
+    border-bottom-color: var(--brand);
+  }
+
+  /* The Chinese locales set no letter-spacing: tracking between Han characters
+     reads as a typographic error, not as emphasis, and uppercase does nothing
+     to them. :lang() rather than a prop so it follows the document. */
+  :global(html:lang(zh-Hant)) .nav-link,
+  :global(html:lang(zh-Hans)) .nav-link {
+    letter-spacing: 0;
+    font-size: 0.82rem;
+    text-transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link {
+      transition: none;
+    }
+  }
+</style>

@@ -56,6 +56,40 @@ describe('practice.address stays derived from addressParts', () => {
   });
 });
 
+describe('the doctor is named once, and rendered two ways', () => {
+  /*
+    practice.ts publishes two renderings of the same name: `doctorName` with the
+    doctorate, for page titles, the OG card, the footer and all nine JSON-LD
+    fields, and `doctorNameShort` without it, for the header wordmark and the
+    home page headline. The owner asked for that split on 2026-08-19.
+
+    Two renderings is one copy too many the moment either is written out by
+    hand, which is why both derive from a single `doctorBaseName`. These
+    assertions are what stops someone reintroducing the second copy: change the
+    name in one and the prefix relationship breaks.
+  */
+
+  it('states the short form as a prefix of the full one, so both name the same person', () => {
+    expect(
+      practice.doctorName.startsWith(practice.doctorNameShort),
+      `"${practice.doctorNameShort}" is not a prefix of "${practice.doctorName}" — ` +
+        'the two have drifted. Both should derive from doctorBaseName in practice.ts, ' +
+        'not be maintained separately.',
+    ).toBe(true);
+  });
+
+  it('keeps the doctorate out of the short form and in the full one', () => {
+    expect(practice.doctorNameShort).not.toContain('Ph.D.');
+    expect(practice.doctorName).toContain('Ph.D.');
+  });
+
+  it('leaves the short form a real name rather than an empty string or bare credential', () => {
+    // A botched derivation ('' or ', M.D.') would still satisfy startsWith.
+    expect(practice.doctorNameShort.length).toBeGreaterThan(6);
+    expect(practice.doctorNameShort).not.toMatch(/^[,\s]/);
+  });
+});
+
 describe('practice data is not restated anywhere in src/', () => {
   const DATA_FILE = 'data/practice.ts';
 

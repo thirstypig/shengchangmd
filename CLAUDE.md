@@ -355,7 +355,7 @@ needed in version control, make the repo private first.
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 162 vitest tests
+npm test                             # 194 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -373,7 +373,7 @@ touching the build config.
 
 ## Tests
 
-Seven files, 162 tests, run with `npm test`:
+Nine files, 194 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -419,6 +419,26 @@ Seven files, 162 tests, run with `npm test`:
   fourth (`hover:bg-primary-50`, a near-white panel under amber text) was found
   by this test. It also asserts the dark block still redefines `--brand`, since
   every other assertion here passes if it stops
+- `tests/styles/contrast.test.ts` — the only check here that resolves a color.
+  Parses both token blocks out of `global.css` and computes WCAG contrast for
+  every foreground/background pair the design relies on, in both themes. It
+  also pins the invariant behind the 2026-08-19 retone: **`--brand` must not
+  change hue between themes**. The old palette swung deep red to amber, a 46
+  degree gap, and every contrast failure recorded here traces back to reasoning
+  about one theme's brand while looking at the other's. Anything past 25 degrees
+  fails. `--seal`, the name chop, gets its own assertions — legibility, hue
+  stability, and that it has not been quietly pointed at `--brand`
+- `tests/assets/css-referenced-assets.test.ts` — every `url()` in a stylesheet
+  or a scoped `<style>` block resolves to a real file in `public/`.
+  `verify-build.mjs` sounds like it covers this and does not: it reads
+  `<img src>`, `<script src>` and `<link href>` out of the built HTML and never
+  looks inside CSS. Demonstrated on 2026-08-19 by deleting
+  `public/images/chop-mask.png` — 184 tests passed, the build succeeded, and
+  verify-build reported "58 referenced assets all present" while the practice's
+  logo was invisible on all 22 pages in both themes. A mask with no image paints
+  nothing; it does not fall back and it does not warn. Also checks the PNG magic
+  bytes and the alpha channel, since a flattened re-export is still a valid PNG
+  and would render the mark as a solid square
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:
