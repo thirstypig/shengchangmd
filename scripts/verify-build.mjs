@@ -105,6 +105,31 @@ else {
   }
 }
 
+// 5. Every hreflang alternate must resolve to a page that was actually built.
+//    Check 1 collects these — they are <link href> — and then drops them on the
+//    `endsWith('/')` guard, which exists so directory URLs are not treated as
+//    asset files. So the alternates were read and silently discarded.
+//
+//    BaseLayout emitted one alternate per locale unconditionally, with no idea
+//    which locales a given page exists in. Four English-only pages
+//    (new-patients, hours, privacy, accessibility) therefore advertised zh-Hant
+//    and zh-Hans versions that returned 404 on the live site. An alternate
+//    pointing at a 404 is worse than no alternate: it is the tag that tells a
+//    crawler a translation exists, and it steers the Chinese-language searcher
+//    the practice most wants to reach into a dead end.
+for (const page of pages) {
+  const html = read(page);
+  for (const m of html.matchAll(/<link rel="alternate"[^>]*href="([^"]+)"/g)) {
+    let path = m[1];
+    if (siteOrigin && path.startsWith(siteOrigin)) path = path.slice(siteOrigin.length);
+    if (!path.startsWith('/')) continue;
+    const target = join(DIST, path.split(/[?#]/)[0], 'index.html');
+    if (!existsSync(target)) {
+      fail(`${relative(DIST, page)}: hreflang alternate points at a page that was not built: ${path}`);
+    }
+  }
+}
+
 // 4. No page may reference a host other than the one it declares as canonical.
 if (siteOrigin) {
   const stale = /https?:\/\/shengchangmd\.bahtzang\.com/;

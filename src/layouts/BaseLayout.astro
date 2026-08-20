@@ -52,19 +52,40 @@ const englishOnlyMarker = locale === 'en' ? '' : t('footer.englishOnly');
 // English-only page.
 const legalPrefix = '';
 
-const hreflangLinks = Object.entries(locales).map(([code, metadata]) => ({
-  lang: metadata.code,
-  href: canonicalUrl.replace(
-    /^(https?:\/\/[^/]+)(\/)?.*$/,
-    (match, domain, slash) => {
-      const basePath = domain + (slash || '/');
-      if (code === 'en') {
-        return basePath + canonicalUrl.split('/').slice(3).join('/');
-      }
-      return basePath + code + '/' + canonicalUrl.split('/').slice(3).join('/');
-    },
-  ),
-}));
+// Which locales does THIS page actually exist in? Derived from the filesystem
+// rather than hand-listed, so a page added or translated later is covered
+// without anyone remembering to update a list here.
+const pageFiles = new Set(Object.keys(import.meta.glob('/src/pages/**/*.astro')));
+
+// The path with any locale prefix removed: '/zh-hant/about/' -> 'about', '/' -> 'index'.
+const canonicalPath = new URL(canonicalUrl).pathname;
+const slug = canonicalPath.replace(/^\/(zh-hant|zh-hans)(?=\/)/, '').replace(/^\/|\/$/g, '') || 'index';
+
+const localeHasPage = (code: string) =>
+  pageFiles.has(code === 'en' ? `/src/pages/${slug}.astro` : `/src/pages/${code}/${slug}.astro`);
+
+// Two things were wrong here and both were live on 16 of 22 pages.
+//
+// The href was built with canonicalUrl.split('/').slice(3), which KEEPS the
+// locale segment already in the canonical URL. That is only correct when the
+// canonical is the English one. On every Chinese page it produced
+// /zh-hant/zh-hant/about/ and /zh-hans/zh-hant/about/ — both 404 — while the
+// en-US alternate pointed at the Chinese URL, declaring the Chinese page to be
+// its own English version.
+//
+// And the map ran over every locale unconditionally, with no idea which
+// locales a page exists in, so the four English-only pages advertised Chinese
+// versions that were never built. An alternate pointing at a 404 is worse than
+// no alternate: it is the tag that tells a crawler a translation exists, so it
+// steers the Chinese-language searcher this practice most wants to reach into
+// a dead end. scripts/verify-build.mjs now fails the build on both shapes.
+const origin = new URL(canonicalUrl).origin;
+const hreflangLinks = Object.entries(locales)
+  .filter(([code]) => localeHasPage(code))
+  .map(([code, metadata]) => ({
+    lang: metadata.code,
+    href: `${origin}/${code === 'en' ? '' : code + '/'}${slug === 'index' ? '' : slug + '/'}`,
+  }));
 
 const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
 ---
