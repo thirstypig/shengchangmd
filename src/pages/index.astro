@@ -84,12 +84,18 @@ const canonicalUrl = new URL('/', Astro.site).href;
           </h2>
           <p class="text-lg text-gray-700">{practice.languages.join(' · ')}</p>
         </div>
+        {/*
+          This badge is the only inbound link to /new-patients/ anywhere on the
+          site. Before 2026-08-20 that page sat in the sitemap and was indexed
+          with no page linking to it, so search was the only route in — and the
+          hreflang alternates search would have followed were 404s.
+        */}
         {practice.acceptingNewPatients && (
-          <div class="bg-white border border-success rounded-lg px-6 py-4 text-center">
+          <a href="/new-patients/" class="bg-white border border-success rounded-lg px-6 py-4 text-center block">
             <p class="text-success font-semibold">
               <span aria-hidden="true">✓</span> Accepting New Patients
             </p>
-          </div>
+          </a>
         )}
       </div>
       {/*

@@ -76,12 +76,18 @@ const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
           <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">看診語言</h2>
           <p class="text-lg text-gray-700">{pl.languages.join(' · ')}</p>
         </div>
+        {/*
+          This badge is the only inbound link to /new-patients/ anywhere on the
+          site. Before 2026-08-20 that page sat in the sitemap and was indexed
+          with no page linking to it, so search was the only route in — and the
+          hreflang alternates search would have followed were 404s.
+        */}
         {practice.acceptingNewPatients && (
-          <div class="bg-white border border-success rounded-lg px-6 py-4 text-center">
+          <a href="/zh-hant/new-patients/" class="bg-white border border-success rounded-lg px-6 py-4 text-center block">
             <p class="text-success font-semibold">
               <span aria-hidden="true">✓</span> 現正接受新患者
             </p>
-          </div>
+          </a>
         )}
       </div>
       {/* 看診對象 — qualifies the badge above. See src/pages/index.astro. */}
