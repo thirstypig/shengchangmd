@@ -193,9 +193,6 @@ button {
 .bg-primary-50 {
   background-color: var(--surface-accent);
 }
-.bg-gray-900 {
-  background-color: var(--text-strong);
-}
 
 .from-primary-50 {
   --tw-gradient-from: var(--surface-accent);
@@ -265,6 +262,37 @@ button {
 .border-gray-200,
 .border-gray-300 {
   border-color: var(--line);
+}
+
+/* ---------------------------------------------------------------------------
+   Fixed-dark surfaces — the charcoal band and the hero ground.
+
+   These are deliberately NOT Tailwind palette classes. A .bg-gray-800 would sit
+   on the map above and inherit that map's failure mode: leave it off and it
+   silently keeps a raw hex. A semantic class defined only against a token
+   cannot fail that way, because there is no Tailwind rule for it to fall back
+   to.
+
+   Both surfaces stay dark in light mode AND dark mode, so .on-dark is white in
+   both. That is the one correct fixed light foreground on this site; see the
+   COLOR PAIRING RULE at the top of this file before changing it.
+--------------------------------------------------------------------------- */
+.surface-dark {
+  background-color: var(--surface-dark);
+  color: var(--on-dark);
+}
+.surface-deep {
+  background-color: var(--surface-deep);
+  color: var(--on-dark);
+}
+.on-dark {
+  color: var(--on-dark);
+}
+/* Headings inside a fixed-dark surface inherit, like everywhere else. Pinning
+   one is what broke the insurance hero. */
+.surface-dark :is(h1, h2, h3, h4, h5, h6),
+.surface-deep :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
 }
 
 .text-success {
