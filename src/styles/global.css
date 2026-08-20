@@ -58,6 +58,19 @@
      the dark ground, both well past the 3:1 WCAG asks of a non-text graphic. */
   --seal: #c1392b;
 
+  /* A large area FILLED with the brand — the insurance hero, a filled button.
+     Like --surface-dark this does not invert, and for the same reason: it is a
+     surface in its own right, not a foreground that has to sit on one.
+
+     Splitting this out of --brand fixes a real defect. --brand has to be light
+     in dark mode so it is legible AS TEXT on a dark page, but at the size of a
+     full-width hero that same light rose reads as a pink banner, which is not
+     what a medical practice should look like. Text and fill genuinely want
+     opposite lightness in dark mode, so they cannot be one token. */
+  --brand-fill: #8a2f3c;
+  --brand-fill-strong: #6f2531;
+  --on-brand-fill: #ffffff;
+
   /* Dark in BOTH themes. See the exception in the rule above. */
   --surface-dark: #3f3f3f;
   --surface-deep: #34313b;
@@ -104,6 +117,12 @@ html[data-theme='dark'] {
   --brand-contrast: #26161a;
 
   --seal: #e0685a;
+
+  /* Lifted just enough to clear 3:1 against the dark page (3.06:1) while
+     keeping white legible on it (5.71:1). Still unmistakably the brand red. */
+  --brand-fill: #ad4252;
+  --brand-fill-strong: #8a2f3c;
+  --on-brand-fill: #ffffff;
 
   --surface-dark: #2c2b31;
   --surface-deep: #34313b;
@@ -317,14 +336,17 @@ button {
   border-color: var(--secondary);
 }
 
-/* Filled brand buttons: the label colour has to move with the fill, otherwise
-   white-on-light-red fails contrast in dark mode. */
+/* Filled brand buttons sit on --brand-fill, which does not invert, so their
+   label is --on-brand-fill in both themes. This used to be --brand with a
+   --brand-contrast label; that inverted, and in dark mode produced a pink
+   button with near-black text. */
 .bg-primary-600 {
-  background-color: var(--brand);
-  color: var(--brand-contrast);
+  background-color: var(--brand-fill);
+  color: var(--on-brand-fill);
 }
 .hover\:bg-primary-700:hover {
-  background-color: var(--brand-strong);
+  background-color: var(--brand-fill-strong);
+  color: var(--on-brand-fill);
 }
 
 html[data-theme='dark'] {

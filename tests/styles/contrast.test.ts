@@ -110,6 +110,47 @@ describe('--brand keeps its hue between themes', () => {
   });
 });
 
+describe('--brand-fill is a surface, and does not invert', () => {
+  /*
+    --brand and --brand-fill exist separately because text and fill want
+    opposite lightness in dark mode. --brand has to be LIGHT so it reads as
+    text on a dark page; a hero filled with that same light rose reads as a
+    pink banner. Splitting them is what fixed the insurance hero, which the
+    contrast sweep passed at 8.32:1 while looking wrong.
+
+    So the assertions here are about legibility ON the fill, plus the fill
+    staying dark enough in both themes to still be the brand rather than a
+    tint.
+  */
+
+  it('takes its label at AA in both themes', () => {
+    expect(contrast(LIGHT['--on-brand-fill'], LIGHT['--brand-fill'])).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DARK['--on-brand-fill'], DARK['--brand-fill'])).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(LIGHT['--on-brand-fill'], LIGHT['--brand-fill-strong'])).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DARK['--on-brand-fill'], DARK['--brand-fill-strong'])).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('stays distinguishable from the page it sits on', () => {
+    // WCAG 1.4.11 asks 3:1 for a control's boundary against its background.
+    expect(contrast(DARK['--brand-fill'], DARK['--surface'])).toBeGreaterThanOrEqual(3);
+    expect(contrast(LIGHT['--brand-fill'], LIGHT['--surface'])).toBeGreaterThanOrEqual(3);
+  });
+
+  it('stays dark enough to be the brand rather than a tint', () => {
+    // The regression this exists for: pointing --brand-fill at --brand, which
+    // in dark mode is a light rose and turns a full-width hero pink. A fill
+    // lighter than its own label is the signature of that mistake.
+    expect(luminance(DARK['--brand-fill'])).toBeLessThan(luminance(DARK['--on-brand-fill']));
+    expect(luminance(LIGHT['--brand-fill'])).toBeLessThan(luminance(LIGHT['--on-brand-fill']));
+    expect(DARK['--brand-fill']).not.toBe(DARK['--brand']);
+  });
+
+  it('keeps the brand hue across the split', () => {
+    expect(hueGap(LIGHT['--brand-fill'], LIGHT['--brand'])).toBeLessThan(25);
+    expect(hueGap(DARK['--brand-fill'], DARK['--brand'])).toBeLessThan(25);
+  });
+});
+
 describe('--seal, the name chop, stays legible and stays cinnabar', () => {
   /*
     The seal is painted onto an alpha mask via background-color, so --seal is
