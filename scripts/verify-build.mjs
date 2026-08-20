@@ -117,16 +117,47 @@ else {
 //    pointing at a 404 is worse than no alternate: it is the tag that tells a
 //    crawler a translation exists, and it steers the Chinese-language searcher
 //    the practice most wants to reach into a dead end.
+//
+//    TWO assertions, and the second exists because the first cannot fail on an
+//    empty page. Validating "every alternate resolves" says nothing when there
+//    are no alternates: deleting the emission from BaseLayout entirely left this
+//    reporting "OK — 26 pages". A guard that passes when the thing it guards is
+//    removed is the defect class this file's header is about, so the second
+//    assertion pins the shape instead of the instances — every page must name
+//    ITSELF among its alternates, which is what makes an hreflang cluster a
+//    cluster, and is untrue the moment the emission stops.
+//
+//    x-default is deliberately excluded from that count. It always points at
+//    the English URL, so on an English page it equals the canonical and would
+//    satisfy the check on its own while every locale alternate was missing.
 for (const page of pages) {
   const html = read(page);
-  for (const m of html.matchAll(/<link rel="alternate"[^>]*href="([^"]+)"/g)) {
-    let path = m[1];
+  const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
+  const selfReferencing = [];
+
+  for (const tag of html.match(/<link rel="alternate"[^>]*>/g) ?? []) {
+    const href = tag.match(/href="([^"]+)"/)?.[1];
+    const lang = tag.match(/hreflang="([^"]+)"/i)?.[1];
+    if (!href) continue;
+
+    let path = href;
     if (siteOrigin && path.startsWith(siteOrigin)) path = path.slice(siteOrigin.length);
-    if (!path.startsWith('/')) continue;
-    const target = join(DIST, path.split(/[?#]/)[0], 'index.html');
-    if (!existsSync(target)) {
-      fail(`${relative(DIST, page)}: hreflang alternate points at a page that was not built: ${path}`);
+    if (path.startsWith('/')) {
+      const target = join(DIST, path.split(/[?#]/)[0], 'index.html');
+      if (!existsSync(target)) {
+        fail(`${relative(DIST, page)}: hreflang alternate points at a page that was not built: ${path}`);
+      }
     }
+
+    if (lang && lang.toLowerCase() !== 'x-default' && href === canonical) selfReferencing.push(lang);
+  }
+
+  if (canonical && selfReferencing.length === 0) {
+    fail(
+      `${relative(DIST, page)}: no hreflang alternate points at this page's own canonical ` +
+        `(${canonical}). A page must name itself in its own hreflang cluster; none doing so ` +
+        `means the alternates are missing or point somewhere else entirely.`,
+    );
   }
 }
 

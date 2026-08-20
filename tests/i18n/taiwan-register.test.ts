@@ -393,6 +393,35 @@ describe('a Traditional-to-Simplified map derived from the copy itself', () => {
     flattenStrings(translations['zh-hans']).concat(flattenStrings(practiceLocalized['zh-hans'])),
   );
 
+  // Guards the derivation itself, in the same spirit as "finds the nested blocks
+  // to check" in source-integrity. Both assertions below iterate a map and expect
+  // an empty list of problems, so BOTH pass when the map is empty — replacing the
+  // zh-hant construction above with [] left all 29 tests green while checking
+  // nothing. A rename or a flattening of the locale shape would do the same
+  // silently. The floor is deliberately well under the real count so ordinary
+  // copy edits never trip it; it only catches the map collapsing.
+  it('derives a non-trivial map, so the assertions below cannot pass vacuously', () => {
+    const paired = [...hant.keys()].filter((k) => hans.has(k));
+    expect(hant.size, 'zh-hant produced no strings — the locale shape changed').toBeGreaterThan(50);
+    expect(hans.size, 'zh-hans produced no strings — the locale shape changed').toBeGreaterThan(50);
+    expect(paired.length, 'no key exists in both locales, so nothing is compared').toBeGreaterThan(50);
+  });
+
+  it('sees a conversion it must see, proving the zip reads real copy', () => {
+    // 醫 -> 医 is the most load-bearing character on the site: it is in the
+    // doctor's title on every page. If the zip is running at all, it is here.
+    const pairs = new Set<string>();
+    for (const [key, traditional] of hant) {
+      const simplified = hans.get(key);
+      if (simplified === undefined) continue;
+      const a = [...traditional];
+      const b = [...simplified];
+      if (a.length !== b.length) continue;
+      a.forEach((ch, i) => pairs.add(`${ch}${b[i]}`));
+    }
+    expect([...pairs], 'the derived map never saw 醫 -> 医').toContain('醫医');
+  });
+
   it('pairs every keyed string at equal length, so the zip below is valid', () => {
     const unalignable = [...hant.keys()]
       .filter((k) => hans.has(k))
