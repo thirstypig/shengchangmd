@@ -2,6 +2,7 @@
 import CallButton from '@/components/CallButton.astro';
 import { practice } from '@/data/practice';
 import ServiceIllustration from '@/components/ServiceIllustration.astro';
+import Logo from '@/components/Logo.astro';
 import { getTranslation } from '@i18n/locales';
 
 interface Props {
@@ -15,8 +16,17 @@ interface Props {
   imageCaption?: string;
   /** Render an illustration instead of a photo. Takes precedence over `image`. */
   illustration?: 'family' | 'internal' | 'preventive' | 'chronic' | 'immigration';
-  /** 'photo' | 'illustration' | 'placeholder'. Inferred from the props given. */
-  media?: 'photo' | 'illustration' | 'placeholder';
+  /**
+   * 'chop' | 'photo' | 'illustration' | 'placeholder'. Inferred from the props
+   * given, except 'chop', which has no props of its own and must be asked for.
+   *
+   * 'chop' is the home page's interim treatment. The intended design is
+   * dililaw.com's full-bleed photographic hero, but the practice has no such
+   * photographs yet, so the seal stands in rather than the doctor's portrait —
+   * which stays on the About page in all three locales. Swap to the photograph
+   * when the images arrive; nothing else has to move.
+   */
+  media?: 'chop' | 'photo' | 'illustration' | 'placeholder';
 }
 
 const {
@@ -85,7 +95,11 @@ const t = {
     {/* Media: portrait photo or labelled placeholder */}
     <div class="flex-1 order-1 md:order-2 flex justify-center items-center w-full">
       {
-        media === 'illustration' && illustration ? (
+        media === 'chop' ? (
+          <div class="hero-chop">
+            <Logo {locale} size={340} />
+          </div>
+        ) : media === 'illustration' && illustration ? (
           <div class="w-full max-w-sm mx-auto">
             <ServiceIllustration subject={illustration} style="soft" />
           </div>
@@ -122,3 +136,20 @@ const t = {
     </div>
   </div>
 </section>
+
+<style>
+  /* The seal is the only thing in the hero's media slot, so it is allowed to
+     be large. It scales down with the viewport rather than at fixed
+     breakpoints because it is a single square with no internal layout to
+     break. */
+  .hero-chop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .hero-chop :global(.chop) {
+    width: min(340px, 62vw);
+    height: min(340px, 62vw);
+  }
+</style>
