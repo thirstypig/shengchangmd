@@ -1,0 +1,140 @@
+import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+/**
+ * Computes WCAG contrast from the token block in global.css.
+ *
+ * Every other check in this repo reads source or built HTML. None of them
+ * resolves a color, which is why `.hover:text-primary-700` shipped at 1.67:1 on
+ * the practice's primary call to action — the phone number — and was found by
+ * eye, on the third pass. Arithmetic on the declared tokens is not a substitute
+ * for reading the computed value out of a browser, but it is the part a machine
+ * can own.
+ *
+ * It also pins the redesign's central claim: --brand keeps its hue between
+ * themes. The palette this replaced swung deep red (#8a2f3c, hue ~351) to amber
+ * (#e8b96b, hue ~38) — a 47 degree gap and a different color entirely. Both of
+ * this repo's worst UI bugs trace to that swing.
+ */
+
+const CSS = readFileSync(
+  fileURLToPath(new URL('../../src/styles/global.css', import.meta.url)),
+  'utf8'
+);
+
+/** The first `:root { … }` block, and the first dark block. Tokens only. */
+function tokenBlock(selector: string): Record<string, string> {
+  const start = CSS.indexOf(selector);
+  if (start === -1) throw new Error(`no ${selector} block in global.css`);
+  const open = CSS.indexOf('{', start);
+  let depth = 0;
+  let end = CSS.length;
+  for (let i = open; i < CSS.length; i++) {
+    if (CSS[i] === '{') depth++;
+    else if (CSS[i] === '}' && --depth === 0) {
+      end = i;
+      break;
+    }
+  }
+  const out: Record<string, string> = {};
+  for (const m of CSS.slice(open, end).matchAll(/(--[a-z-]+)\s*:\s*(#[0-9a-fA-F]{3,8})\s*;/g)) {
+    out[m[1]] = m[2];
+  }
+  return out;
+}
+
+const LIGHT = tokenBlock(':root');
+const DARK = tokenBlock("html[data-theme='dark']");
+
+function rgb(hex: string): [number, number, number] {
+  let h = hex.slice(1);
+  if (h.length === 3)
+    h = h
+      .split('')
+      .map((c) => c + c)
+      .join('');
+  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)) as [number, number, number];
+}
+
+function luminance(hex: string): number {
+  const f = (v: number) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  const [r, g, b] = rgb(hex).map((v) => f(v / 255));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a: string, b: string): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/** Hue in degrees, 0–360. Achromatic colors return 0. */
+function hue(hex: string): number {
+  const [r, g, b] = rgb(hex).map((v) => v / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  if (d === 0) return 0;
+  let h: number;
+  if (max === r) h = ((g - b) / d) % 6;
+  else if (max === g) h = (b - r) / d + 2;
+  else h = (r - g) / d + 4;
+  h *= 60;
+  return h < 0 ? h + 360 : h;
+}
+
+/** Smallest angle between two hues, so 359 and 1 are 2 degrees apart. */
+function hueGap(a: string, b: string): number {
+  const d = Math.abs(hue(a) - hue(b)) % 360;
+  return d > 180 ? 360 - d : d;
+}
+
+describe('the token blocks parse, so nothing below can pass vacuously', () => {
+  it('reads both blocks', () => {
+    expect(Object.keys(LIGHT).length).toBeGreaterThan(10);
+    expect(Object.keys(DARK).length).toBeGreaterThan(10);
+  });
+
+  it('defines every token in both themes', () => {
+    const missing = Object.keys(LIGHT).filter((t) => !(t in DARK));
+    expect(
+      missing,
+      'a token defined in light but not dark silently keeps its light value on a dark page'
+    ).toEqual([]);
+  });
+});
+
+describe('--brand keeps its hue between themes', () => {
+  it('does not swing to a different color family', () => {
+    expect(hueGap(LIGHT['--brand'], DARK['--brand'])).toBeLessThan(25);
+  });
+});
+
+describe('every foreground/background pair the design relies on clears AAA', () => {
+  const PAIRS: Array<[string, string, string]> = [
+    ['brand on surface', '--brand', '--surface'],
+    ['brand on surface-sunken', '--brand', '--surface-sunken'],
+    ['brand on surface-raised', '--brand', '--surface-raised'],
+    ['text-strong on surface', '--text-strong', '--surface'],
+    ['text on surface', '--text', '--surface'],
+    ['brand-contrast on brand', '--brand-contrast', '--brand'],
+    ['brand-strong on surface', '--brand-strong', '--surface'],
+    ['on-dark on surface-dark', '--on-dark', '--surface-dark'],
+    ['on-dark on surface-deep', '--on-dark', '--surface-deep'],
+  ];
+
+  for (const [label, fg, bg] of PAIRS) {
+    it(`light: ${label}`, () => {
+      expect(contrast(LIGHT[fg], LIGHT[bg])).toBeGreaterThanOrEqual(7);
+    });
+    it(`dark: ${label}`, () => {
+      expect(contrast(DARK[fg], DARK[bg])).toBeGreaterThanOrEqual(7);
+    });
+  }
+
+  it('--text-muted still clears AA even though it is the weakest', () => {
+    // Guards against "muted" drifting into decorative-only illegibility.
+    expect(contrast(LIGHT['--text-muted'], LIGHT['--surface'])).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DARK['--text-muted'], DARK['--surface'])).toBeGreaterThanOrEqual(4.5);
+  });
+});

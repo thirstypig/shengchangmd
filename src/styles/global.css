@@ -17,68 +17,90 @@
    inline pre-paint script in BaseLayout so navigation never flashes.
 --------------------------------------------------------------------------- */
 /*
-  COLOUR PAIRING RULE — read before adding any coloured surface.
+  COLOR PAIRING RULE — read before adding any colored surface.
 
-  Never hardcode `black`, `white`, `#000`, `#fff`, or any fixed text colour on
-  a branded or coloured background, and never pin a heading's colour inside
-  one. --brand inverts between themes: it is a dark red in light mode and a
-  light amber in dark mode. Any label pinned to one end goes invisible at the
-  other.
+  Never hardcode `black`, `white`, `#000`, `#fff`, or any fixed text color on a
+  branded or colored background, and never pin a heading's color inside one.
+  Set the surface's own `color` to --brand-contrast (or --text-strong on a
+  neutral surface) and let everything inside inherit it. --brand-contrast is
+  defined per theme to be legible on --brand.
 
-  Instead: set the surface's own `color` to --brand-contrast (or
-  --text-strong on a neutral surface) and let everything inside inherit it.
-  --brand-contrast is defined per theme to be legible on --brand.
+  ONE EXCEPTION, and it is deliberate: --surface-dark and --surface-deep are
+  dark in BOTH themes, so their foreground --on-dark is white in both. That is
+  correct precisely because those surfaces do not invert. Do not "fix" them
+  into --text-strong; that puts charcoal text on charcoal in light mode.
 */
 :root {
   color-scheme: light;
 
-  /* Warm off-whites rather than #fff — less glare, more depth between bands. */
-  --surface: #fbf7f4;
-  --surface-raised: #fffdfb;
-  --surface-sunken: #f4ece7;
-  --surface-accent: #fbeeec;
-  --surface-info: #ecf3f2;
+  /* Achromatic surfaces, after dililaw.com. The warm tinted neutrals this
+     palette used until 2026-08-19 are gone: photography carries the color now
+     and the red is reserved for the mark, links and the phone button. */
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f7f6f4;
+  --surface-accent: #f7f4f4;
 
-  --text-strong: #23191a;
-  --text: #3d3234;
-  --text-muted: #6b5c5e;
+  --text-strong: #2b2a28;
+  --text: #46443f;
+  --text-muted: #6f6b65;
 
-  --line: #e4d6d2;
+  --line: #e3e0db;
 
   --brand: #8a2f3c;
   --brand-strong: #6f2531;
-  --brand-contrast: #fffdfb;
+  --brand-contrast: #ffffff;
+
+  /* Dark in BOTH themes. See the exception in the rule above. */
+  --surface-dark: #3f3f3f;
+  --surface-deep: #34313b;
+  --on-dark: #ffffff;
 
   --secondary: #1d6a6a;
-  --accent: #96560c;
   --positive: #2f6b39;
 }
 
 html[data-theme='dark'] {
   color-scheme: dark;
 
-  --surface: #171315;
-  --surface-raised: #211a1d;
-  --surface-sunken: #1d1719;
-  --surface-accent: #2d1d21;
-  --surface-info: #16262a;
+  --surface: #1a191d;
+  --surface-raised: #212026;
+  --surface-sunken: #17161a;
+  --surface-accent: #241f21;
 
-  --text-strong: #f6f0f0;
-  --text: #e2d8d9;
-  --text-muted: #ab9c9e;
+  --text-strong: #eae7e2;
+  --text: #cfcac3;
+  --text-muted: #948f88;
 
-  --line: #3a2c30;
+  --line: #38363d;
 
-  /* Warm amber, not a lightened red. Tinting the red up for dark surfaces
-     produced a pink that read as a different brand entirely and was hard to
-     get legible text onto. Amber sits complementary to the deep red, measures
-     10.2:1 on the dark surface, and takes a dark label cleanly at 9.6:1. */
-  --brand: #e8b96b;
-  --brand-strong: #f2cd8e;
-  --brand-contrast: #24161a;
+  /* A lightened red, NOT amber — reversing a decision, so here is the reason.
+     This slot held #e8b96b amber, chosen because an earlier attempt at
+     "tinting the red up for dark surfaces produced a pink that read as a
+     different brand entirely and was hard to get legible text onto". Those
+     measurements were accurate: amber is 10.16:1 on the old surface and takes
+     a dark label at 9.61:1.
+
+     The legibility half of that objection turned out to be a property of the
+     particular pink, not of pinks. #e0a4ad measures 8.40:1 on --surface,
+     7.76:1 on --surface-raised, and takes --brand-contrast at 8.32:1 — all
+     AAA, and close enough to amber's numbers that legibility is no longer the
+     deciding factor.
+
+     What decides it is hue. Amber sits 46 degrees from the light-mode red, so
+     --brand was a different color in each theme, and every contrast failure
+     this repo has recorded came out of reasoning about one theme's brand while
+     looking at the other's. #e0a4ad sits 0.4 degrees away: same hue, different
+     lightness. tests/styles/contrast.test.ts fails if that gap exceeds 25. */
+  --brand: #e0a4ad;
+  --brand-strong: #eec3c9;
+  --brand-contrast: #26161a;
+
+  --surface-dark: #2c2b31;
+  --surface-deep: #34313b;
+  --on-dark: #ffffff;
 
   --secondary: #5cc9c9;
-  --accent: #e0a05a;
   --positive: #74c583;
 }
 
