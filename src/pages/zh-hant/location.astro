@@ -66,6 +66,13 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
             </p>
           </div>
         </div>
+
+        <!-- Hours Link. The .hours-link CSS below this file has always been
+             here; until 2026-08-20 no markup used it, because /hours/ existed
+             only in English. -->
+        <div class="hours-link-box">
+          <a href="/zh-hant/hours/" class="hours-link">查看完整門診時間</a>
+        </div>
       </div>
 
       <!-- Right Column: Map & Directions -->
@@ -222,6 +229,27 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   }
 
 
+
+  /* Base rules restored 2026-08-20. Only :hover and :focus-visible were here,
+     because no markup used the class. A hover rule without its base sets
+     --brand-fill-strong as a background while the text colour stays inherited,
+     which is dark-on-dark-red in light mode — the fill/text split CLAUDE.md
+     exists to prevent. */
+  .hours-link-box {
+    text-align: center;
+  }
+
+  .hours-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand-fill);
+    color: var(--on-brand-fill);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
 
   .hours-link:hover {
     background: var(--brand-fill-strong);
