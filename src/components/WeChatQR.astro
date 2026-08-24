@@ -9,15 +9,23 @@ const { locale } = Astro.props;
 const qrLabel = getTranslation(locale, 'footer.wechatQr');
 ---
 
+{/*
+  QR modules stay black-on-white in both themes on purpose — inverting to
+  white-on-black risks breaking scan reliability on phone cameras tuned for
+  dark-on-light codes, and WeChat's own QR codes are always black-on-white.
+  Theme adaptation happens in the card around it, not the code itself.
+*/}
 <div class="wechat-qr">
-  <img
-    src="/images/wechat-qr.svg"
-    alt={qrLabel}
-    class="qr-image"
-    width="160"
-    height="127"
-    decoding="async"
-  />
+  <div class="qr-card">
+    <img
+      src="/images/wechat-qr-light.svg"
+      alt={qrLabel}
+      class="qr-image"
+      width="160"
+      height="161"
+      decoding="async"
+    />
+  </div>
   <p class="qr-label">Scan to chat on WeChat</p>
 </div>
 
@@ -29,17 +37,33 @@ const qrLabel = getTranslation(locale, 'footer.wechatQr');
     gap: 0.75rem;
   }
 
-  .qr-image {
-    width: 160px;
-    height: auto;
-    border: 1px solid var(--line);
-    border-radius: 4px;
+  .qr-card {
+    padding: 0.75rem;
     background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .qr-image {
+    display: block;
+    width: 160px;
+    height: 160px;
   }
 
   .qr-label {
     font-size: 0.875rem;
     color: var(--text-muted);
     margin: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .qr-card {
+      /* A plain white square reads harshly against the dark footer, so the
+         card gets a visible border and stronger shadow to look intentional
+         rather than like an unstyled fallback. */
+      border-color: var(--line);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
   }
 </style>
