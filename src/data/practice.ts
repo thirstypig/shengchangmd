@@ -41,6 +41,15 @@ export interface PracticeInfo {
    * drift; do not write it out by hand.
    */
   doctorNameShort: string;
+  /**
+   * Label shown under the icon when a visitor adds the homepage to a phone's
+   * home screen (iOS `apple-mobile-web-app-title`, Android `application-name`
+   * / manifest `short_name`). Neither platform documents a hard limit, but
+   * both truncate past ~12 characters, so this stays short rather than using
+   * `doctorNameShort` or `doctorName`. Derived from `doctorBaseName` so it
+   * can't drift from the other name fields.
+   */
+  homeScreenTitle: string;
   credentials: string;
   /** California license. Restored 2026-08-06; see the comment block below. */
   medicalLicenseNumber: string;
@@ -153,6 +162,7 @@ const doctorBaseName = 'Sheng Chang';
 export const practice: PracticeInfo = {
   doctorName: `${doctorBaseName}, M.D., Ph.D.`,
   doctorNameShort: `${doctorBaseName}, M.D.`,
+  homeScreenTitle: doctorBaseName,
   credentials: 'M.D., Ph.D.',
   medicalLicenseNumber: 'A 33409',
   medicalLicenseStatus: 'Active',
