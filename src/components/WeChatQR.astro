@@ -10,13 +10,13 @@ const qrLabel = getTranslation(locale, 'footer.wechatQr');
 ---
 
 <div class="wechat-qr">
-  <img
-    src="/images/wechat-qr-small.png"
+  <svg
+    src="/images/wechat-qr.svg"
     alt={qrLabel}
-    width="200"
-    height="200"
-    decoding="async"
-  />
+    class="qr-svg"
+  >
+    <!-- SVG will be loaded via src -->
+  </svg>
   <p class="qr-label">Scan to chat on WeChat</p>
 </div>
 
@@ -28,12 +28,12 @@ const qrLabel = getTranslation(locale, 'footer.wechatQr');
     gap: 0.75rem;
   }
 
-  img {
+  .qr-svg {
     width: 160px;
     height: 160px;
     border: 1px solid var(--line);
     border-radius: 4px;
-    background: var(--surface);
+    background: white;
   }
 
   .qr-label {

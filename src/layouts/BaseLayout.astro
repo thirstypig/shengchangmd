@@ -146,8 +146,11 @@ const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
       })();
     </script>
 
-    <link rel="icon" href="/favicon-chop.png?v=1" type="image/png" />
-    <link rel="shortcut icon" href="/favicon-chop.png?v=1" type="image/png" />
+    {/* Favicon: light mode default, dark mode variant */}
+    <link rel="icon" href="/favicon.png?v=2" type="image/png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/favicon-dark.png?v=2" type="image/png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.png?v=2" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
 
     {breadcrumbs && (
       <script type="application/ld+json" set:html={JSON.stringify({
