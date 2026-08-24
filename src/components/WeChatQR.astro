@@ -1,0 +1,153 @@
+---
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const qrLabel = getTranslation(locale, 'footer.wechatQr');
+---
+
+<div class="wechat-qr">
+  <svg
+    viewBox="0 0 200 200"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label={qrLabel}
+  >
+    {/* Outer background - will invert based on theme */}
+    <rect width="200" height="200" class="qr-bg" />
+
+    {/* Finder pattern (top-left) */}
+    <g class="qr-pattern">
+      <rect x="10" y="10" width="30" height="30" />
+      <rect x="14" y="14" width="22" height="22" class="qr-inner" />
+      <rect x="18" y="18" width="14" height="14" />
+    </g>
+
+    {/* Finder pattern (top-right) */}
+    <g class="qr-pattern">
+      <rect x="160" y="10" width="30" height="30" />
+      <rect x="164" y="14" width="22" height="22" class="qr-inner" />
+      <rect x="168" y="18" width="14" height="14" />
+    </g>
+
+    {/* Finder pattern (bottom-left) */}
+    <g class="qr-pattern">
+      <rect x="10" y="160" width="30" height="30" />
+      <rect x="14" y="164" width="22" height="22" class="qr-inner" />
+      <rect x="18" y="168" width="14" height="14" />
+    </g>
+
+    {/* QR data pattern - pseudo-random representation */}
+    <g class="qr-data">
+      <rect x="50" y="50" width="4" height="4" />
+      <rect x="58" y="50" width="4" height="4" />
+      <rect x="66" y="50" width="4" height="4" />
+      <rect x="74" y="50" width="4" height="4" />
+      <rect x="50" y="58" width="4" height="4" />
+      <rect x="66" y="58" width="4" height="4" />
+      <rect x="74" y="58" width="4" height="4" />
+      <rect x="50" y="66" width="4" height="4" />
+      <rect x="58" y="66" width="4" height="4" />
+      <rect x="74" y="66" width="4" height="4" />
+      <rect x="50" y="74" width="4" height="4" />
+      <rect x="58" y="74" width="4" height="4" />
+      <rect x="66" y="74" width="4" height="4" />
+      <rect x="50" y="82" width="4" height="4" />
+      <rect x="74" y="82" width="4" height="4" />
+      <rect x="50" y="90" width="4" height="4" />
+      <rect x="58" y="90" width="4" height="4" />
+      <rect x="66" y="90" width="4" height="4" />
+      <rect x="74" y="90" width="4" height="4" />
+      <rect x="82" y="50" width="4" height="4" />
+      <rect x="90" y="50" width="4" height="4" />
+      <rect x="98" y="50" width="4" height="4" />
+      <rect x="82" y="58" width="4" height="4" />
+      <rect x="98" y="58" width="4" height="4" />
+      <rect x="82" y="66" width="4" height="4" />
+      <rect x="90" y="66" width="4" height="4" />
+      <rect x="82" y="74" width="4" height="4" />
+      <rect x="90" y="74" width="4" height="4" />
+      <rect x="82" y="82" width="4" height="4" />
+      <rect x="98" y="82" width="4" height="4" />
+      <rect x="82" y="90" width="4" height="4" />
+      <rect x="90" y="90" width="4" height="4" />
+      <rect x="98" y="90" width="4" height="4" />
+    </g>
+
+    {/* WeChat logo center - two speech bubbles */}
+    <g class="wechat-logo">
+      {/* Left bubble */}
+      <circle cx="85" cy="100" r="8" class="bubble-fill" />
+      <path
+        d="M 93 100 L 98 105 L 98 100 Q 98 95 93 95 L 87 95 Q 82 95 82 100 Q 82 105 87 105 L 93 105 L 93 100 Z"
+        class="bubble-fill"
+      />
+
+      {/* Right bubble */}
+      <circle cx="115" cy="100" r="8" class="bubble-fill" />
+      <path
+        d="M 107 100 L 102 105 L 102 100 Q 102 95 107 95 L 113 95 Q 118 95 118 100 Q 118 105 113 105 L 107 105 L 107 100 Z"
+        class="bubble-fill"
+      />
+    </g>
+  </svg>
+
+  <p class="qr-label">Scan to chat on WeChat</p>
+</div>
+
+<style>
+  .wechat-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  svg {
+    width: 160px;
+    height: 160px;
+  }
+
+  /* QR background - light in light mode, dark in dark mode */
+  .qr-bg {
+    fill: var(--surface);
+  }
+
+  /* Finder patterns and data dots - dark in light mode, light in dark mode */
+  .qr-pattern,
+  .qr-data {
+    fill: var(--text-strong);
+  }
+
+  .qr-pattern .qr-inner {
+    fill: var(--surface);
+  }
+
+  /* WeChat logo - uses brand color */
+  .wechat-logo .bubble-fill {
+    fill: var(--brand-strong);
+  }
+
+  .qr-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .qr-bg {
+      fill: var(--surface-dark);
+    }
+
+    .qr-pattern,
+    .qr-data {
+      fill: var(--text);
+    }
+
+    .qr-pattern .qr-inner {
+      fill: var(--surface-dark);
+    }
+  }
+</style>
