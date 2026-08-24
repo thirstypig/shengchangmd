@@ -2,29 +2,29 @@
 /**
  * The practice mark: Dr. Chang's name chop, 張勝雄.
  *
- * The artwork is a real 篆書 (seal script) 朱文 seal supplied by the owner on
- * 2026-08-19 — red characters and border on paper, which is the impression a
- * physical chop actually leaves. 張 occupies the full-height left column with
- * 勝 above 雄 on the right, which is the arrangement the owner specified.
+ * The artwork is a real 篆書 (seal script) 朱文 seal — red characters and
+ * border, the impression a physical chop actually leaves. 張 occupies the
+ * full-height left column with 勝 above 雄 on the right.
+ *
+ * Replaced 2026-08-24 with a higher-resolution supplied render of the same
+ * seal (same characters, same arrangement, already alpha-extracted rather
+ * than shot on paper). A prior version sent the same day was AI-generated
+ * and garbled the name (雄 duplicated); that one was rejected and never used.
+ * This file was verified before use: alpha corners measured 0 and center
+ * ink measured ~254, confirming a real transparent cutout, and the edge
+ * alpha values are graduated (not a hard 0/255 cutout), preserving stroke
+ * texture rather than producing jaggies.
  *
  * WHY IT IS A MASK AND NOT AN <img>.
- * The supplied file is a photograph of a stamped seal: 1254x1254, 2.8 MB, on
- * cream paper with no alpha. Three things were wrong with using it directly:
+ * A flat image would bake one theme's ink color into the artwork. Painting
+ * an alpha mask with the --seal token instead gives one file that is
+ * correct in both themes:
  *
- *   - the cream ground measures 15.78:1 against the dark header, so it would
- *     have shown as a glaring light square in dark mode
- *   - its darkest ink is 2.34:1 on that same ground, under the 3:1 WCAG asks
- *     of a non-text graphic
- *   - 2.8 MB for a mark that renders at 40px
+ *   - light mode: --seal is cinnabar on white
+ *   - dark mode: --seal lifts to a legible cinnabar on charcoal
  *
- * public/images/chop-mask.png is the seal reduced to an alpha channel: paper
- * transparent, ink opaque, the eroded stroke edges preserved as partial alpha
- * rather than thresholded into jaggies. Painting that mask with a token gives
- * one 43 KB file that is correct in both themes and keeps the texture of the
- * original stamp.
- *
- * The threshold was measured, not guessed: paper grain tops out at 0.061
- * inkiness and the strokes sit at 0.6-0.8, so the cut is at 0.10.
+ * public/images/chop-mask.png is the seal reduced to alpha only: transparent
+ * outside the ink, opaque inside it. 37 KB for a mark that renders at 40px.
  *
  * THE ORIGINAL lives in src-photos/, which is gitignored. Only the derived
  * mask is committed, the same rule the doctor's portrait follows.
