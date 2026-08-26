@@ -343,12 +343,23 @@ what you are about to publish, in every locale and in the structured data.**
   claim resting on one sentence.
 
   The collection's own terms prohibit reproducing its items in any form without
-  written permission, so its photographs — including a c.1996 portrait and the
-  1995 library groundbreaking — may be linked but never copied into `public/`.
-  **The owner emailed `ref247@ArcadiaCA.gov` on or before 2026-08-09 and is
-  awaiting a reply.** The images are deferred until it arrives; that is his
-  decision, not an oversight. The prohibition on copying stands until written
-  permission is actually in hand — an unanswered request is not permission.
+  written permission. The owner emailed `ref247@ArcadiaCA.gov` on or before
+  2026-08-09; the prohibition stood, unmodified, for the ten and a half months
+  this repo enforced it, because an unanswered request is not permission.
+
+  **The owner confirmed permission is in hand, 2026-08-26.** This repo has not
+  independently seen the library's written reply — the confirmation is the
+  owner's own word, relayed the same way most facts on this site are (see
+  "Facts that must come from source" above) — but it is the authority this
+  repo has for the change. Three of the collection's photographs are now live
+  on the About page (PR #55): the 1995 library groundbreaking and two council-
+  chamber photos, in `public/images/recognition/`. They're used exactly as
+  supplied, watermark and all — the owner's own choice, not an oversight. **A
+  c.1996 portrait from the same collection is still not copied into `public/`**
+  — permission covers what was actually requested and supplied, not the whole
+  collection by extension; treat any *other* item from this archive as still
+  requiring the same confirmation before it's copied, not assumed covered by
+  this one.
 - **No video of Dr. Chang has ever been found**, in English or Chinese, despite
   targeted searching. Chinese-language press coverage is likewise near-absent:
   the only hit for 張勝雄 is zh.wikipedia's Arcadia article listing him among
