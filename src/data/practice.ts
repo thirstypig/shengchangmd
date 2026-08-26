@@ -60,6 +60,8 @@ export interface PracticeInfo {
   addressParts: AddressParts;
   phone: string;
   email: string;
+  /** WeChat ID (add-friend search / QR-scan handle), used in WeChatQR.astro and contact.astro. */
+  wechatId: string;
   hours: {
     /** 24-hour, the format JSON-LD's openingHoursSpecification requires. */
     opens: string;
@@ -171,6 +173,7 @@ export const practice: PracticeInfo = {
   addressParts,
   phone: '(626) 573-0055',
   email: 'shengchangmd@gmail.com',
+  wechatId: 'shengchangmd',
   hours: {
     // 9:00 AM – 1:00 PM confirmed by the practice owner 2026-08-06.
     opens: hoursOpens,
