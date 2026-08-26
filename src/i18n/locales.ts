@@ -108,6 +108,8 @@ export const translations = {
       photo6: 'Dr. Chang at a welcome reception for overseas Chinese community leaders',
       photo7: 'Dr. Chang presenting a plaque at a community event, 1989',
       photo8: 'Dr. Chang speaking at a Chinese culture and education symposium',
+      photo9:
+        'Dr. Chang at the groundbreaking for the Arcadia Police Department, with the City of Arcadia City Council',
       heading: 'Certificates & Recognition',
       intro:
         "A selection of certificates and photographs from Dr. Chang's community involvement.",
@@ -233,6 +235,7 @@ export const translations = {
       photo6: '張醫師出席歡迎僑團首長回國致敬活動',
       photo7: '張醫師於1989年在社區活動中頒發獎牌',
       photo8: '張醫師於中華文化推廣中心文教育研討會上致詞',
+      photo9: '張醫師與 Arcadia 市議會出席 Arcadia 警察總部動土典禮',
       heading: '獎狀與表彰',
       intro: '精選張醫師參與社區服務期間所獲頒的獎狀，以及活動照片。',
     },
@@ -330,6 +333,7 @@ export const translations = {
       photo6: '张医师出席欢迎侨团首长回国致敬活动',
       photo7: '张医师于1989年在社区活动中颁发奖牌',
       photo8: '张医师于中华文化推广中心文教育研讨会上致词',
+      photo9: '张医师与 Arcadia 市议会出席 Arcadia 警察总部动土典礼',
       heading: '奖状与表彰',
       intro: '精选张医师参与社区服务期间所获颁的奖状，以及活动照片。',
     },
