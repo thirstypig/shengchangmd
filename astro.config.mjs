@@ -54,6 +54,7 @@ export default defineConfig({
         const pathname = new URL(page).pathname;
 
         if (pathname.startsWith('/404')) return false;
+        if (pathname.startsWith('/family-photos-2026')) return false;
 
         const segment = pathname.split('/')[1];
         const locale = LOCALE_KEYS.includes(segment) ? segment : 'en';
