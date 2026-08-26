@@ -95,9 +95,12 @@ both — a resting screenshot in one theme is not evidence.**
 
 ## Facts that must come from source, never memory
 
-- Hours, address, phone → `src/data/practice.ts` (single source of truth). The
-  address lives there as `addressParts`; `practice.address` is derived from it,
-  so the prose address and the JSON-LD `PostalAddress` cannot drift apart.
+- Hours, address, phone, WeChat ID → `src/data/practice.ts` (single source of
+  truth). The address lives there as `addressParts`; `practice.address` is
+  derived from it, so the prose address and the JSON-LD `PostalAddress` cannot
+  drift apart. WeChat ID (`practice.wechatId`) is locale-neutral like phone and
+  email, so it's interpolated directly into Chinese pages rather than routed
+  through `getPracticeLocalized()`.
 - **A fact copied into a second place will drift, and your fix will reach only
   one copy.** This happened six times in one session on 2026-08-05 — the false
   Alabama training claim, a fabricated map embed, the insurance carrier list,
@@ -352,8 +355,9 @@ what you are about to publish, in every locale and in the structured data.**
   owner's own word, relayed the same way most facts on this site are (see
   "Facts that must come from source" above) — but it is the authority this
   repo has for the change. Three of the collection's photographs are now live
-  on the About page (PR #55): the 1995 library groundbreaking and two council-
-  chamber photos, in `public/images/recognition/`. They're used exactly as
+  on the About page (PR #56, merged 2026-08-26): the 1995 library
+  groundbreaking and two council-chamber photos, in
+  `public/images/recognition/`. They're used exactly as
   supplied, watermark and all — the owner's own choice, not an oversight. **A
   c.1996 portrait from the same collection is still not copied into `public/`**
   — permission covers what was actually requested and supplied, not the whole
@@ -400,16 +404,15 @@ what you are about to publish, in every locale and in the structured data.**
   `public/` — anything there is served publicly, and whether Mrs. Chang has a
   role in the practice is unconfirmed.
 - **The About-page recognition strip and the personal gallery are live**
-  (PR #52, merged and deployed 2026-08-26): an 8-photo recognition strip in
-  "Community & Public Service" (certificates and civic photos), and an
-  unlinked personal gallery at `/family-photos-2026/` with 88 photos. See
-  "Photographs" below for what's permanently blocked from either destination
-  and why.
-- **A 9th recognition photo (the Arcadia Police Department groundbreaking)
-  is open in PR #53, not yet merged.** It has a faintly visible license
-  plate in the background — a parked car, incidental, not the photo's
-  subject — flagged to the owner and not yet resolved whether it needs
-  cropping/blurring or is fine as-is.
+  (PR #52, #53, #56, all merged and deployed 2026-08-26): a 17-photo
+  recognition strip in "Community & Public Service" — certificates, civic
+  photos, the Arcadia Police Department and Library groundbreakings, 2 City
+  Council chamber photos, 2 podium speeches and 3 newspaper clippings — and
+  an unlinked personal gallery at `/family-photos-2026/` with 83 photos (5
+  moved to the recognition strip after initial publication; see Photographs
+  below). The police HQ photo has a faintly visible license plate in the
+  background — a parked car, incidental, not the photo's subject — the owner
+  reviewed it and said it's fine as-is.
 
 ## Photographs
 
@@ -428,24 +431,25 @@ folder with `scripts/prepare-photo-assets.sh`, not by hand-copying a file into
 `public/`.
 
 **Two things are deliberately published from that folder, unlike `src-photos/`:**
-a curated **8-photo recognition strip** on the About page (certificates and
-civic/association photos, `public/images/recognition/` — a 9th is open in
-PR #53, not yet merged; see "Known open items" above), and an **unlinked
-personal gallery** at `/family-photos-2026/` (`public/images/gallery/`, 88
-photos). The gallery page hand-writes its own `<meta name="robots"
+a curated **17-photo recognition strip** on the About page (certificates,
+civic/association photos, the police HQ and library groundbreakings, council
+chamber photos, podium speeches and newspaper clippings —
+`public/images/recognition/`), and an **unlinked personal gallery** at
+`/family-photos-2026/` (`public/images/gallery/`, 83 photos). The gallery page hand-writes its own `<meta name="robots"
 content="noindex, nofollow">` rather than using `BaseLayout` — that page must
 **never** gain a nav/footer link, and must stay excluded from the sitemap filter
 in `astro.config.mjs`. `tests/routes/gallery-unlisted.test.ts` guards both.
 
-**Three photos are permanently blocked from ever appearing in either
-destination**: they carry a "City of Arcadia Library" watermark and the
-collection's terms prohibit reproduction without written permission — see "The
-Arcadia History Collection" below. **Four more are blocked for a different
-reason, found on final review before the first push**: they show the owner's
-home address and other named individuals' private correspondence (a
+(The 3 Arcadia Public Library archive photos that were blocked here through
+2026-08-25 are no longer — permission confirmed 2026-08-26; see "The Arcadia
+History Collection" below.)
+
+**Four photos are permanently blocked from ever appearing in either
+destination**, found on final review before the first push: they show the
+owner's home address and other named individuals' private correspondence (a
 1986 letter from the Governor, a 1988 LAUSD letter, a 1988 campaign-donation
 letter, and a Senator's letter). `scripts/prepare-photo-assets.sh`'s `BLOCKED`
-list names all seven source files — **never remove an entry from that list
+list names all four source files — **never remove an entry from that list
 without a fresh privacy review**, and never assume a photo is safe to publish
 just because it isn't on the list; the list only encodes what has already been
 checked, not what's clear. Full incident write-up, including why every
