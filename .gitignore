@@ -12,6 +12,12 @@ dist
 # on the site (public/images/dr-sheng-chang.jpg) is committed.
 src-photos/
 
+# Source photos for recognition and gallery albums. Contains 3 Arcadia Public
+# Library archive photos that must never be reproduced or committed. Only the
+# derived and resized images (public/images/recognition/*.jpg and
+# public/images/gallery/{thumb,full}/*.jpg) are committed.
+_Sheng Chang Photos/
+
 # Astro generates this directory on every dev run and build. It was
 # committed by mistake: data-store.json is a content-layer cache that changes
 # on every build, so it dirtied the working tree constantly and appeared in ten
