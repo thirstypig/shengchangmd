@@ -110,6 +110,20 @@ export const translations = {
       photo8: 'Dr. Chang speaking at a Chinese culture and education symposium',
       photo9:
         'Dr. Chang at the groundbreaking for the Arcadia Police Department, with the City of Arcadia City Council',
+      photo10:
+        'Groundbreaking for the Arcadia Public Library renovation and addition, with Dr. Chang listed as a City Council member',
+      photo11: 'Dr. Chang in the Arcadia City Council chambers',
+      photo12: 'Dr. Chang at a City Council meeting table in the Arcadia City Council chambers',
+      photo13:
+        'Newspaper clipping of Dr. Chang receiving a plaque as director of the Southern California Chinese Culture Promotion Center',
+      photo14:
+        'Dr. Chang speaking at an Arcadia Chinese Association and Chinese School Lunar New Year celebration',
+      photo15:
+        'Dr. Chang speaking at a Southern California National Taiwan University Medical Alumni Association Lunar New Year celebration',
+      photo16:
+        'Newspaper clipping, "Doctor helps immigrants adjust," on Dr. Chang\'s influence in Arcadia\'s Asian community',
+      photo17:
+        'Newspaper clipping, "AAUW features noted Chinese leader," featuring Mrs. Mey Chang as a speaker on Chinese culture',
       heading: 'Certificates & Recognition',
       intro:
         "A selection of certificates and photographs from Dr. Chang's community involvement.",
@@ -236,6 +250,14 @@ export const translations = {
       photo7: '張醫師於1989年在社區活動中頒發獎牌',
       photo8: '張醫師於中華文化推廣中心文教育研討會上致詞',
       photo9: '張醫師與 Arcadia 市議會出席 Arcadia 警察總部動土典禮',
+      photo10: 'Arcadia 公共圖書館擴建動土典禮看板，看板上列出張醫師為市議員之一',
+      photo11: '張醫師於 Arcadia 市議會會議室',
+      photo12: '張醫師於 Arcadia 市議會會議桌前',
+      photo13: '報紙剪報：張醫師以南加州中華文化推廣中心主任身分獲頒獎牌',
+      photo14: '張醫師於 Arcadia 華人聯誼會暨中文學校慶祝新春聯歡晚會上致詞',
+      photo15: '張醫師於南加州台大醫學院校友會慶祝新春聯歡晚會上致詞',
+      photo16: '報紙剪報〈Doctor helps immigrants adjust〉，報導張醫師對 Arcadia 亞裔社區的影響',
+      photo17: '報紙剪報〈AAUW features noted Chinese leader〉，報導張夫人 Mey Chang 主講中華文化講座',
       heading: '獎狀與表彰',
       intro: '精選張醫師參與社區服務期間所獲頒的獎狀，以及活動照片。',
     },
@@ -334,6 +356,14 @@ export const translations = {
       photo7: '张医师于1989年在社区活动中颁发奖牌',
       photo8: '张医师于中华文化推广中心文教育研讨会上致词',
       photo9: '张医师与 Arcadia 市议会出席 Arcadia 警察总部动土典礼',
+      photo10: 'Arcadia 公共图书馆扩建动土典礼看板，看板上列出张医师为市议员之一',
+      photo11: '张医师于 Arcadia 市议会会议室',
+      photo12: '张医师于 Arcadia 市议会会议桌前',
+      photo13: '报纸剪报：张医师以南加州中华文化推广中心主任身分获颁奖牌',
+      photo14: '张医师于 Arcadia 华人联谊会暨中文学校庆祝新春联欢晚会上致词',
+      photo15: '张医师于南加州台大医学院校友会庆祝新春联欢晚会上致词',
+      photo16: '报纸剪报〈Doctor helps immigrants adjust〉，报导张医师对 Arcadia 亚裔社区的影响',
+      photo17: '报纸剪报〈AAUW features noted Chinese leader〉，报导张夫人 Mey Chang 主讲中华文化讲座',
       heading: '奖状与表彰',
       intro: '精选张医师参与社区服务期间所获颁的奖状，以及活动照片。',
     },

@@ -18,8 +18,16 @@ GALLERY_FULL_DIR="public/images/gallery/full"
 
 mkdir -p "$RECOGNITION_DIR" "$GALLERY_THUMB_DIR" "$GALLERY_FULL_DIR"
 
-# --- 8 selected photos for the About page, explicit source -> target name ---
-# Using parallel indexed arrays for bash 3.2 compatibility
+# --- Selected photos for the About page, explicit source -> target name ---
+# Using parallel indexed arrays for bash 3.2 compatibility.
+#
+# The first 8 were the original selection. The next 3 (1475/1497/1508.jpg)
+# were the Arcadia Public Library archive photos, blocked pending written
+# permission — the owner confirmed permission is in hand on 2026-08-26, so
+# they moved from BLOCKED into this list. The final 5 were promoted out of
+# the gallery the same day (newspaper clippings and two "speaking at a
+# podium" photos, chosen over two similar photos that turned out to be home
+# karaoke, not public speaking — 1179/1195 copy.HEIC, not 1191/1197).
 RECOGNITION_SRC=(
   "IMG_1220.HEIC"
   "IMG_1222.HEIC"
@@ -29,6 +37,14 @@ RECOGNITION_SRC=(
   "IMG_1227 copy.HEIC"
   "IMG_1259 copy.HEIC"
   "IMG_1182 copy.HEIC"
+  "1475.jpg"
+  "1497.jpg"
+  "1508.jpg"
+  "IMG_1172.HEIC"
+  "IMG_1179 copy.HEIC"
+  "IMG_1195 copy.HEIC"
+  "IMG_1229 copy.HEIC"
+  "IMG_1242 copy.HEIC"
 )
 RECOGNITION_DST=(
   "congressional-proclamation-1988.jpg"
@@ -39,6 +55,14 @@ RECOGNITION_DST=(
   "welcome-delegation.jpg"
   "plaque-presentation-1989.jpg"
   "culture-symposium.jpg"
+  "library-groundbreaking.jpg"
+  "city-council-chambers-1.jpg"
+  "city-council-chambers-2.jpg"
+  "press-clipping-culture-center.jpg"
+  "speech-arcadia-new-year.jpg"
+  "speech-ntu-alumni.jpg"
+  "press-clipping-doctor-helps-immigrants.jpg"
+  "press-clipping-aauw.jpg"
 )
 
 for i in "${!RECOGNITION_SRC[@]}"; do
@@ -48,14 +72,14 @@ for i in "${!RECOGNITION_SRC[@]}"; do
   echo "recognition: $src_name -> $target"
 done
 
-# --- Everything else, minus the blocked photos and the 8 selected above ---
-# The first 3 are the Arcadia Public Library archive photos (no reproduction
-# permission). The next 4 were cut after publication review found the
-# owner's home address and third-party private correspondence in them
-# (ids 049/063/068/069 in the gallery that shipped before this fix) — do
-# not remove them from this list without a fresh privacy review.
+# --- Everything else, minus the blocked photos and the photos selected above ---
+# These 4 were cut after publication review found the owner's home address
+# and third-party private correspondence in them (ids 049/063/068/069 in the
+# gallery that shipped before this fix) — do not remove them from this list
+# without a fresh privacy review. The Arcadia Public Library archive photos
+# are no longer here: permission confirmed 2026-08-26, moved to
+# RECOGNITION_SRC above.
 BLOCKED=(
-  "1475.jpg" "1497.jpg" "1508.jpg"
   "IMG_1171.HEIC" "IMG_1223 copy.HEIC" "IMG_1230.HEIC" "IMG_1232 copy.HEIC"
 )
 SELECTED=("${RECOGNITION_SRC[@]}")
