@@ -373,11 +373,12 @@ what you are about to publish, in every locale and in the structured data.**
   Do not replace it with a per-theme pair of PNGs — that is the duplicated-fact
   defect, and the reasoning is in
   [`docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md`](docs/solutions/ui-bugs/raster-logo-cannot-serve-two-themes.md).
-- **The favicon is still the placeholder `SC` square**, and it cannot use the
-  mask technique — a favicon is a real image file and cannot take a custom
-  property. It needs two exported PNGs behind
-  `media="(prefers-color-scheme: dark)"`, or one color that works on both
-  browser chromes. Outstanding.
+- ~~The favicon is still the placeholder `SC` square~~ — **resolved
+  2026-08-24** (PR #46, with the seal outline fixed same day in PR #49). It
+  cannot use the mask technique — a favicon is a real image file and cannot
+  take a custom property — so it ships as two exported PNGs,
+  `public/favicon.png` / `public/favicon-dark.png`, behind
+  `media="(prefers-color-scheme: dark)"` in `BaseLayout.astro`.
 - **Hero photographs are still missing.** The owner is sourcing them. Heroes
   fall back to flat `--surface-dark` and the home page uses the chop
   (`media="chop"`), so nothing is blocked; swapping in a photograph is one prop.
@@ -387,6 +388,17 @@ what you are about to publish, in every locale and in the structured data.**
   `src-photos/dr-and-mrs-chang-crop.jpg`. Unused, and deliberately not in
   `public/` — anything there is served publicly, and whether Mrs. Chang has a
   role in the practice is unconfirmed.
+- **The About-page recognition strip and the personal gallery are live**
+  (PR #52, merged and deployed 2026-08-26): an 8-photo recognition strip in
+  "Community & Public Service" (certificates and civic photos), and an
+  unlinked personal gallery at `/family-photos-2026/` with 88 photos. See
+  "Photographs" below for what's permanently blocked from either destination
+  and why.
+- **A 9th recognition photo (the Arcadia Police Department groundbreaking)
+  is open in PR #53, not yet merged.** It has a faintly visible license
+  plate in the background — a parked car, incidental, not the photo's
+  subject — flagged to the owner and not yet resolved whether it needs
+  cropping/blurring or is fine as-is.
 
 ## Photographs
 
@@ -397,13 +409,45 @@ from git history while it was still unpushed. Only the derived portrait the site
 actually renders is committed. Keep it that way — if the originals are ever
 needed in version control, make the repo private first.
 
+**A second source folder, `_Sheng Chang Photos/`, is also gitignored**, for the
+same reason and by the same rule — it holds ~100 originals the owner supplied
+on 2026-08-25 to sort into two destinations (see below). Any future addition to
+either destination should be added to this file too and derived from that
+folder with `scripts/prepare-photo-assets.sh`, not by hand-copying a file into
+`public/`.
+
+**Two things are deliberately published from that folder, unlike `src-photos/`:**
+a curated **8-photo recognition strip** on the About page (certificates and
+civic/association photos, `public/images/recognition/` — a 9th is open in
+PR #53, not yet merged; see "Known open items" above), and an **unlinked
+personal gallery** at `/family-photos-2026/` (`public/images/gallery/`, 88
+photos). The gallery page hand-writes its own `<meta name="robots"
+content="noindex, nofollow">` rather than using `BaseLayout` — that page must
+**never** gain a nav/footer link, and must stay excluded from the sitemap filter
+in `astro.config.mjs`. `tests/routes/gallery-unlisted.test.ts` guards both.
+
+**Three photos are permanently blocked from ever appearing in either
+destination**: they carry a "City of Arcadia Library" watermark and the
+collection's terms prohibit reproduction without written permission — see "The
+Arcadia History Collection" below. **Four more are blocked for a different
+reason, found on final review before the first push**: they show the owner's
+home address and other named individuals' private correspondence (a
+1986 letter from the Governor, a 1988 LAUSD letter, a 1988 campaign-donation
+letter, and a Senator's letter). `scripts/prepare-photo-assets.sh`'s `BLOCKED`
+list names all seven source files — **never remove an entry from that list
+without a fresh privacy review**, and never assume a photo is safe to publish
+just because it isn't on the list; the list only encodes what has already been
+checked, not what's clear. Full incident write-up, including why every
+automated check in this repo passed while this was about to ship:
+[`docs/solutions/logic-errors/photo-content-outside-every-text-based-guard.md`](docs/solutions/logic-errors/photo-content-outside-every-text-based-guard.md).
+
 ## Setup
 
 ```
 npm install
 npm run dev                          # http://localhost:3120
-ALLOW_INDEXING=true npm run build    # 22 pages; postbuild runs verify-css + verify-build
-npm test                             # 198 vitest tests
+ALLOW_INDEXING=true npm run build    # 27 pages; postbuild runs verify-css + verify-build
+npm test                             # 207 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -421,7 +465,7 @@ touching the build config.
 
 ## Tests
 
-Nine files, 198 tests, run with `npm test`:
+Ten files, 207 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -490,6 +534,16 @@ Nine files, 198 tests, run with `npm test`:
   nothing; it does not fall back and it does not warn. Also checks the PNG magic
   bytes and the alpha channel, since a flattened re-export is still a valid PNG
   and would render the mark as a solid square
+- `tests/routes/gallery-unlisted.test.ts` — the personal gallery page's
+  must-stay-unlinked invariant: no import of `BaseLayout`/`Header`/
+  `StickyCallBar`/`WeChatQR`/`CallButton`/`Footer`, a hardcoded (not computed)
+  `noindex` meta tag, and an explicit exclusion in `astro.config.mjs`'s sitemap
+  filter. Guards the exact regression that happened once during development —
+  the page correctly rendered `noindex` while still being auto-discovered into
+  the sitemap by Astro's sitemap integration, caught only by a human reading the
+  built sitemap file, not by any test. Also asserts the asset-prep script's
+  `BLOCKED` list names every currently-excluded source file, so a future re-run
+  cannot silently resurrect a privacy-cut photo
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:

@@ -16,8 +16,8 @@ listed and de-indexed at the same time.
 ```bash
 npm install
 npm run dev                          # http://localhost:3120
-npm test                             # 198 tests
-ALLOW_INDEXING=true npm run build    # 22 pages
+npm test                             # 207 tests
+ALLOW_INDEXING=true npm run build    # 27 pages
 ```
 
 **`npm run build` on its own fails locally, and that is expected.**
