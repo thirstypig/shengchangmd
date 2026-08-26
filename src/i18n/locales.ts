@@ -96,6 +96,22 @@ export const translations = {
       privateInsurance: 'Private insurance',
       cash: 'Cash and self-pay',
     },
+    communityPhotos: {
+      photo1:
+        'Congressional Proclamation of Excellence, Achievement and Commitment presented to Dr. Sheng H. Chang, November 4, 1988',
+      photo2:
+        'County of Los Angeles Commendation to Dr. Sheng H. Chang as founding president of the Arcadia Chinese Association, 1988',
+      photo3: 'Certificate of Commendation presented to Dr. Sheng H. Chang, 1988',
+      photo4:
+        'Certificate of Appreciation from the Alumni Association of Tainan First High School of Southern California, 2005',
+      photo5: 'Dr. Chang speaking at a Chinese community banquet, 1987',
+      photo6: 'Dr. Chang at a welcome reception for overseas Chinese community leaders',
+      photo7: 'Dr. Chang presenting a plaque at a community event, 1989',
+      photo8: 'Dr. Chang speaking at a Chinese culture and education symposium',
+      heading: 'Certificates & Recognition',
+      intro:
+        "A selection of certificates and photographs from Dr. Chang's community involvement.",
+    },
     footer: {
       hours: 'Hours',
       address: 'Address',
@@ -207,6 +223,19 @@ export const translations = {
       privateInsurance: '私人保險',
       cash: '現金自費',
     },
+    communityPhotos: {
+      photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
+      photo2:
+        '洛杉磯郡政府於1988年頒發張勝雄醫師褒揚狀，表彰其擔任 Arcadia Chinese Association 創會會長之貢獻',
+      photo3: '1988年頒發張勝雄醫師之褒揚狀',
+      photo4: '2005年南加州台南一中校友會頒發張勝雄醫師感謝狀',
+      photo5: '張醫師於1987年在僑界宴會上致詞',
+      photo6: '張醫師出席歡迎僑團首長回國致敬活動',
+      photo7: '張醫師於1989年在社區活動中頒發獎牌',
+      photo8: '張醫師於中華文化推廣中心文教育研討會上致詞',
+      heading: '獎狀與表彰',
+      intro: '精選張醫師參與社區服務期間所獲頒的獎狀，以及活動照片。',
+    },
     footer: {
       hours: '門診時間',
       address: '地址',
@@ -290,6 +319,19 @@ export const translations = {
       ppo: 'PPO 保险',
       privateInsurance: '私人保险',
       cash: '现金自费',
+    },
+    communityPhotos: {
+      photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',
+      photo2:
+        '洛杉矶郡政府于1988年颁发张胜雄医师褒扬状，表彰其担任 Arcadia Chinese Association 创会会长之贡献',
+      photo3: '1988年颁发张胜雄医师之褒扬状',
+      photo4: '2005年南加州台南一中校友会颁发张胜雄医师感谢状',
+      photo5: '张医师于1987年在侨界宴会上致词',
+      photo6: '张医师出席欢迎侨团首长回国致敬活动',
+      photo7: '张医师于1989年在社区活动中颁发奖牌',
+      photo8: '张医师于中华文化推广中心文教育研讨会上致词',
+      heading: '奖状与表彰',
+      intro: '精选张医师参与社区服务期间所获颁的奖状，以及活动照片。',
     },
     footer: {
       hours: '门诊时间',
