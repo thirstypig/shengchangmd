@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
+import PhotoGallery from '@components/PhotoGallery.astro';
 import { practice } from '@data/practice';
 import { getPracticeLocalized, getTranslation } from '@i18n/locales';
 
@@ -24,6 +25,36 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
   noindex — that gate is what makes this safe to ship. Do not flip `reviewed`
   for zh-hant until a fluent reader has checked this page.
 */
+
+// Order matches the curated visual grouping from PR #58 — do not resort to
+// numeric photoN order, which was deliberately broken up. Each alt is a
+// literal getTranslation call (not built from a template string) so
+// tests/data/source-integrity.test.ts can see that every communityPhotos key
+// is actually read by a page.
+const recognitionPhotos = [
+  { src: '/images/recognition/banquet-speech-1987.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo5') },
+  { src: '/images/recognition/la-county-commendation-1988.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo2') },
+  { src: '/images/recognition/speech-arcadia-new-year.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo14') },
+  { src: '/images/recognition/city-council-chambers-1.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo11') },
+  { src: '/images/recognition/city-council-chambers-2.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo12') },
+  { src: '/images/recognition/library-groundbreaking.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo10') },
+  { src: '/images/recognition/police-hq-groundbreaking.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo9') },
+  { src: '/images/recognition/congressional-proclamation-1988.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo1') },
+  { src: '/images/recognition/certificate-of-commendation-1988.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo3') },
+  { src: '/images/recognition/speech-ntu-alumni.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo15') },
+  { src: '/images/recognition/alumni-certificate-2005.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo4') },
+  { src: '/images/recognition/welcome-delegation.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo6') },
+  { src: '/images/recognition/plaque-presentation-1989.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo7') },
+  { src: '/images/recognition/culture-symposium.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo8') },
+  { src: '/images/recognition/press-clipping-culture-center.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo13') },
+  { src: '/images/recognition/press-clipping-doctor-helps-immigrants.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo16') },
+  { src: '/images/recognition/press-clipping-aauw.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo17') },
+  { src: '/images/recognition/welcome-delegation-forestry-1998.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo18') },
+  { src: '/images/recognition/chamber-commerce-council-1998.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo19') },
+  { src: '/images/recognition/chamber-commerce-mayor-2003.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo20') },
+  { src: '/images/recognition/chamber-commerce-council-2004.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo21') },
+  { src: '/images/recognition/mayor-gavel-plaque-2003.jpg', alt: getTranslation('zh-hant', 'communityPhotos.photo22') },
+];
 ---
 
 <BaseLayout
@@ -124,59 +155,7 @@ const canonicalUrl = new URL('/zh-hant/about/', Astro.site).href;
           <p class="text-gray-600 mb-4">
             {getTranslation('zh-hant', 'communityPhotos.intro')}
           </p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <a href="/images/recognition/banquet-speech-1987.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/banquet-speech-1987.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo5')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/la-county-commendation-1988.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/la-county-commendation-1988.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo2')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/speech-arcadia-new-year.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/speech-arcadia-new-year.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo14')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/city-council-chambers-1.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/city-council-chambers-1.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo11')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/city-council-chambers-2.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/city-council-chambers-2.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo12')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/library-groundbreaking.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/library-groundbreaking.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo10')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/police-hq-groundbreaking.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/police-hq-groundbreaking.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo9')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/congressional-proclamation-1988.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/congressional-proclamation-1988.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo1')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/certificate-of-commendation-1988.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/certificate-of-commendation-1988.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo3')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/speech-ntu-alumni.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/speech-ntu-alumni.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo15')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/alumni-certificate-2005.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/alumni-certificate-2005.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo4')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/welcome-delegation.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/welcome-delegation.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo6')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/plaque-presentation-1989.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/plaque-presentation-1989.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo7')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/culture-symposium.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/culture-symposium.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo8')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/press-clipping-culture-center.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/press-clipping-culture-center.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo13')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/press-clipping-doctor-helps-immigrants.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/press-clipping-doctor-helps-immigrants.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo16')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-            <a href="/images/recognition/press-clipping-aauw.jpg" target="_blank" rel="noopener noreferrer">
-              <img src="/images/recognition/press-clipping-aauw.jpg" alt={getTranslation('zh-hant', 'communityPhotos.photo17')} class="w-full h-48 sm:h-56 object-contain bg-white rounded-lg border border-gray-200" loading="lazy" />
-            </a>
-          </div>
+          <PhotoGallery photos={recognitionPhotos} locale="zh-hant" />
         </div>
       </div>
     </div>

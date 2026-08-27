@@ -124,9 +124,25 @@ export const translations = {
         'Newspaper clipping, "Doctor helps immigrants adjust," on Dr. Chang\'s influence in Arcadia\'s Asian community',
       photo17:
         'Newspaper clipping, "AAUW features noted Chinese leader," featuring Mrs. Mey Chang as a speaker on Chinese culture',
+      photo18:
+        'Dr. Chang speaking at a banquet welcoming a visiting Inner Mongolia government forestry delegation, January 1998',
+      photo19:
+        "Arcadia Chamber of Commerce plaque recognizing Dr. Chang's first term on the Arcadia City Council, 1994-1998",
+      photo20:
+        "Arcadia Chamber of Commerce plaque recognizing Dr. Chang's service as Mayor during Arcadia's Centennial Year, 2003",
+      photo21:
+        "Arcadia Chamber of Commerce plaque recognizing Dr. Chang's second term on the Arcadia City Council, 2000-2004",
+      photo22:
+        "Gavel plaque presented to Dr. Chang in recognition of his service as Mayor of Arcadia, April-July 2003",
       heading: 'Certificates & Recognition',
       intro:
         "A selection of certificates and photographs from Dr. Chang's community involvement.",
+    },
+    gallery: {
+      close: 'Close',
+      previous: 'Previous photo',
+      next: 'Next photo',
+      viewer: 'Photo viewer',
     },
     footer: {
       hours: 'Hours',
@@ -258,8 +274,19 @@ export const translations = {
       photo15: '張醫師於南加州台大醫學院校友會慶祝新春聯歡晚會上致詞',
       photo16: '報紙剪報〈Doctor helps immigrants adjust〉，報導張醫師對 Arcadia 亞裔社區的影響',
       photo17: '報紙剪報〈AAUW features noted Chinese leader〉，報導張夫人 Mey Chang 主講中華文化講座',
+      photo18: '張醫師於1998年1月出席歡迎內蒙古自治區政府林業考察團訪美的宴會並致詞',
+      photo19: 'Arcadia 商會頒發獎牌，表彰張醫師首任 Arcadia 市議員任期（1994年至1998年）',
+      photo20: 'Arcadia 商會頒發獎牌，表彰張醫師於 Arcadia 建市百週年（2003年）擔任市長之貢獻',
+      photo21: 'Arcadia 商會頒發獎牌，表彰張醫師第二任 Arcadia 市議員任期（2000年至2004年）',
+      photo22: 'Arcadia 市議會頒發議事槌獎牌予張醫師，表彰其於2003年4月至7月擔任市長之貢獻',
       heading: '獎狀與表彰',
       intro: '精選張醫師參與社區服務期間所獲頒的獎狀，以及活動照片。',
+    },
+    gallery: {
+      close: '關閉',
+      previous: '上一張',
+      next: '下一張',
+      viewer: '照片檢視器',
     },
     footer: {
       hours: '門診時間',
@@ -364,8 +391,19 @@ export const translations = {
       photo15: '张医师于南加州台大医学院校友会庆祝新春联欢晚会上致词',
       photo16: '报纸剪报〈Doctor helps immigrants adjust〉，报导张医师对 Arcadia 亚裔社区的影响',
       photo17: '报纸剪报〈AAUW features noted Chinese leader〉，报导张夫人 Mey Chang 主讲中华文化讲座',
+      photo18: '张医师于1998年1月出席欢迎内蒙古自治区政府林业考察团访美的宴会并致词',
+      photo19: 'Arcadia 商会颁发奖牌，表彰张医师首任 Arcadia 市议员任期（1994年至1998年）',
+      photo20: 'Arcadia 商会颁发奖牌，表彰张医师于 Arcadia 建市百周年（2003年）担任市长之贡献',
+      photo21: 'Arcadia 商会颁发奖牌，表彰张医师第二任 Arcadia 市议员任期（2000年至2004年）',
+      photo22: 'Arcadia 市议会颁发议事槌奖牌予张医师，表彰其于2003年4月至7月担任市长之贡献',
       heading: '奖状与表彰',
       intro: '精选张医师参与社区服务期间所获颁的奖状，以及活动照片。',
+    },
+    gallery: {
+      close: '关闭',
+      previous: '上一张',
+      next: '下一张',
+      viewer: '照片检视器',
     },
     footer: {
       hours: '门诊时间',
