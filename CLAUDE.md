@@ -404,8 +404,7 @@ what you are about to publish, in every locale and in the structured data.**
   `public/` — anything there is served publicly, and whether Mrs. Chang has a
   role in the practice is unconfirmed.
 - **The About-page recognition strip and the personal gallery are live**
-  (PR #52, #53, #56, all merged and deployed 2026-08-26): a 17-photo
-  recognition strip in "Community & Public Service" — certificates, civic
+  (PR #52, #53, #56, all merged and deployed 2026-08-26): certificates, civic
   photos, the Arcadia Police Department and Library groundbreakings, 2 City
   Council chamber photos, 2 podium speeches and 3 newspaper clippings — and
   an unlinked personal gallery at `/family-photos-2026/` with 83 photos (5
@@ -413,6 +412,29 @@ what you are about to publish, in every locale and in the structured data.**
   below). The police HQ photo has a faintly visible license plate in the
   background — a parked car, incidental, not the photo's subject — the owner
   reviewed it and said it's fine as-is.
+- **The recognition strip grew to 22 photos and gained a lightbox** (PR #59,
+  merged 2026-08-27): the owner supplied 5 more photos directly — a 1998
+  banquet welcoming an Inner Mongolia government forestry delegation, and 4
+  Chamber of Commerce/mayoral plaques that independently corroborate the
+  council terms (1994–1998, 2000–2004) and confirm the rotating mayoralty's
+  dates in writing (Centennial Year, April–July 2003). The strip's
+  click-opens-a-new-tab links were replaced by `src/components/PhotoGallery.astro`,
+  a shared lightbox (caption, prev/next, keyboard nav, focus trap) used by all
+  three locale pages — no external dependency, matching this repo's
+  zero-npm-UI-package convention. **Two of the four new plaque photos needed a
+  fix that a file-preview tool couldn't show**: `sips -r 90` physically
+  rotated the pixels correctly, but left a stale `Orientation: Rotate 90 CW`
+  EXIF tag from the original photo, which Chrome then applied a second time —
+  invisible in Read/Preview (which ignore EXIF orientation) and only visible
+  by opening the actual lightbox in a browser. Fixed with
+  `exiftool -Orientation=1`. **Any future photo rotated with `sips -r` needs
+  its EXIF orientation tag reset the same way, and must be verified in an
+  actual browser, not a file-preview tool.**
+- **A design spec exists for an unlisted admin page** to let the owner
+  reorder/recaption/add/remove recognition photos himself via a
+  GitHub-API-backed PR flow, without going through a full review each time —
+  [`docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md`](docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md).
+  Approved 2026-08-26, **not yet built**.
 
 ## Photographs
 
@@ -431,9 +453,10 @@ folder with `scripts/prepare-photo-assets.sh`, not by hand-copying a file into
 `public/`.
 
 **Two things are deliberately published from that folder, unlike `src-photos/`:**
-a curated **17-photo recognition strip** on the About page (certificates,
+a curated **22-photo recognition strip** on the About page (certificates,
 civic/association photos, the police HQ and library groundbreakings, council
-chamber photos, podium speeches and newspaper clippings —
+chamber photos, podium speeches, newspaper clippings, and — as of PR #59 — a
+1998 delegation banquet and 4 Chamber of Commerce/mayoral plaques —
 `public/images/recognition/`), and an **unlinked personal gallery** at
 `/family-photos-2026/` (`public/images/gallery/`, 83 photos). The gallery page hand-writes its own `<meta name="robots"
 content="noindex, nofollow">` rather than using `BaseLayout` — that page must
@@ -462,7 +485,7 @@ automated check in this repo passed while this was about to ship:
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 27 pages; postbuild runs verify-css + verify-build
-npm test                             # 207 vitest tests
+npm test                             # 208 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -480,7 +503,7 @@ touching the build config.
 
 ## Tests
 
-Ten files, 207 tests, run with `npm test`:
+Ten files, 208 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as

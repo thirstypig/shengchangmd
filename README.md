@@ -16,7 +16,7 @@ listed and de-indexed at the same time.
 ```bash
 npm install
 npm run dev                          # http://localhost:3120
-npm test                             # 207 tests
+npm test                             # 208 tests
 ALLOW_INDEXING=true npm run build    # 27 pages
 ```
 
