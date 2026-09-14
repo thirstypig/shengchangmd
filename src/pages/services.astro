@@ -4,6 +4,7 @@ import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import ServiceIllustration from '@components/ServiceIllustration.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
 const title = `Services | ${practice.doctorName} | Family Medicine in San Gabriel, CA`;
 const description = `Immigration medical services (Form I-693), citizenship exam waiver medical evaluation reports (Form N-648), medical-legal reports, stem cell therapy, and family medicine in San Gabriel, California.`;
@@ -36,21 +37,25 @@ const breadcrumbs = [
     Placed above the service descriptions on purpose: a patient needs to learn
     the practice does not see their child before reading three service
     descriptions, not after.
+
+    Read from patientScope, as the Chinese pages already were. This page used
+    to restate the sentences, so a correction reached Chinese and missed the
+    one locale that is indexed.
   */}
   <section id="who-we-see" class="py-12 bg-gray-50 border-b border-gray-200">
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="max-w-3xl mx-auto">
         <h2 class="font-serif text-2xl md:text-3xl font-bold mb-6 text-gray-900">
-          Who we see
+          {getTranslation(locale, 'patientScope.heading')}
         </h2>
         <ul class="space-y-3 text-gray-700">
-          <li>Adults aged 18 and over</li>
-          <li>Seniors aged 65 and over</li>
-          <li>We do not see patients under 18. Please ask us and we will point you to a pediatric practice.</li>
-          <li>We do not provide gynecology or obstetric care.</li>
+          <li>{getTranslation(locale, 'patientScope.adults')}</li>
+          <li>{getTranslation(locale, 'patientScope.seniors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noMinors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noObGyn')}</li>
         </ul>
         <p class="mt-6 text-gray-700">
-          We refer to specialists where it is indicated. Some referrals need prior authorization from your plan, and we will tell you if yours does.
+          {getTranslation(locale, 'patientScope.referrals')}
         </p>
       </div>
     </div>
@@ -217,7 +222,7 @@ const breadcrumbs = [
         </p>
         <div class="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
           <p class="text-gray-700">
-            Stem cell therapy is by appointment only. Please call the office to
+            {getTranslation(locale, 'patientScope.stemCellAppointment')} Please call the office to
             discuss whether this treatment is suitable for your situation, what it
             involves, and what it costs.
           </p>

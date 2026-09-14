@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
 
+const locale = 'en';
 const title = `New Patients | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Welcome to Dr. Chang's practice. Learn how to schedule your first appointment and what to expect.`;
 const canonicalUrl = new URL('/new-patients/', Astro.site).href;
@@ -15,7 +17,7 @@ const breadcrumbs = [
 <BaseLayout
   title={title}
   description={description}
-  locale="en"
+  locale={locale}
   canonicalUrl={canonicalUrl}
   breadcrumbs={breadcrumbs}
 >
@@ -30,13 +32,17 @@ const breadcrumbs = [
           Who we see — scope limits supplied by the practice owner 2026-08-06.
           Placed before "How to Schedule" on purpose: someone about to phone for
           an appointment should learn the limits before they dial, not after.
+
+          Read from patientScope, as the Chinese pages already were. This page
+          used to restate the sentences, so a correction reached Chinese and
+          missed the one locale that is indexed.
         */}
-        <h3>Who we see</h3>
+        <h3>{getTranslation(locale, 'patientScope.heading')}</h3>
         <ul>
-          <li>Adults aged 18 and over</li>
-          <li>Seniors aged 65 and over</li>
-          <li>We do not see patients under 18. Please ask us and we will point you to a pediatric practice.</li>
-          <li>We do not provide gynecology or obstetric care.</li>
+          <li>{getTranslation(locale, 'patientScope.adults')}</li>
+          <li>{getTranslation(locale, 'patientScope.seniors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noMinors')}</li>
+          <li>{getTranslation(locale, 'patientScope.noObGyn')}</li>
         </ul>
         <h3>How to Schedule</h3>
         <p>
