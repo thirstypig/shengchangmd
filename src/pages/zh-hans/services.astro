@@ -6,8 +6,8 @@ import ServiceIllustration from '@components/ServiceIllustration.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `诊疗项目 | ${practice.doctorName} | 加州圣盖博的家庭医学`;
-const description = `移民医疗服务（Form I-693）、公民入籍考试豁免医疗评估报告（Form N-648）、医疗法律报告、干细胞治疗与家庭医学。`;
+const title = '移民体检与诊疗项目 | 张胜雄医师';
+const description = '张胜雄医师于加州圣盖博提供移民体检（Form I-693）、公民入籍考试豁免医疗评估报告（Form N-648）、医疗法律报告与家庭医学。';
 const canonicalUrl = new URL('/zh-hans/services/', Astro.site).href;
 const locale = 'zh-hans';
 
@@ -20,6 +20,11 @@ const locale = 'zh-hans';
   checked this page — particularly the stem cell section, whose English source
   is itself an unconfirmed placeholder.
 */
+
+const breadcrumbs = [
+  { label: getTranslation('zh-hans', 'home'), href: '/zh-hans/' },
+  { label: getTranslation('zh-hans', 'services'), href: '/zh-hans/services/' },
+];
 ---
 
 <BaseLayout
@@ -27,6 +32,7 @@ const locale = 'zh-hans';
   description={description}
   locale={locale}
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   {/* Hero Section */}
   <HeroSection

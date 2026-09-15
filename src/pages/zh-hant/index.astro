@@ -9,14 +9,15 @@ import { getPracticeLocalized, getTranslation } from '@i18n/locales';
 const locale = 'zh-hant';
 const t = (key: string) => getTranslation(locale, key);
 const pl = getPracticeLocalized(locale);
-const title = `${practice.doctorName} | 家庭醫學專科醫師 | 加州聖蓋博`;
-const description = `加州聖蓋博的家庭醫學專科醫師，並為美國移民局指定體檢醫師。提供移民醫療服務、公民入籍考試豁免醫療評估報告、醫療法律報告、幹細胞治療與家庭醫學。`;
+const title = '張勝雄醫師 | 加州聖蓋博家庭醫學專科醫師';
+const description = '加州聖蓋博的家庭醫學專科醫師，並為美國移民局指定體檢醫師。提供移民體檢、N-648 醫療評估報告與成人家庭醫學，可用國語看診。';
 const canonicalUrl = new URL('/zh-hant/', Astro.site).href;
 ---
 
 <BaseLayout {title} {description} {locale} {canonicalUrl}>
   <HeroSection
     headline="張勝雄醫師（M.D.）"
+    tagline={t(`hero.tagline`)}
     subheadline="於聖蓋博谷及鄰近社區提供家庭醫學診療，具家庭醫學專科醫師資格，看診細心，以您的健康為念。"
     {locale}
     media="chop"

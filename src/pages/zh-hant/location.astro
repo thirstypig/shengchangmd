@@ -3,8 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `門診時間與位置 | ${practice.doctorName} | 加州聖蓋博`;
-const description = `張醫師診所在加州聖蓋博的門診時間、位置與交通方向。`;
+const title = '聖蓋博診所地圖與交通方式 | 張勝雄醫師';
+const description = '張勝雄醫師位於加州聖蓋博的診所地圖與交通方式，並附門診時間與聯絡電話。';
 const canonicalUrl = new URL('/zh-hant/location/', Astro.site).href;
 
 /*
@@ -18,6 +18,11 @@ const addressQuery = encodeURIComponent(practice.address);
 const mapEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
 const googleDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
 const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
+
+const breadcrumbs = [
+  { label: getTranslation('zh-hant', 'home'), href: '/zh-hant/' },
+  { label: getTranslation('zh-hant', 'hoursLocation'), href: '/zh-hant/location/' },
+];
 ---
 
 <BaseLayout
@@ -25,6 +30,7 @@ const appleDirectionsUrl = `https://maps.apple.com/?daddr=${addressQuery}`;
   description={description}
   locale="zh-hant"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   <section class="hero-section">
     <h1>門診時間與位置</h1>

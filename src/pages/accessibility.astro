@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
 
-const title = 'Accessibility Statement | Sheng Chang, M.D.';
-const description = 'Accessibility statement for the practice website of Sheng Chang, M.D.';
+const title = `Accessibility Statement | ${practice.doctorName}`;
+const description = `Accessibility statement for the practice website of ${practice.doctorName}.`;
 const canonicalUrl = new URL('/accessibility/', Astro.site).href;
 ---
 

@@ -10,6 +10,17 @@ export interface LocaleMetadata {
   nativeName: string;
   /** Compact label for the header switcher, where horizontal space is tight. */
   shortName: string;
+  /**
+   * Open Graph locale. A different format from `code` on purpose: og:locale
+   * takes language_TERRITORY (en_US), not a BCP 47 tag. This used to emit
+   * `code` directly, so the Chinese pages declared og:locale="zh-Hant", which
+   * no Open Graph consumer recognizes.
+   *
+   * zh-hans maps to zh_CN because Open Graph has no simplified-script value
+   * without a territory. That describes the script, not the reader — the
+   * copy is still Taiwan wording, per the trilingual-content skill.
+   */
+  ogLocale: string;
   reviewed: boolean;
 }
 
@@ -19,6 +30,7 @@ export const locales: Record<string, LocaleMetadata> = {
     name: 'English',
     nativeName: 'English',
     shortName: 'EN',
+    ogLocale: 'en_US',
     reviewed: true,
   },
   'zh-hant': {
@@ -26,6 +38,7 @@ export const locales: Record<string, LocaleMetadata> = {
     name: '繁體中文',
     nativeName: '繁體中文',
     shortName: '繁體',
+    ogLocale: 'zh_TW',
     reviewed: false,
   },
   'zh-hans': {
@@ -33,6 +46,7 @@ export const locales: Record<string, LocaleMetadata> = {
     name: '簡體中文',
     nativeName: '簡體中文',
     shortName: '简体',
+    ogLocale: 'zh_CN',
     reviewed: false,
   },
 };
@@ -152,6 +166,10 @@ export const translations = {
       legal: 'Legal',
       connect: 'Connect',
       wechatQr: 'WeChat QR code',
+      // The visible caption under the footer QR code. It was a literal in
+      // WeChatQR.astro and rendered in English on all sixteen Chinese pages;
+      // shared-component-labels only inspects attributes, not text nodes.
+      wechatScan: 'Scan to chat on WeChat',
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
       accessibility: 'Accessibility Statement',
@@ -189,6 +207,16 @@ export const translations = {
       placeholder: 'Photograph placeholder',
       boardCertified: 'Board-Certified Family Physician',
       acceptingPatients: 'Accepting new patients',
+      // Second line of the home page <h1>, under the name. The owner asked on
+      // 2026-08-19 for the headline to read "Sheng Chang, M.D.", and it still
+      // does; this adds what the practice is and where, which the <h1> — the
+      // strongest on-page signal a search engine reads — did not say at all.
+      tagline: 'Board-Certified Family Physician in San Gabriel, CA',
+    },
+    seo: {
+      // og:site_name, and the name a Chinese page's share card shows. Chinese
+      // pages previously announced themselves in English here.
+      siteName: practice.doctorName,
     },
     stickyCall: {
       label: 'Call for an appointment',
@@ -247,7 +275,7 @@ export const translations = {
     coverage: {
       heading: '合作的保險與付款方式',
       confirmNote:
-        '保險名稱並非全部——您的保險方案是否與本診所簽約，取決於網路內容。就診前請攜保險卡來電，我們會為您確認並說明費用。',
+        '保險名稱並非全部——您的保險方案是否與本診所簽約，取決於該方案的特約醫師名單。就診前請攜保險卡來電，我們會為您確認並說明費用。',
       medicare: 'Medicare（紅白藍卡）',
       mediCal: 'Medi-Cal（白卡）',
       hmo: 'HMO 保險',
@@ -296,6 +324,7 @@ export const translations = {
       legal: '法律',
       connect: '聯絡',
       wechatQr: 'WeChat QR 碼',
+      wechatScan: '掃描 QR 碼，以 WeChat 聯絡我們',
       rightsReserved: '版權所有。',
       privacy: '隱私政策',
       accessibility: '無障礙說明',
@@ -306,6 +335,10 @@ export const translations = {
       placeholder: '照片預留位置',
       boardCertified: '家庭醫學專科醫師',
       acceptingPatients: '現正接受新患者',
+      tagline: '加州聖蓋博　家庭醫學專科醫師',
+    },
+    seo: {
+      siteName: '張勝雄醫師',
     },
     stickyCall: {
       label: '電話預約',
@@ -364,7 +397,7 @@ export const translations = {
     coverage: {
       heading: '合作的保险与付款方式',
       confirmNote:
-        '保险名称并非全部——您的保险方案是否与本诊所签约，取决于网路内容。就诊前请携保险卡来电，我们会为您确认并说明费用。',
+        '保险名称并非全部——您的保险方案是否与本诊所签约，取决于该方案的特约医师名单。就诊前请携保险卡来电，我们会为您确认并说明费用。',
       medicare: 'Medicare（红白蓝卡）',
       mediCal: 'Medi-Cal（白卡）',
       hmo: 'HMO 保险',
@@ -413,6 +446,7 @@ export const translations = {
       legal: '法律',
       connect: '联络',
       wechatQr: 'WeChat QR 码',
+      wechatScan: '扫描 QR 码，以 WeChat 联络我们',
       rightsReserved: '版权所有。',
       privacy: '隐私政策',
       accessibility: '无障碍说明',
@@ -423,6 +457,10 @@ export const translations = {
       placeholder: '照片预留位置',
       boardCertified: '家庭医学专科医师',
       acceptingPatients: '现正接受新患者',
+      tagline: '加州圣盖博　家庭医学专科医师',
+    },
+    seo: {
+      siteName: '张胜雄医师',
     },
     stickyCall: {
       label: '电话预约',

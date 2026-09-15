@@ -7,6 +7,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const qrLabel = getTranslation(locale, 'footer.wechatQr');
+const scanLabel = getTranslation(locale, 'footer.wechatScan');
 ---
 
 {/*
@@ -26,7 +27,7 @@ const qrLabel = getTranslation(locale, 'footer.wechatQr');
       decoding="async"
     />
   </div>
-  <p class="qr-label">Scan to chat on WeChat</p>
+  <p class="qr-label">{scanLabel}</p>
 </div>
 
 <style>
