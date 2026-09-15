@@ -297,6 +297,46 @@ the Simplified pages used the Taiwan term 国语.
 None of these checked whether locale-neutral data leaked English. They verified
 that pages and UI strings *existed*, which is a different claim.
 
+## Recurrence, 2026-09-14: the same leak, in `<head>`
+
+The rule "never interpolate `practice.*` into a Chinese page" was in CLAUDE.md
+and was broken anyway, in the one place none of the prevention above looks.
+
+- **Eight Chinese page titles** — home, services, insurance and location in both
+  scripts — were built as `` `${practice.doctorName} | 家庭醫學專科醫師 | 加州聖蓋博` ``,
+  so a Chinese search result led with "Sheng Chang, M.D., Ph.D." in English.
+- **`og:site_name`** was `practice.doctorName` in `BaseLayout.astro`: English on
+  all sixteen Chinese pages.
+- **`og:locale`** was the locale's BCP 47 `code`, so Chinese pages declared
+  `zh-Hant` — not a valid Open Graph locale, which takes `zh_TW`.
+
+**Why the prevention above could not see it.** The Latin-run scan described
+under "A guard, with honest limits" reads the visible *body*. Titles, meta
+descriptions and Open Graph tags live in `<head>`, which a reader never sees on
+the page and a search engine reads first. The source looked fine too: a
+template literal and a locale code are both correct-looking TypeScript. It was
+found by an SEO audit that fetched every live page and printed its `<head>`.
+
+**The fix and the guard.** Chinese titles now name 張勝雄醫師; `og:site_name`
+reads `seo.siteName` from `locales.ts`; `og:locale` reads a separate
+`ogLocale` field. `scripts/verify-build.mjs` now fails the build if a Chinese
+page's `<title>`, meta description or `og:site_name` contains no CJK or
+contains `Sheng Chang`, or if any page's `og:locale` is not
+`language_TERRITORY`. Unlike the body scan it has no false-positive tax: it
+checks three named fields, and it deliberately permits `（M.D., Ph.D.）` and
+`Form I-693`, which are correct on a Chinese page. **Mutation-verified** by
+writing a mixed title (`移民體檢 | Sheng Chang, M.D., Ph.D.`), an English
+`og:site_name` and `og:locale="en-US"` into `dist/`: all three reported, and the
+check passed again once restored.
+
+**Deliberately still English:** JSON-LD `name`. It is one entity with one `@id`
+described from three locales, so the name stays identical everywhere and the
+Chinese forms are carried as `alternateName: ["張勝雄醫師", "张胜雄医师"]`.
+
+**Warning sign to add to the list above:** a `practice.*` interpolation inside a
+page's *frontmatter* — `title`, `description`, anything passed to the layout —
+is invisible on the rendered page and is still what a Chinese searcher reads.
+
 ## Related
 
 - [Tailwind never wired into Astro](../integration-issues/tailwind-v4-astro-silently-uncompiled.md)

@@ -220,16 +220,22 @@ These are not one pattern. Sorting them changes the fix:
 
 - **`getTranslation`'s `||` is unfixed** (`src/i18n/locales.ts:185`). Worked
   around, not repaired.
-- **`PageNav.astro` is dead code carrying live hazards**: a hardcoded
-  `aria-label="Main navigation"`, hardcoded English nav labels, and links to
-  `/zh-hant/hours/` and `/zh-hant/new-patients/`, **neither of which exists**.
-  Harmless while nothing imports it; a set of bugs the moment someone does.
-  Delete it or fix it.
-- **No test catches a hardcoded English literal in a shared component's
-  `aria-label`/`title`/`alt`/`data-label`.** Six shipped and rendered on all 12
-  Chinese pages — three in `FontSizeControl`, its live-region announcement,
-  `MobileNav`'s toggle, `LanguageSwitcher`'s nav — fixed in `0a82988` and
-  `40efe52`. Nothing prevents a seventh.
+- ~~`PageNav.astro` is dead code carrying live hazards~~ — deleted in `34db7ab`;
+  nothing references it (checked 2026-09-14).
+- ~~No test catches a hardcoded English literal in a shared component's
+  `aria-label`/`title`/`alt`/`data-label`~~ — `tests/i18n/shared-component-labels.test.ts`
+  now does. Six had shipped to all 12 Chinese pages, fixed in `0a82988` and
+  `40efe52`.
+- **That test is itself scope-narrow, and a seventh shipped past it.** It matches
+  literal *attributes*. A literal *text node* is outside its domain.
+  `WeChatQR.astro` rendered `<p class="qr-label">Scan to chat on WeChat</p>` in
+  the footer of all sixteen Chinese pages, while the same component's `alt` —
+  which the test does see — was correctly translated two lines above. Found
+  2026-09-14 by sweeping the visible text of built Chinese pages for English
+  phrases, not by any test; fixed in PR #64 (`footer.wechatScan`). **No test
+  catches a literal text node in a shared component.** The shape to search for
+  is text between tags in `src/components/` and `src/layouts/` that is not an
+  `{expression}` — the same widening this document recommends for instance 5.
 
 ## Related
 

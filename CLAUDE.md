@@ -435,6 +435,18 @@ what you are about to publish, in every locale and in the structured data.**
   GitHub-API-backed PR flow, without going through a full review each time —
   [`docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md`](docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md).
   Approved 2026-08-26, **not yet built**.
+- **Chinese SEO shipped 2026-09-14 (PR #64); indexing waits on Dr. Chang's
+  read** — see the indexing paragraphs at the end of Deployment. Two owner decisions from that day:
+  the header wordmark shows 張勝雄醫師 / 张胜雄医师 on Chinese pages
+  (`header.wordmark`; English keeps "Sheng Chang, M.D."), and the home `<h1>`
+  carries a tagline under the unchanged name. **Still open:** `og-image.png` is
+  English-only, so a Chinese page shared on LINE or Facebook shows an English
+  card; a Chinese card must be rendered from a real font, never generated, and
+  read character by character. New Chinese copy awaiting Dr. Chang's read
+  includes every Chinese title and description, 「加州聖蓋博　家庭醫學專科醫師」,
+  and 「取決於該方案的特約醫師名單」 — a fix for 「取決於網路內容」 ("depends on
+  the internet content") in the load-bearing insurance qualifier. Page speed and
+  Google Search Console have never been measured here.
 
 ## Photographs
 
@@ -485,7 +497,7 @@ automated check in this repo passed while this was about to ship:
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 27 pages; postbuild runs verify-css + verify-build
-npm test                             # 208 vitest tests
+npm test                             # 209 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -503,7 +515,7 @@ touching the build config.
 
 ## Tests
 
-Ten files, 208 tests, run with `npm test`:
+Ten files, 209 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -518,7 +530,11 @@ Ten files, 208 tests, run with `npm test`:
   way and reached screen-reader users on all 12 Chinese pages; four of the six
   had translations sitting unused in `locales.ts`. The test matches literals and
   ignores `{expressions}`, so it flags the defect by construction rather than by
-  trying to detect English. Both of the above are written up in
+  trying to detect English. **It sees attributes only — a literal text node is
+  outside it.** `WeChatQR.astro`'s visible caption "Scan to chat on WeChat"
+  rendered in English on all sixteen Chinese pages until 2026-09-14, two lines
+  below an `alt` the test correctly checked. No test covers text nodes yet.
+  Both of the above are written up in
   [`docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md`](docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md)
 - `tests/data/source-integrity.test.ts` — guards facts against being stored
   twice: the address must stay derived from `addressParts`, no file outside
@@ -599,8 +615,14 @@ before the build, so a typecheck or locale regression blocks the deploy rather
 than shipping. `postbuild` then runs `scripts/verify-css.mjs` and
 `scripts/verify-build.mjs`, which assert against the built output — that a
 referenced asset exists, that the sitemap and the robots meta tag agree, that
-JSON-LD's address matches `practice.ts`, and that no page names the retired
-host. Those are contradiction checks; none of them can be seen from source.
+JSON-LD's address matches `practice.ts`, that no page names the retired
+host, and — since 2026-09-14 — that every Chinese page's `<title>`, meta
+description and `og:site_name` is Chinese and free of the English doctor name,
+and every `og:locale` is `language_TERRITORY`. Those are contradiction checks;
+none of them can be seen from source. The last one exists because eight Chinese
+titles interpolated `practice.doctorName` and `og:locale` emitted `zh-Hant`, and
+both looked correct in source
+([write-up](docs/solutions/logic-errors/shared-data-module-locale-strings.md)).
 
 **Every test here was verified by making it fail.** A mutation was introduced
 for each guarded invariant and the expected test confirmed red before being
@@ -644,3 +666,10 @@ can never be listed and de-indexed at once. **Both Chinese locales are still
 `reviewed: false`**, so two-thirds of the site is not indexed pending a fluent
 reader. Un-indexing is far slower than indexing: anything published here should
 be true first.
+
+**Decided 2026-09-14: Dr. Chang is that reader.** The owner wants Chinese search
+traffic and chose to have Dr. Chang — a native Taiwanese reader — read the
+Chinese pages before indexing, over flipping the flag immediately. The on-page
+Chinese SEO shipped first (PR #64). The sequence is: he reads the 繁體 pages,
+corrections land, **then** a separate PR sets `reviewed: true` for both Chinese
+locales. Do not flip it before his corrections, and do not re-ask the question.
