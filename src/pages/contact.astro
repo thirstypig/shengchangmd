@@ -3,8 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import CallButton from '@components/CallButton.astro';
 import { practice } from '@data/practice';
 
-const title = 'Contact Us | Sheng Chang, M.D.';
-const description = 'Contact Dr. Sheng Chang in San Gabriel, California. Call, visit our office, or send a message.';
+const title = `Contact Us | ${practice.doctorName} | San Gabriel, CA`;
+const description = 'Contact Dr. Sheng Chang in San Gabriel, California. Call, email, or message us on WeChat, or visit the office.';
 const canonicalUrl = new URL('/contact/', Astro.site).href;
 
 const breadcrumbs = [

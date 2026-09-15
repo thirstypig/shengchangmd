@@ -1,5 +1,6 @@
 ---
 import { practice } from '@data/practice';
+import { translations } from '@i18n/locales';
 
 /*
   The postal address is derived from practice.addressParts, not restated here.
@@ -31,12 +32,26 @@ interface Props {
 
 const { locale, pageSchema } = Astro.props;
 
+/*
+  The doctor's Chinese name, in both scripts, as alternateName on the business
+  and the person. Until 2026-09-14 the structured data on all sixteen Chinese
+  pages was English only, so nothing machine-readable connected 張勝雄醫師 to
+  this practice — which is the name a Chinese-speaking patient searches for.
+
+  `name` stays English and identical in every locale on purpose: the @id is
+  shared, so it is one entity described from three pages, not three entities.
+  The Chinese name was confirmed by the owner 2026-07-29. It is read from
+  locales.ts because a shared component must not contain Chinese.
+*/
+const alternateName = [translations['zh-hant'].seo.siteName, translations['zh-hans'].seo.siteName];
+
 // LocalBusiness Schema
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   '@id': new URL('/#organization', Astro.site).href,
   name: practice.doctorName,
+  alternateName,
   description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
@@ -51,6 +66,7 @@ const medicalBusinessSchema = {
   '@type': 'MedicalBusiness',
   '@id': new URL('/#medical-business', Astro.site).href,
   name: practice.doctorName,
+  alternateName,
   description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
@@ -81,6 +97,7 @@ const doctorSchema = {
   '@type': 'Person',
   '@id': new URL('/#doctor', Astro.site).href,
   name: practice.doctorName,
+  alternateName,
   givenName: 'Sheng',
   familyName: 'Chang',
   description: 'Board-certified family physician and medical doctor',

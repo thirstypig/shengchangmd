@@ -13,8 +13,8 @@ import { getTranslation } from '@i18n/locales';
  */
 
 const locale = 'zh-hant';
-const title = '門診時間 | 張勝雄醫師';
-const description = '張勝雄醫師家庭醫學診所的門診時間。加州聖蓋博。';
+const title = '門診時間 | 張勝雄醫師 | 加州聖蓋博';
+const description = `加州聖蓋博張勝雄醫師家庭醫學診所的門診時間：${getTranslation(locale, 'hoursWeekday')}，${getTranslation(locale, 'hoursWeekend')}。`;
 const canonicalUrl = new URL('/zh-hant/hours/', Astro.site).href;
 
 const breadcrumbs = [

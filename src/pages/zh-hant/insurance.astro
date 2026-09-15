@@ -3,10 +3,15 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = `保險與支付 | ${practice.doctorName} | 加州聖蓋博`;
-const description = `張醫師診所的保險與費用說明。歡迎來電，我們會與您確認保險給付與就診費用。`;
+const title = '保險與支付 | 張勝雄醫師 | 加州聖蓋博';
+const description = '加州聖蓋博張勝雄醫師診所的保險與費用說明。歡迎來電，我們會與您確認保險給付與就診費用。';
 const canonicalUrl = new URL('/zh-hant/insurance/', Astro.site).href;
 const locale = 'zh-hant';
+
+const breadcrumbs = [
+  { label: getTranslation('zh-hant', 'home'), href: '/zh-hant/' },
+  { label: getTranslation('zh-hant', 'insurance'), href: '/zh-hant/insurance/' },
+];
 ---
 
 <BaseLayout
@@ -14,6 +19,7 @@ const locale = 'zh-hant';
   description={description}
   locale="zh-hant"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
   <!-- Hero Section -->
   <section class="hero-section">

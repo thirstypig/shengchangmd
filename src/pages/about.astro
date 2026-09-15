@@ -6,8 +6,8 @@ import PhotoGallery from '@components/PhotoGallery.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
-const title = 'About Dr. Sheng Chang, M.D., Ph.D. | Board-Certified Family Physician';
-const description = 'Learn about Dr. Sheng Chang, M.D., Ph.D., a board-certified family physician in San Gabriel, California, who has practiced in the San Gabriel Valley since 1979 and served two terms on the Arcadia City Council.';
+const title = `About ${practice.doctorName} | San Gabriel Family Physician`;
+const description = `${practice.doctorName}, a board-certified family physician, has practiced in the San Gabriel Valley since 1979 and served two terms on Arcadia's City Council.`;
 const canonicalUrl = new URL('/about/', Astro.site).href;
 
 // Order matches the curated visual grouping from PR #58 — do not resort to

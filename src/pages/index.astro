@@ -8,8 +8,8 @@ import { getTranslation } from '@i18n/locales';
 
 const locale = 'en';
 const t = (key: string) => getTranslation(locale, key);
-const title = `${practice.doctorName} | Board-Certified Family Physician | San Gabriel, CA`;
-const description = `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Immigration medical services, citizenship exam waiver reports, medical-legal reports, stem cell therapy, and family medicine.`;
+const title = `${practice.doctorName} | Family Physician in San Gabriel, CA`;
+const description = `Board-certified family physician and USCIS civil surgeon in San Gabriel, CA: immigration exams, N-648 reports, and adult family medicine. Mandarin spoken.`;
 const canonicalUrl = new URL('/', Astro.site).href;
 ---
 
@@ -22,6 +22,7 @@ const canonicalUrl = new URL('/', Astro.site).href;
   {/* Hero Section */}
   <HeroSection
     headline={practice.doctorNameShort}
+    tagline={t(`hero.tagline`)}
     subheadline="Family medicine serving San Gabriel Valley and surrounding communities, board-certified, compassionate, and dedicated to your health."
     locale={locale}
     media="chop"

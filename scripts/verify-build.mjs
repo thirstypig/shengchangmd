@@ -169,6 +169,38 @@ if (siteOrigin) {
   }
 }
 
+// 5. A Chinese page's search and share metadata must be Chinese.
+//
+//    Until 2026-09-14 four Chinese page titles per locale were built as
+//    `${practice.doctorName} | …`, so a zh-Hant search result read "Sheng Chang,
+//    M.D., Ph.D." in English; og:site_name was English on all sixteen; and
+//    og:locale was the BCP 47 tag "zh-Hant", which is not a valid Open Graph
+//    locale at all. Every one of those looked correct in source — a template
+//    literal and a locale code — and was visible only in the built <head>.
+//
+//    The English-name test is deliberately "no Latin run of the doctor's name",
+//    not "no Latin at all": "（M.D., Ph.D.）" and "Form I-693" are correct on a
+//    Chinese page and stay.
+const CJK = /[㐀-鿿]/;
+for (const page of pages) {
+  const path = relative(DIST, page);
+  const html = read(page);
+  const ogLocale = html.match(/property="og:locale" content="([^"]*)"/)?.[1];
+  if (ogLocale !== undefined && !/^[a-z]{2}_[A-Z]{2}$/.test(ogLocale)) {
+    fail(`${path}: og:locale "${ogLocale}" is not language_TERRITORY (e.g. zh_TW)`);
+  }
+  if (!/^zh-han[st]\//.test(path)) continue;
+  const fields = {
+    title: html.match(/<title>([^<]*)<\/title>/)?.[1],
+    description: html.match(/name="description" content="([^"]*)"/)?.[1],
+    'og:site_name': html.match(/property="og:site_name" content="([^"]*)"/)?.[1],
+  };
+  for (const [name, value] of Object.entries(fields)) {
+    if (!value || !CJK.test(value)) fail(`${path}: ${name} is not Chinese: "${value}"`);
+    else if (/Sheng Chang/.test(value)) fail(`${path}: ${name} carries the English doctor name: "${value}"`);
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);

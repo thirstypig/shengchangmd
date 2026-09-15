@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
 
 const title = `Office Hours | ${practice.doctorName} | San Gabriel, CA`;
-const description = `Office hours and availability for Dr. Chang's family medicine practice in San Gabriel, California.`;
+const description = `Office hours for Dr. Chang's family medicine practice in San Gabriel, California: ${practice.hours.weekday}. ${practice.hours.weekend}.`;
 const canonicalUrl = new URL('/hours/', Astro.site).href;
 
 const breadcrumbs = [
