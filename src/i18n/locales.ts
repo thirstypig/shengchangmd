@@ -223,6 +223,10 @@ export const translations = {
       aria: 'Call {phone} for an appointment',
     },
     header: {
+      // The name in the header wordmark. English keeps the short form the
+      // owner asked for on 2026-08-19; on 2026-09-14 the owner chose the
+      // Chinese name for the Chinese pages, which had shown this in English.
+      wordmark: practice.doctorNameShort,
       tagline: 'Family Medicine',
       callLabel: 'Call Now',
     },
@@ -345,6 +349,7 @@ export const translations = {
       aria: '致電 {phone} 預約看診',
     },
     header: {
+      wordmark: '張勝雄醫師',
       tagline: '家庭醫學',
       callLabel: '致電',
     },
@@ -467,6 +472,7 @@ export const translations = {
       aria: '致电 {phone} 预约看诊',
     },
     header: {
+      wordmark: '张胜雄医师',
       tagline: '家庭医学',
       callLabel: '致电',
     },

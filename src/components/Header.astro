@@ -6,7 +6,6 @@ import FontSizeControl from '@/components/FontSizeControl.astro';
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import Logo from '@/components/Logo.astro';
-import { practice } from '@/data/practice';
 import { getTranslation } from '@i18n/locales';
 
 interface Props {
@@ -23,6 +22,7 @@ const { locale, currentPath } = Astro.props;
   components missed this file. It renders on every page in every locale, which
   made it the worst of the three. Moved 2026-08-10.
 */
+const wordmark = getTranslation(locale, 'header.wordmark');
 const tagline = getTranslation(locale, 'header.tagline');
 const callLabel = getTranslation(locale, 'header.callLabel');
 const homeHref = locale === 'en' ? '/' : `/${locale}/`;
@@ -63,7 +63,7 @@ const homeHref = locale === 'en' ? '/' : `/${locale}/`;
       <Logo {locale} size={44} />
       <span class="flex flex-col">
         <span class="text-lg md:text-xl font-serif font-semibold text-primary-600">
-          {practice.doctorNameShort}
+          {wordmark}
         </span>
         <span class="text-base md:text-lg font-serif font-normal text-gray-600 whitespace-nowrap">
           {tagline}
