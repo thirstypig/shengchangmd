@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p2
 issue_id: 003
 tags: [code-review, architecture, i18n, duplicated-facts]
@@ -70,7 +70,7 @@ A test that fails if a hardcoded English sentence diverges from `locales.ts`.
 
 ## Recommended Action
 
-_(to be filled during triage)_
+Option A — delete the English copies and read the source.
 
 ## Technical Details
 
@@ -80,11 +80,41 @@ _(to be filled during triage)_
 
 ## Acceptance Criteria
 
-- [ ] The scope sentences exist in exactly one place in the repo
-- [ ] Built HTML for `/new-patients/` and `/services/` is unchanged
-- [ ] Changing the sentence in `locales.ts` changes all six pages
+- [x] The scope sentences exist in exactly one place in the repo
+- [x] Built HTML for `/new-patients/` and `/services/` is unchanged — see the
+      work log: rendered content identical, one file differs in whitespace
+- [x] Changing the sentence in `locales.ts` changes all six pages
 
 ## Work Log
+
+**2026-09-14** — Fixed, Option A. Both English pages now read `patientScope.*`
+with `getTranslation`, as the Chinese pages already did.
+
+**This finding undercounted the copies.** It named four list items per page.
+Searching `src/` for every value of `en.patientScope`, rather than for the lines
+named here, found three more in `services.astro`: the `Who we see` heading, the
+referrals sentence, and `Stem cell therapy is by appointment only.` in the stem
+cell panel. All seven are now read from the source. The same search after the
+fix finds the values only in two code comments.
+
+Verified:
+
+- Whole-`dist/` comparison against a build of `main`, 231 files: 230
+  byte-identical, 1 (`services/index.html`) differing only in whitespace — three
+  text nodes went from `\n…\n` to ` … ` because an expression collapses
+  differently from a literal. Leading and trailing whitespace inside `<h2>`/`<p>`
+  does not render. No content change anywhere, confirmed by a
+  whitespace-normalized comparison whose negative control (65 -> 60) registers.
+- Mutation: replacing `en.patientScope.noObGyn` with a sentinel and rebuilding
+  put the sentinel on `/new-patients/` and `/services/` and removed the old
+  sentence from both. Restored; `locales.ts` has no diff.
+- `tsc --noEmit` clean, 208/208 tests, `ALLOW_INDEXING=true npm run build`
+  passes verify-css and verify-build.
+
+No guard was added. `source-integrity.test.ts` still cannot see a page that
+restates a locale value rather than reading it, which is how this survived. It
+is related to todo 006 (the check asks whether a key is read *somewhere*, never
+whether a copy exists elsewhere) but is not the same gap, and no todo tracks it.
 
 **2026-08-20** — Found during self-review. Verified all copies currently
 byte-identical, so latent rather than live.
