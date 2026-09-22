@@ -65,6 +65,18 @@ describe('getExamFacts', () => {
   });
 });
 
+describe('languageList serial comma (en only)', () => {
+  it('en: joins with a serial comma before the last item', () => {
+    const line = getExamFacts('en', known).find((f) => f.key === 'languages')!;
+    expect(line.value).toContain(', and Vietnamese');
+  });
+
+  it('zh-hant: stays joined with 、', () => {
+    const line = getExamFacts('zh-hant', known).find((f) => f.key === 'languages')!;
+    expect(line.value).toContain('、');
+  });
+});
+
 describe('getExamFaq and examFaqSchema', () => {
   it.each(LOCALES)('%s: four questions, none empty', (locale) => {
     const faq = getExamFaq(locale);

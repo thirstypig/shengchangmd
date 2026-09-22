@@ -23,8 +23,10 @@ export interface FaqItem {
 }
 
 function languageList(locale: string): string {
-  const sep = locale === 'en' ? ', ' : '、';
-  return getPracticeLocalized(locale).languages.join(sep);
+  const languages = getPracticeLocalized(locale).languages;
+  if (locale !== 'en') return languages.join('、');
+  if (languages.length < 2) return languages.join(', ');
+  return `${languages.slice(0, -1).join(', ')}, and ${languages[languages.length - 1]}`;
 }
 
 export function getExamFacts(

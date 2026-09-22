@@ -235,6 +235,14 @@ patients under 18" and "patients of all ages" on the same page. No test catches
 this; both sentences are individually well-formed. **Grep for the negation of
 what you are about to publish, in every locale and in the structured data.**
 
+- **The I-693 immigration medical exam page** at `/immigration-medical-exam/`
+  is live on merge. Unknown and deliberately unpublished: the fee amount,
+  whether vaccines are given in the office, the number of visits, on-site vs.
+  outside lab, and turnaround time. The family medicine services page's line
+  about 例行預防接種與疫苗 / "routine immunizations" is likewise still
+  unconfirmed. `doctorLanguages` (English, Mandarin) is site copy, not yet
+  confirmed by the owner in writing. Also unconfirmed: whether the office wants
+  patients to arrive with Part 1 of Form I-693 already filled in.
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
 - ~~Office hours~~ — **9:00 AM – 1:00 PM confirmed by the owner 2026-08-06** and
@@ -496,8 +504,8 @@ automated check in this repo passed while this was about to ship:
 ```
 npm install
 npm run dev                          # http://localhost:3120
-ALLOW_INDEXING=true npm run build    # 27 pages; postbuild runs verify-css + verify-build
-npm test                             # 209 vitest tests
+ALLOW_INDEXING=true npm run build    # 30 pages; postbuild runs verify-css + verify-build
+npm test                             # 232 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -515,7 +523,7 @@ touching the build config.
 
 ## Tests
 
-Ten files, 209 tests, run with `npm test`:
+Eleven files, 232 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -598,6 +606,12 @@ Ten files, 209 tests, run with `npm test`:
   built sitemap file, not by any test. Also asserts the asset-prep script's
   `BLOCKED` list names every currently-excluded source file, so a future re-run
   cannot silently resurrect a privacy-cut photo
+- `tests/data/immigration-exam.test.ts` — pins the rule that a null fact in
+  `practice.immigrationExam` renders no line, and pins the live unknowns
+  (`feeAmount`, `vaccinesOnSite`, `typicalVisits`) to `null` until the office
+  confirms them in writing. Also asserts the FAQ schema is built from the same
+  data the page shows, and that the English languages line uses a serial comma
+  while both Chinese locales stay joined with 「、」
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:
@@ -618,10 +632,12 @@ referenced asset exists, that the sitemap and the robots meta tag agree, that
 JSON-LD's address matches `practice.ts`, that no page names the retired
 host, and — since 2026-09-14 — that every Chinese page's `<title>`, meta
 description and `og:site_name` is Chinese and free of the English doctor name,
-and every `og:locale` is `language_TERRITORY`. Those are contradiction checks;
-none of them can be seen from source. The last one exists because eight Chinese
-titles interpolated `practice.doctorName` and `og:locale` emitted `zh-Hant`, and
-both looked correct in source
+and every `og:locale` is `language_TERRITORY`, and — since this fix wave — that
+the I-693 page's FAQPage JSON-LD is built from the same FAQ the page shows.
+Those are contradiction checks; none of them can be seen from source. The
+`og:locale` one exists because eight Chinese titles interpolated
+`practice.doctorName` and `og:locale` emitted `zh-Hant`, and both looked
+correct in source
 ([write-up](docs/solutions/logic-errors/shared-data-module-locale-strings.md)).
 
 **Every test here was verified by making it fail.** A mutation was introduced

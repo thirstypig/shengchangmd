@@ -108,7 +108,7 @@ const doctorSchema = {
     '@type': 'Organization',
     name: practice.doctorName,
   },
-  knowsLanguage: practice.languages,
+  knowsLanguage: practice.doctorLanguages,
   hasCredential: practice.boardCertifications.map((cert) => ({
     '@type': 'EducationalOccupationalCredential',
     name: `Board Certified in ${cert.specialty}`,

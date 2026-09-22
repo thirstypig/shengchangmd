@@ -3,7 +3,6 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import ExamFacts from '@components/ExamFacts.astro';
-import { practice } from '@data/practice';
 import { getExamFaq, examFaqSchema } from '@data/immigrationExam';
 import { getTranslation } from '@i18n/locales';
 
@@ -63,10 +62,10 @@ const breadcrumbs = [
           <li>政府核發、附照片的有效身分證件，例如未過期的護照或駕照</li>
           <li>您的疫苗接種紀錄</li>
           <li>您手邊的其他病歷</li>
-          <li>已填好第 1 部分（Part 1）的 Form I-693。請先不要簽名：您必須在張醫師面前簽名。</li>
+          <li>已填好第 1 部分（Part 1）的 Form I-693。請先不要簽名：您必須在張醫師面前簽名。請從 <a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">uscis.gov/i-693</a> 下載最新版本；美國移民局只接受醫師簽名時現行的版本。</li>
         </ul>
         <p class="mt-4 text-gray-700">
-          資料來源：<a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">美國移民局 Form I-693 頁面與填表說明</a>（英文）。
+          資料來源：<a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">美國移民局 Form I-693 頁面</a>（英文）。
         </p>
       </div>
 

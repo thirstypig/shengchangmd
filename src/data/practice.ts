@@ -105,6 +105,13 @@ export interface PracticeInfo {
     secondary: string[];
   };
   languages: string[];
+  /**
+   * The languages Dr. Chang himself speaks with patients, as distinct from
+   * `languages` above (what the office as a whole can serve). Matches site
+   * copy published since commit 961f7de (2026-07-29), "results explained in
+   * English or Mandarin" — not yet confirmed by the owner in writing.
+   */
+  doctorLanguages: string[];
   boardCertifications: BoardCertification[];
 }
 
@@ -234,6 +241,11 @@ export const practice: PracticeInfo = {
   // actually serve a patient in, not about Dr. Chang alone — if a language here
   // depends on a particular staff member being present, it should come off.
   languages: ['English', 'Mandarin', 'Cantonese', 'Spanish', 'Vietnamese'],
+  // The languages Dr. Chang himself speaks with patients, as distinct from
+  // `languages` above (what the office can serve). Matches site copy
+  // published since commit 961f7de (2026-07-29), "results explained in
+  // English or Mandarin" — not yet confirmed by the owner in writing.
+  doctorLanguages: ['English', 'Mandarin'],
   boardCertifications: [
     {
       board: 'American Board of Family Medicine',
