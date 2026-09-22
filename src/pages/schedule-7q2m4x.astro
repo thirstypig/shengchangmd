@@ -48,6 +48,8 @@ const encryptedJson = JSON.stringify(encrypted);
 
         <h2 id="open-questions-heading"></h2>
         <ul id="open-questions"></ul>
+
+        <div id="drafts"></div>
       </div>
     </main>
 
@@ -152,6 +154,27 @@ const encryptedJson = JSON.stringify(encrypted);
       li {
         margin-bottom: 0.4rem;
       }
+      #drafts {
+        margin-top: 1.5rem;
+      }
+      .draft-item {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 0.75rem;
+        background: var(--card);
+      }
+      .draft-item h3 {
+        font-size: 1rem;
+        margin: 0 0 0.4rem;
+      }
+      .draft-item summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .draft-item p {
+        margin: 0.5rem 0;
+      }
     </style>
 
     <script define:vars={{ encryptedJson }}>
@@ -166,6 +189,7 @@ const encryptedJson = JSON.stringify(encrypted);
       const tableBody = document.getElementById('table-body');
       const openQuestionsHeading = document.getElementById('open-questions-heading');
       const openQuestionsList = document.getElementById('open-questions');
+      const draftsEl = document.getElementById('drafts');
       const tabs = Array.from(document.querySelectorAll('.tab'));
 
       const OPEN_QUESTIONS_HEADING = {
@@ -224,32 +248,72 @@ const encryptedJson = JSON.stringify(encrypted);
 
         cadenceEl.textContent = schedule.cadence[locale];
 
+        function clear(el) {
+          while (el.firstChild) el.removeChild(el.firstChild);
+        }
+
+        function cell(tag, text) {
+          const el = document.createElement(tag);
+          el.textContent = text;
+          return el;
+        }
+
         const columns = schedule.columns[locale];
-        tableHead.innerHTML = `<tr>
-          <th>${columns.topic}</th>
-          <th>${columns.status}</th>
-          <th>${columns.target}</th>
-          <th>${columns.cluster}</th>
-          <th>${columns.notes}</th>
-        </tr>`;
+        clear(tableHead);
+        const headRow = document.createElement('tr');
+        for (const value of [columns.topic, columns.status, columns.target, columns.cluster, columns.notes]) {
+          headRow.appendChild(cell('th', value));
+        }
+        tableHead.appendChild(headRow);
 
         const statusLabels = schedule.statusLabels[locale];
-        tableBody.innerHTML = schedule.items
-          .map(
-            (item) => `<tr>
-              <td>${item.title[locale]}</td>
-              <td>${statusLabels[item.status] ?? item.status}</td>
-              <td>${item.target}</td>
-              <td>${item.cluster}</td>
-              <td>${item.notes[locale]}</td>
-            </tr>`,
-          )
-          .join('');
+        clear(tableBody);
+        for (const item of schedule.items) {
+          const row = document.createElement('tr');
+          row.appendChild(cell('td', item.title[locale]));
+          row.appendChild(cell('td', statusLabels[item.status] ?? item.status));
+          row.appendChild(cell('td', item.target));
+          row.appendChild(cell('td', item.cluster));
+          row.appendChild(cell('td', item.notes[locale]));
+          tableBody.appendChild(row);
+        }
 
         openQuestionsHeading.textContent = OPEN_QUESTIONS_HEADING[locale];
-        openQuestionsList.innerHTML = schedule.openQuestions[locale]
-          .map((q) => `<li>${q}</li>`)
-          .join('');
+        clear(openQuestionsList);
+        for (const q of schedule.openQuestions[locale]) {
+          openQuestionsList.appendChild(cell('li', q));
+        }
+
+        const labels = schedule.draftLabels[locale];
+        clear(draftsEl);
+        for (const item of schedule.items) {
+          const wrapper = document.createElement('details');
+          wrapper.className = 'draft-item';
+
+          const summary = document.createElement('summary');
+          summary.textContent = labels.show;
+          wrapper.appendChild(summary);
+
+          wrapper.appendChild(cell('h3', item.title[locale]));
+
+          const draftHeading = cell('h4', labels.heading);
+          wrapper.appendChild(draftHeading);
+
+          const draftText = item.draft ? item.draft[locale] : null;
+          if (draftText) {
+            for (const paragraph of draftText.split('\n\n')) {
+              wrapper.appendChild(cell('p', paragraph));
+            }
+          } else {
+            wrapper.appendChild(cell('p', labels.none));
+          }
+
+          wrapper.addEventListener('toggle', () => {
+            summary.textContent = wrapper.open ? labels.hide : labels.show;
+          });
+
+          draftsEl.appendChild(wrapper);
+        }
       }
 
       for (const tab of tabs) {

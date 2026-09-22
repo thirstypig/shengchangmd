@@ -60,7 +60,17 @@ describe('the committed ciphertext leaks no plaintext', () => {
   const encrypted = JSON.parse(encryptedSource);
 
   it('contains none of the known plaintext markers from the schedule', () => {
-    for (const marker of ['I-693', 'Medi-Cal', 'N-648', 'Dr. Chang', '體檢', '医师']) {
+    for (const marker of [
+      'I-693',
+      'Medi-Cal',
+      'N-648',
+      'Dr. Chang',
+      '體檢',
+      '医师',
+      'Medicare',
+      '國語',
+      'Draft',
+    ]) {
       expect(encryptedSource, `ciphertext file contains plaintext marker "${marker}"`).not.toContain(
         marker,
       );
@@ -70,6 +80,49 @@ describe('the committed ciphertext leaks no plaintext', () => {
   it('has a base64 ciphertext field', () => {
     expect(typeof encrypted.ciphertext).toBe('string');
     expect(encrypted.ciphertext).toMatch(/^[A-Za-z0-9+/]+=*$/);
+  });
+});
+
+describe('the new schedule passphrase never appears in the repo', () => {
+  const passphrase = process.env.SCHEDULE_PASSPHRASE;
+
+  it('is absent from every file under src/, scripts/, tests/, docs/, .github/', () => {
+    if (!passphrase) {
+      // Not set (e.g. CI without the secret) — nothing to check, but never
+      // fail the build over an absent env var.
+      return;
+    }
+
+    const { readdirSync, statSync } = require('node:fs') as typeof import('node:fs');
+
+    const scanDirs = ['src', 'scripts', 'tests', 'docs', '.github'];
+    const walk = (dir: string): string[] => {
+      let entries: string[];
+      try {
+        entries = readdirSync(dir);
+      } catch {
+        return [];
+      }
+      return entries.flatMap((entry) => {
+        const full = `${dir}/${entry}`;
+        const stat = statSync(full);
+        return stat.isDirectory() ? walk(full) : [full];
+      });
+    };
+
+    for (const dir of scanDirs) {
+      for (const file of walk(`${ROOT}/${dir}`)) {
+        let contents: string;
+        try {
+          contents = readFileSync(file, 'utf8');
+        } catch {
+          continue; // binary or unreadable file
+        }
+        expect(contents.includes(passphrase), `${file} contains the schedule passphrase`).toBe(
+          false,
+        );
+      }
+    }
   });
 });
 
