@@ -252,6 +252,25 @@ for (const page of pages) {
   }
 }
 
+// 8. The I-693 page and the "What to bring" article render the same list from
+//    one component. Compare the built lists, so a hand edit to either copy fails.
+const listText = (html) => {
+  const m = html.match(/<ul data-what-to-bring[^>]*>([\s\S]*?)<\/ul>/);
+  return m ? m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : null;
+};
+for (const prefix of ['', 'zh-hant/', 'zh-hans/']) {
+  const examFile = join(DIST, `${prefix}immigration-medical-exam/index.html`);
+  const articleFile = join(DIST, `${prefix}articles/what-to-bring-i-693/index.html`);
+  if (!existsSync(examFile) || !existsSync(articleFile)) {
+    fail(`${prefix || 'en/'}: I-693 page or "What to bring" article not built`);
+    continue;
+  }
+  const a = listText(read(examFile));
+  const b = listText(read(articleFile));
+  if (!a || !b) fail(`${prefix || 'en/'}: "What to bring" list missing from the I-693 page or the article`);
+  else if (a !== b) fail(`${prefix || 'en/'}: "What to bring" lists differ between the I-693 page and the article`);
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);

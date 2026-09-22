@@ -70,3 +70,11 @@ describe('articleSchema', () => {
     expect('lastReviewed' in s).toBe(a.lastReviewed !== null);
   });
 });
+
+describe('article pages', () => {
+  it.each(articles.map((a) => [a.slug] as const))('%s exists in all three locales', (slug) => {
+    for (const dir of ['', 'zh-hant/', 'zh-hans/']) {
+      expect(existsSync(`${SRC}/pages/${dir}articles/${slug}.astro`), `${dir}${slug}`).toBe(true);
+    }
+  });
+});

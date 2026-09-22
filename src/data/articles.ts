@@ -36,8 +36,16 @@ export const articles: Article[] = [
     sources: [
       { title: 'USCIS: Form I-693', url: 'https://www.uscis.gov/i-693' },
       {
-        title: 'CDC: Technical Instructions for Civil Surgeons',
-        url: 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/index.html',
+        title: 'USCIS: Instructions for Form I-693',
+        url: 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf',
+      },
+      {
+        title: 'CDC: Vaccination Technical Instructions for Civil Surgeons',
+        url: 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/vaccination.html',
+      },
+      {
+        title: 'CDC: Tuberculosis Technical Instructions for Civil Surgeons',
+        url: 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/tuberculosis.html',
       },
     ],
     relatedPage: '/immigration-medical-exam/',

@@ -174,6 +174,7 @@ export const translations = {
         'We do not publish prices or office scheduling details here, because they change. Please call the office at {phone} and we will answer directly.',
       methodNotAdvice: 'These articles are general information, not medical advice for your situation.',
       methodErrors: 'If you find an error, please call {phone} or email {email}.',
+      fullGuideLink: 'Full guide: what to bring to your I-693 exam',
     },
     communityPhotos: {
       photo1:
@@ -414,6 +415,7 @@ export const translations = {
       methodNotPublished: '費用與門診排程等資訊時常變動，因此不在此公布。請來電 {phone}，我們會直接為您說明。',
       methodNotAdvice: '這些文章為一般資訊，並非針對您個人情況的醫療建議。',
       methodErrors: '如發現錯誤，請來電 {phone} 或寄電子郵件至 {email}。',
+      fullGuideLink: '完整說明：I-693 移民體檢應攜帶的資料',
     },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
@@ -600,6 +602,7 @@ export const translations = {
       methodNotPublished: '费用与门诊排程等资讯时常变动，因此不在此公布。请来电 {phone}，我们会直接为您说明。',
       methodNotAdvice: '这些文章为一般资讯，并非针对您个人情况的医疗建议。',
       methodErrors: '如发现错误，请来电 {phone} 或寄电子邮件至 {email}。',
+      fullGuideLink: '完整说明：I-693 移民体检应携带的资料',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',
