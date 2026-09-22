@@ -128,9 +128,12 @@ Both reviewers confirmed available (owner, 2026-09-21).
 
 ## Open questions for the owner
 
-- Who drafts: Claude from sources, the owner, or Dr. Chang?
-- Byline: "by Dr. Chang" or "medically reviewed by Dr. Chang"? Only the
-  accurate one may be used.
+- ~~Who drafts~~: **Claude drafts from primary sources (USCIS, CDC, CMS,
+  DHCS)**; the owner and Dr. Chang review (owner, 2026-09-21). Consequence: the
+  byline cannot be "by Dr. Chang". It must be "medically reviewed by".
+- Whether and how to disclose that drafts are AI-assisted (Google's "How"
+  question).
+
 - Section name in Chinese (e.g. 健康專欄 or 衛教文章) and the English name.
 - Could the front desk keep a simple list of the questions patients ask?
 
