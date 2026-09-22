@@ -69,6 +69,10 @@ export const articles: Article[] = [
         title: 'USCIS Policy Manual, Volume 8, Part B, Chapter 4',
         url: 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4',
       },
+      {
+        title: 'USCIS Policy Alert PA-2025-08: Form I-693 Validity',
+        url: 'https://www.uscis.gov/sites/default/files/document/policy-manual-updates/20250611-I-693Validity.pdf',
+      },
     ],
     relatedPage: '/immigration-medical-exam/',
   },

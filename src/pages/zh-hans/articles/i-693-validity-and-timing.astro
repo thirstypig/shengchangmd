@@ -25,6 +25,8 @@ const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
 const uscisPage = 'https://www.uscis.gov/i-693';
 const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
 const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4';
+const policyAlert =
+  'https://www.uscis.gov/sites/default/files/document/policy-manual-updates/20250611-I-693Validity.pdf';
 ---
 
 <BaseLayout
@@ -59,7 +61,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
           <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">目前的规定</h2>
           <div class="space-y-4 text-gray-700">
             <p>
-              美国移民局的规定指出，2023 年 11 月 1 日（含）以后由体检医师签署、且填写完整的 Form I-693，只能用来证明申请人在健康相关事由上并无不得入境的情形，而且效力只涵盖与该表格一并送件的那份移民申请，在其审理期间内全程有效。
+              美国移民局的规定指出，原则上，2023 年 11 月 1 日（含）以后由体检医师签署、且填写完整的 Form I-693，只能用来证明申请人在健康相关事由上并无不得入境的情形，而且效力只涵盖与该表格一并送件的那份移民申请，在其审理期间内全程有效。
             </p>
             <p>由此衍生两点：</p>
             <ul class="list-disc pl-6 space-y-2">
@@ -82,10 +84,13 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <a href={uscisInstructions} rel="noopener" class={link}>Form I-693 填表说明</a>（英文）01/20/25 版仍写着：Form I-693 自体检医师签名之日起两年内有效。这句话被广泛引用，也是许多人以为有两年期限的原因。
             </p>
             <p>
-              对某一群人而言，两年仍然是正确答案。美国移民局指出，体检医师在 2023 年 11 月 1 日<em>之前</em>签署的 Form I-693，自签名之日起两年内仍具证明效力。
+              对某一群人而言，两年仍然是正确答案。美国移民局指出，体检医师在 2023 年 11 月 1 日<em>之前</em>签署的 Form I-693，自签名之日起两年内仍具证明效力——不过在该日期之前签署的表格，已于 2025 年 10 月届满两年效期。
             </p>
             <p>
               至于现在才签署的表格，则以政策手册为准。美国移民局自己的 Form I-693 页面写着：关于 Form I-693 有效期限的进一步资讯，请见美国移民局政策手册第 8 册 B 部分第 4 章。该章最近一次的政策更新公告日期为 2025 年 6 月 11 日，内容更新至 2026 年 9 月 18 日；填表说明的版本日期则为 01/20/25。若您阅读本文的时间已远晚于文末的查核日期，请直接查阅该政策手册章节，因为那是美国移民局持续更新的页面。
+            </p>
+            <p>
+              2025 年 6 月的这次政策更新，即<a href={policyAlert} rel="noopener" class={link}>美国移民局政策提示 PA-2025-08</a>（英文），明白指出：政策手册所载规定具有拘束力，并取代先前所有相关规定。因此若政策手册与较旧的填表说明有出入，应以政策手册——以及前述「没有固定到期日」的规定——为准。
             </p>
           </div>
         </section>
@@ -97,7 +102,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <a href={uscisPage} rel="noopener" class={link}>美国移民局 Form I-693 页面</a>（英文）写着：自 2024 年 12 月 2 日起，您必须提交 Form I-693，或部分的 Form I-693（例如疫苗接种纪录部分），而且必须与 Form I-485 一并送件；否则美国移民局可能会将您的 Form I-485 退件。
             </p>
             <p>
-              退件不等于驳回：美国移民局并未就此审定您的案件，而是把整份文件退还给您。您损失的是时间，并且必须重新送件。
+              退件不等于驳回：美国移民局并未就此审定您的案件，而是把整份文件退还给您。您会失去原本的送件日期，必须重新送件。
             </p>
             <p>
               若美国移民局退件，退还时 Form I-693 的信封已被拆开，移民局指出您可以用这份已拆封的正本重新送件，连同体检医师原本放入的证明文件一起放回原信封，并附上退件通知书影本。
@@ -143,7 +148,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <li>没有 60 天的时限，体检不必赶在送件前的某个期限之内完成。</li>
               <li>但送件之前必须已经拿到密封信封，因为表格要与 Form I-485 一并送出。</li>
               <li>
-                列印表格之前，请先确认该用哪一个版本。体检医师必须使用签名当日现行的版本。签名日期为 2025 年 7 月 3 日（含）以后者，美国移民局只接受 01/20/25 版；现行版本公布在<a href={uscisPage} rel="noopener" class={link}>美国移民局 Form I-693 页面</a>（英文）。
+                列印表格之前，请先确认该用哪一个版本。在绝大多数情况下，体检医师须使用签名当日现行的版本。签名日期为 2025 年 7 月 3 日（含）以后者，美国移民局只接受 01/20/25 版；现行版本公布在<a href={uscisPage} rel="noopener" class={link}>美国移民局 Form I-693 页面</a>（英文）。
               </li>
             </ul>
             <p>

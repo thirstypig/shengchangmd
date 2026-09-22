@@ -28,6 +28,8 @@ const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
 const uscisPage = 'https://www.uscis.gov/i-693';
 const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
 const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4';
+const policyAlert =
+  'https://www.uscis.gov/sites/default/files/document/policy-manual-updates/20250611-I-693Validity.pdf';
 ---
 
 <BaseLayout
@@ -50,7 +52,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
           <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The short answer</h2>
           <div class="space-y-4 text-gray-700">
             <p>
-              If a civil surgeon signed your Form I-693 on or after November 1, 2023, the form has no fixed expiry
+              If a civil surgeon signed your Form I-693 on or after November 1, 2023, the form has no fixed expiration
               date. USCIS treats it as evidence for one application only — the one you file it with — and for the whole
               time that application is pending. You must file it together with your Form I-485. If you do not, USCIS
               may reject your Form I-485.
@@ -68,8 +70,8 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
           <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The rule now</h2>
           <div class="space-y-4 text-gray-700">
             <p>
-              USCIS's wording is that a properly completed Form I-693 signed by a civil surgeon on or after
-              November 1, 2023 "can only be used as evidence to show that the applicant is not inadmissible under the
+              USCIS's wording is that, in general, a properly completed Form I-693 signed by a civil surgeon on or
+              after November 1, 2023 "can only be used as evidence to show that the applicant is not inadmissible under the
               health-related grounds for the entire period the immigration benefit application with which the Form
               I-693 is submitted is pending."
             </p>
@@ -107,7 +109,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
             <p>
               Two years is still the right answer for one group. USCIS says a Form I-693 signed by a civil surgeon
               <em>before</em> November 1, 2023 "retains evidentiary value for 2 years from the date of the civil surgeon's
-              signature."
+              signature" — though a form signed before that date passed its two-year mark in October 2025.
             </p>
             <p>
               For a form signed today, the Policy Manual governs. USCIS's own Form I-693 page says: "For more
@@ -115,6 +117,12 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               Policy Manual chapter was last changed by a policy alert dated June 11, 2025 and is current as of
               September 18, 2026; the instructions carry the 01/20/25 edition date. If you are reading this well after
               the date below, check that chapter, because that is the page USCIS keeps current.
+            </p>
+            <p>
+              That June 2025 update, <a href={policyAlert} rel="noopener" class={link}>USCIS Policy Alert PA-2025-08</a>,
+              says so directly: "The guidance contained in the Policy Manual is controlling and supersedes any related
+              prior guidance." So where the Policy Manual and the older instructions disagree, the Policy Manual — and
+              the no-fixed-expiration rule above — is the one that governs.
             </p>
           </div>
         </section>
@@ -129,7 +137,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
             </p>
             <p>
               A rejection is not a denial: USCIS does not decide your case, it sends the package back. You lose the
-              time and file again.
+              filing date and file again.
             </p>
             <p>
               If USCIS rejects a package and returns it with the Form I-693 envelope opened, USCIS says you may refile
@@ -188,9 +196,9 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
                 I-485.
               </li>
               <li>
-                Check which edition of the form to use before you print it. The civil surgeon must use the edition
-                current on the day they sign. USCIS accepts only the 01/20/25 edition for signatures dated July 3, 2025
-                or later, and the current edition is listed on the
+                Check which edition of the form to use before you print it. The civil surgeon is required to use, in
+                almost all cases, the edition in use on the day they sign. USCIS accepts only the 01/20/25 edition for
+                signatures dated July 3, 2025 or later, and the current edition is listed on the
                 <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a>.
               </li>
             </ul>

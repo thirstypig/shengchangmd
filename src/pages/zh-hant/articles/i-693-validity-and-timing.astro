@@ -25,6 +25,8 @@ const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
 const uscisPage = 'https://www.uscis.gov/i-693';
 const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
 const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4';
+const policyAlert =
+  'https://www.uscis.gov/sites/default/files/document/policy-manual-updates/20250611-I-693Validity.pdf';
 ---
 
 <BaseLayout
@@ -59,7 +61,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
           <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">目前的規定</h2>
           <div class="space-y-4 text-gray-700">
             <p>
-              美國移民局的規定指出，2023 年 11 月 1 日（含）以後由體檢醫師簽署、且填寫完整的 Form I-693，只能用來證明申請人在健康相關事由上並無不得入境的情形，而且效力只涵蓋與該表格一併送件的那份移民申請，在其審理期間內全程有效。
+              美國移民局的規定指出，原則上，2023 年 11 月 1 日（含）以後由體檢醫師簽署、且填寫完整的 Form I-693，只能用來證明申請人在健康相關事由上並無不得入境的情形，而且效力只涵蓋與該表格一併送件的那份移民申請，在其審理期間內全程有效。
             </p>
             <p>由此衍生兩點：</p>
             <ul class="list-disc pl-6 space-y-2">
@@ -82,10 +84,13 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <a href={uscisInstructions} rel="noopener" class={link}>Form I-693 填表說明</a>（英文）01/20/25 版仍寫著：Form I-693 自體檢醫師簽名之日起兩年內有效。這句話被廣泛引用，也是許多人以為有兩年期限的原因。
             </p>
             <p>
-              對某一群人而言，兩年仍然是正確答案。美國移民局指出，體檢醫師在 2023 年 11 月 1 日<em>之前</em>簽署的 Form I-693，自簽名之日起兩年內仍具證明效力。
+              對某一群人而言，兩年仍然是正確答案。美國移民局指出，體檢醫師在 2023 年 11 月 1 日<em>之前</em>簽署的 Form I-693，自簽名之日起兩年內仍具證明效力——不過在該日期之前簽署的表格，已於 2025 年 10 月屆滿兩年效期。
             </p>
             <p>
               至於現在才簽署的表格，則以政策手冊為準。美國移民局自己的 Form I-693 頁面寫著：關於 Form I-693 有效期限的進一步資訊，請見美國移民局政策手冊第 8 冊 B 部分第 4 章。該章最近一次的政策更新公告日期為 2025 年 6 月 11 日，內容更新至 2026 年 9 月 18 日；填表說明的版本日期則為 01/20/25。若您閱讀本文的時間已遠晚於文末的查核日期，請直接查閱該政策手冊章節，因為那是美國移民局持續更新的頁面。
+            </p>
+            <p>
+              2025 年 6 月的這次政策更新，即<a href={policyAlert} rel="noopener" class={link}>美國移民局政策提示 PA-2025-08</a>（英文），明白指出：政策手冊所載規定具有拘束力，並取代先前所有相關規定。因此若政策手冊與較舊的填表說明有出入，應以政策手冊——以及前述「沒有固定到期日」的規定——為準。
             </p>
           </div>
         </section>
@@ -97,7 +102,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）寫著：自 2024 年 12 月 2 日起，您必須提交 Form I-693，或部分的 Form I-693（例如疫苗接種紀錄部分），而且必須與 Form I-485 一併送件；否則美國移民局可能會將您的 Form I-485 退件。
             </p>
             <p>
-              退件不等於駁回：美國移民局並未就此審定您的案件，而是把整份文件退還給您。您損失的是時間，並且必須重新送件。
+              退件不等於駁回：美國移民局並未就此審定您的案件，而是把整份文件退還給您。您會失去原本的送件日期，必須重新送件。
             </p>
             <p>
               若美國移民局退件，退還時 Form I-693 的信封已被拆開，移民局指出您可以用這份已拆封的正本重新送件，連同體檢醫師原本放入的證明文件一起放回原信封，並附上退件通知書影本。
@@ -143,7 +148,7 @@ const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapte
               <li>沒有 60 天的時限，體檢不必趕在送件前的某個期限之內完成。</li>
               <li>但送件之前必須已經拿到密封信封，因為表格要與 Form I-485 一併送出。</li>
               <li>
-                列印表格之前，請先確認該用哪一個版本。體檢醫師必須使用簽名當日現行的版本。簽名日期為 2025 年 7 月 3 日（含）以後者，美國移民局只接受 01/20/25 版；現行版本公布在<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。
+                列印表格之前，請先確認該用哪一個版本。在絕大多數情況下，體檢醫師須使用簽名當日現行的版本。簽名日期為 2025 年 7 月 3 日（含）以後者，美國移民局只接受 01/20/25 版；現行版本公布在<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。
               </li>
             </ul>
             <p>
