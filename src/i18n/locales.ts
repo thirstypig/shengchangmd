@@ -155,7 +155,7 @@ export const translations = {
         'The documents to bring to your immigration medical exam, and how to prepare Form I-693 before you arrive.',
       reviewedLine:
         'Drafted with AI assistance from the official sources listed below. Medically reviewed by {doctor}, on {date}.',
-      awaitingReview: 'Awaiting medical review by {doctor}. This article is not yet published.',
+      awaitingReview: 'This article is awaiting medical review by {doctor} and is not yet published.',
       howWeWriteLink: 'How we write these articles',
       sourcesHeading: 'Sources',
       sourcesChecked: 'Sources checked {date}.',
