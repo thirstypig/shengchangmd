@@ -171,7 +171,7 @@ export const translations = {
       methodReview:
         'Every article is reviewed twice before it is published. The practice checks that it matches how our office works, and Dr. Chang checks it for medical and regulatory accuracy. The review date on an article is the date of his review.',
       methodNotPublished:
-        'We do not publish prices or office scheduling details here, because they change. Please call the office at {phone} and we will answer directly.',
+        'We do not publish prices or office scheduling details here. Please call the office at {phone} and we will answer directly.',
       methodNotAdvice: 'These articles are general information, not medical advice for your situation.',
       methodErrors: 'If you find an error, please call {phone} or email {email}.',
       fullGuideLink: 'Full guide: what to bring to your I-693 exam',
@@ -412,7 +412,7 @@ export const translations = {
       methodAi: '文章初稿由 AI 協助、依據上述資料撰寫。',
       methodReview:
         '每篇文章發布前都經過兩次審閱：診所確認內容符合本診所的實際作業，張醫師則審閱醫學與法規上的正確性。文章上的審閱日期，即為張醫師審閱的日期。',
-      methodNotPublished: '費用與門診排程等資訊時常變動，因此不在此公布。請來電 {phone}，我們會直接為您說明。',
+      methodNotPublished: '費用與門診排程等資訊不在此公布。請來電 {phone}，我們會直接為您說明。',
       methodNotAdvice: '這些文章為一般資訊，並非針對您個人情況的醫療建議。',
       methodErrors: '如發現錯誤，請來電 {phone} 或寄電子郵件至 {email}。',
       fullGuideLink: '完整說明：I-693 移民體檢應攜帶的資料',
@@ -599,7 +599,7 @@ export const translations = {
       methodAi: '文章初稿由 AI 协助、依据上述资料撰写。',
       methodReview:
         '每篇文章发布前都经过两次审阅：诊所确认内容符合本诊所的实际作业，张医师则审阅医学与法规上的正确性。文章上的审阅日期，即为张医师审阅的日期。',
-      methodNotPublished: '费用与门诊排程等资讯时常变动，因此不在此公布。请来电 {phone}，我们会直接为您说明。',
+      methodNotPublished: '费用与门诊排程等资讯不在此公布。请来电 {phone}，我们会直接为您说明。',
       methodNotAdvice: '这些文章为一般资讯，并非针对您个人情况的医疗建议。',
       methodErrors: '如发现错误，请来电 {phone} 或寄电子邮件至 {email}。',
       fullGuideLink: '完整说明：I-693 移民体检应携带的资料',
