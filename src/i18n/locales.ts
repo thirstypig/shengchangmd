@@ -181,6 +181,10 @@ export const translations = {
       methodNotAdvice: 'These articles are general information, not medical advice for your situation.',
       methodErrors: 'If you find an error, please call {phone} or email {email}.',
       fullGuideLink: 'Full guide: what to bring to your I-693 exam',
+      validityTitle: 'How long your I-693 is good for, and when to file it',
+      validitySummary:
+        'What USCIS says about how long Form I-693 stays valid, why the form instructions still say two years, and when to file the form with your Form I-485.',
+      validityLink: 'Also read: how long your I-693 is good for, and when to file it',
     },
     communityPhotos: {
       photo1:
@@ -422,6 +426,10 @@ export const translations = {
       methodNotAdvice: '這些文章為一般資訊，並非針對您個人情況的醫療建議。',
       methodErrors: '如發現錯誤，請來電 {phone} 或寄電子郵件至 {email}。',
       fullGuideLink: '完整說明：I-693 移民體檢應攜帶的資料',
+      validityTitle: 'I-693 的有效期限，以及何時送件',
+      validitySummary:
+        '美國移民局對 Form I-693 有效期限的規定、為何填表說明仍寫著兩年，以及何時要與 Form I-485 一併送件。',
+      validityLink: '延伸閱讀：I-693 的有效期限，以及何時送件',
     },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
@@ -609,6 +617,10 @@ export const translations = {
       methodNotAdvice: '这些文章为一般资讯，并非针对您个人情况的医疗建议。',
       methodErrors: '如发现错误，请来电 {phone} 或寄电子邮件至 {email}。',
       fullGuideLink: '完整说明：I-693 移民体检应携带的资料',
+      validityTitle: 'I-693 的有效期限，以及何时送件',
+      validitySummary:
+        '美国移民局对 Form I-693 有效期限的规定、为何填表说明仍写着两年，以及何时要与 Form I-485 一并送件。',
+      validityLink: '延伸阅读：I-693 的有效期限，以及何时送件',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',

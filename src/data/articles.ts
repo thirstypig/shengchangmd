@@ -52,6 +52,26 @@ export const articles: Article[] = [
     ],
     relatedPage: '/immigration-medical-exam/',
   },
+  {
+    slug: 'i-693-validity-and-timing',
+    titleKey: 'articles.validityTitle',
+    summaryKey: 'articles.validitySummary',
+    reviewedBy: 'doctor',
+    lastReviewed: null,
+    sourcesChecked: '2026-09-22',
+    sources: [
+      { title: 'USCIS: Form I-693', url: 'https://www.uscis.gov/i-693' },
+      {
+        title: 'USCIS: Instructions for Form I-693',
+        url: 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf',
+      },
+      {
+        title: 'USCIS Policy Manual, Volume 8, Part B, Chapter 4',
+        url: 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4',
+      },
+    ],
+    relatedPage: '/immigration-medical-exam/',
+  },
 ];
 
 export function articleBySlug(slug: string): Article {

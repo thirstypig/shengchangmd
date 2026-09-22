@@ -1,0 +1,163 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import ArticleByline from '@components/ArticleByline.astro';
+import ArticleSources from '@components/ArticleSources.astro';
+import { getTranslation } from '@i18n/locales';
+import { articleBySlug, articleSchema } from '@data/articles';
+
+const locale = 'zh-hant';
+const t = (k: string) => getTranslation(locale, k);
+const article = articleBySlug('i-693-validity-and-timing');
+const canonicalUrl = new URL('/zh-hant/articles/i-693-validity-and-timing/', Astro.site).href;
+const title = `${t(article.titleKey)}｜${t('header.wordmark')}`;
+const description = t(article.summaryKey);
+const breadcrumbs = [
+  { label: t('home'), href: '/zh-hant/' },
+  { label: t('articles.indexTitle'), href: '/zh-hant/articles/' },
+  { label: t(article.titleKey), href: '/zh-hant/articles/i-693-validity-and-timing/' },
+];
+
+// Mirrors the English article sentence for sentence; its sources are quoted in
+// the task report. Deliberately absent: the exam fee, whether vaccines are
+// given in this office, the number of visits, turnaround and the lab location.
+const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
+const uscisPage = 'https://www.uscis.gov/i-693';
+const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
+const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={articleSchema(article, locale, canonicalUrl)}
+>
+  <article class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-10">
+        <header class="space-y-4">
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
+          <ArticleByline article={article} locale={locale} />
+        </header>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">重點摘要</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              若您的 Form I-693 是由體檢醫師在 2023 年 11 月 1 日（含）以後簽署，這份表格沒有固定的到期日。美國移民局只把它當作單一份申請的證明文件——也就是與它一併送件的那份申請——並在該申請的整個審理期間有效。您必須把它與 Form I-485 一併送件；若未一併送件，美國移民局可能會將您的 Form I-485 退件。
+            </p>
+            <p>
+              以上是截至 2026 年 9 月 22 日（本文最近一次查核資料來源的日期）的規定，依據為<a href={policyManual} rel="noopener" class={link}>美國移民局政策手冊第 8 冊 B 部分第 4 章</a>（英文）與<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。本文為美國移民局公布的一般資訊，並非針對您個人案件的建議。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">目前的規定</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              美國移民局的規定指出，2023 年 11 月 1 日（含）以後由體檢醫師簽署、且填寫完整的 Form I-693，只能用來證明申請人在健康相關事由上並無不得入境的情形，而且效力只涵蓋與該表格一併送件的那份移民申請，在其審理期間內全程有效。
+            </p>
+            <p>由此衍生兩點：</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>在您的申請等待審理期間，這份表格不會失效，沒有倒數計時的問題。</li>
+              <li>它只屬於那一份申請。您不能留著它，日後用在另一份申請上。</li>
+            </ul>
+            <p>
+              美國移民局也保留裁量權：若審理人員有理由認為您的健康狀況在體檢醫師簽署之後有所改變，或認為表格已無法反映您的健康狀況，可以要求補充證明文件，或要求一份新的或更新過的 Form I-693。
+            </p>
+            <p>
+              資料來源：<a href={policyManual} rel="noopener" class={link}>美國移民局政策手冊第 8 冊 B 部分第 4 章</a>（英文），該頁內容更新至 2026 年 9 月 18 日。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">為何其他地方仍寫著「兩年」</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              <a href={uscisInstructions} rel="noopener" class={link}>Form I-693 填表說明</a>（英文）01/20/25 版仍寫著：Form I-693 自體檢醫師簽名之日起兩年內有效。這句話被廣泛引用，也是許多人以為有兩年期限的原因。
+            </p>
+            <p>
+              對某一群人而言，兩年仍然是正確答案。美國移民局指出，體檢醫師在 2023 年 11 月 1 日<em>之前</em>簽署的 Form I-693，自簽名之日起兩年內仍具證明效力。
+            </p>
+            <p>
+              至於現在才簽署的表格，則以政策手冊為準。美國移民局自己的 Form I-693 頁面寫著：關於 Form I-693 有效期限的進一步資訊，請見美國移民局政策手冊第 8 冊 B 部分第 4 章。該章最近一次的政策更新公告日期為 2025 年 6 月 11 日，內容更新至 2026 年 9 月 18 日；填表說明的版本日期則為 01/20/25。若您閱讀本文的時間已遠晚於文末的查核日期，請直接查閱該政策手冊章節，因為那是美國移民局持續更新的頁面。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">必須與 Form I-485 一併送件</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              <a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）寫著：自 2024 年 12 月 2 日起，您必須提交 Form I-693，或部分的 Form I-693（例如疫苗接種紀錄部分），而且必須與 Form I-485 一併送件；否則美國移民局可能會將您的 Form I-485 退件。
+            </p>
+            <p>
+              退件不等於駁回：美國移民局並未就此審定您的案件，而是把整份文件退還給您。您損失的是時間，並且必須重新送件。
+            </p>
+            <p>
+              若美國移民局退件，退還時 Form I-693 的信封已被拆開，移民局指出您可以用這份已拆封的正本重新送件，連同體檢醫師原本放入的證明文件一起放回原信封，並附上退件通知書影本。
+            </p>
+            <p>
+              如何將密封信封送交美國移民局（郵寄或線上），請見<a href="/zh-hant/immigration-medical-exam/#how-it-works" class={link}>本診所移民體檢頁面</a>的「體檢流程」。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">60 天規定已經取消</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              美國移民局過去規定，體檢醫師的簽名日期不得早於您送出該項移民申請之日前 60 天。這項規定自 2021 年 12 月 9 日起暫時停止適用，美國移民局並於 2023 年 3 月 31 日永久取消。
+            </p>
+            <p>
+              截至 2026 年 9 月 22 日，這項規定並未恢復，因此目前沒有「體檢必須在送件前幾天之內完成」的規定。
+            </p>
+            <p>
+              資料來源：<a href={policyManual} rel="noopener" class={link}>美國移民局政策手冊第 8 冊 B 部分第 4 章</a>（英文）。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">申請若撤回或遭駁回</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              美國移民局指出：與 Form I-693 一併送件的移民申請若撤回或遭駁回，申請人日後提出任何需要證明健康相關事由符合資格的移民申請時，都必須附上重新填寫並簽署的新 Form I-693。
+            </p>
+            <p>
+              白話說：案件撤回或遭駁回，下一次申請就要重做體檢、重新填一份表格。舊的那一份不能沿用。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">這對安排體檢時間的意義</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>以下只根據美國移民局公布的內容，截至 2026 年 9 月 22 日：</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>沒有 60 天的時限，體檢不必趕在送件前的某個期限之內完成。</li>
+              <li>但送件之前必須已經拿到密封信封，因為表格要與 Form I-485 一併送出。</li>
+              <li>
+                列印表格之前，請先確認該用哪一個版本。體檢醫師必須使用簽名當日現行的版本。簽名日期為 2025 年 7 月 3 日（含）以後者，美國移民局只接受 01/20/25 版；現行版本公布在<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。
+              </li>
+            </ul>
+            <p>
+              體檢當天應攜帶哪些資料，請見<a href="/zh-hant/articles/what-to-bring-i-693/" class={link}>{t('articles.fullGuideLink')}</a>。
+            </p>
+            <p>
+              張醫師是美國移民局指定體檢醫師，只看 18 歲以上成人。移民體檢採預約制，請來電預約。
+            </p>
+          </div>
+        </section>
+
+        <ArticleSources article={article} locale={locale} />
+        <div class="text-center"><CallButton text="來電洽詢" size="lg" variant="filled" /></div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
