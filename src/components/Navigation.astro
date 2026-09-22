@@ -1,5 +1,6 @@
 ---
 import { getTranslation } from '@/i18n/locales';
+import { primaryNav } from '@/i18n/nav';
 
 interface Props {
   locale: string;
@@ -8,14 +9,7 @@ interface Props {
 
 const { locale, currentPath } = Astro.props;
 
-const navItems = [
-  { label: getTranslation(locale, 'home'), href: locale === 'en' ? '/' : `/${locale}/` },
-  { label: getTranslation(locale, 'about'), href: locale === 'en' ? '/about' : `/${locale}/about` },
-  { label: getTranslation(locale, 'services'), href: locale === 'en' ? '/services' : `/${locale}/services` },
-  { label: getTranslation(locale, 'insurance'), href: locale === 'en' ? '/insurance' : `/${locale}/insurance` },
-  { label: getTranslation(locale, 'hoursLocation'), href: locale === 'en' ? '/location' : `/${locale}/location` },
-  { label: getTranslation(locale, 'contact'), href: locale === 'en' ? '/contact' : `/${locale}/contact` },
-];
+const navItems = primaryNav(locale);
 
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
 ---

@@ -249,7 +249,7 @@ export const translations = {
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
       accessibility: 'Accessibility Statement',
-      resources: 'Resources',
+      site: 'Site',
       articles: 'Articles',
       // Non-empty on purpose, even though English readers never see it:
       // getTranslation() does `value || key`, so an empty string here is
@@ -318,6 +318,7 @@ export const translations = {
     insurance: 'Insurance',
     hoursLocation: 'Hours & Location',
     contact: 'Contact',
+    newPatients: 'New Patients',
     privacy: 'Privacy Policy',
     accessibility: 'Accessibility Statement',
   },
@@ -477,7 +478,7 @@ export const translations = {
       privacy: '隱私政策',
       accessibility: '無障礙說明',
       englishOnly: '（英文）',
-      resources: '資源',
+      site: '網站導覽',
       articles: '文章專區',
     },
     hero: {
@@ -509,6 +510,7 @@ export const translations = {
     insurance: '保險',
     hoursLocation: '門診時間與位置',
     contact: '聯絡',
+    newPatients: '新患者須知',
     privacy: '隱私政策',
     accessibility: '無障礙說明',
   },
@@ -668,7 +670,7 @@ export const translations = {
       privacy: '隐私政策',
       accessibility: '无障碍说明',
       englishOnly: '（英文）',
-      resources: '资源',
+      site: '网站导览',
       articles: '文章专区',
     },
     hero: {
@@ -700,6 +702,7 @@ export const translations = {
     insurance: '保险',
     hoursLocation: '门诊时间与位置',
     contact: '联络',
+    newPatients: '新患者须知',
     privacy: '隐私政策',
     accessibility: '无障碍说明',
   },
