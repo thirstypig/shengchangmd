@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getTranslation } from '@i18n/locales';
+import { articles, articlePath, formatDate, articlesIndexSchema } from '@data/articles';
+
+const locale = 'zh-hant';
+const t = (k: string) => getTranslation(locale, k);
+const canonicalUrl = new URL('/zh-hant/articles/', Astro.site).href;
+const title = `${t('articles.indexTitle')}｜${t('header.wordmark')}`;
+const description = t('articles.indexIntro');
+const breadcrumbs = [
+  { label: t('home'), href: '/zh-hant/' },
+  { label: t('articles.indexTitle'), href: '/zh-hant/articles/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={articlesIndexSchema(locale, canonicalUrl)}
+>
+  <section class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-8">
+        <div>
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('articles.indexTitle')}</h1>
+          <p class="text-gray-700">{t('articles.indexIntro')}</p>
+        </div>
+        <ul class="space-y-6">
+          {
+            articles.map((a) => (
+              <li>
+                <a href={articlePath(a.slug, locale)} class="font-serif text-xl font-bold text-primary-700 underline underline-offset-2 hover:no-underline">
+                  {t(a.titleKey)}
+                </a>
+                <p class="mt-1 text-gray-700">{t(a.summaryKey)}</p>
+                <p class="mt-1 text-sm text-gray-700">
+                  {a.lastReviewed
+                    ? t('articles.reviewedOn').replace('{date}', formatDate(a.lastReviewed, locale))
+                    : t('articles.notYetReviewed')}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+        <p>
+          <a href="/zh-hant/articles/how-we-write/" class="text-primary-700 underline underline-offset-2 hover:no-underline">
+            {t('articles.howWeWriteLink')}
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

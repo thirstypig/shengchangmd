@@ -159,6 +159,21 @@ export const translations = {
       howWeWriteLink: 'How we write these articles',
       sourcesHeading: 'Sources',
       sourcesChecked: 'Sources checked {date}.',
+      indexTitle: 'Articles',
+      indexIntro:
+        'Plain-language guides to immigration medical exams and the paperwork around them, written from official sources and reviewed by Dr. Chang.',
+      reviewedOn: 'Reviewed {date}',
+      notYetReviewed: 'Awaiting review',
+      methodTitle: 'How we write these articles',
+      methodSources:
+        'Every article explains a process (an exam, a form, a kind of coverage) using official sources only: U.S. Citizenship and Immigration Services (USCIS), the Centers for Disease Control and Prevention (CDC), the Centers for Medicare & Medicaid Services (CMS), and the California Department of Health Care Services (DHCS). Each article lists its sources and the date we last checked them.',
+      methodAi: 'Drafts are written with the help of AI, working from those sources.',
+      methodReview:
+        'Every article is reviewed twice before it is published. The practice checks that it matches how our office works, and Dr. Chang checks it for medical and regulatory accuracy. The review date on an article is the date of his review.',
+      methodNotPublished:
+        'We do not publish prices or office scheduling details here, because they change. Please call the office at {phone} and we will answer directly.',
+      methodNotAdvice: 'These articles are general information, not medical advice for your situation.',
+      methodErrors: 'If you find an error, please call {phone} or email {email}.',
     },
     communityPhotos: {
       photo1:
@@ -223,6 +238,8 @@ export const translations = {
       rightsReserved: 'All rights reserved.',
       privacy: 'Privacy Policy',
       accessibility: 'Accessibility Statement',
+      resources: 'Resources',
+      articles: 'Articles',
       // Non-empty on purpose, even though English readers never see it:
       // getTranslation() does `value || key`, so an empty string here is
       // falsy and falls through to returning the literal key
@@ -384,6 +401,19 @@ export const translations = {
       howWeWriteLink: '我們如何撰寫這些文章',
       sourcesHeading: '資料來源',
       sourcesChecked: '資料查核日期：{date}。',
+      indexTitle: '文章專區',
+      indexIntro: '以淺顯文字說明移民體檢與相關文件，依據官方資料撰寫，並經張醫師審閱。',
+      reviewedOn: '審閱日期：{date}',
+      notYetReviewed: '尚待審閱',
+      methodTitle: '我們如何撰寫這些文章',
+      methodSources:
+        '每篇文章都只依據官方資料說明一項流程（例如一項體檢、一份表格或一種保險）：美國公民及移民服務局（USCIS）、美國疾病管制與預防中心（CDC）、美國聯邦醫療保險與醫療補助服務中心（CMS），以及加州醫療服務部（DHCS）。每篇文章都列出資料來源，以及我們最近一次查核的日期。',
+      methodAi: '文章初稿由 AI 協助、依據上述資料撰寫。',
+      methodReview:
+        '每篇文章發布前都經過兩次審閱：診所確認內容符合本診所的實際作業，張醫師則審閱醫學與法規上的正確性。文章上的審閱日期，即為張醫師審閱的日期。',
+      methodNotPublished: '費用與門診排程等資訊時常變動，因此不在此公布。請來電 {phone}，我們會直接為您說明。',
+      methodNotAdvice: '這些文章為一般資訊，並非針對您個人情況的醫療建議。',
+      methodErrors: '如發現錯誤，請來電 {phone} 或寄電子郵件至 {email}。',
     },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
@@ -431,6 +461,8 @@ export const translations = {
       privacy: '隱私政策',
       accessibility: '無障礙說明',
       englishOnly: '（英文）',
+      resources: '資源',
+      articles: '文章專區',
     },
     hero: {
       cta: '立即致電',
@@ -555,6 +587,19 @@ export const translations = {
       howWeWriteLink: '我们如何撰写这些文章',
       sourcesHeading: '资料来源',
       sourcesChecked: '资料查核日期：{date}。',
+      indexTitle: '文章专区',
+      indexIntro: '以浅显文字说明移民体检与相关文件，依据官方资料撰写，并经张医师审阅。',
+      reviewedOn: '审阅日期：{date}',
+      notYetReviewed: '尚待审阅',
+      methodTitle: '我们如何撰写这些文章',
+      methodSources:
+        '每篇文章都只依据官方资料说明一项流程（例如一项体检、一份表格或一种保险）：美国公民及移民服务局（USCIS）、美国疾病管制与预防中心（CDC）、美国联邦医疗保险与医疗补助服务中心（CMS），以及加州医疗服务部（DHCS）。每篇文章都列出资料来源，以及我们最近一次查核的日期。',
+      methodAi: '文章初稿由 AI 协助、依据上述资料撰写。',
+      methodReview:
+        '每篇文章发布前都经过两次审阅：诊所确认内容符合本诊所的实际作业，张医师则审阅医学与法规上的正确性。文章上的审阅日期，即为张医师审阅的日期。',
+      methodNotPublished: '费用与门诊排程等资讯时常变动，因此不在此公布。请来电 {phone}，我们会直接为您说明。',
+      methodNotAdvice: '这些文章为一般资讯，并非针对您个人情况的医疗建议。',
+      methodErrors: '如发现错误，请来电 {phone} 或寄电子邮件至 {email}。',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',
@@ -602,6 +647,8 @@ export const translations = {
       privacy: '隐私政策',
       accessibility: '无障碍说明',
       englishOnly: '（英文）',
+      resources: '资源',
+      articles: '文章专区',
     },
     hero: {
       cta: '立即致电',
