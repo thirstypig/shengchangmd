@@ -39,7 +39,12 @@ export const locales: Record<string, LocaleMetadata> = {
     nativeName: '繁體中文',
     shortName: '繁體',
     ogLocale: 'zh_TW',
-    reviewed: false,
+    // Indexing turned ON 2026-09-22 at the owner's instruction ("just publish
+    // Chinese and English now"), ahead of Dr. Chang's read. This reverses the
+    // 2026-09-14 decision to wait for him. The Chinese copy is machine-assisted
+    // Taiwan Mandarin, reviewed only by the guards in this repo; his
+    // corrections will land on live, indexed pages.
+    reviewed: true,
   },
   'zh-hans': {
     code: 'zh-Hans',
@@ -47,7 +52,8 @@ export const locales: Record<string, LocaleMetadata> = {
     nativeName: '簡體中文',
     shortName: '简体',
     ogLocale: 'zh_CN',
-    reviewed: false,
+    // Indexing turned ON 2026-09-22; see the note on zh-hant above.
+    reviewed: true,
   },
 };
 
