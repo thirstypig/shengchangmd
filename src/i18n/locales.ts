@@ -141,6 +141,14 @@ export const translations = {
       faqChildrenA:
         'No. We see adults 18 and over. For a child, use the USCIS Find a Civil Surgeon tool to find a civil surgeon who sees children.',
     },
+    whatToBring: {
+      photoId: "A valid government-issued photo ID, such as your unexpired passport or driver's license",
+      vaccinationRecords: 'Your vaccination records',
+      otherRecords: 'Any other medical records you have',
+      formBeforeLink:
+        'Form I-693 with Part 1 filled in. Do not sign it yet: you must sign it in front of Dr. Chang. Download the current edition from ',
+      formAfterLink: '; USCIS accepts only the edition in use when the doctor signs.',
+    },
     communityPhotos: {
       photo1:
         'Congressional Proclamation of Excellence, Achievement and Commitment presented to Dr. Sheng H. Chang, November 4, 1988',
@@ -349,6 +357,14 @@ export const translations = {
       faqChildrenA:
         '很抱歉，本診所只看 18 歲以上成人。孩童的移民體檢，請使用美國移民局的 Find a Civil Surgeon 工具，尋找有看孩童的體檢醫師。',
     },
+    whatToBring: {
+      photoId: '政府核發、附照片的有效身分證件，例如未過期的護照或駕照',
+      vaccinationRecords: '您的疫苗接種紀錄',
+      otherRecords: '您手邊的其他病歷',
+      formBeforeLink:
+        '已填好第 1 部分（Part 1）的 Form I-693。請先不要簽名：您必須在張醫師面前簽名。請從 ',
+      formAfterLink: ' 下載最新版本；美國移民局只接受醫師簽名時現行的版本。',
+    },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
       photo2:
@@ -502,6 +518,14 @@ export const translations = {
       faqChildrenQ: '可以为孩童做体检吗？',
       faqChildrenA:
         '很抱歉，本诊所只看 18 岁以上成人。孩童的移民体检，请使用美国移民局的 Find a Civil Surgeon 工具，寻找有看孩童的体检医师。',
+    },
+    whatToBring: {
+      photoId: '政府核发、附照片的有效身分证件，例如未过期的护照或驾照',
+      vaccinationRecords: '您的疫苗接种纪录',
+      otherRecords: '您手边的其他病历',
+      formBeforeLink:
+        '已填好第 1 部分（Part 1）的 Form I-693。请先不要签名：您必须在张医师面前签名。请从 ',
+      formAfterLink: ' 下载最新版本；美国移民局只接受医师签名时现行的版本。',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',

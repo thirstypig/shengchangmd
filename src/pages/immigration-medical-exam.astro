@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import ExamFacts from '@components/ExamFacts.astro';
+import WhatToBring from '@components/WhatToBring.astro';
 import { practice } from '@data/practice';
 import { getExamFaq, examFaqSchema } from '@data/immigrationExam';
 import { getTranslation } from '@i18n/locales';
@@ -59,12 +60,7 @@ const breadcrumbs = [
 
       <div>
         <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">What to bring</h2>
-        <ul class="list-disc pl-6 space-y-2 text-gray-700">
-          <li>A valid government-issued photo ID, such as your unexpired passport or driver's license</li>
-          <li>Your vaccination records</li>
-          <li>Any other medical records you have</li>
-          <li>Form I-693 with Part 1 filled in. Do not sign it yet: you must sign it in front of Dr. Chang. Download the current edition from <a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">uscis.gov/i-693</a>; USCIS accepts only the edition in use when the doctor signs.</li>
-        </ul>
+        <WhatToBring locale={locale} />
         <p class="mt-4 text-gray-700">
           Source: <a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">USCIS Form I-693 page</a>.
         </p>
