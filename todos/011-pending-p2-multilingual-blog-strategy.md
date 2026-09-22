@@ -72,6 +72,11 @@ section may not be expanded; see CLAUDE.md), medical-legal specifics,
 anything pediatric (the practice sees adults only), and seasonal clinical
 topics such as flu shots (whether the office gives them is unknown).
 
+**Deliberately general (owner, 2026-09-21):** articles, like the I-693 page,
+never state the exam fee, whether vaccines are given in the office, the number
+of visits, or turnaround. Where a reader would want those, point them to call
+the office.
+
 ## Technical design notes (for the spec)
 
 - **Astro content collections**, one entry per post per locale under

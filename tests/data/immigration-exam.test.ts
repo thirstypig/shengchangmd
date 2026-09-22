@@ -49,7 +49,8 @@ describe('getExamFacts', () => {
   });
 
   it('the live data publishes nothing the owner has not confirmed', () => {
-    // Flip this only when the office confirms the value in writing.
+    // Unpublished by the owner's decision (2026-09-21): the page stays general
+    // and patients call to ask. Changing this needs the owner to reverse that.
     expect(practice.immigrationExam.vaccinesOnSite).toBeNull();
     expect(practice.immigrationExam.typicalVisits).toBeNull();
     expect(practice.immigrationExam.feeAmount).toBeNull();

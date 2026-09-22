@@ -209,12 +209,15 @@ export const practice: PracticeInfo = {
     // Owner, 2026-09-21. No page or JSON-LD said otherwise (walk-in, same-day,
     // 現場, 免預約 searched in every locale before publishing).
     appointmentOnly: true,
-    // Owner, 2026-09-21: one flat fee. The amount was not known.
+    // Owner, 2026-09-21: one flat fee.
     flatFee: true,
+    // These three stay null BY DECISION, not because they are pending. The
+    // owner chose on 2026-09-21 to keep the page deliberately general and let
+    // patients call to ask, rather than publish the fee, vaccine service or
+    // visit count. Do not fill them in without the owner reversing that.
+    // (services.astro used to claim "missing doses given" and "one visit
+    // wherever possible" from the scaffold era; that copy was removed.)
     feeAmount: null,
-    // UNKNOWN as of 2026-09-21. services.astro used to claim both ("missing
-    // doses given", "one visit wherever possible") from the scaffold era; that
-    // copy was removed when this page shipped, not confirmed.
     vaccinesOnSite: null,
     typicalVisits: null,
   },
@@ -244,7 +247,7 @@ export const practice: PracticeInfo = {
   // The languages Dr. Chang himself speaks with patients, as distinct from
   // `languages` above (what the office can serve). Matches site copy
   // published since commit 961f7de (2026-07-29), "results explained in
-  // English or Mandarin" — not yet confirmed by the owner in writing.
+  // English or Mandarin". Confirmed by the owner 2026-09-21 ("He can do both").
   doctorLanguages: ['English', 'Mandarin'],
   boardCertifications: [
     {

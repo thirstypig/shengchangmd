@@ -88,13 +88,18 @@ doctors: 小红书 (Xiaohongshu), WeChat groups, LINE. See todo 010.
 
 ## Acceptance Criteria
 
-- [ ] License status confirmed against the Medical Board, with the date recorded here
+- [x] License status confirmed against the Medical Board, with the date recorded here (owner, 2026-09-21: active)
 - [ ] Hours corrected on WebMD, CivilSurgeonFinder and every other listing that shows 6 PM
 - [ ] Google Business Profile claimed by the practice
 - [ ] Each Chinese directory in the list above checked, and listed where appropriate
 - [ ] A table in this file of every listing, its URL, and the date its fields were verified
 
 ## Work Log
+
+**2026-09-21** — **License verified active by the owner** at the Medical Board
+lookup ("he is still practicing"). WebMD's "expired in 2026" is stale data;
+correcting it is part of claiming the WebMD profile. The owner is continuing to
+claim Google Business Profile and the other listings.
 
 **2026-09-21** — Found while brainstorming the SEO strategy. Fetched WebMD and
 CivilSurgeonFinder directly and quoted their text. DCA lookup attempted, and
