@@ -236,13 +236,14 @@ this; both sentences are individually well-formed. **Grep for the negation of
 what you are about to publish, in every locale and in the structured data.**
 
 - **The I-693 immigration medical exam page** at `/immigration-medical-exam/`
-  is live on merge. Unknown and deliberately unpublished: the fee amount,
-  whether vaccines are given in the office, the number of visits, on-site vs.
-  outside lab, and turnaround time. The family medicine services page's line
-  about 例行預防接種與疫苗 / "routine immunizations" is likewise still
-  unconfirmed. `doctorLanguages` (English, Mandarin) is site copy, not yet
-  confirmed by the owner in writing. Also unconfirmed: whether the office wants
-  patients to arrive with Part 1 of Form I-693 already filled in.
+  went live 2026-09-22 (PR #67). **Deliberately general, by the owner's
+  decision of 2026-09-21:** the fee amount, whether vaccines are given in the
+  office, the number of visits, on-site vs. outside lab, and turnaround are
+  not published, and patients call to ask. That is a choice, not a gap waiting
+  to be filled — do not add these to the page or to articles, and do not keep
+  asking for them. `doctorLanguages` (English, Mandarin) confirmed by the owner
+  2026-09-21. The family medicine services page's line about
+  例行預防接種與疫苗 / "routine immunizations" is still unconfirmed.
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
 - ~~Office hours~~ — **9:00 AM – 1:00 PM confirmed by the owner 2026-08-06** and
