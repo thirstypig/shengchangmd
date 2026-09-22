@@ -1,0 +1,36 @@
+---
+/*
+  The review line on every article. While `lastReviewed` is null it renders an
+  "awaiting review" notice carrying data-unreviewed, and scripts/verify-build.mjs
+  fails any build containing that attribute, so an unreviewed article cannot
+  deploy. The date always comes from the registry, never typed by hand.
+*/
+import { getTranslation } from '@i18n/locales';
+import { formatDate, type Article } from '@data/articles';
+
+interface Props {
+  article: Article;
+  locale: string;
+}
+const { article, locale } = Astro.props;
+const t = (k: string) => getTranslation(locale, k);
+const doctor = t('header.wordmark');
+const methodHref = `${locale === 'en' ? '' : '/' + locale}/articles/how-we-write/`;
+---
+
+{
+  article.lastReviewed ? (
+    <p class="text-sm text-gray-700">
+      {t('articles.reviewedLine')
+        .replace('{doctor}', doctor)
+        .replace('{date}', formatDate(article.lastReviewed, locale))}{' '}
+      <a href={methodHref} class="text-primary-700 underline underline-offset-2 hover:no-underline">
+        {t('articles.howWeWriteLink')}
+      </a>
+    </p>
+  ) : (
+    <p data-unreviewed class="text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg p-4">
+      {t('articles.awaitingReview').replace('{doctor}', doctor)}
+    </p>
+  )
+}

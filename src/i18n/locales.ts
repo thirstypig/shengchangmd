@@ -149,6 +149,17 @@ export const translations = {
         'Form I-693 with Part 1 filled in. Do not sign it yet: you must sign it in front of Dr. Chang. Download the current edition from ',
       formAfterLink: '; USCIS accepts only the edition in use when the doctor signs.',
     },
+    articles: {
+      whatToBringTitle: 'What to bring to your I-693 exam',
+      whatToBringSummary:
+        'The documents to bring to your immigration medical exam, and how to prepare Form I-693 before you arrive.',
+      reviewedLine:
+        'Drafted with AI assistance from the official sources listed below. Medically reviewed by {doctor}, on {date}.',
+      awaitingReview: 'Awaiting medical review by {doctor}. This article is not yet published.',
+      howWeWriteLink: 'How we write these articles',
+      sourcesHeading: 'Sources',
+      sourcesChecked: 'Sources checked {date}.',
+    },
     communityPhotos: {
       photo1:
         'Congressional Proclamation of Excellence, Achievement and Commitment presented to Dr. Sheng H. Chang, November 4, 1988',
@@ -365,6 +376,15 @@ export const translations = {
         '已填好第 1 部分（Part 1）的 Form I-693。請先不要簽名：您必須在張醫師面前簽名。請從 ',
       formAfterLink: ' 下載最新版本；美國移民局只接受醫師簽名時現行的版本。',
     },
+    articles: {
+      whatToBringTitle: 'I-693 移民體檢應攜帶的資料',
+      whatToBringSummary: '移民體檢當天應攜帶的文件，以及到診前如何準備 Form I-693。',
+      reviewedLine: '本文由 AI 協助、依據下列官方資料撰寫，並經{doctor}於 {date} 醫學審閱。',
+      awaitingReview: '本文尚待{doctor}醫學審閱，尚未正式發布。',
+      howWeWriteLink: '我們如何撰寫這些文章',
+      sourcesHeading: '資料來源',
+      sourcesChecked: '資料查核日期：{date}。',
+    },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
       photo2:
@@ -526,6 +546,15 @@ export const translations = {
       formBeforeLink:
         '已填好第 1 部分（Part 1）的 Form I-693。请先不要签名：您必须在张医师面前签名。请从 ',
       formAfterLink: ' 下载最新版本；美国移民局只接受医师签名时现行的版本。',
+    },
+    articles: {
+      whatToBringTitle: 'I-693 移民体检应携带的资料',
+      whatToBringSummary: '移民体检当天应携带的文件，以及到诊前如何准备 Form I-693。',
+      reviewedLine: '本文由 AI 协助、依据下列官方资料撰写，并经{doctor}于 {date} 医学审阅。',
+      awaitingReview: '本文尚待{doctor}医学审阅，尚未正式发布。',
+      howWeWriteLink: '我们如何撰写这些文章',
+      sourcesHeading: '资料来源',
+      sourcesChecked: '资料查核日期：{date}。',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',

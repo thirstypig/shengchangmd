@@ -243,6 +243,15 @@ for (const rel of EXAM_PAGES) {
   }
 }
 
+// 7. An article must not deploy before Dr. Chang's medical review. While an
+//    article's registry entry has lastReviewed: null, ArticleByline renders a
+//    notice carrying data-unreviewed; no built page may contain it.
+for (const page of pages) {
+  if (/\sdata-unreviewed[\s>=]/.test(read(page))) {
+    fail(`${relative(DIST, page)}: article is awaiting medical review (lastReviewed is null in src/data/articles.ts)`);
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);

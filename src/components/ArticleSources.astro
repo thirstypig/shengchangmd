@@ -1,0 +1,30 @@
+---
+/* The article's sources, from the registry. No literal text. */
+import { getTranslation } from '@i18n/locales';
+import { formatDate, type Article } from '@data/articles';
+
+interface Props {
+  article: Article;
+  locale: string;
+}
+const { article, locale } = Astro.props;
+const t = (k: string) => getTranslation(locale, k);
+---
+
+<div>
+  <h2 class="font-serif text-2xl font-bold mb-4 text-gray-900">{t('articles.sourcesHeading')}</h2>
+  <ul class="list-disc pl-6 space-y-2 text-gray-700">
+    {
+      article.sources.map((s) => (
+        <li>
+          <a href={s.url} rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">
+            {s.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-4 text-sm text-gray-700">
+    {t('articles.sourcesChecked').replace('{date}', formatDate(article.sourcesChecked, locale))}
+  </p>
+</div>
