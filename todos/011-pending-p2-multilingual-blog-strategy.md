@@ -131,8 +131,12 @@ Both reviewers confirmed available (owner, 2026-09-21).
 - ~~Who drafts~~: **Claude drafts from primary sources (USCIS, CDC, CMS,
   DHCS)**; the owner and Dr. Chang review (owner, 2026-09-21). Consequence: the
   byline cannot be "by Dr. Chang". It must be "medically reviewed by".
-- Whether and how to disclose that drafts are AI-assisted (Google's "How"
-  question).
+- ~~AI disclosure~~: **both** (owner, 2026-09-21). Each post carries a short
+  line, e.g. "Drafted with AI assistance from USCIS and CDC sources. Medically
+  reviewed by Dr. Sheng Chang, M.D., on [date]." Each post also links to one
+  "How we write these articles" page (sources, AI-assisted drafting, the two
+  reviews). That page is trilingual like everything else, and the reviewed date
+  comes from `lastReviewed`, never typed by hand.
 - Section name in Chinese (e.g. 健康專欄 or 衛教文章) and the English name.
 - Could the front desk keep a simple list of the questions patients ask?
 
