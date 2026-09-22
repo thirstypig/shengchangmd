@@ -21,9 +21,13 @@ This is a strategy record. The build gets its own spec.
 
 ## Principles
 
-1. **Few posts, each one Dr. Chang stands behind.** One a month at most. The
-   limit is his review time, not writing speed. A stale or wrong post costs
-   more than a missing one.
+1. **Few posts, each one Dr. Chang stands behind.** Cadence (agreed
+   2026-09-21): **one post every two weeks for the first 2–3 months** to build
+   the I-693 cluster (about five posts), **then one a month**, plus a yearly
+   re-review of every post. Google's documentation gives no frequency signal;
+   it flags "producing lots of content on many different topics in hopes that
+   some of it might perform well" as a warning sign. A stale or wrong post
+   costs more than a missing one.
 2. **All three locales publish together.** The CLAUDE.md rule for page copy
    applies to posts too. A post that exists only in English is a sitewide
    defect.
@@ -112,13 +116,18 @@ Every new guard must be shown to fail before it counts (CLAUDE.md, Tests).
 2. Draft the English version with sources, then 繁體 (Taiwan Mandarin), then
    简体 (the same Taiwan wording in simplified characters, not mainland
    wording).
-3. Dr. Chang reads it for accuracy. Record `reviewedBy` and `lastReviewed`.
-4. One PR carrying all three locales.
+3. **The owner reviews** the English: whether it reads well, whether it matches
+   what the office actually does, and whether any practice fact is new and
+   needs confirming.
+4. **Dr. Chang reviews** medical and regulatory accuracy, and reads the 繁體
+   as a native Taiwanese reader. Only his review sets `reviewedBy` and
+   `lastReviewed`; the byline must name whoever actually reviewed.
+5. One PR carrying all three locales.
+
+Both reviewers confirmed available (owner, 2026-09-21).
 
 ## Open questions for the owner
 
-- **How much of Dr. Chang's time is realistically available for review?** This
-  sets the cadence more than anything else.
 - Who drafts: Claude from sources, the owner, or Dr. Chang?
 - Byline: "by Dr. Chang" or "medically reviewed by Dr. Chang"? Only the
   accurate one may be used.
