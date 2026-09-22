@@ -1,0 +1,221 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import ArticleByline from '@components/ArticleByline.astro';
+import ArticleSources from '@components/ArticleSources.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+import { articleBySlug, articleSchema } from '@data/articles';
+
+const locale = 'en';
+const t = (k: string) => getTranslation(locale, k);
+const article = articleBySlug('i-693-validity-and-timing');
+const canonicalUrl = new URL('/articles/i-693-validity-and-timing/', Astro.site).href;
+const title = `${t(article.titleKey)} | ${practice.doctorNameShort}`;
+const description = t(article.summaryKey);
+const breadcrumbs = [
+  { label: t('home'), href: '/' },
+  { label: t('articles.indexTitle'), href: '/articles/' },
+  { label: t(article.titleKey), href: '/articles/i-693-validity-and-timing/' },
+];
+
+// Every rule below is quoted from a uscis.gov page fetched on 2026-09-22; the
+// exact sentences, their URLs and the date checked are in the task report for
+// this article. Deliberately absent: the exam fee, whether vaccines are given
+// in this office, the number of visits, turnaround and the lab location
+// (owner decision, 2026-09-21).
+const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
+const uscisPage = 'https://www.uscis.gov/i-693';
+const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
+const policyManual = 'https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4';
+const policyAlert =
+  'https://www.uscis.gov/sites/default/files/document/policy-manual-updates/20250611-I-693Validity.pdf';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={articleSchema(article, locale, canonicalUrl)}
+>
+  <article class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-10">
+        <header class="space-y-4">
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
+          <ArticleByline article={article} locale={locale} />
+        </header>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The short answer</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              If a civil surgeon signed your Form I-693 on or after November 1, 2023, the form has no fixed expiration
+              date. USCIS treats it as evidence for one application only — the one you file it with — and for the whole
+              time that application is pending. You must file it together with your Form I-485. If you do not, USCIS
+              may reject your Form I-485.
+            </p>
+            <p>
+              That is the rule as of September 22, 2026, when we last checked these sources. It comes from the
+              <a href={policyManual} rel="noopener" class={link}>USCIS Policy Manual, Volume 8, Part B, Chapter 4</a>
+              and the <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a>. This article is general
+              information from USCIS, not advice about your own case.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The rule now</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              USCIS's wording is that, in general, a properly completed Form I-693 signed by a civil surgeon on or
+              after November 1, 2023 "can only be used as evidence to show that the applicant is not inadmissible under the
+              health-related grounds for the entire period the immigration benefit application with which the Form
+              I-693 is submitted is pending."
+            </p>
+            <p>Two things follow:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                Your form does not run out while your application is waiting to be decided. No clock counts down
+                against you.
+              </li>
+              <li>
+                It belongs to that one application. You cannot hold on to it and reuse it for a different application
+                later.
+              </li>
+            </ul>
+            <p>
+              USCIS also keeps discretion. If an officer has reason to believe your medical condition has changed since
+              the civil surgeon signed, or that the form no longer reflects your condition, the officer may ask for
+              further evidence or for a new or updated Form I-693.
+            </p>
+            <p>
+              Source: <a href={policyManual} rel="noopener" class={link}>USCIS Policy Manual, Volume 8, Part B, Chapter 4</a>,
+              current as of September 18, 2026.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">Why you will see "two years" elsewhere</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              The <a href={uscisInstructions} rel="noopener" class={link}>Instructions for Form I-693</a>, edition
+              01/20/25, still say: "Form I-693 remains valid for two years from the date of the civil surgeon's
+              signature." That sentence is widely repeated, and it is why many people expect two years.
+            </p>
+            <p>
+              Two years is still the right answer for one group. USCIS says a Form I-693 signed by a civil surgeon
+              <em>before</em> November 1, 2023 "retains evidentiary value for 2 years from the date of the civil surgeon's
+              signature" — though a form signed before that date passed its two-year mark in October 2025.
+            </p>
+            <p>
+              For a form signed today, the Policy Manual governs. USCIS's own Form I-693 page says: "For more
+              information on the validity of Form I-693, see the USCIS Policy Manual Volume 8, Part B, Chapter 4." The
+              Policy Manual chapter was last changed by a policy alert dated June 11, 2025 and is current as of
+              September 18, 2026; the instructions carry the 01/20/25 edition date. If you are reading this well after
+              the date below, check that chapter, because that is the page USCIS keeps current.
+            </p>
+            <p>
+              That June 2025 update, <a href={policyAlert} rel="noopener" class={link}>USCIS Policy Alert PA-2025-08</a>,
+              says so directly: "The guidance contained in the Policy Manual is controlling and supersedes any related
+              prior guidance." So where the Policy Manual and the older instructions disagree, the Policy Manual — and
+              the no-fixed-expiration rule above — is the one that governs.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">File it with your Form I-485</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              The <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a> says: "Effective
+              Dec. 2, 2024, you must submit Form I-693, or a partial Form I-693 (such as the Vaccination Record), and
+              you must submit it with your Form I-485. Otherwise, we may reject your Form I-485."
+            </p>
+            <p>
+              A rejection is not a denial: USCIS does not decide your case, it sends the package back. You lose the
+              filing date and file again.
+            </p>
+            <p>
+              If USCIS rejects a package and returns it with the Form I-693 envelope opened, USCIS says you may refile
+              using that original opened form, in its original envelope with the civil surgeon's supporting documents,
+              together with a copy of the rejection notice.
+            </p>
+            <p>
+              How to hand the sealed envelope in, by mail or online, is under "How it works" on
+              <a href="/immigration-medical-exam/#how-it-works" class={link}>our immigration medical exam page</a>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The 60-day rule is gone</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              USCIS used to require the civil surgeon's signature to be dated no more than 60 days before you filed
+              the underlying application. That requirement was temporarily waived beginning December 9, 2021, and
+              permanently removed on March 31, 2023.
+            </p>
+            <p>
+              It has not returned, so as of September 22, 2026 there is no rule requiring your exam to fall within a
+              set number of days before you file.
+            </p>
+            <p>
+              Source: <a href={policyManual} rel="noopener" class={link}>USCIS Policy Manual, Volume 8, Part B, Chapter 4</a>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">If your application is withdrawn or denied</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              USCIS says: "If the immigration benefit application with which the Form I-693 is submitted is withdrawn
+              or denied, then an applicant needs to submit a newly completed and signed Form I-693 with any future
+              immigration benefit application that requires an alien to demonstrate that he or she is not inadmissible
+              on health-related grounds."
+            </p>
+            <p>
+              In plain terms: a withdrawn or denied case means a new exam and a new form for the next application. The
+              old one does not carry over.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">What this means for timing your exam</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>Working only from what USCIS publishes, as of September 22, 2026:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>There is no 60-day window to hit, so the exam is not a race against a filing deadline.</li>
+              <li>
+                You do need the sealed envelope in hand before you file, because the form has to go in with your Form
+                I-485.
+              </li>
+              <li>
+                Check which edition of the form to use before you print it. The civil surgeon is required to use, in
+                almost all cases, the edition in use on the day they sign. USCIS accepts only the 01/20/25 edition for
+                signatures dated July 3, 2025 or later, and the current edition is listed on the
+                <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a>.
+              </li>
+            </ul>
+            <p>
+              For the day itself, see
+              <a href="/articles/what-to-bring-i-693/" class={link}>{t('articles.fullGuideLink')}</a>.
+            </p>
+            <p>
+              Dr. Chang is a USCIS-designated civil surgeon. He sees adults 18 and over, and exams are by appointment
+              only, so please call the office to book.
+            </p>
+          </div>
+        </section>
+
+        <ArticleSources article={article} locale={locale} />
+        <div class="text-center"><CallButton text="Call the office" size="lg" variant="filled" /></div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

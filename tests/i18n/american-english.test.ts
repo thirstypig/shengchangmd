@@ -124,6 +124,7 @@ const BRITISH: Array<[string, string]> = [
   ['specialised', 'specialized'],
   ['enquiry', 'inquiry'],
   ['enquiries', 'inquiries'],
+  ['expiry', 'expiration'],
   ['programme', 'program'],
   // General prose
   ['colour', 'color'],
