@@ -1,0 +1,28 @@
+---
+/*
+  The I-693 quick facts box. No literal text: every label and value comes from
+  getExamFacts(), which drops any fact that is null in practice.ts.
+*/
+import { getExamFacts } from '@data/immigrationExam';
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+}
+const { locale } = Astro.props;
+const facts = getExamFacts(locale);
+---
+
+<div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+  <h2 class="font-serif text-2xl font-bold mb-4 text-gray-900">
+    {getTranslation(locale, 'immigrationExam.factsHeading')}
+  </h2>
+  <dl class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3">
+    {facts.map((f) => (
+      <>
+        <dt class="font-semibold text-gray-900">{f.label}</dt>
+        <dd class="sm:col-span-2 text-gray-700">{f.value}</dd>
+      </>
+    ))}
+  </dl>
+</div>

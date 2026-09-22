@@ -108,7 +108,7 @@ const doctorSchema = {
     '@type': 'Organization',
     name: practice.doctorName,
   },
-  knowsLanguage: practice.languages,
+  knowsLanguage: practice.doctorLanguages,
   hasCredential: practice.boardCertifications.map((cert) => ({
     '@type': 'EducationalOccupationalCredential',
     name: `Board Certified in ${cert.specialty}`,
@@ -178,7 +178,8 @@ const servicesSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'MedicalService',
-    '@id': new URL('/services/#immigration-exams', Astro.site).href,
+    '@id': new URL('/immigration-medical-exam/#service', Astro.site).href,
+    url: new URL('/immigration-medical-exam/', Astro.site).href,
     name: 'Immigration Medical Services (Form I-693)',
     description:
       'Immigration medical examination completed by a USCIS-designated civil surgeon, with Form I-693 sealed for submission with an adjustment of status application.',

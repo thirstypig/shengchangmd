@@ -1,0 +1,111 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import ExamFacts from '@components/ExamFacts.astro';
+import { getExamFaq, examFaqSchema } from '@data/immigrationExam';
+import { getTranslation } from '@i18n/locales';
+
+const locale = 'zh-hant';
+const title = '移民體檢（Form I-693）｜加州聖蓋博｜張勝雄醫師';
+const description =
+  '張勝雄醫師為美國移民局指定體檢醫師，於加州聖蓋博提供 Form I-693 移民體檢。採預約制，並以國語或英語為您說明結果。';
+const canonicalUrl = new URL('/zh-hant/immigration-medical-exam/', Astro.site).href;
+const faq = getExamFaq(locale);
+
+const breadcrumbs = [
+  { label: getTranslation(locale, 'home'), href: '/zh-hant/' },
+  { label: getTranslation(locale, 'services'), href: '/zh-hant/services/' },
+  { label: '移民體檢', href: '/zh-hant/immigration-medical-exam/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={examFaqSchema(locale, canonicalUrl)}
+>
+  <HeroSection
+    headline="移民體檢（Form I-693）"
+    subheadline="張醫師為美國移民局指定體檢醫師（civil surgeon），移民體檢採預約制。"
+    locale={locale}
+    illustration="immigration"
+  />
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+    <div class="max-w-3xl mx-auto space-y-12">
+      <ExamFacts locale={locale} />
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">體檢項目</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li>詢問病史，並檢閱您帶來的病歷</li>
+          <li>身體檢查，包括心理狀態評估</li>
+          <li>結核病血液檢驗（IGRA，丙型干擾素釋放試驗）。若檢驗結果為陽性，或屬其他特定情況，須加照胸部 X 光。</li>
+          <li>梅毒血液檢驗，18 至 44 歲須接受</li>
+          <li>淋病檢驗，18 至 24 歲須接受</li>
+          <li>依 CDC 規定，核對您的疫苗接種紀錄是否符合您的年齡應接種的疫苗</li>
+        </ul>
+        <p class="mt-4 text-gray-700">
+          您需要做哪些檢驗，視您的年齡與病史而定。相關規定由美國疾病管制與預防中心（CDC）訂定，本診所依規定辦理。資料來源：
+          <a href="https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/index.html" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">CDC 體檢醫師技術指引</a>（英文）。
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">應攜帶的資料</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li>政府核發、附照片的有效身分證件，例如未過期的護照或駕照</li>
+          <li>您的疫苗接種紀錄</li>
+          <li>您手邊的其他病歷</li>
+          <li>已填好第 1 部分（Part 1）的 Form I-693。請先不要簽名：您必須在張醫師面前簽名。請從 <a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">uscis.gov/i-693</a> 下載最新版本；美國移民局只接受醫師簽名時現行的版本。</li>
+        </ul>
+        <p class="mt-4 text-gray-700">
+          資料來源：<a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">美國移民局 Form I-693 頁面</a>（英文）。
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">體檢流程</h2>
+        <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+          <li>來電預約。移民體檢採預約制。</li>
+          <li>依上述項目進行體檢。</li>
+          <li>
+            張醫師填妥 Form I-693 後，以密封信封交給您。表格須由您本人（而非醫師）送交美國移民局。若以郵寄方式申請 Form I-485，請將
+            Form I-693 裝在原密封信封內寄出，不可拆封。若在線上申請，美國移民局要求您拆開信封、上傳表格，並保留表格正本與信封，直到案件審理完成。
+          </li>
+          <li>
+            送件時間（資訊查核日期：2026 年 9 月 21 日）：美國移民局規定，Form I-693 必須與 Form I-485 一併送件，否則 Form I-485
+            可能遭退件。美國移民局已不再要求醫師的簽名日期須在送件前 60 天內。2023 年 11 月 1 日（含）以後簽署的 Form I-693，原則上只適用於與其一併送件的那份申請；若該申請撤回或遭駁回，日後再提出申請時，須附上新的
+            Form I-693。資料來源：
+            <a href="https://www.uscis.gov/i-693" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">美國移民局 Form I-693 頁面</a>、
+            <a href="https://www.uscis.gov/policy-manual/volume-8-part-b-chapter-4" rel="noopener" class="text-primary-700 underline underline-offset-2 hover:no-underline">美國移民局政策手冊第 8 冊 B 部分第 4 章</a>（皆為英文）。
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+          {getTranslation(locale, 'immigrationExam.faqHeading')}
+        </h2>
+        <dl class="exam-faq space-y-6">
+          {faq.map((q) => (
+            <div>
+              <dt class="font-semibold text-gray-900">{q.question}</dt>
+              <dd class="mt-2 text-gray-700">{q.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="text-center">
+        <CallButton text="來電預約體檢" size="lg" variant="filled" />
+      </div>
+    </div>
+    </div>
+  </section>
+</BaseLayout>

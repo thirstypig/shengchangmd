@@ -32,6 +32,15 @@ const addressParts: AddressParts = {
   country: 'US',
 };
 
+export interface ImmigrationExamFacts {
+  appointmentOnly: boolean;
+  flatFee: boolean;
+  /** Display string including currency, e.g. '$350'. */
+  feeAmount: string | null;
+  vaccinesOnSite: boolean | null;
+  typicalVisits: number | null;
+}
+
 export interface PracticeInfo {
   doctorName: string;
   /**
@@ -78,6 +87,12 @@ export interface PracticeInfo {
    * physicians of any specialty, not a surgical qualification.
    */
   civilSurgeon: boolean;
+  /**
+   * Form I-693 exam facts. `null` means UNKNOWN, and an unknown fact renders
+   * nothing: see getExamFacts() in immigrationExam.ts. Do not fill a null in
+   * without the office confirming it in writing.
+   */
+  immigrationExam: ImmigrationExamFacts;
   education: {
     medicalDegree: string;
     school: string;
@@ -90,6 +105,13 @@ export interface PracticeInfo {
     secondary: string[];
   };
   languages: string[];
+  /**
+   * The languages Dr. Chang himself speaks with patients, as distinct from
+   * `languages` above (what the office as a whole can serve). Matches site
+   * copy published since commit 961f7de (2026-07-29), "results explained in
+   * English or Mandarin" — not yet confirmed by the owner in writing.
+   */
+  doctorLanguages: string[];
   boardCertifications: BoardCertification[];
 }
 
@@ -183,6 +205,19 @@ export const practice: PracticeInfo = {
   },
   acceptingNewPatients: true,
   civilSurgeon: true,
+  immigrationExam: {
+    // Owner, 2026-09-21. No page or JSON-LD said otherwise (walk-in, same-day,
+    // 現場, 免預約 searched in every locale before publishing).
+    appointmentOnly: true,
+    // Owner, 2026-09-21: one flat fee. The amount was not known.
+    flatFee: true,
+    feeAmount: null,
+    // UNKNOWN as of 2026-09-21. services.astro used to claim both ("missing
+    // doses given", "one visit wherever possible") from the scaffold era; that
+    // copy was removed when this page shipped, not confirmed.
+    vaccinesOnSite: null,
+    typicalVisits: null,
+  },
   education: {
     medicalDegree: 'M.D.',
     school: 'National Taiwan University College of Medicine',
@@ -206,6 +241,11 @@ export const practice: PracticeInfo = {
   // actually serve a patient in, not about Dr. Chang alone — if a language here
   // depends on a particular staff member being present, it should come off.
   languages: ['English', 'Mandarin', 'Cantonese', 'Spanish', 'Vietnamese'],
+  // The languages Dr. Chang himself speaks with patients, as distinct from
+  // `languages` above (what the office can serve). Matches site copy
+  // published since commit 961f7de (2026-07-29), "results explained in
+  // English or Mandarin" — not yet confirmed by the owner in writing.
+  doctorLanguages: ['English', 'Mandarin'],
   boardCertifications: [
     {
       board: 'American Board of Family Medicine',
