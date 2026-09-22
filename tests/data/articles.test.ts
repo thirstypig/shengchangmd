@@ -42,6 +42,18 @@ describe('the article registry', () => {
   });
 });
 
+describe('articles.draftLine', () => {
+  it('is a real string in every locale and names no reviewer', () => {
+    for (const locale of LOCALES) {
+      const value = getTranslation(locale, 'articles.draftLine');
+      expect(value, locale).not.toBe('articles.draftLine');
+      expect(value, locale).not.toContain('Sheng Chang');
+      expect(value, locale).not.toContain('張勝雄');
+      expect(value, locale).not.toContain('张胜雄');
+    }
+  });
+});
+
 describe('formatDate', () => {
   it('formats per locale', () => {
     expect(formatDate('2026-09-22', 'en')).toBe('September 22, 2026');

@@ -1,9 +1,10 @@
 ---
 /*
-  The review line on every article. While `lastReviewed` is null it renders an
-  "awaiting review" notice carrying data-unreviewed, and scripts/verify-build.mjs
-  fails any build containing that attribute, so an unreviewed article cannot
-  deploy. The date always comes from the registry, never typed by hand.
+  The review line on every article. While `lastReviewed` is null it renders a
+  neutral draft-disclosure line carrying data-unreviewed, which makes no
+  review claim. scripts/verify-build.mjs uses that marker to fail any build
+  where such a page's JSON-LD claims reviewedBy or lastReviewed. The date
+  always comes from the registry, never typed by hand.
 */
 import { getTranslation } from '@i18n/locales';
 import { formatDate, type Article } from '@data/articles';
@@ -29,8 +30,11 @@ const methodHref = `${locale === 'en' ? '' : '/' + locale}/articles/how-we-write
       </a>
     </p>
   ) : (
-    <p data-article-byline data-unreviewed class="text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg p-4">
-      {t('articles.awaitingReview').replace('{doctor}', doctor)}
+    <p data-article-byline data-unreviewed class="text-sm text-gray-700">
+      {t('articles.draftLine')}{' '}
+      <a href={methodHref} class="text-primary-700 underline underline-offset-2 hover:no-underline">
+        {t('articles.howWeWriteLink')}
+      </a>
     </p>
   )
 }

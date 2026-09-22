@@ -472,11 +472,18 @@ what you are about to publish, in every locale and in the structured data.**
   the internet content") in the load-bearing insurance qualifier. Page speed and
   Google Search Console have never been measured here.
 - **The Articles section and its first article, "What to bring to your I-693
-  exam", await Dr. Chang's medical review** (branch `feat/articles-section`,
-  2026-09-22). While `lastReviewed` is `null` in `src/data/articles.ts`, the
-  build fails **by design** — `verify-build.mjs` refuses any page carrying
-  `data-unreviewed`. Merging before the review would therefore block every
-  deploy of the whole site, not just the article. **Never set `lastReviewed`
+  exam", ship WITHOUT Dr. Chang's medical review** (owner decision, branch
+  `feat/articles-section`, 2026-09-22, reversing the build-blocking gate
+  written earlier the same day). While `lastReviewed` is `null` in
+  `src/data/articles.ts`, the article renders `articles.draftLine` — a
+  neutral disclosure that makes no review claim, no "medically reviewed by"
+  line — and the build no longer fails because of it. The rule now enforced
+  by `verify-build.mjs` is narrower and permanent: an unreviewed article
+  (any page carrying `data-unreviewed`) may ship, but it must never claim a
+  review, on the page or in structured data — the build fails if such a
+  page's JSON-LD contains `reviewedBy` or `lastReviewed`. Adding Dr. Chang's
+  review date later is what adds the "Medically reviewed by" line and the
+  `reviewedBy`/`lastReviewed` structured data; **never set `lastReviewed`
   without the owner relaying the date of Dr. Chang's review.**
 
 ## Photographs
@@ -528,7 +535,7 @@ automated check in this repo passed while this was about to ship:
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 39 pages; postbuild runs verify-css + verify-build
-npm test                             # 265 vitest tests
+npm test                             # 266 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -546,7 +553,7 @@ touching the build config.
 
 ## Tests
 
-Thirteen files, 265 tests, run with `npm test`:
+Thirteen files, 266 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as

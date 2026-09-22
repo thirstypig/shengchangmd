@@ -243,12 +243,17 @@ for (const rel of EXAM_PAGES) {
   }
 }
 
-// 7. An article must not deploy before Dr. Chang's medical review. While an
-//    article's registry entry has lastReviewed: null, ArticleByline renders a
-//    notice carrying data-unreviewed; no built page may contain it.
+// 7. An unreviewed article may ship (owner decision, 2026-09-22: publish
+//    before Dr. Chang's review rather than block on it), but it must never
+//    claim a medical review it has not had, on the page or in structured
+//    data. While an article's registry entry has lastReviewed: null,
+//    ArticleByline renders data-unreviewed; any built page carrying that
+//    marker fails if its JSON-LD asserts reviewedBy or lastReviewed.
 for (const page of pages) {
-  if (/\sdata-unreviewed[\s>=]/.test(read(page))) {
-    fail(`${relative(DIST, page)}: article is awaiting medical review (lastReviewed is null in src/data/articles.ts)`);
+  const html = read(page);
+  if (!/\sdata-unreviewed[\s>=]/.test(html)) continue;
+  if (/"reviewedBy"/.test(html) || /"lastReviewed"/.test(html)) {
+    fail(`${relative(DIST, page)}: page is marked data-unreviewed but its JSON-LD claims reviewedBy or lastReviewed`);
   }
 }
 
