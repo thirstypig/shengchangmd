@@ -1,0 +1,40 @@
+---
+/*
+  The review line on every article. While `lastReviewed` is null it renders a
+  neutral draft-disclosure line carrying data-unreviewed, which makes no
+  review claim. scripts/verify-build.mjs uses that marker to fail any build
+  where such a page's JSON-LD claims reviewedBy or lastReviewed. The date
+  always comes from the registry, never typed by hand.
+*/
+import { getTranslation } from '@i18n/locales';
+import { formatDate, type Article } from '@data/articles';
+
+interface Props {
+  article: Article;
+  locale: string;
+}
+const { article, locale } = Astro.props;
+const t = (k: string) => getTranslation(locale, k);
+const doctor = t('header.wordmark');
+const methodHref = `${locale === 'en' ? '' : '/' + locale}/articles/how-we-write/`;
+---
+
+{
+  article.lastReviewed ? (
+    <p data-article-byline class="text-sm text-gray-700">
+      {t('articles.reviewedLine')
+        .replace('{doctor}', doctor)
+        .replace('{date}', formatDate(article.lastReviewed, locale))}{' '}
+      <a href={methodHref} class="text-primary-700 underline underline-offset-2 hover:no-underline">
+        {t('articles.howWeWriteLink')}
+      </a>
+    </p>
+  ) : (
+    <p data-article-byline data-unreviewed class="text-sm text-gray-700">
+      {t('articles.draftLine')}{' '}
+      <a href={methodHref} class="text-primary-700 underline underline-offset-2 hover:no-underline">
+        {t('articles.howWeWriteLink')}
+      </a>
+    </p>
+  )
+}

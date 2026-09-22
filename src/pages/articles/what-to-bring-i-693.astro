@@ -1,0 +1,208 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import WhatToBring from '@components/WhatToBring.astro';
+import ArticleByline from '@components/ArticleByline.astro';
+import ArticleSources from '@components/ArticleSources.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+import { articleBySlug, articleSchema } from '@data/articles';
+
+const locale = 'en';
+const t = (k: string) => getTranslation(locale, k);
+const article = articleBySlug('what-to-bring-i-693');
+const canonicalUrl = new URL('/articles/what-to-bring-i-693/', Astro.site).href;
+const title = `${t(article.titleKey)} | ${practice.doctorNameShort}`;
+const description = t(article.summaryKey);
+const breadcrumbs = [
+  { label: t('home'), href: '/' },
+  { label: t('articles.indexTitle'), href: '/articles/' },
+  { label: t(article.titleKey), href: '/articles/what-to-bring-i-693/' },
+];
+
+// Every statement below is sourced; the quoted sentences, their URLs and the
+// date checked are in the task report for this article. Deliberately absent:
+// the exam fee, whether vaccines are given in this office, the number of
+// visits, turnaround and the lab location (owner decision, 2026-09-21).
+const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
+const uscisPage = 'https://www.uscis.gov/i-693';
+const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
+const cdcVaccination = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/vaccination.html';
+const cdcTuberculosis = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/tuberculosis.html';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={articleSchema(article, locale, canonicalUrl)}
+>
+  <article class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-10">
+        <header class="space-y-4">
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
+          <ArticleByline article={article} locale={locale} />
+        </header>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">Who this guide is for</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              If you are applying for a Green Card from inside the United States (adjustment of status, on Form
+              I-485), USCIS requires Form I-693, the Report of Immigration Medical Examination and Vaccination Record.
+              Only a USCIS-designated civil surgeon can complete it. Some applicants who already had a medical exam
+              abroad, such as certain refugees, need only part of the form; the
+              <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a> explains who.
+            </p>
+            <p>
+              Dr. Chang is a civil surgeon. He sees adults 18 and over, and exams are by appointment only, so please
+              call the office to book. This guide covers what to bring and how to prepare the form. It is general
+              information from USCIS and the CDC, not advice about your own case.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">The checklist</h2>
+          <WhatToBring locale={locale} />
+          <p class="mt-4 text-gray-700">
+            Source: <a href={uscisInstructions} rel="noopener" class={link}>USCIS Instructions for Form I-693</a>. The
+            sections below explain each item.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">Your vaccination records</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>The CDC's rules for civil surgeons say which records count:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                A personal vaccination record, or a copy of a medical chart with entries made by a physician or other
+                appropriate medical personnel.
+              </li>
+              <li>Each dose must show the full date it was given: month, day and year.</li>
+              <li>The record must not appear to have been altered, and the dates should seem reasonable.</li>
+              <li>A dose you remember getting but have no written record of does not count.</li>
+            </ul>
+            <p>
+              The CDC's rules also accept laboratory evidence of immunity to measles, mumps, rubella, hepatitis A,
+              hepatitis B, polio (for polio, the test must cover all three types of poliovirus) and varicella
+              (chickenpox) when there is no acceptable vaccination record for that disease. If you have results from a blood test like this, bring them too.
+            </p>
+            <p>
+              If your records are missing or incomplete, the CDC's rules say you do not have to finish every vaccine
+              series before you adjust status. Instead, you need at least one dose of each required vaccine you are
+              not up to date on. Which vaccines are required depends on your age. USCIS's instructions say you may ask
+              your own doctor to give those vaccines after the civil surgeon has evaluated you, and then show those
+              records to the civil surgeon to note on Form I-693.
+            </p>
+            <p>
+              Source: <a href={cdcVaccination} rel="noopener" class={link}>CDC Vaccination Technical Instructions for Civil Surgeons</a>
+              and <a href={uscisInstructions} rel="noopener" class={link}>USCIS Instructions for Form I-693</a>.
+            </p>
+            <p class="font-semibold text-gray-900">
+              To find out how this works at our office, please call and ask before your exam.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">Records not in English</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              The CDC's rules say the responsibility lies with the applicant to provide reliable English
+              translations of all records. If any of your vaccination or medical records are in another language, bring an English
+              translation with them.
+            </p>
+            <p>
+              Source: <a href={cdcVaccination} rel="noopener" class={link}>CDC Vaccination Technical Instructions for Civil Surgeons</a>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">If you have had tuberculosis or a positive TB test</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              The exam includes a TB blood test (IGRA). If you have a TB history, written documentation matters. The
+              CDC's rules for civil surgeons say:
+            </p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                <strong class="font-semibold text-gray-900">A previous positive TB blood test (IGRA).</strong> Written
+                documentation from a physician of a previous positive IGRA means you do not need a new one, though a
+                chest X-ray is then required. The documentation must include the date of the test, the type of IGRA,
+                the results in standard units of measurement, the interpretation (positive), and the testing
+                physician's name, signature and office information.
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">A previous positive skin test (TST).</strong> This does not
+                replace the IGRA; you must still have one.
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">Completed treatment.</strong> Bring documentation of your
+                diagnosis and of completing treatment, whether for TB disease or for latent TB infection. If you
+                report completing treatment for TB disease but have no documentation, you are evaluated as if you had
+                not had TB disease.
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">Earlier chest X-rays.</strong> A chest X-ray reading must
+                include a comparison with prior chest X-rays, if available, so bring any earlier chest X-ray reports
+                or images you have.
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">A TB diagnosis in the United States.</strong> The civil
+                surgeon should try to get those records from the state or local health department, or ask you to get
+                them and bring them.
+              </li>
+            </ul>
+            <p>
+              Source: <a href={cdcTuberculosis} rel="noopener" class={link}>CDC Tuberculosis Technical Instructions for Civil Surgeons</a>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">Filling in Part 1 of Form I-693</h2>
+          <div class="space-y-4 text-gray-700">
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                Download the form from the <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a>.
+                That page says which edition USCIS accepts, based on the date the civil surgeon signs. The edition date
+                is printed at the bottom of each page of the form.
+              </li>
+              <li>
+                Fill in only Part 1, Information About You, plus your name and A-Number (if you have one) at the top
+                of each page. If you do not have an A-Number, write "N/A." The civil surgeon, and any other doctors,
+                clinics or health departments you are referred to, complete the other parts.
+              </li>
+              <li>Type or print legibly in black ink.</li>
+              <li>
+                Do not sign the form yet. USCIS's instructions say not to sign it until the civil surgeon tells you to,
+                and that you must sign in the civil surgeon's presence.
+              </li>
+            </ul>
+            <p>
+              Source: <a href={uscisInstructions} rel="noopener" class={link}>USCIS Instructions for Form I-693</a> and
+              the <a href={uscisPage} rel="noopener" class={link}>USCIS Form I-693 page</a>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">After the exam</h2>
+          <p class="text-gray-700">
+            What happens next, including how to submit the sealed form to USCIS, is under "How it works" on
+            <a href="/immigration-medical-exam/#how-it-works" class={link}>our immigration medical exam page</a>.
+          </p>
+        </section>
+
+        <ArticleSources article={article} locale={locale} />
+        <div class="text-center"><CallButton text="Call the office" size="lg" variant="filled" /></div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -243,6 +243,53 @@ for (const rel of EXAM_PAGES) {
   }
 }
 
+// 7. An unreviewed article may ship (owner decision, 2026-09-22: publish
+//    before Dr. Chang's review rather than block on it), but it must never
+//    claim a medical review it has not had, on the page or in structured
+//    data. While an article's registry entry has lastReviewed: null,
+//    ArticleByline renders data-unreviewed; any built page carrying that
+//    marker fails if its JSON-LD asserts reviewedBy or lastReviewed.
+for (const page of pages) {
+  const html = read(page);
+  if (!/\sdata-unreviewed[\s>=]/.test(html)) continue;
+  if (/"reviewedBy"/.test(html) || /"lastReviewed"/.test(html)) {
+    fail(`${relative(DIST, page)}: page is marked data-unreviewed but its JSON-LD claims reviewedBy or lastReviewed`);
+  }
+}
+
+// 8. The I-693 page and the "What to bring" article render the same list from
+//    one component. Compare the built lists, so a hand edit to either copy fails.
+const listText = (html) => {
+  const m = html.match(/<ul data-what-to-bring[^>]*>([\s\S]*?)<\/ul>/);
+  return m ? m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : null;
+};
+for (const prefix of ['', 'zh-hant/', 'zh-hans/']) {
+  const examFile = join(DIST, `${prefix}immigration-medical-exam/index.html`);
+  const articleFile = join(DIST, `${prefix}articles/what-to-bring-i-693/index.html`);
+  if (!existsSync(examFile) || !existsSync(articleFile)) {
+    fail(`${prefix || 'en/'}: I-693 page or "What to bring" article not built`);
+    continue;
+  }
+  const a = listText(read(examFile));
+  const b = listText(read(articleFile));
+  if (!a || !b) fail(`${prefix || 'en/'}: "What to bring" list missing from the I-693 page or the article`);
+  else if (a !== b) fail(`${prefix || 'en/'}: "What to bring" lists differ between the I-693 page and the article`);
+}
+
+// 9. Check 7 only fires if an article page renders ArticleByline. An article
+//    page that omits it, or one with no registry entry, would deploy with no
+//    review line and no gate. So every built article page must carry the
+//    byline's data-article-byline marker (the index and how-we-write are not
+//    articles).
+for (const page of pages) {
+  const rel = relative(DIST, page).split('\\').join('/');
+  const m = rel.match(/^(?:zh-hant\/|zh-hans\/)?articles\/([^/]+)\/index\.html$/);
+  if (!m || m[1] === 'how-we-write') continue;
+  if (!/\sdata-article-byline[\s>=]/.test(read(page))) {
+    fail(`${rel}: article page does not render ArticleByline (no data-article-byline), so the review gate cannot see it — every article page must render ArticleByline`);
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);

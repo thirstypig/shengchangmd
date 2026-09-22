@@ -1,0 +1,30 @@
+---
+/*
+  The I-693 "What to bring" list, rendered by both the I-693 page and the
+  "What to bring" article, so the two can never disagree. verify-build
+  compares the built copies. All copy comes from locales.ts; the one literal,
+  "uscis.gov/i-693", is a locale-neutral identifier like a form number, and a
+  locale key for it would be identical in every locale, which locale-coverage
+  rejects.
+*/
+import { getTranslation } from '@i18n/locales';
+
+interface Props {
+  locale: string;
+}
+const { locale } = Astro.props;
+const t = (k: string) => getTranslation(locale, k);
+---
+
+<ul data-what-to-bring class="list-disc pl-6 space-y-2 text-gray-700">
+  <li>{t('whatToBring.photoId')}</li>
+  <li>{t('whatToBring.vaccinationRecords')}</li>
+  <li>{t('whatToBring.otherRecords')}</li>
+  <li>
+    {t('whatToBring.formBeforeLink')}<a
+      href="https://www.uscis.gov/i-693"
+      rel="noopener"
+      class="text-primary-700 underline underline-offset-2 hover:no-underline">uscis.gov/i-693</a
+    >{t('whatToBring.formAfterLink')}
+  </li>
+</ul>

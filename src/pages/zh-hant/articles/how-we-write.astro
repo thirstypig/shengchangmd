@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { practice } from '@data/practice';
+import { getTranslation } from '@i18n/locales';
+
+const locale = 'zh-hant';
+const t = (k: string) => getTranslation(locale, k);
+const canonicalUrl = new URL('/zh-hant/articles/how-we-write/', Astro.site).href;
+const title = `${t('articles.methodTitle')}｜${t('header.wordmark')}`;
+const description = t('articles.methodAi');
+const breadcrumbs = [
+  { label: t('home'), href: '/zh-hant/' },
+  { label: t('articles.indexTitle'), href: '/zh-hant/articles/' },
+  { label: t('articles.methodTitle'), href: '/zh-hant/articles/how-we-write/' },
+];
+const fill = (s: string) => s.replace('{phone}', practice.phone).replace('{email}', practice.email);
+---
+
+<BaseLayout title={title} description={description} locale={locale} canonicalUrl={canonicalUrl} breadcrumbs={breadcrumbs}>
+  <section class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-6 text-gray-700">
+        <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t('articles.methodTitle')}</h1>
+        <p>{t('articles.methodSources')}</p>
+        <p>{t('articles.methodAi')}</p>
+        <p>{t('articles.methodReview')}</p>
+        <p>{fill(t('articles.methodNotPublished'))}</p>
+        <p>{t('articles.methodNotAdvice')}</p>
+        <p>{fill(t('articles.methodErrors'))}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

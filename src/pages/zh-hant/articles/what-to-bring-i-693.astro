@@ -1,0 +1,163 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import WhatToBring from '@components/WhatToBring.astro';
+import ArticleByline from '@components/ArticleByline.astro';
+import ArticleSources from '@components/ArticleSources.astro';
+import { getTranslation } from '@i18n/locales';
+import { articleBySlug, articleSchema } from '@data/articles';
+
+const locale = 'zh-hant';
+const t = (k: string) => getTranslation(locale, k);
+const article = articleBySlug('what-to-bring-i-693');
+const canonicalUrl = new URL('/zh-hant/articles/what-to-bring-i-693/', Astro.site).href;
+const title = `${t(article.titleKey)}｜${t('header.wordmark')}`;
+const description = t(article.summaryKey);
+const breadcrumbs = [
+  { label: t('home'), href: '/zh-hant/' },
+  { label: t('articles.indexTitle'), href: '/zh-hant/articles/' },
+  { label: t(article.titleKey), href: '/zh-hant/articles/what-to-bring-i-693/' },
+];
+
+// Mirrors the English article sentence for sentence; its sources are quoted in
+// the task report. Deliberately absent: the exam fee, whether vaccines are
+// given in this office, the number of visits, turnaround and the lab location.
+const link = 'text-primary-700 underline underline-offset-2 hover:no-underline';
+const uscisPage = 'https://www.uscis.gov/i-693';
+const uscisInstructions = 'https://www.uscis.gov/sites/default/files/document/forms/i-693instr.pdf';
+const cdcVaccination = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/vaccination.html';
+const cdcTuberculosis = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-surgeons/tuberculosis.html';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={articleSchema(article, locale, canonicalUrl)}
+>
+  <article class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-3xl mx-auto space-y-10">
+        <header class="space-y-4">
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
+          <ArticleByline article={article} locale={locale} />
+        </header>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">本文適用對象</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              若您在美國境內申請綠卡（調整身分，使用 Form I-485），美國移民局要求提交 Form I-693「移民體檢及疫苗接種紀錄報告」（Report of Immigration Medical Examination and Vaccination Record）。這份表格只能由美國移民局指定的體檢醫師（civil surgeon）填寫。部分已在國外做過移民體檢的申請人（例如某些難民）只需提交表格的一部分，詳情請見<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。
+            </p>
+            <p>
+              張醫師是美國移民局指定體檢醫師，只看 18 歲以上成人。移民體檢採預約制，請來電預約。本文說明體檢應攜帶的資料，以及如何事先準備表格。內容為美國移民局與 CDC 公布的一般資訊，並非針對您個人案件的建議。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">應攜帶資料清單</h2>
+          <WhatToBring locale={locale} />
+          <p class="mt-4 text-gray-700">
+            資料來源：<a href={uscisInstructions} rel="noopener" class={link}>美國移民局 Form I-693 填表說明</a>（英文）。以下各段逐項說明。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">疫苗接種紀錄</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>美國疾病管制與預防中心（CDC）對體檢醫師的規定指出，符合下列條件的紀錄才予採認：</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>個人疫苗接種紀錄，或由醫師或其他適當醫療人員記載的病歷影本。</li>
+              <li>每一劑都必須註明完整的接種日期：年、月、日。</li>
+              <li>紀錄不得有塗改的跡象，接種日期也應合理。</li>
+              <li>只憑記憶、沒有書面紀錄的接種，不予採認。</li>
+            </ul>
+            <p>
+              若某種疾病沒有可採認的疫苗接種紀錄，CDC 的規定也採認證明具有免疫力的檢驗結果，適用於麻疹、腮腺炎、德國麻疹、A 型肝炎、B 型肝炎、小兒麻痺（小兒麻痺的檢驗須涵蓋三型小兒麻痺病毒）與水痘。若您有這類血液檢驗結果，也請一併攜帶。
+            </p>
+            <p>
+              若您的紀錄遺失或不完整，CDC 的規定指出，您不必在調整身分前打完每一種疫苗的全部劑次；但對於每一種您尚未按時程完成的規定疫苗，您須至少接種一劑。須接種哪些疫苗，視您的年齡而定。美國移民局的填表說明指出，您可以在體檢醫師評估之後，請您自己的醫師為您接種這些疫苗，再把紀錄交給體檢醫師登錄在 Form I-693 上。
+            </p>
+            <p>
+              資料來源：<a href={cdcVaccination} rel="noopener" class={link}>CDC 體檢醫師疫苗接種技術指引</a>（英文）與<a href={uscisInstructions} rel="noopener" class={link}>美國移民局 Form I-693 填表說明</a>（英文）。
+            </p>
+            <p class="font-semibold text-gray-900">本診所的實際作業方式，請於體檢前來電洽詢。</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">非英文的紀錄</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>
+              CDC 的規定指出，提供所有紀錄可靠英文翻譯的責任在申請人。若您的疫苗接種紀錄或病歷不是英文，請一併攜帶英文翻譯。
+            </p>
+            <p>
+              資料來源：<a href={cdcVaccination} rel="noopener" class={link}>CDC 體檢醫師疫苗接種技術指引</a>（英文）。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">曾患結核病或結核檢驗呈陽性者</h2>
+          <div class="space-y-4 text-gray-700">
+            <p>體檢包括結核病血液檢驗（IGRA）。若您有結核病病史，書面證明文件很重要。CDC 對體檢醫師的規定指出：</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                <strong class="font-semibold text-gray-900">先前 IGRA 結核血液檢驗呈陽性。</strong>若有醫師出具先前 IGRA 陽性的書面證明，就不必重做 IGRA，但須照胸部 X 光。證明文件必須載明檢驗日期、IGRA 的種類、以標準單位表示的檢驗結果、判讀結果（陽性），以及檢驗醫師的姓名、簽名與診所資訊。
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">先前結核菌素皮膚試驗（TST）呈陽性。</strong>這不能取代 IGRA，您仍須接受 IGRA 檢驗。
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">已完成治療。</strong>無論是結核病或潛伏結核感染，請攜帶診斷及完成治療的證明文件。若您自述已完成結核病治療，卻沒有證明文件，將視同未曾罹患結核病來評估。
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">先前的胸部 X 光。</strong>胸部 X 光的判讀必須與先前的胸部 X 光比較（如有的話），因此請攜帶您手邊先前的胸部 X 光報告或影像。
+              </li>
+              <li>
+                <strong class="font-semibold text-gray-900">曾在美國診斷出結核病。</strong>體檢醫師應設法向州或地方衛生局取得相關紀錄，或請您自行取得並提供。
+              </li>
+            </ul>
+            <p>
+              資料來源：<a href={cdcTuberculosis} rel="noopener" class={link}>CDC 體檢醫師結核病技術指引</a>（英文）。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">填寫 Form I-693 第 1 部分</h2>
+          <div class="space-y-4 text-gray-700">
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                請從<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）下載表格。該頁面會說明美國移民局依體檢醫師的簽名日期接受哪一個版本。版本日期印在表格每一頁的底部。
+              </li>
+              <li>
+                只填寫第 1 部分「關於您的資料」（Information About You），並在每一頁頂端填上您的姓名與 A-Number（外國人登記號碼，如有的話）。若沒有 A-Number，請填寫「N/A」。其餘部分由體檢醫師，以及您被轉診到的其他醫師、診所或衛生局填寫。
+              </li>
+              <li>請用黑色墨水，以打字或正楷清楚填寫。</li>
+              <li>
+                請先不要簽名。美國移民局的填表說明指出，須等體檢醫師告知後才可簽名，而且必須在體檢醫師面前簽名。
+              </li>
+            </ul>
+            <p>
+              資料來源：<a href={uscisInstructions} rel="noopener" class={link}>美國移民局 Form I-693 填表說明</a>（英文）與<a href={uscisPage} rel="noopener" class={link}>美國移民局 Form I-693 頁面</a>（英文）。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">體檢之後</h2>
+          <p class="text-gray-700">
+            體檢之後的步驟，包括如何將密封的表格送交美國移民局，請見<a href="/zh-hant/immigration-medical-exam/#how-it-works" class={link}>本診所移民體檢頁面</a>的「體檢流程」。
+          </p>
+        </section>
+
+        <ArticleSources article={article} locale={locale} />
+        <div class="text-center"><CallButton text="來電洽詢" size="lg" variant="filled" /></div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

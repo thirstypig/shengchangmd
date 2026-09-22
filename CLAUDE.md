@@ -215,6 +215,20 @@ This exists because six English `aria-label`s rendered on all 12 Chinese pages
 for months — the strings a screen-reader user actually hears — while four of them
 had translations sitting in `locales.ts` that nothing read.
 
+### Articles
+
+The registry is `src/data/articles.ts` — slug, title and summary keys, sources,
+the date the sources were checked, and `lastReviewed`. Pages are locale-forked
+`.astro` files under `src/pages/articles/`, `src/pages/zh-hant/articles/` and
+`src/pages/zh-hans/articles/`, one per slug, and each must render
+`ArticleByline`. The byline says "Medically reviewed by", **never "by Dr.
+Chang"** — he reviews these; he does not write them. The owner's never-state
+list applies to articles exactly as it does to the I-693 page: the exam fee,
+whether vaccines are given in this office, the number of visits, turnaround,
+and the lab location. Where a reader would want one of those, say to call. The
+"What to bring" list lives once, in `src/components/WhatToBring.astro`, and
+both the I-693 page and the article render it.
+
 ## Known open items requiring the owner's confirmation
 
 **The batch of facts that arrived from the owner on 2026-08-06 is now fully
@@ -457,6 +471,20 @@ what you are about to publish, in every locale and in the structured data.**
   and 「取決於該方案的特約醫師名單」 — a fix for 「取決於網路內容」 ("depends on
   the internet content") in the load-bearing insurance qualifier. Page speed and
   Google Search Console have never been measured here.
+- **The Articles section and its first article, "What to bring to your I-693
+  exam", ship WITHOUT Dr. Chang's medical review** (owner decision, branch
+  `feat/articles-section`, 2026-09-22, reversing the build-blocking gate
+  written earlier the same day). While `lastReviewed` is `null` in
+  `src/data/articles.ts`, the article renders `articles.draftLine` — a
+  neutral disclosure that makes no review claim, no "medically reviewed by"
+  line — and the build no longer fails because of it. The rule now enforced
+  by `verify-build.mjs` is narrower and permanent: an unreviewed article
+  (any page carrying `data-unreviewed`) may ship, but it must never claim a
+  review, on the page or in structured data — the build fails if such a
+  page's JSON-LD contains `reviewedBy` or `lastReviewed`. Adding Dr. Chang's
+  review date later is what adds the "Medically reviewed by" line and the
+  `reviewedBy`/`lastReviewed` structured data; **never set `lastReviewed`
+  without the owner relaying the date of Dr. Chang's review.**
 
 ## Photographs
 
@@ -506,8 +534,8 @@ automated check in this repo passed while this was about to ship:
 ```
 npm install
 npm run dev                          # http://localhost:3120
-ALLOW_INDEXING=true npm run build    # 30 pages; postbuild runs verify-css + verify-build
-npm test                             # 250 vitest tests
+ALLOW_INDEXING=true npm run build    # 39 pages; postbuild runs verify-css + verify-build
+npm test                             # 266 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -525,7 +553,7 @@ touching the build config.
 
 ## Tests
 
-Twelve files, 250 tests, run with `npm test`:
+Thirteen files, 266 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -628,6 +656,14 @@ Twelve files, 250 tests, run with `npm test`:
   confirms them in writing. Also asserts the FAQ schema is built from the same
   data the page shows, and that the English languages line uses a serial comma
   while both Chinese locales stay joined with 「、」
+- `tests/data/articles.test.ts` — the article registry in `src/data/articles.ts`:
+  every entry has sources, ISO dates, and a title and summary in all three
+  locales; every registered article has a page file in all three locales; and
+  **no article page exists without a registry entry**, because the review gate
+  in `verify-build.mjs` only sees pages that render `ArticleByline`, which reads
+  the registry. Also pins that the `MedicalWebPage` schema omits `reviewedBy`
+  and `lastReviewed` until the article is reviewed — naming a reviewer on an
+  unreviewed page is the claim the gate exists to prevent
 
 Deliberately narrow. Every test prevents a regression that has actually happened
 here, and all of them are for defects that typecheck and build cleanly:
@@ -649,7 +685,11 @@ JSON-LD's address matches `practice.ts`, that no page names the retired
 host, and — since 2026-09-14 — that every Chinese page's `<title>`, meta
 description and `og:site_name` is Chinese and free of the English doctor name,
 and every `og:locale` is `language_TERRITORY`, and — since 2026-09-21 — that
-the I-693 page's FAQPage JSON-LD is built from the same FAQ the page shows.
+the I-693 page's FAQPage JSON-LD is built from the same FAQ the page shows,
+and — since 2026-09-22 — that no page carries `data-unreviewed` (the article
+review gate), that every article page carries `data-article-byline` (so an
+article page that skips `ArticleByline` cannot slip past that gate), and that
+the I-693 page's and the article's "What to bring" lists are identical.
 Those are contradiction checks; none of them can be seen from source. The
 `og:locale` one exists because eight Chinese titles interpolated
 `practice.doctorName` and `og:locale` emitted `zh-Hant`, and both looked
