@@ -632,7 +632,7 @@ referenced asset exists, that the sitemap and the robots meta tag agree, that
 JSON-LD's address matches `practice.ts`, that no page names the retired
 host, and — since 2026-09-14 — that every Chinese page's `<title>`, meta
 description and `og:site_name` is Chinese and free of the English doctor name,
-and every `og:locale` is `language_TERRITORY`, and — since this fix wave — that
+and every `og:locale` is `language_TERRITORY`, and — since 2026-09-21 — that
 the I-693 page's FAQPage JSON-LD is built from the same FAQ the page shows.
 Those are contradiction checks; none of them can be seen from source. The
 `og:locale` one exists because eight Chinese titles interpolated
