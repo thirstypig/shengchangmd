@@ -201,6 +201,48 @@ for (const page of pages) {
   }
 }
 
+// 6. The FAQ that crawlers read must be the FAQ that patients read. The
+//    I-693 page emits FAQPage JSON-LD from the same data as its visible <dl>;
+//    this compares the two in the built HTML, where a hand edit to either
+//    one would show.
+const decode = (s) =>
+  s
+    .replace(/&#39;|&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .trim();
+const EXAM_PAGES = [
+  'immigration-medical-exam/index.html',
+  'zh-hant/immigration-medical-exam/index.html',
+  'zh-hans/immigration-medical-exam/index.html',
+];
+for (const rel of EXAM_PAGES) {
+  const file = join(DIST, rel);
+  if (!existsSync(file)) {
+    fail(`I-693 page not built: ${rel}`);
+    continue;
+  }
+  const html = read(file);
+  const schemaJson = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .map((m) => JSON.parse(m[1]))
+    .find((s) => s['@type'] === 'FAQPage');
+  if (!schemaJson) {
+    fail(`${rel}: no FAQPage JSON-LD`);
+    continue;
+  }
+  const dl = html.match(/<dl class="exam-faq[^"]*"[^>]*>([\s\S]*?)<\/dl>/)?.[1] ?? '';
+  const visible = [...dl.matchAll(/<dt[^>]*>([\s\S]*?)<\/dt>\s*<dd[^>]*>([\s\S]*?)<\/dd>/g)].map(
+    (m) => [decode(m[1]), decode(m[2])],
+  );
+  const schema = schemaJson.mainEntity.map((q) => [q.name.trim(), q.acceptedAnswer.text.trim()]);
+  if (visible.length === 0) fail(`${rel}: visible FAQ not found`);
+  else if (JSON.stringify(visible) !== JSON.stringify(schema)) {
+    fail(`${rel}: FAQPage JSON-LD differs from the visible FAQ`);
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);
