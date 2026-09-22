@@ -271,6 +271,20 @@ for (const prefix of ['', 'zh-hant/', 'zh-hans/']) {
   else if (a !== b) fail(`${prefix || 'en/'}: "What to bring" lists differ between the I-693 page and the article`);
 }
 
+// 9. Check 7 only fires if an article page renders ArticleByline. An article
+//    page that omits it, or one with no registry entry, would deploy with no
+//    review line and no gate. So every built article page must carry the
+//    byline's data-article-byline marker (the index and how-we-write are not
+//    articles).
+for (const page of pages) {
+  const rel = relative(DIST, page).split('\\').join('/');
+  const m = rel.match(/^(?:zh-hant\/|zh-hans\/)?articles\/([^/]+)\/index\.html$/);
+  if (!m || m[1] === 'how-we-write') continue;
+  if (!/\sdata-article-byline[\s>=]/.test(read(page))) {
+    fail(`${rel}: article page does not render ArticleByline (no data-article-byline), so the review gate cannot see it — every article page must render ArticleByline`);
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);

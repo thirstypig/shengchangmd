@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import {
   articles,
@@ -7,6 +7,7 @@ import {
   formatDate,
   articlePath,
   articleSchema,
+  articlesIndexSchema,
 } from '@data/articles';
 import { getTranslation } from '@i18n/locales';
 
@@ -60,14 +61,40 @@ describe('articlePath', () => {
 
 describe('articleSchema', () => {
   const a = articles[0];
-  const s = articleSchema(a, 'en', 'https://shengchangmd.com/articles/x/') as Record<string, any>;
-  it('is a MedicalWebPage reviewed by the doctor, citing its sources', () => {
+  const url = 'https://shengchangmd.com/articles/x/';
+  const s = articleSchema(a, 'en', url) as Record<string, any>;
+  it('is a MedicalWebPage citing its sources', () => {
     expect(s['@type']).toBe('MedicalWebPage');
-    expect(s.reviewedBy['@id']).toBe('https://shengchangmd.com/#doctor');
     expect(s.citation.map((c: any) => c.url)).toEqual(a.sources.map((x) => x.url));
   });
-  it('omits lastReviewed while the article is unreviewed', () => {
-    expect('lastReviewed' in s).toBe(a.lastReviewed !== null);
+  it('carries the localized title as name and headline, and the summary as description', () => {
+    for (const locale of LOCALES) {
+      const ls = articleSchema(a, locale, url) as Record<string, any>;
+      expect(ls.name, locale).toBe(getTranslation(locale, a.titleKey));
+      expect(ls.headline, locale).toBe(getTranslation(locale, a.titleKey));
+      expect(ls.description, locale).toBe(getTranslation(locale, a.summaryKey));
+      expect(ls.name, locale).not.toBe(a.titleKey);
+    }
+  });
+  it('omits reviewedBy and lastReviewed while the article is unreviewed', () => {
+    const unreviewed = articleSchema({ ...a, lastReviewed: null }, 'en', url) as Record<string, any>;
+    expect('reviewedBy' in unreviewed).toBe(false);
+    expect('lastReviewed' in unreviewed).toBe(false);
+  });
+  it('names the doctor as reviewer, with the date, once reviewed', () => {
+    const reviewed = articleSchema({ ...a, lastReviewed: '2026-01-02' }, 'en', url) as Record<string, any>;
+    expect(reviewed.reviewedBy['@id']).toBe('https://shengchangmd.com/#doctor');
+    expect(reviewed.lastReviewed).toBe('2026-01-02');
+  });
+});
+
+describe('articlesIndexSchema', () => {
+  it('carries the localized index title as name', () => {
+    for (const locale of LOCALES) {
+      const s = articlesIndexSchema(locale, 'https://shengchangmd.com/articles/') as Record<string, any>;
+      expect(s.name, locale).toBe(getTranslation(locale, 'articles.indexTitle'));
+      expect(s.name, locale).not.toBe('articles.indexTitle');
+    }
   });
 });
 
@@ -75,6 +102,20 @@ describe('article pages', () => {
   it.each(articles.map((a) => [a.slug] as const))('%s exists in all three locales', (slug) => {
     for (const dir of ['', 'zh-hant/', 'zh-hans/']) {
       expect(existsSync(`${SRC}/pages/${dir}articles/${slug}.astro`), `${dir}${slug}`).toBe(true);
+    }
+  });
+
+  // The review gate (verify-build check 7) sees only pages that render
+  // ArticleByline, which reads the registry. A page with no registry entry
+  // would sit outside it, so every article page must be a registered slug.
+  it('has no article page without a registry entry', () => {
+    const slugs = new Set(articles.map((a) => a.slug));
+    const notArticles = new Set(['index.astro', 'how-we-write.astro']);
+    for (const dir of ['', 'zh-hant/', 'zh-hans/']) {
+      for (const f of readdirSync(`${SRC}/pages/${dir}articles`)) {
+        if (!f.endsWith('.astro') || notArticles.has(f)) continue;
+        expect(slugs.has(f.replace(/\.astro$/, '')), `${dir}articles/${f} is not in src/data/articles.ts`).toBe(true);
+      }
     }
   });
 });

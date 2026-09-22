@@ -20,7 +20,7 @@ const methodHref = `${locale === 'en' ? '' : '/' + locale}/articles/how-we-write
 
 {
   article.lastReviewed ? (
-    <p class="text-sm text-gray-700">
+    <p data-article-byline class="text-sm text-gray-700">
       {t('articles.reviewedLine')
         .replace('{doctor}', doctor)
         .replace('{date}', formatDate(article.lastReviewed, locale))}{' '}
@@ -29,7 +29,7 @@ const methodHref = `${locale === 'en' ? '' : '/' + locale}/articles/how-we-write
       </a>
     </p>
   ) : (
-    <p data-unreviewed class="text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg p-4">
+    <p data-article-byline data-unreviewed class="text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg p-4">
       {t('articles.awaitingReview').replace('{doctor}', doctor)}
     </p>
   )

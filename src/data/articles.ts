@@ -9,6 +9,8 @@
  * notice that scripts/verify-build.mjs refuses to deploy. Never set it without
  * the owner confirming the review.
  */
+import { getTranslation } from '../i18n/locales';
+
 export interface ArticleSource {
   title: string;
   url: string;
@@ -82,14 +84,22 @@ export function articleSchema(
   pageUrl: string,
 ): Record<string, unknown> {
   const origin = new URL(pageUrl).origin;
+  const title = getTranslation(locale, article.titleKey);
   return {
     '@context': 'https://schema.org',
     '@type': 'MedicalWebPage',
     '@id': `${pageUrl}#article`,
     url: pageUrl,
     inLanguage: inLanguage(locale),
-    reviewedBy: { '@id': `${origin}/#doctor` },
-    ...(article.lastReviewed ? { lastReviewed: article.lastReviewed } : {}),
+    name: title,
+    headline: title,
+    description: getTranslation(locale, article.summaryKey),
+    // reviewedBy and lastReviewed together, and only once the review has
+    // happened: asserting a reviewer on an unreviewed page is the claim the
+    // review gate exists to prevent.
+    ...(article.lastReviewed
+      ? { reviewedBy: { '@id': `${origin}/#doctor` }, lastReviewed: article.lastReviewed }
+      : {}),
     about: { '@id': `${origin}${article.relatedPage}#service` },
     citation: article.sources.map((s) => ({ '@type': 'CreativeWork', name: s.title, url: s.url })),
   };
@@ -102,6 +112,7 @@ export function articlesIndexSchema(locale: string, pageUrl: string): Record<str
     '@type': 'CollectionPage',
     '@id': `${pageUrl}#collection`,
     url: pageUrl,
+    name: getTranslation(locale, 'articles.indexTitle'),
     inLanguage: inLanguage(locale),
     hasPart: articles.map((a) => ({ '@id': `${origin}${articlePath(a.slug, locale)}#article` })),
   };
