@@ -75,7 +75,7 @@ topics such as flu shots (whether the office gives them is unknown).
 ## Technical design notes (for the spec)
 
 - **Astro content collections**, one entry per post per locale under
-  `src/content/blog/{en,zh-hant,zh-hans}/`, sharing a `translationKey` so the
+  `src/content/articles/{en,zh-hant,zh-hans}/`, sharing a `translationKey` so the
   three are linked for hreflang.
 - **Frontmatter:** `title`, `description`, `translationKey`, `published`,
   `lastReviewed`, `reviewedBy` (Dr. Chang), `sources` (non-empty), and a
@@ -101,7 +101,7 @@ cannot-see-the-defect shape recorded in
   so a post saying 医生 or 信息 would pass. The corpus must include the blog.
 - **`tests/i18n/american-english.test.ts`** reads `src/pages` only. Same gap,
   same fix.
-- **Todo 005, hreflang on nested routes:** `/blog/<slug>/` is exactly the
+- **Todo 005, hreflang on nested routes:** `/articles/<slug>/` is exactly the
   nested-route case that todo describes, which today would emit **no
   alternates at all**, silently. It becomes live the moment the first post
   ships. Hence the dependency.
@@ -137,7 +137,10 @@ Both reviewers confirmed available (owner, 2026-09-21).
   "How we write these articles" page (sources, AI-assisted drafting, the two
   reviews). That page is trilingual like everything else, and the reviewed date
   comes from `lastReviewed`, never typed by hand.
-- Section name in Chinese (e.g. 健康專欄 or 衛教文章) and the English name.
+- ~~Section name~~: URL **`/articles/`**, chosen to be permanent and neutral
+  enough to hold guides, coverage explainers and practice history. Displayed
+  name **Articles / 文章專區 / 文章专区** (owner, 2026-09-21). The label lives in
+  `locales.ts` and can change freely; the URL should not.
 - Could the front desk keep a simple list of the questions patients ask?
 
 ## Acceptance Criteria
