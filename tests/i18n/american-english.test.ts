@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { translations, practiceLocalized } from '@i18n/locales';
+import { filesUnder, isContentFor } from '../helpers/source-files';
 import { practice } from '@data/practice';
 
 /**
@@ -58,11 +59,15 @@ function strip(source: string): string {
  * only Latin text in them is form numbers and institution names.
  */
 function corpus(): string {
-  const pages = readdirSync(join(SRC, 'pages'))
-    .filter((f) => f.endsWith('.astro'))
-    .map((f) => strip(readFileSync(join(SRC, 'pages', f), 'utf8')));
+  // Recursive, and including src/content/: the single-level readdirSync this
+  // replaced could not see a page in a subfolder or a Markdown article.
+  const pages = filesUnder(
+    join(SRC, 'pages'),
+    (rel) => rel.endsWith('.astro') && !/^zh-han[st]\//.test(rel),
+  );
+  const content = filesUnder(join(SRC, 'content'), isContentFor('en'));
   return [
-    ...pages,
+    ...[...pages, ...content].map((f) => strip(readFileSync(f, 'utf8'))),
     JSON.stringify(translations.en),
     JSON.stringify(practiceLocalized.en),
     JSON.stringify(practice),

@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { translations, practiceLocalized } from '@i18n/locales';
+import { filesUnder, isContentFor } from '../helpers/source-files';
 
 /**
  * Guards both Chinese locales against drifting into MAINLAND Mandarin.
@@ -104,12 +105,12 @@ function strip(source: string): string {
  * HeroSection/StickyCallBar/Header refactor.
  */
 function corpus(locale: ChineseLocale): string {
-  const dir = join(SRC, 'pages', locale);
-  const pages = readdirSync(dir)
-    .filter((f) => f.endsWith('.astro'))
-    .map((f) => strip(readFileSync(join(dir, f), 'utf8')));
+  // Recursive, and including src/content/: the single-level readdirSync this
+  // replaced could not see a page in a subfolder or a Markdown article.
+  const pages = filesUnder(join(SRC, 'pages', locale), (rel) => rel.endsWith('.astro'));
+  const content = filesUnder(join(SRC, 'content'), isContentFor(locale));
   return [
-    ...pages,
+    ...[...pages, ...content].map((f) => strip(readFileSync(f, 'utf8'))),
     JSON.stringify(translations[locale]),
     JSON.stringify(practiceLocalized[locale]),
   ].join('\n');

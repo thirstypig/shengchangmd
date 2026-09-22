@@ -243,7 +243,8 @@ what you are about to publish, in every locale and in the structured data.**
   to be filled — do not add these to the page or to articles, and do not keep
   asking for them. `doctorLanguages` (English, Mandarin) confirmed by the owner
   2026-09-21. The family medicine services page's line about
-  例行預防接種與疫苗 / "routine immunizations" is still unconfirmed.
+  例行預防接種與疫苗 / "routine immunizations" stays as it is: the owner said
+  on 2026-09-21 to leave it. Do not re-raise it.
 - ~~Doctor's Chinese name~~ — 张胜雄 / 張勝雄 confirmed acceptable by the owner
   (2026-07-29).
 - ~~Office hours~~ — **9:00 AM – 1:00 PM confirmed by the owner 2026-08-06** and
@@ -506,7 +507,7 @@ automated check in this repo passed while this was about to ship:
 npm install
 npm run dev                          # http://localhost:3120
 ALLOW_INDEXING=true npm run build    # 30 pages; postbuild runs verify-css + verify-build
-npm test                             # 232 vitest tests
+npm test                             # 250 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -524,7 +525,7 @@ touching the build config.
 
 ## Tests
 
-Eleven files, 232 tests, run with `npm test`:
+Twelve files, 250 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -563,7 +564,21 @@ Eleven files, 232 tests, run with `npm test`:
   and the sweep that fixed `医生` let seven further concepts through. Its corpus
   is the locale-forked pages **plus** each locale's subtree of `locales.ts` —
   `普通话` hid in `practiceLocalized.languages` and rendered under the homepage
-  看诊语言 heading, invisible to a pages-only sweep
+  看诊语言 heading, invisible to a pages-only sweep. Since 2026-09-21 the page
+  read is **recursive** and includes Markdown under `src/content/` in a
+  `<locale>/` folder (`american-english` got the same widening, for `en/`).
+  Both used to read one directory level, so a page in a subfolder or an
+  article would have passed while saying 医生 or "colour" — demonstrated by
+  planting both, with every language test still green
+- `tests/i18n/alternates.test.ts` — the hreflang cluster, now computed in
+  `src/i18n/alternates.ts` rather than inline in `BaseLayout.astro`, where no
+  test could reach it. Covers nested routes and canonicals without a trailing
+  slash (both used to emit no alternates, silently) and an `x-default` that is
+  omitted when no English page exists, instead of pointing at one that was
+  never built. **A dynamic route (`articles/[slug].astro`) has no per-page
+  file, so the filesystem check cannot see its locales; such a page must
+  declare them.** Until it does, `verify-build`'s self-referential-alternate
+  check fails the build
 - `tests/routes/robots-gate.test.ts` — the `ALLOW_INDEXING` gate in both states,
   which `verify-build.mjs` cannot cover because it only ever sees one build
 - `tests/styles/theme-token-coverage.test.ts` — the hand-maintained color map
