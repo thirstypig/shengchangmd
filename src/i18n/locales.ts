@@ -111,6 +111,8 @@ export const translations = {
       cash: 'Cash and self-pay',
     },
     immigrationExam: {
+      factsHeading: 'At a glance',
+      faqHeading: 'Frequently asked questions',
       physicianLabel: 'Physician',
       designationLabel: 'Designation',
       designationValue: 'USCIS-designated civil surgeon',
@@ -317,6 +319,8 @@ export const translations = {
       cash: '現金自費',
     },
     immigrationExam: {
+      factsHeading: '重點資訊',
+      faqHeading: '常見問題',
       physicianLabel: '醫師',
       designationLabel: '資格',
       designationValue: '美國移民局指定體檢醫師（civil surgeon）',
@@ -469,6 +473,8 @@ export const translations = {
       cash: '现金自费',
     },
     immigrationExam: {
+      factsHeading: '重点资讯',
+      faqHeading: '常见问题',
       physicianLabel: '医师',
       designationLabel: '资格',
       designationValue: '美国移民局指定体检医师（civil surgeon）',

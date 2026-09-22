@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import ExamFacts from '@components/ExamFacts.astro';
+import { practice } from '@data/practice';
+import { getExamFaq, examFaqSchema } from '@data/immigrationExam';
+import { getTranslation } from '@i18n/locales';
+
+const locale = 'en';
+const title = `Immigration Medical Exam (Form I-693) in San Gabriel | ${practice.doctorNameShort}`;
+const description =
+  'Form I-693 immigration medical exams in San Gabriel, CA, by a USCIS-designated civil surgeon. By appointment only. Results explained in English or Mandarin.';
+const canonicalUrl = new URL('/immigration-medical-exam/', Astro.site).href;
+const faq = getExamFaq(locale);
+
+const breadcrumbs = [
+  { label: getTranslation(locale, 'home'), href: '/' },
+  { label: getTranslation(locale, 'services'), href: '/services/' },
+  { label: 'Immigration Medical Exam', href: '/immigration-medical-exam/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={examFaqSchema(locale, canonicalUrl)}
+>
+  <HeroSection
+    headline="Immigration Medical Exam (Form I-693) in San Gabriel"
+    subheadline="Dr. Chang is a USCIS-designated civil surgeon. Exams are by appointment only."
+    locale={locale}
+    illustration="immigration"
+  />
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+    <div class="max-w-3xl mx-auto space-y-12">
+      <ExamFacts locale={locale} />
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">What the exam includes</h2>
+        <!-- Task 3 fills this section from the CDC Technical Instructions. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">What to bring</h2>
+        <!-- Task 3 fills this section from the USCIS Form I-693 instructions. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">How it works</h2>
+        <!-- Task 3 fills this section from uscis.gov/i-693. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+          {getTranslation(locale, 'immigrationExam.faqHeading')}
+        </h2>
+        <dl class="exam-faq space-y-6">
+          {faq.map((q) => (
+            <div>
+              <dt class="font-semibold text-gray-900">{q.question}</dt>
+              <dd class="mt-2 text-gray-700">{q.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="text-center">
+        <CallButton text="Call to Book an Exam" size="lg" variant="filled" />
+      </div>
+    </div>
+    </div>
+  </section>
+</BaseLayout>

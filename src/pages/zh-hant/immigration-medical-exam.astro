@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroSection from '@components/HeroSection.astro';
+import CallButton from '@components/CallButton.astro';
+import ExamFacts from '@components/ExamFacts.astro';
+import { practice } from '@data/practice';
+import { getExamFaq, examFaqSchema } from '@data/immigrationExam';
+import { getTranslation } from '@i18n/locales';
+
+const locale = 'zh-hant';
+const title = '移民體檢（Form I-693）｜加州聖蓋博｜張勝雄醫師';
+const description =
+  '張勝雄醫師為美國移民局指定體檢醫師，於加州聖蓋博提供 Form I-693 移民體檢。採預約制，並以國語或英語為您說明結果。';
+const canonicalUrl = new URL('/zh-hant/immigration-medical-exam/', Astro.site).href;
+const faq = getExamFaq(locale);
+
+const breadcrumbs = [
+  { label: getTranslation(locale, 'home'), href: '/zh-hant/' },
+  { label: getTranslation(locale, 'services'), href: '/zh-hant/services/' },
+  { label: '移民體檢', href: '/zh-hant/immigration-medical-exam/' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  pageSchema={examFaqSchema(locale, canonicalUrl)}
+>
+  <HeroSection
+    headline="移民體檢（Form I-693）"
+    subheadline="張醫師為美國移民局指定體檢醫師（civil surgeon），移民體檢採預約制。"
+    locale={locale}
+    illustration="immigration"
+  />
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+    <div class="max-w-3xl mx-auto space-y-12">
+      <ExamFacts locale={locale} />
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">體檢項目</h2>
+        <!-- Task 3 fills this section from the CDC Technical Instructions. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">應攜帶的資料</h2>
+        <!-- Task 3 fills this section from the USCIS Form I-693 instructions. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">體檢流程</h2>
+        <!-- Task 3 fills this section from uscis.gov/i-693. -->
+      </div>
+
+      <div>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+          {getTranslation(locale, 'immigrationExam.faqHeading')}
+        </h2>
+        <dl class="exam-faq space-y-6">
+          {faq.map((q) => (
+            <div>
+              <dt class="font-semibold text-gray-900">{q.question}</dt>
+              <dd class="mt-2 text-gray-700">{q.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="text-center">
+        <CallButton text="來電預約體檢" size="lg" variant="filled" />
+      </div>
+    </div>
+    </div>
+  </section>
+</BaseLayout>
