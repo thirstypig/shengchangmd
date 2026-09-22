@@ -1,0 +1,273 @@
+---
+// Deliberately NOT using BaseLayout: this page carries no medical-practice
+// content (no Header nav, no StickyCallBar/CallButton CTAs, no WeChat QR,
+// no Footer) and no trilingual obligation via getTranslation — its own tab
+// labels, unlock button and error text are the one exception CLAUDE.md
+// allows: literal English/Chinese chrome in a page that has no shared
+// component and no locale variants. It is unlinked from every other page
+// and forced noindex regardless of the ALLOW_INDEXING build flag or locale
+// review status, unlike every other page on this site. Modeled on
+// src/pages/family-photos-2026.astro.
+import encrypted from '@data/schedule.enc.json';
+
+const encryptedJson = JSON.stringify(encrypted);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Schedule</title>
+  </head>
+  <body>
+    <main>
+      <h1>Editorial schedule</h1>
+
+      <form id="unlock-form" autocomplete="off">
+        <label for="passphrase">Passphrase</label>
+        <input type="password" id="passphrase" name="passphrase" autocomplete="off" />
+        <button type="submit">Unlock</button>
+        <p id="error" class="error" hidden>That passphrase did not work.</p>
+      </form>
+
+      <div id="content" hidden>
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab" data-locale="en">English</button>
+          <button type="button" class="tab" data-locale="zh-hant">繁體中文</button>
+          <button type="button" class="tab" data-locale="zh-hans">简体中文</button>
+        </div>
+
+        <p id="cadence"></p>
+
+        <table>
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+
+        <h2 id="open-questions-heading"></h2>
+        <ul id="open-questions"></ul>
+      </div>
+    </main>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f5f5f5;
+        --fg: #1a1a1a;
+        --card: #ffffff;
+        --border: #ccc;
+        --error: #b00020;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111;
+          --fg: #eee;
+          --card: #1c1c1c;
+          --border: #444;
+          --error: #ff6b6b;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-weight: 600;
+      }
+      input[type='password'] {
+        width: 100%;
+        max-width: 320px;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--fg);
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--fg);
+        cursor: pointer;
+      }
+      .error {
+        color: var(--error);
+        margin-top: 0.5rem;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+      }
+      .tab {
+        padding: 0.4rem 0.8rem;
+      }
+      .tab[aria-selected='true'] {
+        font-weight: 700;
+        border-color: var(--fg);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.5rem;
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.9rem;
+      }
+      th {
+        background: var(--card);
+      }
+      ul {
+        padding-left: 1.2rem;
+      }
+      li {
+        margin-bottom: 0.4rem;
+      }
+    </style>
+
+    <script define:vars={{ encryptedJson }}>
+      const encrypted = JSON.parse(encryptedJson);
+
+      const form = document.getElementById('unlock-form');
+      const passphraseInput = document.getElementById('passphrase');
+      const errorEl = document.getElementById('error');
+      const content = document.getElementById('content');
+      const cadenceEl = document.getElementById('cadence');
+      const tableHead = document.getElementById('table-head');
+      const tableBody = document.getElementById('table-body');
+      const openQuestionsHeading = document.getElementById('open-questions-heading');
+      const openQuestionsList = document.getElementById('open-questions');
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+
+      const OPEN_QUESTIONS_HEADING = {
+        en: 'Open questions',
+        'zh-hant': '待確認事項',
+        'zh-hans': '待确认事项',
+      };
+
+      let schedule = null;
+      let currentLocale = 'en';
+
+      function base64ToBytes(base64) {
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return bytes;
+      }
+
+      async function decrypt(passphrase) {
+        const salt = base64ToBytes(encrypted.salt);
+        const iv = base64ToBytes(encrypted.iv);
+        const ciphertext = base64ToBytes(encrypted.ciphertext);
+
+        const baseKey = await window.crypto.subtle.importKey(
+          'raw',
+          new TextEncoder().encode(passphrase),
+          'PBKDF2',
+          false,
+          ['deriveKey'],
+        );
+
+        const key = await window.crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt, iterations: encrypted.iterations, hash: 'SHA-256' },
+          baseKey,
+          { name: 'AES-GCM', length: 256 },
+          false,
+          ['decrypt'],
+        );
+
+        const plainBuffer = await window.crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv },
+          key,
+          ciphertext,
+        );
+
+        return JSON.parse(new TextDecoder().decode(plainBuffer));
+      }
+
+      function render(locale) {
+        if (!schedule) return;
+        currentLocale = locale;
+
+        for (const tab of tabs) {
+          tab.setAttribute('aria-selected', String(tab.dataset.locale === locale));
+        }
+
+        cadenceEl.textContent = schedule.cadence[locale];
+
+        const columns = schedule.columns[locale];
+        tableHead.innerHTML = `<tr>
+          <th>${columns.topic}</th>
+          <th>${columns.status}</th>
+          <th>${columns.target}</th>
+          <th>${columns.cluster}</th>
+          <th>${columns.notes}</th>
+        </tr>`;
+
+        const statusLabels = schedule.statusLabels[locale];
+        tableBody.innerHTML = schedule.items
+          .map(
+            (item) => `<tr>
+              <td>${item.title[locale]}</td>
+              <td>${statusLabels[item.status] ?? item.status}</td>
+              <td>${item.target}</td>
+              <td>${item.cluster}</td>
+              <td>${item.notes[locale]}</td>
+            </tr>`,
+          )
+          .join('');
+
+        openQuestionsHeading.textContent = OPEN_QUESTIONS_HEADING[locale];
+        openQuestionsList.innerHTML = schedule.openQuestions[locale]
+          .map((q) => `<li>${q}</li>`)
+          .join('');
+      }
+
+      for (const tab of tabs) {
+        tab.addEventListener('click', () => render(tab.dataset.locale));
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        errorEl.hidden = true;
+        try {
+          schedule = await decrypt(passphraseInput.value);
+          form.hidden = true;
+          content.hidden = false;
+          render(currentLocale);
+        } catch (err) {
+          errorEl.hidden = false;
+        }
+      });
+    </script>
+  </body>
+</html>

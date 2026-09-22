@@ -31,3 +31,7 @@ _Sheng Chang Photos/
 # Cross-project port registry: kept on disk, never published (names private projects).
 # Synced from ~/Projects/MASTER-PORTS.md by ~/Projects/sync-master-ports.sh.
 MASTER-PORTS.md
+
+# Plaintext editorial schedule (topics, target dates, internal notes). Only the
+# AES-GCM-encrypted src/data/schedule.enc.json is committed; this file never is.
+private/
