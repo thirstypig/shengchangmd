@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p3
 issue_id: 005
 tags: [code-review, routing, seo]
@@ -55,8 +55,8 @@ _(to be filled during triage)_
 
 ## Acceptance Criteria
 
-- [ ] A nested page emits correct alternates, or fails the build loudly
-- [ ] Existing 26 pages' alternates unchanged
+- [x] A nested page emits correct alternates, or fails the build loudly
+- [x] Existing 26 pages' alternates unchanged
 
 ## Work Log
 
@@ -66,3 +66,5 @@ trailing slashes and all routes are flat, so neither case is live.
 ## Resources
 
 - Commit `b9070e6`
+
+**2026-09-21** — Fixed. The hreflang cluster moved to `src/i18n/alternates.ts` with unit tests (`tests/i18n/alternates.test.ts`); nested `{slug}/index.astro` routes and slashless canonicals resolve, and `x-default` uses the same derivation and existence check as the other alternates. Every existing page's alternates and og:locale tags were diffed before and after: 30 pages, 195 tags, byte-identical.

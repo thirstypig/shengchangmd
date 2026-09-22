@@ -3,6 +3,7 @@ import '@/styles/global.css';
 import { getCollection } from 'astro:content';
 import { practice } from '@data/practice';
 import { locales, getTranslation } from '@i18n/locales';
+import { hreflangAlternates, xDefaultHref, ogLocaleAlternates } from '@i18n/alternates';
 import Header from '@components/Header.astro';
 import StickyCallBar from '@components/StickyCallBar.astro';
 import JsonLd from '@components/JsonLd.astro';
@@ -58,44 +59,26 @@ const legalPrefix = '';
 // without anyone remembering to update a list here.
 const pageFiles = new Set(Object.keys(import.meta.glob('/src/pages/**/*.astro')));
 
-// The path with any locale prefix removed: '/zh-hant/about/' -> 'about', '/' -> 'index'.
-const canonicalPath = new URL(canonicalUrl).pathname;
-const slug = canonicalPath.replace(/^\/(zh-hant|zh-hans)(?=\/)/, '').replace(/^\/|\/$/g, '') || 'index';
-
-const localeHasPage = (code: string) =>
-  pageFiles.has(code === 'en' ? `/src/pages/${slug}.astro` : `/src/pages/${code}/${slug}.astro`);
-
-// Two things were wrong here and both were live on 16 of 22 pages.
+// The cluster itself is computed in src/i18n/alternates.ts, where it is unit
+// tested. It was inline here until 2026-09-21, which is how a nested route or a
+// slashless canonical could silently emit no alternates (todo 005) and how
+// x-default came to be built by a second mechanism (todo 004).
 //
-// The href was built with canonicalUrl.split('/').slice(3), which KEEPS the
-// locale segment already in the canonical URL. That is only correct when the
-// canonical is the English one. On every Chinese page it produced
-// /zh-hant/zh-hant/about/ and /zh-hans/zh-hant/about/ — both 404 — while the
-// en-US alternate pointed at the Chinese URL, declaring the Chinese page to be
-// its own English version.
-//
-// And the map ran over every locale unconditionally, with no idea which
-// locales a page exists in, so the four English-only pages advertised Chinese
-// versions that were never built. An alternate pointing at a 404 is worse than
-// no alternate: it is the tag that tells a crawler a translation exists, so it
-// steers the Chinese-language searcher this practice most wants to reach into
-// a dead end. scripts/verify-build.mjs now fails the build on both shapes.
-const origin = new URL(canonicalUrl).origin;
-const hreflangLinks = Object.entries(locales)
-  .filter(([code]) => localeHasPage(code))
-  .map(([code, metadata]) => ({
-    lang: metadata.code,
-    href: `${origin}/${code === 'en' ? '' : code + '/'}${slug === 'index' ? '' : slug + '/'}`,
-  }));
+// History worth keeping: two things were wrong here and both were live on 16
+// of 22 pages. The href was built with canonicalUrl.split('/').slice(3), which
+// KEEPS the locale segment already in the canonical URL, so every Chinese page
+// produced /zh-hant/zh-hant/about/-style 404s while the en-US alternate pointed
+// at the Chinese URL. And the map ran over every locale unconditionally, so
+// English-only pages advertised Chinese versions that were never built. An
+// alternate pointing at a 404 steers the Chinese-language searcher this
+// practice most wants to reach into a dead end. scripts/verify-build.mjs now
+// fails the build on both shapes.
+const hreflangLinks = hreflangAlternates(canonicalUrl, pageFiles);
+const xDefault = xDefaultHref(canonicalUrl, pageFiles);
 
-const xDefaultHref = canonicalUrl.replace(/\/(zh-hans|zh-hant)\//, '/');
-
-// The other locales this page exists in, for og:locale:alternate. Same
-// existence check as the hreflang links, so a share card never advertises a
-// translation that was not built.
-const ogLocaleAlternates = Object.entries(locales)
-  .filter(([code]) => code !== locale && localeHasPage(code))
-  .map(([, metadata]) => metadata.ogLocale);
+// Same existence check as the hreflang links, so a share card never advertises
+// a translation that was not built.
+const ogAlternates = ogLocaleAlternates(locale, canonicalUrl, pageFiles);
 ---
 
 <!doctype html>
@@ -116,7 +99,7 @@ const ogLocaleAlternates = Object.entries(locales)
         <link rel="alternate" hrefLang={link.lang} href={link.href} />
       ))
     }
-    <link rel="alternate" hrefLang="x-default" href={xDefaultHref} />
+    {xDefault && <link rel="alternate" hrefLang="x-default" href={xDefault} />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -127,7 +110,7 @@ const ogLocaleAlternates = Object.entries(locales)
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={localeMetadata.ogLocale} />
-    {ogLocaleAlternates.map((alt) => <meta property="og:locale:alternate" content={alt} />)}
+    {ogAlternates.map((alt) => <meta property="og:locale:alternate" content={alt} />)}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

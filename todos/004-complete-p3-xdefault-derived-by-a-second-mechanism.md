@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p3
 issue_id: 004
 tags: [code-review, seo, duplicated-facts]
@@ -63,8 +63,8 @@ _(to be filled during triage)_
 
 ## Acceptance Criteria
 
-- [ ] x-default and the `en-US` alternate are produced by the same expression
-- [ ] Built x-default values are unchanged on all 26 pages
+- [x] x-default and the `en-US` alternate are produced by the same expression
+- [x] Built x-default values are unchanged on all 26 pages
 
 ## Work Log
 
@@ -74,3 +74,5 @@ four representative page shapes.
 ## Resources
 
 - Commit `b9070e6`
+
+**2026-09-21** — Fixed. The hreflang cluster moved to `src/i18n/alternates.ts` with unit tests (`tests/i18n/alternates.test.ts`); nested `{slug}/index.astro` routes and slashless canonicals resolve, and `x-default` uses the same derivation and existence check as the other alternates. Every existing page's alternates and og:locale tags were diffed before and after: 30 pages, 195 tags, byte-identical.
