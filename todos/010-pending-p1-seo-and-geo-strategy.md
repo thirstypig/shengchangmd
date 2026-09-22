@@ -121,7 +121,11 @@ The owner's channel to run; the site supplies the canonical facts and link.
 ## Open questions for the owner
 
 - The I-693 flat fee amount
-- Labs, vaccines and turnaround for I-693 (see Workstream A)
+- Labs, vaccines and turnaround for I-693 (see Workstream A). **Urgent in
+  part:** `services.astro` already claims, in all three locales, that missing
+  vaccine doses are given and that the exam is done "in one visit wherever
+  possible". Neither is confirmed (scaffold era). See the spec,
+  `docs/superpowers/specs/2026-09-21-immigration-medical-exam-page-design.md`.
 - Whether a staff member must be present for the Vietnamese and Spanish exams
 - Access to Google Search Console and Bing Webmaster Tools
 
