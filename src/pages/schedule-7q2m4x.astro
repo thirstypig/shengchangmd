@@ -58,7 +58,17 @@ const encryptedJson = JSON.stringify(encrypted);
       </div>
     </main>
 
-    <style>
+    <style is:global>
+      /* is:global: nearly everything this page styles (nav items, chips,
+         table rows, article body) is built at runtime via document.createElement
+         in the client script below, not present in the static template Astro
+         scopes at build time. A scoped <style> only rewrites selectors to
+         match elements that carry Astro's injected data-astro-* attribute,
+         which these dynamically-created nodes never get — so a scoped block
+         here would silently fail to apply to exactly the content this page
+         exists to render. This was the root cause of the nav-item layout
+         defects (no title/meta separation, disc bullets, inline-block
+         buttons) found in browser testing 2026-09-23. */
       :root {
         color-scheme: light dark;
         --bg: #f5f5f5;
@@ -232,7 +242,9 @@ const encryptedJson = JSON.stringify(encrypted);
       }
       .nav-item[aria-current='true'] {
         background: var(--card-sunken);
-        border-color: var(--link);
+        border-left: 3px solid var(--link);
+        border-radius: 0 4px 4px 0;
+        padding-left: calc(0.5rem - 3px);
         font-weight: 600;
       }
       .nav-item-title {
