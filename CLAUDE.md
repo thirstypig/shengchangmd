@@ -512,7 +512,11 @@ images while the repo's own privacy review — which looks at what a photo shows
 passed them all. Note also that three recognition photos needed their EXIF
 `Orientation` baked into pixels before stripping; deleting the tag alone rotates
 them in the browser. **The pre-strip images remain in this public repo's git
-history; that has not been rewritten.**
+history. The owner decided on 2026-09-23 to leave them there** — an accepted
+risk, not an oversight, taken knowing the address is recoverable with two
+commands and that the account is on GitHub Free, where making the repo private
+would take the site offline. Do not rewrite history or raise it again without a
+fresh instruction; see `todos/012`.
 
 Originals live in `src-photos/`, which is **gitignored on purpose**: this repo is
 public, and the originals include full-resolution personal photographs of the
