@@ -127,13 +127,13 @@ The owner's channel to run; the site supplies the canonical facts and link.
   were removed in PR #67. Still open: the family-medicine line 例行預防接種與疫苗 /
   "routine immunizations".
 - Whether a staff member must be present for the Vietnamese and Spanish exams
-- Access to Google Search Console and Bing Webmaster Tools
+- ~~Google Search Console~~ verified 2026-09-23. Still open: Bing Webmaster Tools, and whether to add analytics at all (there is none on this site today — a privacy decision for the owner)
 
 ## Acceptance Criteria
 
 - [x] Workstream A shipped as its own spec and PR, in all three locales (PR #67, live 2026-09-22)
-- [ ] Site submitted to Bing Webmaster Tools, with IndexNow configured
-- [ ] Google Search Console access confirmed and a baseline recorded (queries and impressions before any change)
+- [ ] Site submitted to Bing Webmaster Tools, with IndexNow configured (can now be imported from Search Console in one step)
+- [x] **Google Search Console verified 2026-09-23** — URL-prefix property `https://shengchangmd.com/`, HTML-tag method (the tag lives in `BaseLayout.astro` and must never be removed). `sitemap-index.xml` submitted and accepted; indexing requested for the I-693 page, both articles and the 繁體 I-693 page. **No baseline exists**: the property was created after the I-693 page, the Articles section and Chinese indexing all shipped, so the first weeks of data are the starting point, not a before-and-after
 - [ ] Each remaining workstream either shipped or explicitly declined here, with the reason
 
 ## Work Log
