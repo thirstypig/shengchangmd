@@ -9,7 +9,7 @@ import {
   articleSchema,
   articlesIndexSchema,
 } from '@data/articles';
-import { getTranslation } from '@i18n/locales';
+import { getTranslation, translations } from '@i18n/locales';
 
 const SRC = fileURLToPath(new URL('../../src', import.meta.url));
 const LOCALES = ['en', 'zh-hant', 'zh-hans'] as const;
@@ -129,5 +129,52 @@ describe('article pages', () => {
         expect(slugs.has(f.replace(/\.astro$/, '')), `${dir}articles/${f} is not in src/data/articles.ts`).toBe(true);
       }
     }
+  });
+});
+
+// A physician-review claim was published in prose (articles.indexIntro,
+// articles.methodReview) while every registered article had
+// lastReviewed: null — a claim the byline/JSON-LD gate could not see, since
+// it only inspects those two surfaces. This guards the invariant: while any
+// article is unreviewed, no locale string may assert that review has
+// already happened, in general or as a completed process.
+describe('no locale string falsely claims a completed physician review', () => {
+  const anyUnreviewed = articles.some((a) => a.lastReviewed === null);
+
+  // Phrases that assert a completed review. Exclude the conditional strings
+  // that legitimately describe an article that HAS been reviewed
+  // (articles.reviewedLine, articles.reviewedOn) — those are fine because
+  // they only render for a reviewed article.
+  const EXCLUDED_KEYS = new Set(['articles.reviewedLine', 'articles.reviewedOn']);
+
+  const CLAIM_PHRASES: Record<string, RegExp[]> = {
+    en: [/(?<!whether )(?<!reviewed by ["“])reviewed by dr\. chang/i, /(?:is|was|are) reviewed twice/i],
+    'zh-hant': [/(?<!是否已)(?<!「)經張醫師審閱/, /(?<!沒有標示「)都經過.{0,6}審閱/, /(?<!沒有標示「)經過兩次審閱/],
+    'zh-hans': [/(?<!是否已)(?<!「)经张医师审阅/, /(?<!没有标示「)都经过.{0,6}审阅/, /(?<!没有标示「)经过两次审阅/],
+  };
+
+  function walk(obj: any, prefix: string, locale: keyof typeof CLAIM_PHRASES, hits: string[]) {
+    for (const [k, v] of Object.entries(obj)) {
+      const key = prefix ? `${prefix}.${k}` : k;
+      if (EXCLUDED_KEYS.has(key)) continue;
+      if (typeof v === 'string') {
+        for (const re of CLAIM_PHRASES[locale]) {
+          if (re.test(v)) hits.push(`${locale}:${key} matches ${re} -> "${v}"`);
+        }
+      } else if (v && typeof v === 'object') {
+        walk(v, key, locale, hits);
+      }
+    }
+  }
+
+  it('has at least one unreviewed article (precondition for this guard)', () => {
+    expect(anyUnreviewed).toBe(true);
+  });
+
+  it.each(LOCALES)('%s has no string asserting a completed review while an article is unreviewed', (locale) => {
+    if (!anyUnreviewed) return;
+    const hits: string[] = [];
+    walk((translations as any)[locale], '', locale, hits);
+    expect(hits, hits.join('\n')).toEqual([]);
   });
 });
