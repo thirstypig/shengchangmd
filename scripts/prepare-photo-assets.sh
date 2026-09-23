@@ -9,6 +9,18 @@
 # docs/superpowers/specs/2026-08-25-photo-gallery-and-recognition-design.md)
 # and the 8 photos selected for the About page (handled separately below, at
 # higher quality since they're few and framed/read-up-close).
+#
+# Every exported JPEG has its EXIF/IPTC/XMP metadata stripped with
+# `exiftool -all=` immediately after `sips` writes it. This is a privacy
+# fix, not tidiness: on 2026-09-22, 90 of the 189 JPEGs already published
+# under public/images/ — including several on the public, indexed
+# /about/ page — were found to carry GPS EXIF, ~70 of them pointing to the
+# same coordinates near the doctor's home. This repo had already blocked
+# four *photographs* for showing that home address; the address shipped
+# anyway, invisibly, inside the metadata of photos that passed that
+# review. `sips` does not strip metadata on its own, so this step is not
+# optional. `tests/assets/image-metadata.test.ts` guards against this
+# recurring.
 set -euo pipefail
 
 SRC="_Sheng Chang Photos"
@@ -69,6 +81,7 @@ for i in "${!RECOGNITION_SRC[@]}"; do
   src_name="${RECOGNITION_SRC[$i]}"
   target="${RECOGNITION_DST[$i]}"
   sips -s format jpeg -Z 1200 "$SRC/$src_name" --out "$RECOGNITION_DIR/$target" >/dev/null
+  exiftool -all= -overwrite_original "$RECOGNITION_DIR/$target" >/dev/null
   echo "recognition: $src_name -> $target"
 done
 
@@ -102,6 +115,7 @@ for f in "$SRC"/*; do
   id=$(printf "%03d" "$i")
   sips -s format jpeg -Z 480 "$f" --out "$GALLERY_THUMB_DIR/$id.jpg" >/dev/null
   sips -s format jpeg -Z 1400 "$f" --out "$GALLERY_FULL_DIR/$id.jpg" >/dev/null
+  exiftool -all= -overwrite_original "$GALLERY_THUMB_DIR/$id.jpg" "$GALLERY_FULL_DIR/$id.jpg" >/dev/null
   echo "$id" >> src/data/galleryPhotos.ts.ids
 done
 
