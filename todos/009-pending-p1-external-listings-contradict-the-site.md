@@ -1,5 +1,5 @@
 ---
-status: pending
+status: reference
 priority: p1
 issue_id: 009
 tags: [seo, geo, local-listings, duplicated-facts, owner-action]
@@ -71,6 +71,13 @@ duplicate.
 
 Not a directory, but where Chinese-American patients actually search for
 doctors: 小红书 (Xiaohongshu), WeChat groups, LINE. See todo 010.
+
+## Owner runs this offline (2026-09-23)
+
+The owner decided to handle the listings himself: Google Business Profile,
+the WebMD/CivilSurgeonFinder corrections and the Chinese directories. This file
+stays as **reference** — the research, the URLs and the wrong values are all
+here when he wants them. Do not track it as an open task or ask about it again.
 
 ## Recommended Action
 

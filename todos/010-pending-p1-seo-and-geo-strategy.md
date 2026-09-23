@@ -66,15 +66,18 @@ visible copy exactly.
 
 ## Workstream B: listings and consistency (the "any new patient" goal)
 
-See todo 009. For the map results ("doctor near me"), the Google Business
-Profile outweighs anything on the website.
+**The owner handles this offline** (his decision, 2026-09-23): the Google
+Business Profile, the listing corrections and the Chinese directories are his
+to run, not work tracked here. The research stays in todo 009 for reference —
+do not re-raise it as an open task. For the map results ("doctor near me"), the
+Google Business Profile outweighs anything on the website.
 
 ## Workstream C: GEO / AEO
 
 Ranked by expected value:
 
-1. **Bing Webmaster Tools and IndexNow.** ChatGPT search draws heavily on
-   Bing's index. The site has never been submitted. Cheap.
+1. ~~**Bing Webmaster Tools and IndexNow.**~~ Imported from Search Console
+   2026-09-23. ChatGPT search draws heavily on Bing's index.
 2. **Consistency of facts across sources** (todo 009). AI assistants combine
    sources; disagreement makes them hedge or leave the practice out.
 3. **Direct-answer copy.** The questions patients actually ask ("Which doctors
@@ -132,7 +135,7 @@ The owner's channel to run; the site supplies the canonical facts and link.
 ## Acceptance Criteria
 
 - [x] Workstream A shipped as its own spec and PR, in all three locales (PR #67, live 2026-09-22)
-- [ ] Site submitted to Bing Webmaster Tools, with IndexNow configured (can now be imported from Search Console in one step)
+- [x] **Bing Webmaster Tools: imported from Search Console 2026-09-23** (8 properties imported by the owner). Matters because ChatGPT's search leans on Bing's index
 - [x] **Google Search Console verified 2026-09-23** — URL-prefix property `https://shengchangmd.com/`, HTML-tag method (the tag lives in `BaseLayout.astro` and must never be removed). `sitemap-index.xml` submitted and accepted; indexing requested for the I-693 page, both articles and the 繁體 I-693 page. **No baseline exists**: the property was created after the I-693 page, the Articles section and Chinese indexing all shipped, so the first weeks of data are the starting point, not a before-and-after
 - [ ] Each remaining workstream either shipped or explicitly declined here, with the reason
 
