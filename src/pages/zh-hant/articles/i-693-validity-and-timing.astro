@@ -42,7 +42,6 @@ const policyAlert =
       <div class="max-w-3xl mx-auto space-y-10">
         <header class="space-y-4">
           <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
-          <ArticleByline article={article} locale={locale} />
         </header>
 
         <section>
@@ -161,6 +160,9 @@ const policyAlert =
         </section>
 
         <ArticleSources article={article} locale={locale} />
+        <div class="mt-6">
+          <ArticleByline article={article} locale={locale} />
+        </div>
         <div class="text-center"><CallButton text="來電洽詢" size="lg" variant="filled" /></div>
       </div>
     </div>
