@@ -11,6 +11,7 @@ symptoms:
   - 'typecheck, the full test suite, and both postbuild verification scripts are all green'
   - 'the defect is only visible by opening the image files and reading what is printed on the page inside them'
   - 'an exclusion list built for one narrow reason (a single archive's watermark) is silently trusted to cover a much broader constraint (do not republish private/third-party/rights-encumbered material)'
+  - 'the same address ships again a month later as EXIF GPS, where the fix for the first incident — a human looking at the picture — structurally cannot see it'
 stack:
   - Astro 5
   - sips (macOS image processing)
@@ -169,6 +170,77 @@ inherently owner decisions, not test assertions. The durable prevention is
 procedural: no image-bearing batch ships without someone having actually
 looked at the images, and the final review is the checkpoint that
 enforces that, not any test.
+
+## 2026-09-23: the same address again, in bytes nobody renders
+
+A red-team pass found **GPS EXIF in 90 of 189 published images**. About seventy
+shared one coordinate pair, roughly four miles from the office:
+
+```
+34.1539, -118.0656   ~70 files   (a residence)
+34.1022, -118.1035    several    (the office — harmless)
+```
+
+Fourteen of them were on `/about/`, which is indexed. Anyone could download a
+certificate photo and read the doctor's home address out of the file.
+
+**This is the same fact, the same repo, and a different medium.** August's
+incident was a home address *printed on the page* inside a JPEG; the fix was a
+human privacy review of what each picture shows. That review ran, and it was
+sound — and it could not possibly have caught this, because there is nothing to
+see. `Read` renders the image. Preview renders the image. A reviewer looks at
+the image. The coordinates are in a header no renderer displays.
+
+So the lesson from August generalises further than it was written:
+
+> A guard that scans text cannot see pixels.
+
+becomes
+
+> **A guard sees one representation of a file. A fact can live in any of them.**
+
+Text rules could not see pixels; a pixel review could not see headers.
+
+### Why the existing guards were all green
+
+- `tests/data/source-integrity.test.ts` forbids the street address and
+  coordinates *outside `practice.ts`* — and reads `.ts`/`.astro` source as text.
+  A JPEG is not in its corpus, and EXIF is not text.
+- `scripts/verify-build.mjs` checks that referenced assets **exist**, never what
+  they contain.
+- `tests/assets/css-referenced-assets.test.ts` reads PNG magic bytes and alpha
+  channels — the closest any guard came to opening a binary, and it looks at a
+  different format for a different reason.
+- The `BLOCKED` list in `scripts/prepare-photo-assets.sh` encodes four files
+  excluded after the August review. It is a record of what was checked, not a
+  rule about what may ship — as this document already warned.
+
+### The fix
+
+1. **Strip everything**, not just GPS: `exiftool -all=` over `public/images/`.
+   Camera serial numbers, owner names, capture timestamps and software tags are
+   all identifying.
+2. **Strip at the source**: `scripts/prepare-photo-assets.sh` now strips after
+   every `sips` export, so a future run cannot reintroduce it.
+3. **Guard it**: `tests/assets/image-metadata.test.ts` parses JPEG segments
+   directly for an EXIF GPS IFD — no `exiftool` shell-out, because CI may not
+   have it. Shown red against the 90 offending files before the strip.
+4. **Verify the pixels are untouched**: all 191 images were hashed by decoded
+   pixel data, before and after. 188 were byte-identical. **Three were not, and
+   that is the interesting part**: they carried an EXIF `Orientation` tag, so
+   deleting metadata would have silently rotated them in the browser. The
+   rotation was baked into the pixels first, and the dimension swap
+   (1200×900 → 900×1200) confirms it. That is the August 2026 sideways-photo
+   bug, arriving through a new door.
+
+### Still exposed, deliberately
+
+The images with GPS remain in the public repo's **git history**. Stripping the
+working tree does not rewrite published commits, and rewriting them breaks every
+existing clone. The practical exposure drops a lot — casual discovery is what
+matters here — but it is not zero, and it is a decision the owner should make
+knowingly rather than inherit silently.
+
 
 ## Related
 

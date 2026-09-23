@@ -259,6 +259,12 @@ what you are about to publish, in every locale and in the structured data.**
 - **External listings (Google Business Profile, WebMD's wrong hours, the
   Chinese directories) are also the owner's, offline** (2026-09-23).
   `todos/009` keeps the research as reference; it is not an open task here.
+- **No locale string may assert a completed review while an article is
+  unreviewed** (`tests/data/articles.test.ts`). `/articles/` said its guides were
+  "reviewed by Dr. Chang" and the method page said "every article is reviewed
+  twice before it is published" — in all three locales — while both articles
+  rendered "Awaiting review". The existing gate checked the byline and the
+  JSON-LD and was blind to prose elsewhere on the site.
 - **The I-693 immigration medical exam page** at `/immigration-medical-exam/`
   went live 2026-09-22 (PR #67). **Deliberately general, by the owner's
   decision of 2026-09-21:** the fee amount, whether vaccines are given in the
@@ -498,6 +504,16 @@ what you are about to publish, in every locale and in the structured data.**
 
 ## Photographs
 
+**Strip every image's metadata before publishing it, and never re-add it.**
+`scripts/prepare-photo-assets.sh` does this on export and
+`tests/assets/image-metadata.test.ts` fails the build on EXIF GPS. This is a rule
+because the doctor's home address shipped as GPS coordinates in 90 published
+images while the repo's own privacy review — which looks at what a photo shows —
+passed them all. Note also that three recognition photos needed their EXIF
+`Orientation` baked into pixels before stripping; deleting the tag alone rotates
+them in the browser. **The pre-strip images remain in this public repo's git
+history; that has not been rewritten.**
+
 Originals live in `src-photos/`, which is **gitignored on purpose**: this repo is
 public, and the originals include full-resolution personal photographs of the
 doctor and his wife that were never meant for publication. They were stripped
@@ -544,8 +560,8 @@ automated check in this repo passed while this was about to ship:
 ```
 npm install
 npm run dev                          # http://localhost:3120
-ALLOW_INDEXING=true npm run build    # 39 pages; postbuild runs verify-css + verify-build
-npm test                             # 266 vitest tests
+ALLOW_INDEXING=true npm run build    # 43 pages; postbuild runs verify-css + verify-build
+npm test                             # 288 vitest tests
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -563,7 +579,7 @@ touching the build config.
 
 ## Tests
 
-Thirteen files, 266 tests, run with `npm test`:
+Sixteen files, 288 tests, run with `npm test`:
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -650,6 +666,20 @@ Thirteen files, 266 tests, run with `npm test`:
   nothing; it does not fall back and it does not warn. Also checks the PNG magic
   bytes and the alpha channel, since a flattened re-export is still a valid PNG
   and would render the mark as a solid square
+- `tests/assets/image-metadata.test.ts` — no published image may carry EXIF GPS.
+  It parses JPEG segments directly rather than shelling out to `exiftool`, which
+  CI does not have. It exists because **90 of 189 published images carried the
+  doctor's home address as GPS coordinates**, ~14 of them on the indexed About
+  page, for weeks. The August 2026 privacy review that blocked four photos read
+  what the pictures *showed*; nothing reads what the files *carry*. Stripping now
+  happens in `scripts/prepare-photo-assets.sh` on every export
+  ([write-up](docs/solutions/logic-errors/photo-content-outside-every-text-based-guard.md))
+- `tests/routes/internal-links-exist.test.ts` — every internal `href` in the
+  built site must point at a page that was built. `LanguageSwitcher.astro` built
+  locale URLs by string substitution and offered 繁體/简体 links on the two
+  English-only pages; all four 404'd on production, while the `<head>` hreflang
+  tags — which do check existence — were correct. A guard on the machine-readable
+  half, none on the control a reader clicks
 - `tests/routes/gallery-unlisted.test.ts` — the personal gallery page's
   must-stay-unlinked invariant: no import of `BaseLayout`/`Header`/
   `StickyCallBar`/`WeChatQR`/`CallButton`/`Footer`, a hardcoded (not computed)
