@@ -42,7 +42,6 @@ const cdcTuberculosis = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-
       <div class="max-w-3xl mx-auto space-y-10">
         <header class="space-y-4">
           <h1 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">{t(article.titleKey)}</h1>
-          <ArticleByline article={article} locale={locale} />
         </header>
 
         <section>
@@ -161,6 +160,9 @@ const cdcTuberculosis = 'https://www.cdc.gov/immigrant-refugee-health/hcp/civil-
         </section>
 
         <ArticleSources article={article} locale={locale} />
+        <div class="mt-6">
+          <ArticleByline article={article} locale={locale} />
+        </div>
         <div class="text-center"><CallButton text="来电洽询" size="lg" variant="filled" /></div>
       </div>
     </div>

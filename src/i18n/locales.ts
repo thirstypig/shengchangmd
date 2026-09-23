@@ -160,8 +160,8 @@ export const translations = {
       whatToBringSummary:
         'The documents to bring to your immigration medical exam, and how to prepare Form I-693 before you arrive.',
       reviewedLine:
-        'Drafted with AI assistance from the official sources listed below. Medically reviewed by {doctor}, on {date}.',
-      draftLine: 'Drafted with AI assistance from the official sources listed below.',
+        'Drafted with AI assistance from the official sources listed above. Medically reviewed by {doctor}, on {date}.',
+      draftLine: 'Drafted with AI assistance from the official sources listed above.',
       howWeWriteLink: 'How we write these articles',
       sourcesHeading: 'Sources',
       sourcesChecked: 'Sources checked {date}.',
@@ -408,8 +408,8 @@ export const translations = {
     articles: {
       whatToBringTitle: 'I-693 移民體檢應攜帶的資料',
       whatToBringSummary: '移民體檢當天應攜帶的文件，以及到診前如何準備 Form I-693。',
-      reviewedLine: '本文由 AI 協助、依據下列官方資料撰寫，並經{doctor}於 {date} 醫學審閱。',
-      draftLine: '本文由 AI 協助、依據下列官方資料撰寫。',
+      reviewedLine: '本文由 AI 協助、依據上列官方資料撰寫，並經{doctor}於 {date} 醫學審閱。',
+      draftLine: '本文由 AI 協助、依據上列官方資料撰寫。',
       howWeWriteLink: '我們如何撰寫這些文章',
       sourcesHeading: '資料來源',
       sourcesChecked: '資料查核日期：{date}。',
@@ -600,8 +600,8 @@ export const translations = {
     articles: {
       whatToBringTitle: 'I-693 移民体检应携带的资料',
       whatToBringSummary: '移民体检当天应携带的文件，以及到诊前如何准备 Form I-693。',
-      reviewedLine: '本文由 AI 协助、依据下列官方资料撰写，并经{doctor}于 {date} 医学审阅。',
-      draftLine: '本文由 AI 协助、依据下列官方资料撰写。',
+      reviewedLine: '本文由 AI 协助、依据上列官方资料撰写，并经{doctor}于 {date} 医学审阅。',
+      draftLine: '本文由 AI 协助、依据上列官方资料撰写。',
       howWeWriteLink: '我们如何撰写这些文章',
       sourcesHeading: '资料来源',
       sourcesChecked: '资料查核日期：{date}。',
