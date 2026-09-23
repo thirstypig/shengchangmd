@@ -2,12 +2,22 @@
 // Deliberately NOT using BaseLayout: this page carries no medical-practice
 // content (no Header nav, no StickyCallBar/CallButton CTAs, no WeChat QR,
 // no Footer) and no trilingual obligation via getTranslation — its own tab
-// labels, unlock button and error text are the one exception CLAUDE.md
-// allows: literal English/Chinese chrome in a page that has no shared
-// component and no locale variants. It is unlinked from every other page
-// and forced noindex regardless of the ALLOW_INDEXING build flag or locale
-// review status, unlike every other page on this site. Modeled on
+// labels, unlock button, nav labels and error text are the one exception
+// CLAUDE.md allows: literal English/Chinese chrome in a page that has no
+// shared component and no locale variants. It is unlinked from every other
+// page and forced noindex regardless of the ALLOW_INDEXING build flag or
+// locale review status, unlike every other page on this site. Modeled on
 // src/pages/family-photos-2026.astro.
+//
+// Layout: a two-pane "article page" shell (side nav of every drafted item,
+// grouped by cluster, + a main pane rendering the selected item the way
+// src/pages/articles/*.astro renders a real article — h1, metadata line,
+// prose body, sources, then editorial notes as a secondary block). The
+// serif-heading / sans-body typography and the --brand link treatment below
+// are copied from src/styles/global.css so this stays visually consistent
+// with the real article pages; this page can't import that stylesheet (it
+// intentionally carries zero site chrome), so the handful of token values it
+// needs are restated here once, in this one <style> block.
 import encrypted from '@data/schedule.enc.json';
 
 const encryptedJson = JSON.stringify(encrypted);
@@ -23,7 +33,7 @@ const encryptedJson = JSON.stringify(encrypted);
   </head>
   <body>
     <main>
-      <h1>Editorial schedule</h1>
+      <h1 id="page-title">Editorial schedule</h1>
 
       <form id="unlock-form" autocomplete="off">
         <label for="passphrase">Passphrase</label>
@@ -39,36 +49,65 @@ const encryptedJson = JSON.stringify(encrypted);
           <button type="button" class="tab" data-locale="zh-hans">简体中文</button>
         </div>
 
-        <p id="cadence"></p>
+        <p id="cadence" class="cadence"></p>
 
-        <table>
-          <thead id="table-head"></thead>
-          <tbody id="table-body"></tbody>
-        </table>
-
-        <h2 id="open-questions-heading"></h2>
-        <ul id="open-questions"></ul>
-
-        <div id="drafts"></div>
+        <div class="layout">
+          <nav class="side-nav" id="side-nav" aria-label="Schedule articles"></nav>
+          <div class="main-pane" id="main-pane"></div>
+        </div>
       </div>
     </main>
 
-    <style>
+    <style is:global>
+      /* is:global: nearly everything this page styles (nav items, chips,
+         table rows, article body) is built at runtime via document.createElement
+         in the client script below, not present in the static template Astro
+         scopes at build time. A scoped <style> only rewrites selectors to
+         match elements that carry Astro's injected data-astro-* attribute,
+         which these dynamically-created nodes never get — so a scoped block
+         here would silently fail to apply to exactly the content this page
+         exists to render. This was the root cause of the nav-item layout
+         defects (no title/meta separation, disc bullets, inline-block
+         buttons) found in browser testing 2026-09-23. */
       :root {
         color-scheme: light dark;
         --bg: #f5f5f5;
         --fg: #1a1a1a;
         --card: #ffffff;
+        --card-sunken: #f7f6f4;
         --border: #ccc;
         --error: #b00020;
+        --text: #46443f;
+        --text-muted: #6f6b65;
+        /* Copied from src/styles/global.css light-mode --brand / --brand-strong. */
+        --link: #8a2f3c;
+        --link-hover: #6f2531;
+        --chip-published-bg: #e6f2e8;
+        --chip-published-fg: #1e5e2b;
+        --chip-drafting-bg: #fbe9d6;
+        --chip-drafting-fg: #8a5a12;
+        --chip-planned-bg: #eceaf5;
+        --chip-planned-fg: #4a4592;
       }
       @media (prefers-color-scheme: dark) {
         :root {
           --bg: #111;
           --fg: #eee;
           --card: #1c1c1c;
+          --card-sunken: #17161a;
           --border: #444;
           --error: #ff6b6b;
+          --text: #cfcac3;
+          --text-muted: #948f88;
+          /* Copied from src/styles/global.css dark-mode --brand / --brand-strong. */
+          --link: #e0a4ad;
+          --link-hover: #eec3c9;
+          --chip-published-bg: #1c3322;
+          --chip-published-fg: #8fd39e;
+          --chip-drafting-bg: #3a2c17;
+          --chip-drafting-fg: #f0c98a;
+          --chip-planned-bg: #26243a;
+          --chip-planned-fg: #b8b3ec;
         }
       }
       * {
@@ -78,14 +117,17 @@ const encryptedJson = JSON.stringify(encrypted);
         margin: 0;
         padding: 20px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.6;
         background: var(--bg);
         color: var(--fg);
       }
       main {
-        max-width: 900px;
+        max-width: 1200px;
         margin: 0 auto;
       }
-      h1 {
+      #page-title {
+        font-family: Georgia, 'Times New Roman', serif;
         font-size: 1.4rem;
         margin-bottom: 1rem;
       }
@@ -114,6 +156,12 @@ const encryptedJson = JSON.stringify(encrypted);
         background: var(--card);
         color: var(--fg);
         cursor: pointer;
+        font-family: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--link);
+        outline-offset: 2px;
       }
       .error {
         color: var(--error);
@@ -132,10 +180,207 @@ const encryptedJson = JSON.stringify(encrypted);
         font-weight: 700;
         border-color: var(--fg);
       }
+      .cadence {
+        color: var(--text-muted);
+        margin: 0 0 1rem;
+      }
+
+      /* -------------------------------------------------------------------
+         Two-pane layout
+      ------------------------------------------------------------------- */
+      .layout {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .side-nav {
+        flex: 0 0 280px;
+        max-width: 280px;
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--card);
+        padding: 0.5rem;
+      }
+      .nav-group {
+        margin-bottom: 0.75rem;
+      }
+      .nav-group-heading {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+        margin: 0.75rem 0.4rem 0.35rem;
+      }
+      .nav-group:first-child .nav-group-heading {
+        margin-top: 0.25rem;
+      }
+      .nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 0.45rem 0.5rem;
+        margin-bottom: 0.15rem;
+        background: transparent;
+        color: var(--fg);
+        font-size: 0.9rem;
+        line-height: 1.35;
+      }
+      .nav-item:hover {
+        background: var(--card-sunken);
+      }
+      .nav-item[aria-current='true'] {
+        background: var(--card-sunken);
+        border-left: 3px solid var(--link);
+        border-radius: 0 4px 4px 0;
+        padding-left: calc(0.5rem - 3px);
+        font-weight: 600;
+      }
+      .nav-item-title {
+        display: block;
+      }
+      .nav-item-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 0.25rem;
+      }
+      .nav-item-date {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+      .chip {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.1rem 0.45rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .chip[data-status='published'] {
+        background: var(--chip-published-bg);
+        color: var(--chip-published-fg);
+      }
+      .chip[data-status='drafting'] {
+        background: var(--chip-drafting-bg);
+        color: var(--chip-drafting-fg);
+      }
+      .chip[data-status='planned'] {
+        background: var(--chip-planned-bg);
+        color: var(--chip-planned-fg);
+      }
+
+      .main-pane {
+        flex: 1 1 0%;
+        min-width: 0;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--card);
+        padding: 1.5rem 1.75rem;
+      }
+
+      /* Article typography, matching src/pages/articles/*.astro:
+         Georgia/serif headings, the sans-serif body copy at the site's base
+         size/line-height, and --brand-colored underlined links. */
+      .article h1 {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0 0 0.75rem;
+      }
+      .article h2 {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 1.5rem 0 0.75rem;
+      }
+      .article-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .article-meta .sep {
+        opacity: 0.6;
+      }
+      .article-prose p {
+        margin: 0 0 1rem;
+        color: var(--text);
+      }
+      .article-prose a,
+      .sources a {
+        color: var(--link);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .article-prose a:hover,
+      .sources a:hover {
+        color: var(--link-hover);
+        text-decoration: none;
+      }
+      .sources {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+      .sources ul {
+        padding-left: 1.2rem;
+        margin: 0.5rem 0 0;
+      }
+      .sources li {
+        margin-bottom: 0.35rem;
+      }
+      .secondary-block {
+        margin-top: 1.5rem;
+        padding: 0.85rem 1rem;
+        border: 1px dashed var(--border);
+        border-radius: 6px;
+        background: var(--card-sunken);
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .secondary-block h3 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin: 0 0 0.4rem;
+        color: var(--text-muted);
+      }
+      .secondary-block + .secondary-block {
+        margin-top: 0.75rem;
+      }
+      .secondary-block p {
+        margin: 0 0 0.5rem;
+      }
+      .secondary-block p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Overview entry: cadence + open questions + the full table. */
+      .overview h2:first-child {
+        margin-top: 0;
+      }
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 1rem 0;
+        font-size: 0.85rem;
       }
       th,
       td {
@@ -143,37 +388,39 @@ const encryptedJson = JSON.stringify(encrypted);
         padding: 0.5rem;
         text-align: left;
         vertical-align: top;
-        font-size: 0.9rem;
       }
       th {
-        background: var(--card);
+        background: var(--card-sunken);
       }
-      ul {
+      ul.open-questions {
         padding-left: 1.2rem;
+        margin: 0.5rem 0 1.5rem;
       }
-      li {
+      ul.open-questions li {
         margin-bottom: 0.4rem;
       }
-      #drafts {
-        margin-top: 1.5rem;
-      }
-      .draft-item {
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 0.6rem 0.8rem;
-        margin-bottom: 0.75rem;
-        background: var(--card);
-      }
-      .draft-item h3 {
-        font-size: 1rem;
-        margin: 0 0 0.4rem;
-      }
-      .draft-item summary {
-        cursor: pointer;
-        font-weight: 600;
-      }
-      .draft-item p {
-        margin: 0.5rem 0;
+
+      /* Phone width: side nav collapses above the main pane, no horizontal
+         scroll anywhere. */
+      @media (max-width: 700px) {
+        .layout {
+          flex-direction: column;
+        }
+        .side-nav {
+          flex: 1 1 auto;
+          max-width: 100%;
+          width: 100%;
+          position: static;
+          max-height: none;
+        }
+        .main-pane {
+          width: 100%;
+          padding: 1.25rem;
+        }
+        table {
+          display: block;
+          overflow-x: auto;
+        }
       }
     </style>
 
@@ -185,21 +432,46 @@ const encryptedJson = JSON.stringify(encrypted);
       const errorEl = document.getElementById('error');
       const content = document.getElementById('content');
       const cadenceEl = document.getElementById('cadence');
-      const tableHead = document.getElementById('table-head');
-      const tableBody = document.getElementById('table-body');
-      const openQuestionsHeading = document.getElementById('open-questions-heading');
-      const openQuestionsList = document.getElementById('open-questions');
-      const draftsEl = document.getElementById('drafts');
+      const sideNav = document.getElementById('side-nav');
+      const mainPane = document.getElementById('main-pane');
       const tabs = Array.from(document.querySelectorAll('.tab'));
 
-      const OPEN_QUESTIONS_HEADING = {
-        en: 'Open questions',
-        'zh-hant': '待確認事項',
-        'zh-hans': '待确认事项',
+      // Literal chrome labels, same exception the tab labels and error text
+      // already take: this page has no shared component and no locale
+      // variants, so these live here rather than in src/i18n/locales.ts.
+      const UI_LABELS = {
+        en: {
+          overview: 'Overview',
+          openQuestionsHeading: 'Open questions',
+          allItemsHeading: 'All items',
+          sourcesHeading: 'Sources',
+          editorialNotesHeading: 'Editorial notes',
+          draftNotesHeading: 'Draft notes',
+          sourcesChecked: 'Sources checked',
+        },
+        'zh-hant': {
+          overview: '總覽',
+          openQuestionsHeading: '待確認事項',
+          allItemsHeading: '所有項目',
+          sourcesHeading: '資料來源',
+          editorialNotesHeading: '編輯備註',
+          draftNotesHeading: '草稿備註',
+          sourcesChecked: '資料查核日期',
+        },
+        'zh-hans': {
+          overview: '总览',
+          openQuestionsHeading: '待确认事项',
+          allItemsHeading: '所有项目',
+          sourcesHeading: '资料来源',
+          editorialNotesHeading: '编辑备注',
+          draftNotesHeading: '草稿备注',
+          sourcesChecked: '资料核对日期',
+        },
       };
 
       let schedule = null;
       let currentLocale = 'en';
+      let currentSlug = 'overview';
 
       function base64ToBytes(base64) {
         const binary = atob(base64);
@@ -238,6 +510,242 @@ const encryptedJson = JSON.stringify(encrypted);
         return JSON.parse(new TextDecoder().decode(plainBuffer));
       }
 
+      function clear(el) {
+        while (el.firstChild) el.removeChild(el.firstChild);
+      }
+
+      function el(tag, opts) {
+        const node = document.createElement(tag);
+        if (opts) {
+          if (opts.text !== undefined) node.textContent = opts.text;
+          if (opts.className) node.className = opts.className;
+          if (opts.attrs) {
+            for (const [key, value] of Object.entries(opts.attrs)) {
+              node.setAttribute(key, value);
+            }
+          }
+        }
+        return node;
+      }
+
+      function cell(tag, text) {
+        const node = document.createElement(tag);
+        node.textContent = text;
+        return node;
+      }
+
+      function groupByCluster(items) {
+        const groups = [];
+        const bySlug = new Map();
+        for (const item of items) {
+          let group = bySlug.get(item.cluster);
+          if (!group) {
+            group = { cluster: item.cluster, items: [] };
+            bySlug.set(item.cluster, group);
+            groups.push(group);
+          }
+          group.items.push(item);
+        }
+        return groups;
+      }
+
+      function selectItem(slug) {
+        currentSlug = slug;
+        renderSideNav(currentLocale);
+        renderMainPane(currentLocale);
+      }
+
+      function renderSideNav(locale) {
+        if (!schedule) return;
+        const labels = UI_LABELS[locale];
+        clear(sideNav);
+
+        const overviewGroup = el('div', { className: 'nav-group' });
+        const overviewList = el('ul', { className: 'nav-list' });
+        const overviewButton = el('button', { text: labels.overview, className: 'nav-item' });
+        overviewButton.type = 'button';
+        overviewButton.setAttribute('aria-current', String(currentSlug === 'overview'));
+        overviewButton.addEventListener('click', () => selectItem('overview'));
+        const overviewLi = el('li');
+        overviewLi.appendChild(overviewButton);
+        overviewList.appendChild(overviewLi);
+        overviewGroup.appendChild(overviewList);
+        sideNav.appendChild(overviewGroup);
+
+        const statusLabels = schedule.statusLabels[locale];
+        const groups = groupByCluster(schedule.items);
+
+        for (const group of groups) {
+          const groupEl = el('div', { className: 'nav-group' });
+          groupEl.appendChild(el('p', { className: 'nav-group-heading', text: group.cluster }));
+          const list = el('ul', { className: 'nav-list' });
+
+          for (const item of group.items) {
+            const button = el('button', { className: 'nav-item' });
+            button.type = 'button';
+            button.setAttribute('aria-current', String(currentSlug === item.slug));
+
+            button.appendChild(el('span', { className: 'nav-item-title', text: item.title[locale] }));
+
+            const meta = el('span', { className: 'nav-item-meta' });
+            const chip = el('span', {
+              className: 'chip',
+              text: statusLabels[item.status] ?? item.status,
+              attrs: { 'data-status': item.status },
+            });
+            meta.appendChild(chip);
+            meta.appendChild(el('span', { className: 'nav-item-date', text: item.target }));
+            button.appendChild(meta);
+
+            button.addEventListener('click', () => selectItem(item.slug));
+
+            const li = el('li');
+            li.appendChild(button);
+            list.appendChild(li);
+          }
+
+          groupEl.appendChild(list);
+          sideNav.appendChild(groupEl);
+        }
+      }
+
+      function renderOverview(locale) {
+        const labels = UI_LABELS[locale];
+        const wrapper = el('div', { className: 'overview' });
+
+        wrapper.appendChild(el('h2', { text: labels.openQuestionsHeading }));
+        const questionsList = el('ul', { className: 'open-questions' });
+        for (const q of schedule.openQuestions[locale]) {
+          questionsList.appendChild(cell('li', q));
+        }
+        wrapper.appendChild(questionsList);
+
+        wrapper.appendChild(el('h2', { text: labels.allItemsHeading }));
+
+        const columns = schedule.columns[locale];
+        const table = el('table');
+        const thead = el('thead');
+        const headRow = el('tr');
+        for (const value of [columns.topic, columns.status, columns.target, columns.cluster, columns.notes]) {
+          headRow.appendChild(cell('th', value));
+        }
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        const statusLabels = schedule.statusLabels[locale];
+        const tbody = el('tbody');
+        for (const item of schedule.items) {
+          const row = el('tr');
+          row.appendChild(cell('td', item.title[locale]));
+          row.appendChild(cell('td', statusLabels[item.status] ?? item.status));
+          row.appendChild(cell('td', item.target));
+          row.appendChild(cell('td', item.cluster));
+          row.appendChild(cell('td', item.notes[locale]));
+          tbody.appendChild(row);
+        }
+        table.appendChild(tbody);
+        wrapper.appendChild(table);
+
+        return wrapper;
+      }
+
+      // A drafted block is a section heading when it is short and does not
+      // end in terminal punctuation. Body paragraphs always end in sentence
+      // punctuation, and the "Sources:" paragraph ends in ":" — both are
+      // explicitly excluded so they render as <p>, not <h2>.
+      const HEADING_MAX_LENGTH = 80;
+      const TERMINAL_PUNCTUATION = /[.?!。？！：:]$/;
+
+      function isHeadingBlock(block) {
+        const trimmed = block.trim();
+        if (trimmed.length === 0 || trimmed.length > HEADING_MAX_LENGTH) return false;
+        return !TERMINAL_PUNCTUATION.test(trimmed);
+      }
+
+      function renderArticle(locale, item) {
+        const labels = UI_LABELS[locale];
+        const statusLabels = schedule.statusLabels[locale];
+        const draftLabels = schedule.draftLabels[locale];
+        const article = el('article', { className: 'article' });
+
+        article.appendChild(el('h1', { text: item.title[locale] }));
+
+        const meta = el('p', { className: 'article-meta' });
+        const metaParts = [statusLabels[item.status] ?? item.status, item.target, item.cluster];
+        if (item.draftChecked) {
+          metaParts.push(`${labels.sourcesChecked}: ${item.draftChecked}`);
+        }
+        metaParts.forEach((part, index) => {
+          if (index > 0) meta.appendChild(el('span', { className: 'sep', text: '·' }));
+          meta.appendChild(el('span', { text: part }));
+        });
+        article.appendChild(meta);
+
+        const prose = el('div', { className: 'article-prose' });
+        const draftText = item.draft ? item.draft[locale] : null;
+        if (draftText) {
+          for (const block of draftText.split('\n\n')) {
+            prose.appendChild(cell(isHeadingBlock(block) ? 'h2' : 'p', block));
+          }
+        } else {
+          prose.appendChild(cell('p', draftLabels.none));
+        }
+        article.appendChild(prose);
+
+        if (item.sources && item.sources.length > 0) {
+          const sources = el('div', { className: 'sources' });
+          sources.appendChild(el('h3', { text: labels.sourcesHeading }));
+          const list = el('ul');
+          for (const source of item.sources) {
+            const li = el('li');
+            const link = el('a', { text: source.title });
+            link.href = source.url;
+            link.rel = 'noopener';
+            link.target = '_blank';
+            li.appendChild(link);
+            list.appendChild(li);
+          }
+          sources.appendChild(list);
+          article.appendChild(sources);
+        }
+
+        const notesText = item.notes ? item.notes[locale] : null;
+        if (notesText) {
+          const notesBlock = el('div', { className: 'secondary-block' });
+          notesBlock.appendChild(el('h3', { text: labels.editorialNotesHeading }));
+          notesBlock.appendChild(cell('p', notesText));
+          article.appendChild(notesBlock);
+        }
+
+        if (item.draftNotes) {
+          const draftNotesBlock = el('div', { className: 'secondary-block' });
+          draftNotesBlock.appendChild(el('h3', { text: labels.draftNotesHeading }));
+          draftNotesBlock.appendChild(cell('p', item.draftNotes));
+          article.appendChild(draftNotesBlock);
+        }
+
+        return article;
+      }
+
+      function renderMainPane(locale) {
+        if (!schedule) return;
+        clear(mainPane);
+
+        if (currentSlug === 'overview') {
+          mainPane.appendChild(renderOverview(locale));
+          return;
+        }
+
+        const item = schedule.items.find((candidate) => candidate.slug === currentSlug);
+        if (!item) {
+          currentSlug = 'overview';
+          mainPane.appendChild(renderOverview(locale));
+          return;
+        }
+
+        mainPane.appendChild(renderArticle(locale, item));
+      }
+
       function render(locale) {
         if (!schedule) return;
         currentLocale = locale;
@@ -248,72 +756,8 @@ const encryptedJson = JSON.stringify(encrypted);
 
         cadenceEl.textContent = schedule.cadence[locale];
 
-        function clear(el) {
-          while (el.firstChild) el.removeChild(el.firstChild);
-        }
-
-        function cell(tag, text) {
-          const el = document.createElement(tag);
-          el.textContent = text;
-          return el;
-        }
-
-        const columns = schedule.columns[locale];
-        clear(tableHead);
-        const headRow = document.createElement('tr');
-        for (const value of [columns.topic, columns.status, columns.target, columns.cluster, columns.notes]) {
-          headRow.appendChild(cell('th', value));
-        }
-        tableHead.appendChild(headRow);
-
-        const statusLabels = schedule.statusLabels[locale];
-        clear(tableBody);
-        for (const item of schedule.items) {
-          const row = document.createElement('tr');
-          row.appendChild(cell('td', item.title[locale]));
-          row.appendChild(cell('td', statusLabels[item.status] ?? item.status));
-          row.appendChild(cell('td', item.target));
-          row.appendChild(cell('td', item.cluster));
-          row.appendChild(cell('td', item.notes[locale]));
-          tableBody.appendChild(row);
-        }
-
-        openQuestionsHeading.textContent = OPEN_QUESTIONS_HEADING[locale];
-        clear(openQuestionsList);
-        for (const q of schedule.openQuestions[locale]) {
-          openQuestionsList.appendChild(cell('li', q));
-        }
-
-        const labels = schedule.draftLabels[locale];
-        clear(draftsEl);
-        for (const item of schedule.items) {
-          const wrapper = document.createElement('details');
-          wrapper.className = 'draft-item';
-
-          const summary = document.createElement('summary');
-          summary.textContent = labels.show;
-          wrapper.appendChild(summary);
-
-          wrapper.appendChild(cell('h3', item.title[locale]));
-
-          const draftHeading = cell('h4', labels.heading);
-          wrapper.appendChild(draftHeading);
-
-          const draftText = item.draft ? item.draft[locale] : null;
-          if (draftText) {
-            for (const paragraph of draftText.split('\n\n')) {
-              wrapper.appendChild(cell('p', paragraph));
-            }
-          } else {
-            wrapper.appendChild(cell('p', labels.none));
-          }
-
-          wrapper.addEventListener('toggle', () => {
-            summary.textContent = wrapper.open ? labels.hide : labels.show;
-          });
-
-          draftsEl.appendChild(wrapper);
-        }
+        renderSideNav(locale);
+        renderMainPane(locale);
       }
 
       for (const tab of tabs) {
