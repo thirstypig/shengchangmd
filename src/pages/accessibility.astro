@@ -5,6 +5,13 @@ import { practice } from '@data/practice';
 const title = `Accessibility Statement | ${practice.doctorName}`;
 const description = `Accessibility statement for the practice website of ${practice.doctorName}.`;
 const canonicalUrl = new URL('/accessibility/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Accessibility Statement', href: '/accessibility/' },
+];
+
+const telHref = `tel:${practice.phone.replace(/[^\d]/g, '')}`;
 ---
 
 <BaseLayout
@@ -12,7 +19,129 @@ const canonicalUrl = new URL('/accessibility/', Astro.site).href;
   description={description}
   locale="en"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
-  <h1>Accessibility Statement</h1>
-  <p>Coming soon.</p>
+  <section class="content-section">
+    <div class="content-container">
+      <h1>Accessibility Statement</h1>
+      <p>
+        {practice.doctorName}'s office wants this website to be usable by everyone who visits it,
+        including patients using a screen reader, a keyboard instead of a mouse, or a browser
+        text-size setting larger than the default. This page states what this site aims for, what
+        has actually been done, and what is known to still be incomplete.
+      </p>
+
+      <h2>Standard aimed at</h2>
+      <p>
+        This site aims to meet the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA. That
+        is a goal the site is built toward, not a certification: <strong
+          >this site has not had a full accessibility audit by anyone outside the people who built
+          it</strong
+        >, so this is not a claim of conformance.
+      </p>
+
+      <h2>What has been done</h2>
+      <ul>
+        <li>
+          Pages use semantic HTML headings (a single <code>h1</code> per page, nested subheadings
+          in order) so a screen reader user can navigate by heading structure.
+        </li>
+        <li>
+          Meaningful images carry descriptive <code>alt</code> text; decorative images and icons are
+          marked so a screen reader skips them.
+        </li>
+        <li>
+          A "Skip to content" link is the first stop for keyboard users, so you can bypass the
+          header and navigation on every page without tabbing through them first.
+        </li>
+        <li>
+          Interactive elements — links, buttons, the language switcher, the theme toggle, the
+          text-size control — show a visible focus outline when reached by keyboard, not only on
+          mouse hover.
+        </li>
+        <li>
+          The site's color palette, in both light and dark themes, is checked for WCAG contrast
+          between text and its background as part of the site's own automated test suite.
+        </li>
+        <li>
+          A text-size control in the header lets you enlarge the page's text beyond your browser's
+          own default, independent of your device's system settings.
+        </li>
+        <li>
+          The site works in both a light and a dark color theme, and follows your device's
+          preference automatically unless you choose otherwise.
+        </li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <p>
+        This site has not been tested with every screen reader and browser combination, and it has
+        not had a professional accessibility audit. If something on this site is difficult to use
+        with assistive technology, that is useful information the office wants to hear — see
+        "Reporting a problem" below.
+      </p>
+
+      <h2>Reporting a problem</h2>
+      <p>
+        If you have trouble using any part of this website because of a disability, please call the
+        office at <a href={telHref}>{practice.phone}</a> or email{' '}
+        <a href={`mailto:${practice.email}`}>{practice.email}</a>. Please describe the page you were
+        on and the problem you ran into, if you can — that's the fastest way for the issue to get
+        fixed.
+      </p>
+
+      <p class="updated-note">This page was last reviewed on 2026-09-23.</p>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .content-section {
+    padding: 3rem 0 4rem;
+  }
+
+  .content-container {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p,
+  ul {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+
+  a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  code {
+    font-size: 0.9em;
+    background: var(--surface-sunken);
+    padding: 0.1em 0.35em;
+    border-radius: 0.25em;
+  }
+
+  .updated-note {
+    margin-top: 2.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+</style>

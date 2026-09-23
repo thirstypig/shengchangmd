@@ -1,5 +1,6 @@
 ---
 import { locales, getTranslation } from '@i18n/locales';
+import { pageSlug, pageExistsIn } from '@i18n/alternates';
 
 interface Props {
   currentLocale: string;
@@ -28,10 +29,21 @@ function getCleanPath(path: string): string {
 
 const cleanPath = getCleanPath(currentPath);
 
+// Which locales does the CURRENT page actually exist in? Same filesystem-derived
+// check BaseLayout already uses for hreflang — this switcher built its links by
+// pure string substitution with no such check, so it offered 繁體/简体 links to
+// pages that don't exist (e.g. /privacy/, /accessibility/, which are English
+// only) and those 404 on the live site.
+const pageFiles = new Set(Object.keys(import.meta.glob('/src/pages/**/*.astro')));
+// currentPath may be a bare slug ('/') without a real origin, so build a
+// throwaway absolute URL purely to reuse pageSlug's parsing.
+const slug = pageSlug(new URL(currentPath, 'https://example.com').href);
+
 // Build links for each locale
 const localeLinks = Object.entries(locales).map(([code, metadata]) => {
   const prefix = localeToPrefix[code as keyof typeof localeToPrefix];
   const href = prefix + (cleanPath || '/');
+  const exists = code === currentLocale || pageExistsIn(code, slug, pageFiles);
   return {
     code,
     href,
@@ -40,24 +52,44 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
     name: metadata.shortName,
     fullName: metadata.nativeName,
     isCurrent: code === currentLocale,
+    exists,
   };
 });
+
+// A reader looking at this page can't read whatever locale they'd be switching
+// out of, so a disabled entry still needs the localized "(English)"-style
+// marker (already used the same way in the footer's privacy/accessibility
+// links) rather than silent omission — it tells them why the option isn't a
+// live link instead of just disappearing.
+const unavailableMarker = getTranslation(currentLocale, 'footer.englishOnly');
 ---
 
 <nav class="language-switcher" aria-label={getTranslation(currentLocale, 'changeLanguage')}>
   {
-    localeLinks.map((link) => (
-      <a
-        href={link.href}
-        lang={link.code}
-        aria-current={link.isCurrent ? 'page' : undefined}
-        title={link.fullName}
-        aria-label={link.fullName}
-        class:list={['language-link', { 'is-current': link.isCurrent }]}
-      >
-        {link.name}
-      </a>
-    ))
+    localeLinks.map((link) =>
+      link.exists ? (
+        <a
+          href={link.href}
+          lang={link.code}
+          aria-current={link.isCurrent ? 'page' : undefined}
+          title={link.fullName}
+          aria-label={link.fullName}
+          class:list={['language-link', { 'is-current': link.isCurrent }]}
+        >
+          {link.name}
+        </a>
+      ) : (
+        <span
+          lang={link.code}
+          title={`${link.fullName}${unavailableMarker}`}
+          aria-label={`${link.fullName}${unavailableMarker}`}
+          aria-disabled="true"
+          class="language-link is-unavailable"
+        >
+          {link.name}
+        </span>
+      ),
+    )
   }
 </nav>
 
@@ -93,5 +125,10 @@ const localeLinks = Object.entries(locales).map(([code, metadata]) => {
   .language-link.is-current {
     border-bottom-color: currentColor;
     font-weight: 600;
+  }
+
+  .language-link.is-unavailable {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
 </style>

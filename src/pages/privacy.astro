@@ -5,6 +5,13 @@ import { practice } from '@data/practice';
 const title = `Privacy Policy | ${practice.doctorName}`;
 const description = `Privacy policy for the practice website of ${practice.doctorName}.`;
 const canonicalUrl = new URL('/privacy/', Astro.site).href;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Privacy Policy', href: '/privacy/' },
+];
+
+const telHref = `tel:${practice.phone.replace(/[^\d]/g, '')}`;
 ---
 
 <BaseLayout
@@ -12,7 +19,123 @@ const canonicalUrl = new URL('/privacy/', Astro.site).href;
   description={description}
   locale="en"
   canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
 >
-  <h1>Privacy Policy</h1>
-  <p>Coming soon.</p>
+  <section class="content-section">
+    <div class="content-container">
+      <h1>Privacy Policy</h1>
+      <p>
+        This page describes what this website — the public site for {practice.doctorName}'s
+        family medicine practice — does and does not do with information about the people who
+        visit it. It does not cover how the office handles your medical records; that is governed
+        by HIPAA and the office's separate Notice of Privacy Practices, which you can request by
+        phone or in person at the office.
+      </p>
+
+      <h2>This website does not use cookies or analytics</h2>
+      <p>
+        This site sets no cookies and runs no analytics, advertising, or tracking scripts of any
+        kind. No visit, click, or page view is recorded, measured, or shared with any third party.
+      </p>
+
+      <h2>What this site stores in your browser</h2>
+      <p>
+        Two on-page controls save a preference locally, in your own browser's storage, so it holds
+        between visits:
+      </p>
+      <ul>
+        <li>
+          The dark/light theme toggle saves which theme you chose.
+        </li>
+        <li>
+          The text-size control saves the size you chose, so the site doesn't reset to the default
+          size every time you come back.
+        </li>
+      </ul>
+      <p>
+        Both are stored only on the device you're using, are never transmitted anywhere, and are
+        never seen by this office or by us. Clearing your browser's site data removes them. Nothing
+        else on this site is stored in this way.
+      </p>
+
+      <h2>No forms collect information on this site</h2>
+      <p>
+        This website has no appointment-request form, contact form, newsletter sign-up, or any
+        other form that collects your name, email address, phone number, or health information.
+        The only way to reach the office through this site is to call the phone number or send
+        email to the address listed on the <a href="/contact/">Contact page</a> — doing either of
+        those puts you in direct contact with the office by phone or email, not through this
+        website.
+      </p>
+
+      <h2>Maps and outside links</h2>
+      <p>
+        The <a href="/location/">Location page</a> embeds a Google Maps view of the office
+        address so you can see it without leaving the site. Loading that map is a request to
+        Google, and Google's own privacy policy governs what happens with that request — this
+        site has no visibility into it and no control over it. The "Directions" links on that page
+        send you to Google Maps or Apple Maps in a new destination entirely; once you follow one of
+        those links, you're on Google's or Apple's site, not this one.
+      </p>
+      <p>
+        A handful of other pages — for example the biography and the immigration medical exam
+        pages — link out to outside sources such as USCIS, the CDC, and Dr. Chang's civic history
+        in the Arcadia Public Library's local history archive. Following any outside link takes you
+        to a site this practice does not operate and cannot speak for.
+      </p>
+
+      <h2>Questions about this policy</h2>
+      <p>
+        If you have a question about this privacy policy, call the office at{' '}
+        <a href={telHref}>{practice.phone}</a> or email{' '}
+        <a href={`mailto:${practice.email}`}>{practice.email}</a>.
+      </p>
+
+      <p class="updated-note">This page was last reviewed on 2026-09-23.</p>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .content-section {
+    padding: 3rem 0 4rem;
+  }
+
+  .content-container {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p,
+  ul {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+
+  a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .updated-note {
+    margin-top: 2.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+</style>
