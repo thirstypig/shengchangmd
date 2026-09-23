@@ -183,6 +183,50 @@ code run."
 **A grep is an existence proof about text.** For a component, confirm something
 imports it. For a route, confirm it appears in `dist/`.
 
+## 2026-09-23: two more, from a red team, and a fourth shape
+
+### 6. A gate that reads the structured data and never the sentence
+
+`/articles/` told readers its guides were "written from official sources **and
+reviewed by Dr. Chang**", and `/articles/how-we-write/` said "**Every article is
+reviewed twice before it is published**" — in all three locales, for a day,
+while both published articles rendered "Awaiting review" a few centimetres
+lower and carried `lastReviewed: null`.
+
+The review gate built for exactly this was working perfectly. It checks that a
+page marked `data-unreviewed` emits no `reviewedBy`/`lastReviewed` in its
+JSON-LD, and that every article page carries the byline marker. Both held. The
+false claim was **prose on a different page**, which no check inspected.
+
+The machine-readable half of the claim was guarded; the half a patient reads
+was not.
+
+Fixed by rewriting both strings and adding the missing guard: while any
+registered article has `lastReviewed: null`, **no locale string may assert a
+completed review** (`tests/data/articles.test.ts`). It needed negative
+lookbehinds so the new truthful copy — "states whether Dr. Chang has reviewed
+it", "has no 'Medically reviewed by' line" — does not trip it.
+
+### 7. One existence check, two places that needed it
+
+`src/i18n/alternates.ts` resolves hreflang alternates and asks
+`pageExistsIn()` before advertising a locale — the fix from todo 005.
+`LanguageSwitcher.astro`, the control a reader actually clicks, built the same
+URLs by string substitution and asked nothing. On `/privacy/` and
+`/accessibility/`, which exist only in English, it offered 繁體 and 简体 links
+to four URLs that **404 on production**.
+
+The machine-readable half — the `<link rel="alternate">` tags Google reads —
+was correct. The visible control sent the Chinese-speaking reader this site
+exists for to a dead page.
+
+Fixed by giving the switcher the same existence check (unavailable locales
+render disabled, with the existing "(English)" convention), and by adding the
+check nothing had: `tests/routes/internal-links-exist.test.ts` fails if any
+internal `href` in the build points at a path that was not built. It was shown
+red against exactly those four paths.
+
+
 ## The three shapes, and why the distinction matters
 
 These are not one pattern. Sorting them changes the fix:
@@ -192,6 +236,17 @@ These are not one pattern. Sorting them changes the fix:
 | **Entangled oracle** — pass/fail computed from the same mutable source being validated | 1 | **Replace.** Widening cannot help; both sides move together. Assert existence or uniqueness, never equality against the current value. |
 | **Scope-narrow** — sound within its scope, and the defect lives outside it | 2, 3, 4a, 5 | **Widen** the domain the same check already covers: the other resolver, the other encoding, the other locale, the import graph rather than the text. |
 | **Unasked** — no check exists; nothing was green because nothing was asked | 4b | **Write one.** Do not file it as a scope problem. |
+| **Medium-blind** — the guard inspects one representation of a claim while the claim also lives in another | 6, 7 | **Guard the representation a human reads**, not only the one a machine parses. Ask: if this claim were false in prose, in a binary header, or in a second component doing the same job, what would catch it? |
+
+Instances 6 and 7 sharpen the whole document. Every entry here is ultimately a
+mismatch between *where a fact can live* and *where a check looks* — text vs
+pixels, one locale vs another, structured data vs prose, the tags in `<head>` vs
+the control in the page. The question that would have caught all seven is not
+"is there a test?" but:
+
+> **Which representations of this claim exist, and which one does the guard
+> actually read?**
+
 
 ## What to do instead
 
@@ -217,6 +272,11 @@ These are not one pattern. Sorting them changes the fix:
    against a value that later moved. Failing once is necessary, not sufficient.
 
 ## Still open
+
+- **No check reads a binary's metadata beyond images.** `tests/assets/image-metadata.test.ts`
+  now parses JPEG EXIF for GPS after a home address shipped in 90 files
+  (see [`photo-content-outside-every-text-based-guard.md`](photo-content-outside-every-text-based-guard.md)),
+  but PDFs, fonts and any future upload type are unguarded.
 
 - **`getTranslation`'s `||` is unfixed** (`src/i18n/locales.ts:185`). Worked
   around, not repaired.
