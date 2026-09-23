@@ -649,6 +649,19 @@ const encryptedJson = JSON.stringify(encrypted);
         return wrapper;
       }
 
+      // A drafted block is a section heading when it is short and does not
+      // end in terminal punctuation. Body paragraphs always end in sentence
+      // punctuation, and the "Sources:" paragraph ends in ":" — both are
+      // explicitly excluded so they render as <p>, not <h2>.
+      const HEADING_MAX_LENGTH = 80;
+      const TERMINAL_PUNCTUATION = /[.?!。？！：:]$/;
+
+      function isHeadingBlock(block) {
+        const trimmed = block.trim();
+        if (trimmed.length === 0 || trimmed.length > HEADING_MAX_LENGTH) return false;
+        return !TERMINAL_PUNCTUATION.test(trimmed);
+      }
+
       function renderArticle(locale, item) {
         const labels = UI_LABELS[locale];
         const statusLabels = schedule.statusLabels[locale];
@@ -671,8 +684,8 @@ const encryptedJson = JSON.stringify(encrypted);
         const prose = el('div', { className: 'article-prose' });
         const draftText = item.draft ? item.draft[locale] : null;
         if (draftText) {
-          for (const paragraph of draftText.split('\n\n')) {
-            prose.appendChild(cell('p', paragraph));
+          for (const block of draftText.split('\n\n')) {
+            prose.appendChild(cell(isHeadingBlock(block) ? 'h2' : 'p', block));
           }
         } else {
           prose.appendChild(cell('p', draftLabels.none));
