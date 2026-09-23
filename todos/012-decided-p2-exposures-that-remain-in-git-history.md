@@ -1,8 +1,8 @@
 ---
-status: pending
+status: decided
 priority: p2
 issue_id: 012
-tags: [privacy, security, git-history, owner-decision]
+tags: [privacy, security, git-history, owner-decision, accepted-risk]
 dependencies: []
 ---
 
@@ -57,7 +57,36 @@ is not.
 **Options:** leave it (the content is not sensitive); or, if the repo is made
 private for reason 1, this resolves at the same time.
 
-## Recommended Action
+## DECISION: leave it as-is (owner, 2026-09-23)
+
+The owner chose **option A: leave both exposures in history**, after being shown
+the verified facts below. This is an accepted risk, not an oversight. **Do not
+reopen it, and do not rewrite history, without a new instruction from him.**
+
+What the decision was made against, all verified on 2026-09-23:
+
+- The address **is** still readable: `git show <pre-strip-sha>:<image>` piped to
+  `exiftool` returns 34.1539, -118.0657. Two commands.
+- The retired passphrase **is** still in PR #75's edit history (the 21:45 UTC
+  edit), retrievable through the GraphQL `userContentEdits` field, and the
+  ciphertext it opens is still at `6a6da79:src/data/schedule.enc.json`.
+- The account is on **GitHub Free**, so making the repo private would have taken
+  the website offline — Pages serves private repos only on Pro or above. That
+  made "make it private" a ~$4/month decision rather than a free one, which is
+  why it was not chosen.
+- **No forks, no stars, no watchers.** No copies exist elsewhere, so nothing is
+  proliferating.
+
+What this means in practice: casual discovery is closed (nothing served from the
+site carries the address), and reading it now takes cloning a public repository
+and knowing to inspect old image blobs.
+
+**If the calculus changes** — the owner upgrades to Pro for another reason, the
+repo gains forks, or anything genuinely sensitive is ever committed — revisit
+this file first. The cheapest fix remains making the repo private, which closes
+both at once.
+
+## Previously recommended action (superseded by the decision above)
 
 Treat these as one decision, because **making the repo private resolves both at
 once** and costs least. Ask the owner. Do not rewrite history without his explicit
@@ -65,13 +94,20 @@ instruction.
 
 ## Acceptance Criteria
 
-- [ ] The owner has chosen: leave as-is / rewrite history / make the repo private
-- [ ] Whatever he chooses is recorded here with the date
-- [ ] If the repo goes private, confirm GitHub Pages still serves the site (Pages
-      works from a private repo on the current plan — verify before switching)
+- [x] The owner has chosen: **leave as-is** (2026-09-23)
+- [x] The choice is recorded here with the date and the facts it was made against
+- [x] The Pages-on-private constraint was checked before offering the option:
+      the account is on GitHub Free, where a private repo would take the site
+      offline. My first recommendation omitted this and was wrong; corrected
+      before the decision was made
 
 ## Work Log
 
 **2026-09-23** — Both found by the red team, both fixed going forward in PR #82
 and PR #76 respectively. History untouched. Written up in
 `docs/solutions/logic-errors/photo-content-outside-every-text-based-guard.md`.
+
+**2026-09-23 (later)** — Owner chose option A. Both exposures are accepted,
+recorded, and closed as a tracked task. Going forward the guards hold: no served
+image carries metadata (`tests/assets/image-metadata.test.ts`), and the current
+passphrase exists in no file, with a test that fails the build if it appears.
