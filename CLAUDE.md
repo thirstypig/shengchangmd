@@ -249,6 +249,16 @@ patients under 18" and "patients of all ages" on the same page. No test catches
 this; both sentences are individually well-formed. **Grep for the negation of
 what you are about to publish, in every locale and in the structured data.**
 
+- **Dr. Chang's review of the articles and the Chinese pages is the owner's to
+  arrange, offline** (his decision, 2026-09-23). Do not track it here or ask
+  about it again. The mechanism is unchanged and needs no chasing: while
+  `lastReviewed` is null in `src/data/articles.ts`, an article carries the
+  neutral "Drafted with AI assistance…" line and no review claim, on the page
+  or in the structured data. If his review date ever arrives, setting that one
+  field is what adds the "Medically reviewed by" line.
+- **External listings (Google Business Profile, WebMD's wrong hours, the
+  Chinese directories) are also the owner's, offline** (2026-09-23).
+  `todos/009` keeps the research as reference; it is not an open task here.
 - **The I-693 immigration medical exam page** at `/immigration-medical-exam/`
   went live 2026-09-22 (PR #67). **Deliberately general, by the owner's
   decision of 2026-09-21:** the fee amount, whether vaccines are given in the
