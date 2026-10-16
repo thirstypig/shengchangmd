@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroSection from '@components/HeroSection.astro';
 import CallButton from '@components/CallButton.astro';
 import PhotoGallery from '@components/PhotoGallery.astro';
+import VideoLinks from '@components/VideoLinks.astro';
 import { practice } from '@data/practice';
 import { getTranslation } from '@i18n/locales';
 
@@ -164,6 +165,21 @@ const recognitionPhotos = [
               target="_blank"
               rel="noopener noreferrer">Dr. Dan S. Louie Jr. Lifetime Achievement Award</a>, presented at the museum's 30th Annual Historymakers Awards Gala.
           </p>
+        </div>
+        {/* Both videos are on Min Mey Chang's own channel (@minmeychang),
+            confirmed via YouTube oEmbed 2026-10-15, and both are from the
+            gala described in the paragraph above. */}
+        <div class="mt-10">
+          <h3 class="font-semibold text-lg text-gray-900 mb-4">
+            {getTranslation('en', 'videos.heading')}
+          </h3>
+          <VideoLinks
+            locale="en"
+            videos={[
+              { youtubeId: 'HglaC8tWmCY', title: getTranslation('en', 'videos.galaHonored') },
+              { youtubeId: 'xkZWHkp_KV4', title: getTranslation('en', 'videos.honoreeVideo') },
+            ]}
+          />
         </div>
         <div class="mt-10">
           <h3 class="font-semibold text-lg text-gray-900 mb-2">
