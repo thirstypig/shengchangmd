@@ -1,0 +1,51 @@
+---
+// GitHub Pages serves this one file for every unmatched path, in every
+// locale, so it cannot pick a language by URL. It shows all three instead,
+// each marked with its own lang, rather than English to everyone (todo 006).
+// Every string comes from locales.ts; the phone number from practice.ts
+// via CallButton.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CallButton from '@components/CallButton.astro';
+import { getTranslation } from '@i18n/locales';
+
+const blocks = [
+  { locale: 'en', lang: 'en', home: '/' },
+  { locale: 'zh-hant', lang: 'zh-Hant', home: '/zh-hant/' },
+  { locale: 'zh-hans', lang: 'zh-Hans', home: '/zh-hans/' },
+];
+---
+
+<BaseLayout
+  title={`${getTranslation('en', 'notFound.title')} | ${getTranslation('en', 'seo.siteName')}`}
+  description={getTranslation('en', 'notFound.body')}
+  locale="en"
+  canonicalUrl={new URL('/404.html', Astro.site).href}
+  errorPage
+>
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-container mx-auto px-4 md:px-6">
+      <div class="max-w-2xl mx-auto space-y-12 text-center">
+        {blocks.map(({ locale, lang, home }, index) => (
+          <div lang={lang} class={index > 0 ? 'pt-12 border-t border-gray-200' : ''}>
+            {index === 0 ? (
+              <h1 class="font-serif text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+                {getTranslation(locale, 'notFound.title')}
+              </h1>
+            ) : (
+              <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+                {getTranslation(locale, 'notFound.title')}
+              </h2>
+            )}
+            <p class="text-gray-600 mb-6">{getTranslation(locale, 'notFound.body')}</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href={home} class="text-primary-700 underline underline-offset-2 hover:no-underline">
+                {getTranslation(locale, 'notFound.home')}
+              </a>
+              <CallButton text={getTranslation(locale, 'notFound.call')} size="sm" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

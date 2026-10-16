@@ -41,9 +41,14 @@ const read = (f) => readFileSync(f, 'utf8');
 const attr = (html, re) => [...html.matchAll(re)].map((m) => m[1]);
 
 // 1. Every same-origin asset a page references must exist in the build.
+// The first page that HAS a canonical: 404.html sorts first and deliberately
+// carries none (see BaseLayout's errorPage prop).
 const siteOrigin = (() => {
-  const m = read(pages[0]).match(/rel="canonical" href="(https?:\/\/[^/"]+)/);
-  return m ? m[1] : null;
+  for (const page of pages) {
+    const m = read(page).match(/rel="canonical" href="(https?:\/\/[^/"]+)/);
+    if (m) return m[1];
+  }
+  return null;
 })();
 if (!siteOrigin) fail('could not determine the site origin from a canonical URL');
 

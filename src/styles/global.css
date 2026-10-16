@@ -329,6 +329,26 @@ button {
 .border-success {
   border-color: var(--positive);
 }
+
+/* The "Accepting New Patients" badge links to the new-patients page but was
+   styled as a static card (todo 008). The arrow says "link" at rest; hover
+   thickens the border and underlines the label; keyboard focus gets a ring.
+   All of it is --positive, the badge's own themed token, so nothing here
+   needs a hover: entry in the palette map. */
+.badge-link .text-success::after {
+  content: ' →';
+}
+.badge-link:hover {
+  box-shadow: 0 0 0 1px var(--positive);
+}
+.badge-link:hover .text-success {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.badge-link:focus-visible {
+  outline: 2px solid var(--positive);
+  outline-offset: 3px;
+}
 .text-info {
   color: var(--secondary);
 }
