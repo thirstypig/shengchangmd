@@ -20,11 +20,9 @@ design and PR. The multilingual blog is separate: todo 011.
 
 ## Constraints that shape every workstream
 
-- **The Chinese pages are not indexed.** Both Chinese locales are
-  `reviewed: false` until Dr. Chang has read them (owner's decision
-  2026-09-14). Two-thirds of the site, and all Chinese content added from here
-  on, is invisible to Google until then. This is the largest single SEO lever,
-  and it is blocked on a person.
+- ~~**The Chinese pages are not indexed.**~~ They are, since 2026-09-22 (the
+  owner's call, ahead of Dr. Chang's read). Everything Chinese added from here
+  on is indexed the day it ships, so it has to be right before merging.
 - **Health content is YMYL** ("Your Money or Your Life"). Google holds medical
   pages to a higher bar for expertise and trust. Every clinical claim is made
   under Dr. Chang's name and license. No AI-generated health volume.
@@ -143,3 +141,18 @@ The owner's channel to run; the site supplies the canonical facts and link.
 
 **2026-09-21** — Brainstormed with the owner. Priorities set: I-693 (A), then
 any new patient (D). Facts above recorded as the owner stated them.
+
+**2026-10-15** — Workstream C3, structured-data half. A schema.org check of
+every type and property the built site emits found eight terms that do not
+exist or are not allowed where they were used, so search engines ignored them:
+`MedicalService` (all four services, including I-693), `acceptsNewPatients`,
+`availableLanguage` on an organization, free-text `medicalSpecialty`,
+`educationDetails`, `educationLevel`, and `validFrom`/`validUntil`/`issuedBy`
+on a credential. Two of the ignored values were invented (a certification
+expiry of last-recertified + 10, a medical-school start of graduation − 4) and
+were removed rather than renamed. The practice was also two organization nodes,
+with every service naming a third, anonymous one; it is now one `MedicalClinic`
+that the services and the doctor reference by `@id`. `verify-build.mjs` check
+10 now fails the build on any type or property not on a checked allowlist.
+Still open in C3: the visible direct-answer copy on the home page.
+
