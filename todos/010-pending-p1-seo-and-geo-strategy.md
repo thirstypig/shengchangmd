@@ -80,14 +80,15 @@ Ranked by expected value:
    sources; disagreement makes them hedge or leave the practice out.
 3. **Direct-answer copy.** The questions patients actually ask ("Which doctors
    in San Gabriel speak Mandarin and do immigration exams?") answered plainly
-   in the page's first lines, backed by `availableLanguage` and
+   in the page's first lines, backed by `knowsLanguage` and
    `MedicalClinic` structured data derived from `practice.ts`.
-4. **Wikidata item for Dr. Chang (a maybe).** He is plausibly notable: first
+4. ~~**Wikidata item for Dr. Chang (a maybe).**~~ **Declined by the owner,
+   2026-10-16.** He is plausibly notable: first
    Chinese-American mayor of Arcadia, supported by the Arcadia Weekly records.
    Must follow Wikidata's conflict-of-interest norms and cite sources. Never
    cite or link the Arcadia archive's search results (see CLAUDE.md).
-5. `llms.txt`: costs almost nothing, and there is little evidence that it
-   helps. Last.
+5. ~~`llms.txt`~~: **declined by the owner, 2026-10-16.** Little evidence it
+   helps, and it would be another place practice facts are restated.
 
 ## Workstream D: city pages, with strict rules
 
@@ -174,3 +175,33 @@ Remaining workstreams, with recommendations for the owner:
 - D (Arcadia page): recommend waiting for Search Console data, which now
   exists (property verified 2026-09-23), to see whether Arcadia searches
   reach the site at all before writing a page for them.
+
+**2026-10-16** — Owner decisions: C4 (Wikidata) declined, C5 (`llms.txt`)
+declined. Do not re-raise either without a new reason.
+
+Search Console, read 2026-10-15 (URL-prefix property `https://shengchangmd.com/`),
+changes what D can be decided on. Last 28 days: 12 clicks, 196 impressions,
+**all on the home page**, and the only visible queries are his name. Page
+indexing: **1 indexed, 0 not indexed**, so Google had never discovered the other
+40 sitemap URLs. The submitted `/sitemap-index.xml` read "Success" on 09-26 but
+its child `/sitemap-0.xml` showed "Couldn't fetch" with 0 URLs and no retry,
+although the live file is a valid 41-URL sitemap served 200 as
+`application/xml`. URL Inspection: `/immigration-medical-exam/` and `/zh-hant/`
+were "URL is unknown to Google". On 2026-10-16 `/sitemap-0.xml` was submitted
+directly and indexing was requested for the pages listed in the next entry.
+
+So **D stays on hold**, and so does any reading of A's results: with only the
+home page indexed, no other page could have earned a query. Re-read the
+Performance report about two weeks after the pages are indexed.
+
+**2026-10-16** — Done in Search Console, at the owner's instruction:
+`/sitemap-0.xml` submitted directly (it still read "Couldn't fetch", type
+"Unknown", immediately after; recheck after a few days, and if it persists the
+cause is worth finding rather than resubmitting). Indexing requested, each
+confirmed by "URL was added to a priority crawl queue": `/immigration-medical-exam/`,
+`/zh-hant/`, `/zh-hans/`, `/zh-hant/immigration-medical-exam/`,
+`/zh-hans/immigration-medical-exam/`, `/services/`, `/new-patients/`. Every
+one inspected as "URL is unknown to Google" first.
+
+Next check, about 2026-10-23: Search Console → Pages (indexed count should be
+above 1) and Sitemaps (sitemap-0.xml should list 41 discovered URLs).
