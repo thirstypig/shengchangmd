@@ -39,11 +39,11 @@ caution. A baseline test produced exactly this:
 
 It sounds responsible. It is not, and here is why:
 
-- **The safety gate already exists and is not you.** Both Chinese locales are
-  `reviewed: false` in `locales.ts`, which renders every Chinese page `noindex`
-  and keeps it out of the sitemap. That gate is what makes an unreviewed
-  translation safe to ship. Declining to translate does not add safety; it
-  removes content.
+- **There is no safety gate behind you, and abstaining does not create one.**
+  Both Chinese locales have been `reviewed: true` — indexed and in the sitemap —
+  since 2026-09-22, by the owner's decision. Your Chinese is live and searchable
+  the day it merges, so translate carefully and flag it for Dr. Chang's read in
+  the PR. But declining to translate does not add safety; it removes content.
 - **An English-only change makes the Chinese page actively wrong, not merely
   incomplete.** If English gains "we do not accept walk-ins" and Chinese does
   not, a Chinese reader is not missing a sentence — they are being told, by
@@ -237,9 +237,9 @@ reader's call, and it is what currently keeps unreviewed Chinese out of search.
 
 | Excuse | Reality |
 |---|---|
-| "I'm not fluent, a native speaker should write it" | The `reviewed: false` gate is the safety mechanism, not your abstention. Translate and flag it. |
+| "I'm not fluent, a native speaker should write it" | Your abstention is not a safety mechanism; it leaves the Chinese page contradicting the English. Translate carefully and flag it. |
 | "They asked for 'the services page', singular" | This site has three services pages. A copy request means the content, in every locale that carries it. |
-| "The Chinese pages are noindex anyway" | They are still served, still linked, and still read by patients who pick 繁體中文. Noindex is not unpublished. |
+| "The Chinese pages are noindex anyway" | They are not — indexed since 2026-09-22. And even when they were, noindex was never unpublished. |
 | "It's just an aria-label / alt text" | That is the text a screen-reader user hears. Six of them sat in English on every Chinese page for months. |
 | "I'll do the Chinese in a follow-up" | Nothing tracks it, and a missing Chinese string looks like a finished page. Same commit. |
 | "Simplified means mainland readers" | Simplified is a script, not a dialect. This audience is Taiwanese; use Taiwan wording in both scripts. |
