@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getTranslation } from '@i18n/locales';
+import '../../styles/pages/hours.css';
 
 /*
  * Mirrors src/pages/hours.astro. Until 2026-08-20 that page existed only in
@@ -47,36 +48,3 @@ const breadcrumbs = [
     </div>
   </section>
 </BaseLayout>
-
-<style is:global>
-  .content-section {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .content-left h1 {
-    font-size: 2rem;
-    margin: 0 0 1.5rem;
-    font-weight: 700;
-  }
-
-  .hours-list {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .hours-item {
-    display: flex;
-    justify-content: flex-start;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .hours-note {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-</style>

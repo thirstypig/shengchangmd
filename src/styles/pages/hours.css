@@ -1,0 +1,43 @@
+/* Styles for the hours page, in all three locales.
+
+   Imported by src/pages/hours.astro, src/pages/zh-hant/hours.astro and
+   src/pages/zh-hans/hours.astro. Each page used to carry its own verbatim
+   copy as an inline <style is:global> block, and the copies drifted (todo
+   007): the Chinese location pages kept smaller directions buttons, a thinner
+   focus ring and no secondary hover for eleven weeks after English changed.
+
+   Global, not scoped, exactly as before. Several selectors here share names
+   with other page families' files but hold different values (.content-section,
+   .hero-section, .cta-button), so this file must only ever be imported by the
+   hours pages. */
+
+.content-section {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content-left h1 {
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  font-weight: 700;
+}
+
+.hours-list {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hours-item {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.hours-note {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
