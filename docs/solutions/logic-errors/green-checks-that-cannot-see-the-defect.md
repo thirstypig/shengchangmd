@@ -227,6 +227,37 @@ internal `href` in the build points at a path that was not built. It was shown
 red against exactly those four paths.
 
 
+## 2026-10-15: two more, and both were checks that never looked at all
+
+### 8. A guard that skipped on every deploy
+
+`tests/routes/internal-links-exist.test.ts`, added after instance 7, reads the
+built site and calls `it.skip` when `dist/` is missing. `deploy.yml` runs
+`npm test` *before* `npm run build`, so on every deploy from 2026-09-23 to
+2026-10-15 `dist/` was missing and the guard skipped. The deploy log said
+`288 passed | 1 skipped`, and a skip reads as noise. Found by running the suite
+with `dist/` moved aside, the way CI does. Fixed in #94: a post-build step runs
+the file with `REQUIRE_DIST=1`, under which a missing `dist/` fails. The first
+deploy after the fix reported `2 passed` for that step (Actions run
+38860318520). A skip is a check that didn't run; count it as one.
+
+### 9. Every check asserted what the site permits; none saw what Google did
+
+CLAUDE.md said the Chinese pages were "indexed" since 2026-09-22, "verified on
+production": no `noindex` meta, 13 URLs per locale in the sitemap, robots.txt
+open. All true. The first read of Search Console on 2026-10-15 found **one page
+in Google's index, the home page, and zero excluded**. Google had never
+discovered the other 40. The child sitemap `/sitemap-0.xml` read "Couldn't
+fetch" and was never retried, although the live file was valid.
+
+`verify-build` checks that the sitemap and the robots meta agree. The robots
+gate test covers both states of `ALLOW_INDEXING`. Each is correct, and each is
+about *permission*. The defect was in a system this repo does not control and
+had not opened in the three weeks since the property was verified. The word
+"indexed" in the docs was the error: it described the outcome while the
+evidence covered only the precondition. No local check can fix this. Use
+Search Console's Pages report as the source for any "in Google" claim.
+
 ## The three shapes, and why the distinction matters
 
 These are not one pattern. Sorting them changes the fix:

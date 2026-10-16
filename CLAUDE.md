@@ -495,8 +495,9 @@ what you are about to publish, in every locale and in the structured data.**
   includes every Chinese title and description, 「加州聖蓋博　家庭醫學專科醫師」,
   and 「取決於該方案的特約醫師名單」 — a fix for 「取決於網路內容」 ("depends on
   the internet content") in the load-bearing insurance qualifier. Page speed has
-  never been measured here. Google Search Console was verified 2026-09-23 (todo
-  010) but its data has not yet been read in this repo.
+  never been measured here. Google Search Console (URL-prefix property
+  `https://shengchangmd.com/`, verified 2026-09-23) was first read 2026-10-15:
+  see the indexing paragraphs at the end of Deployment.
 - **The Articles section and its first article, "What to bring to your I-693
   exam", ship WITHOUT Dr. Chang's medical review** (owner decision, branch
   `feat/articles-section`, 2026-09-22, reversing the build-blocking gate
@@ -594,9 +595,9 @@ touching the build config.
 ## Tests
 
 Sixteen files, 290 tests, run with `npm test`. **One of them reads `dist/` and
-skips itself when there is none — which is always the case in CI**, because
-`deploy.yml` runs `npm test` before the build (see `internal-links-exist` below
-and todo 013):
+skips itself when there is none**, which is always the case in the pre-build
+`npm test` step in CI. Since 2026-10-15 a post-build workflow step runs it
+again with `REQUIRE_DIST=1` (see `internal-links-exist` below and todo 013):
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -740,7 +741,10 @@ here, and all of them are for defects that typecheck and build cleanly:
 
 **In CI.** `.github/workflows/deploy.yml` runs `npx tsc --noEmit` then `npm test`
 before the build, so a typecheck or locale regression blocks the deploy rather
-than shipping. `postbuild` then runs `scripts/verify-css.mjs` and
+than shipping. After the build, a **Build-output tests** step runs the vitest
+files that read `dist/` (today only `internal-links-exist`) with
+`REQUIRE_DIST=1`; a new test that reads `dist/` must be added to that step, or
+it will only ever skip. `postbuild` then runs `scripts/verify-css.mjs` and
 `scripts/verify-build.mjs`, which assert against the built output — that a
 referenced asset exists, that the sitemap and the robots meta tag agree, that
 JSON-LD's address matches `practice.ts`, that no page names the retired
@@ -797,15 +801,27 @@ workflow. It drives both the robots meta tag and `src/pages/robots.txt.ts`, so
 the two cannot disagree. Unreviewed locales stay `noindex` regardless, driven by
 `reviewed` in `locales.ts` — which also decides sitemap membership, so a page
 can never be listed and de-indexed at once. **All three locales are
-`reviewed: true` and indexed** — the Chinese ones since 2026-09-22 (`842a005`),
+`reviewed: true` and indexable** — the Chinese ones since 2026-09-22 (`842a005`),
 verified on production 2026-10-15: no `noindex` meta on Chinese pages, 13 URLs
 per Chinese locale in the sitemap.
+
+**Indexable is not indexed, and only Search Console can tell them apart.** The
+first read of Search Console, 2026-10-15, found **one page in Google's index —
+the home page — and zero excluded**: Google had never discovered the other 40.
+The submitted `/sitemap-index.xml` read "Success", but its child
+`/sitemap-0.xml` read "Couldn't fetch" and was never retried, although the live
+file was valid. Every check in this repo was green throughout, because they all
+assert what the site *permits* (robots meta, robots.txt, sitemap membership),
+and none can see what Google *did*. On 2026-10-16 the child sitemap was
+submitted directly and indexing requested for seven key pages (log in todo
+010). Until the Pages report shows more than one page indexed, treat every
+"live in Google" statement about a page other than `/` as unverified.
 
 **The owner indexed them ahead of Dr. Chang's read** ("just publish Chinese and
 English now", 2026-09-22), reversing his own 2026-09-14 decision to wait. The
 Chinese copy is machine-assisted Taiwan Mandarin, checked by this repo's guards
 but not yet by a fluent reader, so Dr. Chang's corrections — whenever he gets to
-them, offline and at the owner's arrangement — land on live, indexed pages. Do
+them, offline and at the owner's arrangement — land on live, indexable pages. Do
 not flip the flag back and do not re-ask. Un-indexing is far slower than
 indexing, which is now the reason to get Chinese copy right *before* merging:
 nothing downstream holds it back.
