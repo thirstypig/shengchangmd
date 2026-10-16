@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p3
 issue_id: 007
 tags: [code-review, css, architecture, duplication]
@@ -84,3 +84,25 @@ is inlined per page and absent from the shared bundle.
 
 - Commit `5711618` (the dead-CSS bug this duplication caused)
 - CLAUDE.md, "Color rule"
+
+## Resolution (2026-10-15)
+
+One CSS file per page family (`src/styles/pages/{hours,new-patients,location,insurance}.css`),
+imported by that family's three locale pages; the twelve inline
+`<style is:global>` blocks are gone (−1,972 lines). Not Option A's single
+global file: the families share selector names with *different* values
+(`.content-section` padding, `.hero-section` — a red gradient on insurance, a
+bordered header on location — `.cta-button`), so merging across families would
+have changed pages. Astro still inlines each file into only its own pages;
+checked in `dist/`.
+
+The duplication had already drifted: the Chinese location pages never received
+English's 56px full-width directions buttons, 3px focus ring or secondary hover
+(English changed 2026-07-29). Location now uses the English rules everywhere.
+
+Verified by pixel diff of every built page (42 routes × light/dark ×
+1280px/390px = 168 screenshots) against `main`, after confirming the baseline
+reproduces itself with iframes masked: 159 identical; the only changes are the
+four Chinese location shots (the directions buttons, inspected) plus a
+light-desktop About shot whose difference equals the baseline's own
+run-to-run noise.
