@@ -186,6 +186,13 @@ export const translations = {
         'What USCIS says about how long Form I-693 stays valid, why the form instructions still say two years, and when to file the form with your Form I-485.',
       validityLink: 'Also read: how long your I-693 is good for, and when to file it',
     },
+    videos: {
+      heading: 'Videos',
+      galaHonored:
+        "Dr. and Mrs. Chang honored at the Chinese American Museum's 2026 Historymakers Awards Gala",
+      honoreeVideo: "Dr. and Mrs. Chang's honoree video for the museum's 2026 Historymakers Awards Gala",
+      watchOnYouTube: 'Watch on YouTube',
+    },
     communityPhotos: {
       photo1:
         'Congressional Proclamation of Excellence, Achievement and Commitment presented to Dr. Sheng H. Chang, November 4, 1988',
@@ -432,6 +439,12 @@ export const translations = {
         '美國移民局對 Form I-693 有效期限的規定、為何填表說明仍寫著兩年，以及何時要與 Form I-485 一併送件。',
       validityLink: '延伸閱讀：I-693 的有效期限，以及何時送件',
     },
+    videos: {
+      heading: '影片',
+      galaHonored: '張醫師與夫人於華美博物館 2026 年歷史締造者頒獎典禮獲獎',
+      honoreeVideo: '華美博物館 2026 年歷史締造者頒獎典禮：張醫師與夫人的獲獎者介紹影片',
+      watchOnYouTube: '在 YouTube 上觀看',
+    },
     communityPhotos: {
       photo1: '美國國會眾議院於1988年11月4日頒發張勝雄醫師傑出成就與貢獻褒揚狀',
       photo2:
@@ -623,6 +636,12 @@ export const translations = {
       validitySummary:
         '美国移民局对 Form I-693 有效期限的规定、为何填表说明仍写着两年，以及何时要与 Form I-485 一并送件。',
       validityLink: '延伸阅读：I-693 的有效期限，以及何时送件',
+    },
+    videos: {
+      heading: '影片',
+      galaHonored: '张医师与夫人于华美博物馆 2026 年历史缔造者颁奖典礼获奖',
+      honoreeVideo: '华美博物馆 2026 年历史缔造者颁奖典礼：张医师与夫人的获奖者介绍影片',
+      watchOnYouTube: '在 YouTube 上观看',
     },
     communityPhotos: {
       photo1: '美国国会众议院于1988年11月4日颁发张胜雄医师杰出成就与贡献褒扬状',

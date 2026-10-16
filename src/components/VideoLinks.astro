@@ -1,0 +1,60 @@
+---
+// Thumbnail cards that open each video on YouTube.
+//
+// LINKS, NOT EMBEDS — the same choice minmeychang.com made for the same
+// channel. A YouTube iframe adds roughly a megabyte of third-party JavaScript
+// and reports every visitor to Google, on a page that otherwise loads none.
+// If playback on the page is ever wanted, use a click-to-load facade against
+// youtube-nocookie.com, not a bare iframe.
+//
+// Captions come from the page via getTranslation, so this component carries
+// no language of its own.
+import { getTranslation } from '@i18n/locales';
+
+interface Video {
+  youtubeId: string;
+  title: string;
+}
+
+interface Props {
+  videos: Video[];
+  locale: string;
+}
+
+const { videos, locale } = Astro.props;
+
+const watchLabel = getTranslation(locale, 'videos.watchOnYouTube');
+---
+
+<ul class="grid grid-cols-1 sm:grid-cols-2 gap-6 list-none p-0">
+  {videos.map((video) => (
+    <li>
+      <a
+        href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+        class="group block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {/*
+          hqdefault is 4:3 with letterboxing; aspect-video + object-cover crops
+          the black bars off. Hotlinked: copying it into public/ would need the
+          metadata strip every published image gets, for a frame YouTube may
+          regenerate. referrerpolicy keeps the fetching page out of the request.
+        */}
+        <img
+          src={`https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`}
+          alt=""
+          width="480"
+          height="360"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          class="aspect-video w-full object-cover rounded-lg border border-gray-200"
+        />
+        <p class="mt-3 text-primary-700 underline-offset-2 group-hover:underline">
+          {video.title}
+        </p>
+        <p class="mt-1 text-sm text-gray-600">{watchLabel}</p>
+      </a>
+    </li>
+  ))}
+</ul>

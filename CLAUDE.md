@@ -404,8 +404,13 @@ what you are about to publish, in every locale and in the structured data.**
   collection by extension; treat any *other* item from this archive as still
   requiring the same confirmation before it's copied, not assumed covered by
   this one.
-- **No video of Dr. Chang has ever been found**, in English or Chinese, despite
-  targeted searching. Chinese-language press coverage is likewise near-absent:
+- **Two videos of Dr. Chang are live on the About page** (2026-10-15), both
+  from the September 26, 2026 Chinese American Museum gala and both on Min Mey
+  Chang's own YouTube channel (`@minmeychang`), supplied by the owner. They
+  render through `src/components/VideoLinks.astro` as **thumbnail links, not
+  embeds**, for the same reason minmeychang.com gives: an iframe loads about a
+  megabyte of Google JavaScript per visit. Before these, no video had been
+  found despite targeted searching. Chinese-language press coverage is near-absent:
   the only hit for 張勝雄 is zh.wikipedia's Arcadia article listing him among
   three Chinese council members. 世界日報 / 星島日報 archives from that era are
   largely unindexed, so this is weak evidence, not a finding.
