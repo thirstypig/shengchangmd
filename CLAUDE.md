@@ -494,8 +494,9 @@ what you are about to publish, in every locale and in the structured data.**
   read character by character. Live Chinese copy not yet read by Dr. Chang
   includes every Chinese title and description, 「加州聖蓋博　家庭醫學專科醫師」,
   and 「取決於該方案的特約醫師名單」 — a fix for 「取決於網路內容」 ("depends on
-  the internet content") in the load-bearing insurance qualifier. Page speed and
-  Google Search Console have never been measured here.
+  the internet content") in the load-bearing insurance qualifier. Page speed has
+  never been measured here. Google Search Console was verified 2026-09-23 (todo
+  010) but its data has not yet been read in this repo.
 - **The Articles section and its first article, "What to bring to your I-693
   exam", ship WITHOUT Dr. Chang's medical review** (owner decision, branch
   `feat/articles-section`, 2026-09-22, reversing the build-blocking gate
@@ -573,8 +574,8 @@ automated check in this repo passed while this was about to ship:
 ```
 npm install
 npm run dev                          # http://localhost:3120
-ALLOW_INDEXING=true npm run build    # 43 pages; postbuild runs verify-css + verify-build
-npm test                             # 288 vitest tests
+ALLOW_INDEXING=true npm run build    # 44 pages; postbuild runs verify-css + verify-build
+npm test                             # 290 vitest tests (288 + 1 skipped file with no dist/)
 ```
 
 **`npm run build` on its own fails locally, and that is expected.** `ALLOW_INDEXING`
@@ -592,7 +593,10 @@ touching the build config.
 
 ## Tests
 
-Sixteen files, 288 tests, run with `npm test`:
+Sixteen files, 290 tests, run with `npm test`. **One of them reads `dist/` and
+skips itself when there is none — which is always the case in CI**, because
+`deploy.yml` runs `npm test` before the build (see `internal-links-exist` below
+and todo 013):
 
 - `tests/i18n/locale-coverage.test.ts` — the i18n layer. Also asserts that
   `getTranslation` returns an empty string **as-is** rather than treating it as
@@ -692,7 +696,10 @@ Sixteen files, 288 tests, run with `npm test`:
   locale URLs by string substitution and offered 繁體/简体 links on the two
   English-only pages; all four 404'd on production, while the `<head>` hreflang
   tags — which do check existence — were correct. A guard on the machine-readable
-  half, none on the control a reader clicks
+  half, none on the control a reader clicks. **It never runs in CI** (verified
+  2026-10-15 by running the suite with `dist/` removed: 1 file skipped), so it
+  guards only local runs after a build; todo 013 tracks moving it after the
+  build step
 - `tests/routes/gallery-unlisted.test.ts` — the personal gallery page's
   must-stay-unlinked invariant: no import of `BaseLayout`/`Header`/
   `StickyCallBar`/`WeChatQR`/`CallButton`/`Footer`, a hardcoded (not computed)
