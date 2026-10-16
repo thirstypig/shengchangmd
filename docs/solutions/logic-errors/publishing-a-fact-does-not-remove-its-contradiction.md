@@ -191,3 +191,9 @@ invisible in a diff, because **the contradicting line is not in the diff**.
 
 On a site where the constraint is *who a doctor will treat*, the half that is
 missing from the spec is the half that hurts someone.
+
+## Related
+
+- [Invalid schema.org terms were hiding two invented credential dates](invalid-schema-vocabulary-hid-invented-dates.md):
+  the same file, `JsonLd.astro`, again. A fix that makes an ignored field live
+  publishes whatever value it held, and no one had ever reviewed that value.
