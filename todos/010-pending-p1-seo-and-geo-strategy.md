@@ -154,5 +154,23 @@ were removed rather than renamed. The practice was also two organization nodes,
 with every service naming a third, anonymous one; it is now one `MedicalClinic`
 that the services and the doctor reference by `@id`. `verify-build.mjs` check
 10 now fails the build on any type or property not on a checked allowlist.
-Still open in C3: the visible direct-answer copy on the home page.
 
+**2026-10-15** — Workstream C3, visible half (separate PR). The home page
+hero now answers the search directly in all three locales: family medicine
+for adults in San Gabriel; Dr. Chang speaks English and Mandarin; USCIS
+civil surgeon for I-693. The "Languages Spoken" / 看診語言 heading over the
+five office languages became "Languages Our Office Speaks" /
+診所可使用的語言 (the FAQ's existing wording), because 看診語言 — "languages
+you can be seen in" — implied Dr. Chang sees patients in all five.
+Negation checked: nothing anywhere says he speaks a third language.
+
+Remaining workstreams, with recommendations for the owner:
+- C2 (fact consistency across sources) and E (Chinese channels): the owner's,
+  offline.
+- C4 (Wikidata item): needs the owner to decide; conflict-of-interest norms
+  apply. Not started.
+- C5 (`llms.txt`): recommend declining for now. Little evidence it helps, and
+  it would be another place practice facts are restated.
+- D (Arcadia page): recommend waiting for Search Console data, which now
+  exists (property verified 2026-09-23), to see whether Arcadia searches
+  reach the site at all before writing a page for them.

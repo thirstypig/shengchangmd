@@ -18,7 +18,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
   <HeroSection
     headline="张胜雄医师（M.D.）"
     tagline={t(`hero.tagline`)}
-    subheadline="于圣盖博谷及邻近社区提供家庭医学诊疗，具家庭医学专科医师资格，看诊细心，以您的健康为念。"
+    subheadline="于圣盖博为成人提供家庭医学诊疗。张医师可用英语及国语看诊，并为美国移民局指定体检医师，提供移民体检（Form I-693）。"
     {locale}
     media="chop"
   />
@@ -74,7 +74,7 @@ const canonicalUrl = new URL('/zh-hans/', Astro.site).href;
     <div class="max-w-container mx-auto px-4 md:px-6">
       <div class="flex flex-col md:flex-row md:items-center md:justify-center gap-8 md:gap-16">
         <div class="text-center md:text-left">
-          <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">看诊语言</h2>
+          <h2 class="font-serif text-xl font-bold mb-3 text-gray-900">诊所可使用的语言</h2>
           <p class="text-lg text-gray-700">{pl.languages.join(' · ')}</p>
         </div>
         {/*
