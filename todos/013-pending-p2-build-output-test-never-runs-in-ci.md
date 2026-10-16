@@ -50,5 +50,21 @@ nothing to check, so a future reordering cannot quietly reintroduce this.
 ## Acceptance Criteria
 
 - [ ] The internal-links check executes on every deploy (confirm in the Actions log, not by assumption)
-- [ ] Planting a broken internal link fails the deploy workflow
-- [ ] A missing `dist/` under `CI` is a failure, not a skip
+- [ ] Planting a broken internal link fails the deploy workflow (fails the step locally; not tried on a real deploy)
+- [x] A missing `dist/` under `REQUIRE_DIST` is a failure, not a skip
+
+## Work Log
+
+**2026-10-15** — Implemented A plus a modified B. B as written ("fail when
+`CI` is set and `dist/` is missing") would fail every deploy, because the
+pre-build `npm test` also runs under `CI` with no `dist/`. Instead the new
+post-build workflow step sets `REQUIRE_DIST=1`, and only that makes a missing
+`dist/` a failure. Moving the step above the build still goes red.
+
+Verified locally, all four states: no dist, no flag → 1 skipped; no dist,
+`REQUIRE_DIST=1` → exit 1; dist present → 2 passed; a planted
+`<a href="/no-such-page/">` in `dist/about/index.html` → exit 1, naming the
+link. Full suite unchanged at 290.
+
+Criteria 2 and 3 are verified locally. Criterion 1 needs the Actions log of
+the first deploy after merge; close this todo only then.

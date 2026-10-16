@@ -51,6 +51,16 @@ function pathExistsInDist(path: string): boolean {
 
 describe('internal links point at pages the build actually produced', () => {
   if (!existsSync(DIST)) {
+    // The deploy workflow's post-build step sets REQUIRE_DIST, so there a
+    // missing dist/ is a failure, not a skip. Without it this file skipped on
+    // every deploy from 2026-09-23 to 2026-10-15: `npm test` runs before the
+    // build, so the check passed without ever running (todo 013).
+    if (process.env.REQUIRE_DIST) {
+      it('dist/ must exist when REQUIRE_DIST is set', () => {
+        expect.fail('dist/ not found, but REQUIRE_DIST is set: this step must run after `npm run build`');
+      });
+      return;
+    }
     it.skip('dist/ not found — run `ALLOW_INDEXING=true npm run build` first', () => {});
     return;
   }
