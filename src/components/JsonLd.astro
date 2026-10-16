@@ -45,29 +45,35 @@ const { locale, pageSchema } = Astro.props;
 */
 const alternateName = [translations['zh-hant'].seo.siteName, translations['zh-hans'].seo.siteName];
 
-// LocalBusiness Schema
-const localBusinessSchema = {
+/*
+  The practice, as ONE node. Until 2026-10-15 it was two — a LocalBusiness at
+  #organization and a MedicalBusiness at #medical-business — which tells a
+  search engine there are two entities, and the four services each named a
+  third, anonymous MedicalBusiness as provider. MedicalClinic is a subtype of
+  both LocalBusiness and MedicalOrganization, so it carries everything the two
+  nodes did plus the properties only a MedicalOrganization may have.
+
+  Three properties here were not schema.org vocabulary and were ignored:
+  `acceptsNewPatients` (the property is isAcceptingNewPatients),
+  `availableLanguage` (valid only on ContactPoint, Course, LodgingBusiness,
+  ServiceChannel, TouristAttraction — an organization uses knowsLanguage), and
+  free-text medicalSpecialty values (it expects a MedicalSpecialty member;
+  PrimaryCare is the closest — there is no family-medicine member). Checked
+  against schema.org 2026-10-15; check 10 in scripts/verify-build.mjs pins
+  the types and property names the built site may use.
+*/
+const organizationId = new URL('/#organization', Astro.site).href;
+const organizationRef = { '@id': organizationId };
+
+const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': new URL('/#organization', Astro.site).href,
+  '@type': 'MedicalClinic',
+  '@id': organizationId,
   name: practice.doctorName,
   alternateName,
   description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   url: Astro.site.href.replace(/\/$/, ''),
   logo: new URL('/logo.svg', Astro.site).href,
-  telephone: practice.phone,
-  email: `mailto:${practice.email}`,
-  address: postalAddress,
-};
-
-// MedicalBusiness Schema
-const medicalBusinessSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'MedicalBusiness',
-  '@id': new URL('/#medical-business', Astro.site).href,
-  name: practice.doctorName,
-  alternateName,
-  description: `Board-certified family physician and USCIS-designated civil surgeon in San Gabriel, California. Dr. ${practice.doctorName.replace(/,.*$/, '')} provides family medicine, immigration medical services, and medical report services.`,
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
   address: postalAddress,
@@ -79,16 +85,16 @@ const medicalBusinessSchema = {
       closes: practice.hours.closes,
     },
   ],
-  availableLanguage: practice.languages,
-  medicalSpecialty: practice.practiceAreas.primary.concat(
-    practice.practiceAreas.secondary,
-  ),
+  // What the office as a whole can serve; the doctor's own two languages are
+  // knowsLanguage on the Person below.
+  knowsLanguage: practice.languages,
+  medicalSpecialty: 'https://schema.org/PrimaryCare',
+  isAcceptingNewPatients: practice.acceptingNewPatients,
   areaServed: {
     '@type': 'City',
-    name: 'San Gabriel',
+    name: 'San Gabriel, California',
   },
   priceRange: 'Varies',
-  acceptsNewPatients: practice.acceptingNewPatients,
 };
 
 // Person (Doctor) Schema
@@ -104,30 +110,45 @@ const doctorSchema = {
   jobTitle: 'Family Physician, Medical Doctor',
   telephone: practice.phone,
   email: `mailto:${practice.email}`,
-  worksFor: {
-    '@type': 'Organization',
-    name: practice.doctorName,
-  },
+  worksFor: organizationRef,
   knowsLanguage: practice.doctorLanguages,
-  hasCredential: practice.boardCertifications.map((cert) => ({
-    '@type': 'EducationalOccupationalCredential',
-    name: `Board Certified in ${cert.specialty}`,
-    credentialCategory: 'Certification',
-    issuedBy: {
-      '@type': 'Organization',
-      name: cert.board,
+  /*
+    Until 2026-10-15 this block used three properties schema.org does not
+    have — `educationDetails`, and `validFrom`/`validUntil` on a credential —
+    plus `issuedBy`, which is defined only for Certification/Permit/Ticket. So
+    nothing here was read. Worse, two of its values were invented:
+    `validUntil` was mostRecentCertification + 10, an expiry date nobody
+    supplied, and the EducationEvent's `startDate` was the graduation year
+    minus four, a medical-school start nobody supplied. Fixing the names
+    without removing those would have published both. Emit only what
+    practice.ts holds: the board, the first-certified year, the degree, the
+    school and the graduation year.
+  */
+  hasCredential: [
+    ...practice.boardCertifications.map((cert) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: `Board Certified in ${cert.specialty}`,
+      credentialCategory: 'Certification',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: cert.board,
+      },
+      dateCreated: `${cert.firstCertified}`,
+    })),
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: `${practice.education.medicalDegree}, ${practice.education.school}`,
+      credentialCategory: 'degree',
+      recognizedBy: {
+        '@type': 'CollegeOrUniversity',
+        name: practice.education.school,
+      },
+      dateCreated: `${practice.education.year}`,
     },
-    validFrom: `${cert.firstCertified}`,
-    validUntil: cert.mostRecentCertification
-      ? `${cert.mostRecentCertification + 10}`
-      : undefined,
-  })),
-  educationDetails: {
-    '@type': 'EducationEvent',
-    name: `${practice.education.medicalDegree} from ${practice.education.school}`,
-    educationLevel: 'DoctorateType',
-    startDate: `${practice.education.year - 4}`,
-    endDate: `${practice.education.year}`,
+  ],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: practice.education.school,
   },
 };
 
@@ -153,11 +174,13 @@ const contactPointSchema = {
   },
 };
 
-// Service Schemas
+// Service Schemas. `Service`, not `MedicalService`: there is no MedicalService
+// type in schema.org, so until 2026-10-15 all four of these — the I-693 entry
+// included — were a type search engines do not recognize.
 const servicesSchema = [
   {
     '@context': 'https://schema.org',
-    '@type': 'MedicalService',
+    '@type': 'Service',
     '@id': new URL('/services/#family-medicine', Astro.site).href,
     name: 'Family Medicine',
     // "for patients of all ages, from newborns to seniors" until 2026-08-07.
@@ -166,60 +189,48 @@ const servicesSchema = [
     // and voice assistants read, so a stale claim here reaches a parent who
     // never opens the page.
     description: 'Comprehensive family medicine care for adults, including preventive care, acute illness treatment, and chronic disease management.',
-    provider: {
-      '@type': 'MedicalBusiness',
-      name: practice.doctorName,
-    },
-    serviceArea: {
+    provider: organizationRef,
+    areaServed: {
       '@type': 'City',
       name: 'San Gabriel, California',
     },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'MedicalService',
+    '@type': 'Service',
     '@id': new URL('/immigration-medical-exam/#service', Astro.site).href,
     url: new URL('/immigration-medical-exam/', Astro.site).href,
     name: 'Immigration Medical Services (Form I-693)',
     description:
       'Immigration medical examination completed by a USCIS-designated civil surgeon, with Form I-693 sealed for submission with an adjustment of status application.',
-    provider: {
-      '@type': 'MedicalBusiness',
-      name: practice.doctorName,
-    },
-    serviceArea: {
+    provider: organizationRef,
+    areaServed: {
       '@type': 'City',
       name: 'San Gabriel, California',
     },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'MedicalService',
+    '@type': 'Service',
     '@id': new URL('/services/#citizenship-waiver', Astro.site).href,
     name: 'Citizenship Exam Waiver Medical Evaluation Report (Form N-648)',
     description:
       'Medical certification for disability exceptions, Form N-648, for naturalization applicants seeking an exception to the English and civics testing requirements. USCIS decides the request; the physician provides the certification.',
-    provider: {
-      '@type': 'MedicalBusiness',
-      name: practice.doctorName,
-    },
-    serviceArea: {
+    provider: organizationRef,
+    areaServed: {
       '@type': 'City',
       name: 'San Gabriel, California',
     },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'MedicalService',
+    '@type': 'Service',
     '@id': new URL('/services/#medical-legal', Astro.site).href,
     name: 'Medical-Legal Reports',
     description:
       'Written medical reports and evaluations prepared for legal and administrative proceedings.',
-    provider: {
-      '@type': 'MedicalBusiness',
-      name: practice.doctorName,
-    },
-    serviceArea: {
+    provider: organizationRef,
+    areaServed: {
       '@type': 'City',
       name: 'San Gabriel, California',
     },
@@ -227,7 +238,7 @@ const servicesSchema = [
   /*
     Stem cell therapy is deliberately absent from the structured data while the
     page copy is still an unconfirmed placeholder. Structured data is the part
-    search engines and assistants ingest verbatim, so emitting a MedicalService
+    search engines and assistants ingest verbatim, so emitting a Service
     for a treatment whose type, indications and regulatory basis nobody has
     supplied would assert a clinical claim the practice has not reviewed. Add it
     here once services.astro carries confirmed copy.
@@ -236,8 +247,7 @@ const servicesSchema = [
 
 // Combine all schemas
 const schemas = [
-  localBusinessSchema,
-  medicalBusinessSchema,
+  organizationSchema,
   doctorSchema,
   contactPointSchema,
   ...servicesSchema,

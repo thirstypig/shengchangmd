@@ -295,6 +295,74 @@ for (const page of pages) {
   }
 }
 
+// 10. Structured data may use only schema.org vocabulary someone has checked.
+//     JSON-LD with an invented type or property is valid JSON, builds cleanly
+//     and is silently ignored by search engines. Until 2026-10-15 this site
+//     emitted eight such terms — `MedicalService` (no such type: all four
+//     services, the I-693 one included), `acceptsNewPatients`,
+//     `availableLanguage` on an organization, `educationDetails`,
+//     `educationLevel`, `validFrom`/`validUntil` and `issuedBy` on a credential
+//     — and the ignored ones were hiding two invented dates. Every Type.property
+//     pair below was checked against schema.org on 2026-10-15. Adding a new one
+//     means checking it there first, then adding it here.
+const SCHEMA_VOCAB = {
+  Answer: ['text'],
+  BreadcrumbList: ['itemListElement'],
+  City: ['name'],
+  CollectionPage: ['hasPart', 'inLanguage', 'name', 'url'],
+  CollegeOrUniversity: ['name'],
+  ContactPoint: ['areaServed', 'contactType', 'email', 'hoursAvailable', 'telephone'],
+  CreativeWork: ['name', 'url'],
+  EducationalOccupationalCredential: ['credentialCategory', 'dateCreated', 'name', 'recognizedBy'],
+  FAQPage: ['inLanguage', 'mainEntity'],
+  ListItem: ['item', 'name', 'position'],
+  MedicalClinic: [
+    'address', 'alternateName', 'areaServed', 'description', 'email', 'isAcceptingNewPatients',
+    'knowsLanguage', 'logo', 'medicalSpecialty', 'name', 'openingHoursSpecification', 'priceRange',
+    'telephone', 'url',
+  ],
+  MedicalWebPage: ['about', 'citation', 'description', 'headline', 'inLanguage', 'lastReviewed', 'name', 'reviewedBy', 'url'],
+  OpeningHoursSpecification: ['closes', 'dayOfWeek', 'opens'],
+  Organization: ['name'],
+  Person: [
+    'alternateName', 'alumniOf', 'description', 'email', 'familyName', 'givenName', 'hasCredential',
+    'jobTitle', 'knowsLanguage', 'name', 'telephone', 'worksFor',
+  ],
+  PostalAddress: ['addressCountry', 'addressLocality', 'addressRegion', 'postalCode', 'streetAddress'],
+  Question: ['acceptedAnswer', 'name'],
+  Service: ['areaServed', 'description', 'name', 'provider', 'url'],
+};
+for (const page of pages) {
+  const rel = relative(DIST, page);
+  const visit = (node, where) => {
+    if (Array.isArray(node)) return node.forEach((n) => visit(n, where));
+    if (!node || typeof node !== 'object') return;
+    const type = node['@type'];
+    // A bare {"@id": ...} is a reference to a node described elsewhere.
+    if (type === undefined) {
+      if (Object.keys(node).some((k) => !k.startsWith('@'))) {
+        fail(`${rel}: JSON-LD object without @type under ${where}: ${JSON.stringify(node).slice(0, 80)}`);
+      }
+      return;
+    }
+    const allowed = SCHEMA_VOCAB[type];
+    if (!allowed) {
+      fail(`${rel}: JSON-LD type "${type}" is not in the checked schema.org vocabulary (scripts/verify-build.mjs, check 10)`);
+      return;
+    }
+    for (const [key, value] of Object.entries(node)) {
+      if (key.startsWith('@')) continue;
+      if (!allowed.includes(key)) {
+        fail(`${rel}: JSON-LD property "${type}.${key}" is not in the checked schema.org vocabulary (scripts/verify-build.mjs, check 10)`);
+      }
+      visit(value, `${type}.${key}`);
+    }
+  };
+  for (const m of read(page).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    visit(JSON.parse(m[1]), 'root');
+  }
+}
+
 if (failures.length) {
   console.error('[verify-build] FAILED');
   for (const f of failures) console.error('  - ' + f);
