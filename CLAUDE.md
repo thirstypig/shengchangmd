@@ -170,9 +170,12 @@ Two things from it that are easy to get wrong:
 
 - **Do not skip the translation because you are not fluent.** A baseline test had
   an agent decline with "the wording should come from you or a fluent reviewer
-  rather than me inventing the phrasing." That sounds responsible and is not:
-  `reviewed: false` already keeps both Chinese locales `noindex`, and that gate —
-  not your abstention — is the safety mechanism. An English-only change makes the
+  rather than me inventing the phrasing." That sounds responsible and is not.
+  **There is no `noindex` safety net any more** — both Chinese locales have been
+  `reviewed: true` and indexed since 2026-09-22, so what you write is live and in
+  Google the day it merges. That raises the bar for the translation; it does not
+  make omission safer. Flag new Chinese copy for Dr. Chang's read in the PR
+  description. An English-only change makes the
   Chinese page *actively wrong* rather than merely incomplete: if English gains
   "we do not accept walk-ins" and Chinese does not, silence tells a Chinese
   reader they may walk in. Translate it, flag it for review, do not omit it.
@@ -475,14 +478,15 @@ what you are about to publish, in every locale and in the structured data.**
   GitHub-API-backed PR flow, without going through a full review each time —
   [`docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md`](docs/superpowers/specs/2026-08-26-recognition-photo-admin-page-design.md).
   Approved 2026-08-26, **not yet built**.
-- **Chinese SEO shipped 2026-09-14 (PR #64); indexing waits on Dr. Chang's
-  read** — see the indexing paragraphs at the end of Deployment. Two owner decisions from that day:
+- **Chinese SEO shipped 2026-09-14 (PR #64); the Chinese pages are indexed
+  since 2026-09-22**, ahead of Dr. Chang's read — see the indexing paragraphs
+  at the end of Deployment. Two owner decisions from 2026-09-14:
   the header wordmark shows 張勝雄醫師 / 张胜雄医师 on Chinese pages
   (`header.wordmark`; English keeps "Sheng Chang, M.D."), and the home `<h1>`
   carries a tagline under the unchanged name. **Still open:** `og-image.png` is
   English-only, so a Chinese page shared on LINE or Facebook shows an English
   card; a Chinese card must be rendered from a real font, never generated, and
-  read character by character. New Chinese copy awaiting Dr. Chang's read
+  read character by character. Live Chinese copy not yet read by Dr. Chang
   includes every Chinese title and description, 「加州聖蓋博　家庭醫學專科醫師」,
   and 「取決於該方案的特約醫師名單」 — a fix for 「取決於網路內容」 ("depends on
   the internet content") in the load-bearing insurance qualifier. Page speed and
@@ -778,14 +782,16 @@ History and the 2026-08-01 outage:
 workflow. It drives both the robots meta tag and `src/pages/robots.txt.ts`, so
 the two cannot disagree. Unreviewed locales stay `noindex` regardless, driven by
 `reviewed` in `locales.ts` — which also decides sitemap membership, so a page
-can never be listed and de-indexed at once. **Both Chinese locales are still
-`reviewed: false`**, so two-thirds of the site is not indexed pending a fluent
-reader. Un-indexing is far slower than indexing: anything published here should
-be true first.
+can never be listed and de-indexed at once. **All three locales are
+`reviewed: true` and indexed** — the Chinese ones since 2026-09-22 (`842a005`),
+verified on production 2026-10-15: no `noindex` meta on Chinese pages, 13 URLs
+per Chinese locale in the sitemap.
 
-**Decided 2026-09-14: Dr. Chang is that reader.** The owner wants Chinese search
-traffic and chose to have Dr. Chang — a native Taiwanese reader — read the
-Chinese pages before indexing, over flipping the flag immediately. The on-page
-Chinese SEO shipped first (PR #64). The sequence is: he reads the 繁體 pages,
-corrections land, **then** a separate PR sets `reviewed: true` for both Chinese
-locales. Do not flip it before his corrections, and do not re-ask the question.
+**The owner indexed them ahead of Dr. Chang's read** ("just publish Chinese and
+English now", 2026-09-22), reversing his own 2026-09-14 decision to wait. The
+Chinese copy is machine-assisted Taiwan Mandarin, checked by this repo's guards
+but not yet by a fluent reader, so Dr. Chang's corrections — whenever he gets to
+them, offline and at the owner's arrangement — land on live, indexed pages. Do
+not flip the flag back and do not re-ask. Un-indexing is far slower than
+indexing, which is now the reason to get Chinese copy right *before* merging:
+nothing downstream holds it back.
