@@ -696,10 +696,12 @@ and todo 013):
   locale URLs by string substitution and offered 繁體/简体 links on the two
   English-only pages; all four 404'd on production, while the `<head>` hreflang
   tags — which do check existence — were correct. A guard on the machine-readable
-  half, none on the control a reader clicks. **It never runs in CI** (verified
-  2026-10-15 by running the suite with `dist/` removed: 1 file skipped), so it
-  guards only local runs after a build; todo 013 tracks moving it after the
-  build step
+  half, none on the control a reader clicks. **From 2026-09-23 to 2026-10-15 it
+  never ran in CI**: `npm test` runs before the build, so `dist/` was absent and
+  the file skipped. The deploy workflow now runs it again in a post-build step
+  with `REQUIRE_DIST=1`, under which a missing `dist/` fails instead of
+  skipping (todo 013). A new test that reads `dist/` needs adding to that step
+  — the pre-build `npm test` will skip it
 - `tests/routes/gallery-unlisted.test.ts` — the personal gallery page's
   must-stay-unlinked invariant: no import of `BaseLayout`/`Header`/
   `StickyCallBar`/`WeChatQR`/`CallButton`/`Footer`, a hardcoded (not computed)

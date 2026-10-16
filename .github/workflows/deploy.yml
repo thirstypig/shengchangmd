@@ -32,8 +32,7 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
-      # 55 tests over the i18n layer, source integrity and the indexing gate.
-      # They guard defects that typecheck and build
+      # The vitest suite: i18n, source integrity, styles, assets, routes. They guard defects that typecheck and build
       # cleanly — a practice.ts value with no translation, or a key missing from a
       # locale, either of which puts English or a raw key name in front of a
       # patient. Runs before the build so a locale regression blocks the deploy
@@ -65,6 +64,16 @@ jobs:
           # Before turning this off again, note that un-indexing is far slower
           # than indexing. Anything published here should be true first.
           ALLOW_INDEXING: "true"
+
+      # Tests that read the built site. `npm test` above runs before the build,
+      # when dist/ does not exist, so these skip there; this step is where they
+      # actually run. REQUIRE_DIST turns a missing dist/ into a failure, so
+      # moving this step above the build fails loudly instead of skipping
+      # silently, which is what happened from 2026-09-23 to 2026-10-15 (todo 013).
+      - name: Build-output tests
+        run: npx vitest run tests/routes/internal-links-exist.test.ts
+        env:
+          REQUIRE_DIST: "1"
 
       - uses: actions/upload-pages-artifact@v3
         with:
