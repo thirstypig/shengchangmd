@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p2
 issue_id: 013
 tags: [ci, tests, guards]
@@ -49,7 +49,7 @@ nothing to check, so a future reordering cannot quietly reintroduce this.
 
 ## Acceptance Criteria
 
-- [ ] The internal-links check executes on every deploy (confirm in the Actions log, not by assumption)
+- [x] The internal-links check executes on every deploy (confirmed in the Actions log, run 38860318520)
 - [ ] Planting a broken internal link fails the deploy workflow (fails the step locally; not tried on a real deploy)
 - [x] A missing `dist/` under `REQUIRE_DIST` is a failure, not a skip
 
@@ -68,3 +68,11 @@ link. Full suite unchanged at 290.
 
 Criteria 2 and 3 are verified locally. Criterion 1 needs the Actions log of
 the first deploy after merge; close this todo only then.
+
+**2026-10-15** — Confirmed in GitHub Actions, run 38860318520 (commit
+`7a51339`, the #94 merge). Pre-build **Tests** step: `15 passed | 1 skipped`,
+`288 passed | 1 skipped`, as designed. New **Build-output tests** step:
+`1 passed`, `2 passed`, so the check ran against the real build rather than
+skipping. Deploy succeeded. Criterion 2 (a broken link fails a real deploy)
+was verified locally only, by planting one; not repeated on a live deploy,
+which would mean pushing a deliberately broken commit to main.
