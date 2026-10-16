@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { practice } from '@data/practice';
+import '../styles/pages/hours.css';
 
 const title = `Office Hours | ${practice.doctorName} | San Gabriel, CA`;
 const description = `Office hours for Dr. Chang's family medicine practice in San Gabriel, California: ${practice.hours.weekday}. ${practice.hours.weekend}.`;
@@ -37,36 +38,3 @@ const breadcrumbs = [
     </div>
   </section>
 </BaseLayout>
-
-<style is:global>
-  .content-section {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .content-left h1 {
-    font-size: 2rem;
-    margin: 0 0 1.5rem;
-    font-weight: 700;
-  }
-
-  .hours-list {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .hours-item {
-    display: flex;
-    justify-content: flex-start;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .hours-note {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-</style>
