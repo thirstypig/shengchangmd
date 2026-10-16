@@ -11,9 +11,12 @@ import { getTranslation } from '@i18n/locales';
 interface Props {
   locale: string;
   currentPath: string;
+  /** Path the language switcher builds its links from, when it must differ
+   *  from currentPath — the 404 page, which has no path of its own. */
+  switcherPath?: string;
 }
 
-const { locale, currentPath } = Astro.props;
+const { locale, currentPath, switcherPath } = Astro.props;
 
 /*
   These two used to be inline ternaries holding their own Chinese, which put a
@@ -45,7 +48,7 @@ const homeHref = locale === 'en' ? '/' : `/${locale}/`;
       class="max-w-container mx-auto px-4 md:px-6 py-1 flex items-center justify-end gap-2 sm:gap-4 flex-nowrap overflow-x-auto"
     >
       <FontSizeControl {locale} />
-      <LanguageSwitcher currentLocale={locale} {currentPath} />
+      <LanguageSwitcher currentLocale={locale} currentPath={switcherPath ?? currentPath} />
       <ThemeToggle {locale} />
     </div>
   </div>

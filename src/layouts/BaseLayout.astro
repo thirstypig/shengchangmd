@@ -23,9 +23,16 @@ interface Props {
   canonicalUrl: string;
   breadcrumbs?: BreadcrumbItem[];
   pageSchema?: Record<string, unknown>;
+  /**
+   * The 404 page. Forces noindex, and drops canonical, hreflang and og:url:
+   * an error page is served at every unmatched URL, so it has no address of
+   * its own to declare, and verify-build would rightly reject one that named
+   * a canonical outside its own hreflang cluster.
+   */
+  errorPage?: boolean;
 }
 
-const { title, description, locale, ogImage, canonicalUrl, breadcrumbs, pageSchema } = Astro.props;
+const { title, description, locale, ogImage, canonicalUrl, breadcrumbs, pageSchema, errorPage = false } = Astro.props;
 
 const localeMetadata = locales[locale as keyof typeof locales] || locales['en'];
 const isReviewed = localeMetadata?.reviewed ?? false;
@@ -35,7 +42,7 @@ const isReviewed = localeMetadata?.reviewed ?? false;
 // confirmed (insurance carriers, the doctor's Chinese name, immigration-exam
 // scope), and a staging URL that gets indexed is hard to un-index.
 const allowIndexing = process.env.ALLOW_INDEXING === 'true';
-const noIndex = !allowIndexing || !isReviewed;
+const noIndex = errorPage || !allowIndexing || !isReviewed;
 
 // Set default og:image if not provided
 const finalOgImage = ogImage || new URL('/og-image.png', Astro.site).href;
@@ -103,18 +110,18 @@ const ogAlternates = ogLocaleAlternates(locale, canonicalUrl, pageFiles);
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <link rel="canonical" href={canonicalUrl} />
+    {!errorPage && <link rel="canonical" href={canonicalUrl} />}
 
     {
-      hreflangLinks.map((link) => (
+      !errorPage && hreflangLinks.map((link) => (
         <link rel="alternate" hrefLang={link.lang} href={link.href} />
       ))
     }
-    {xDefault && <link rel="alternate" hrefLang="x-default" href={xDefault} />}
+    {!errorPage && xDefault && <link rel="alternate" hrefLang="x-default" href={xDefault} />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
+    {!errorPage && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:site_name" content={t('seo.siteName')} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content={finalOgImage} />
@@ -178,7 +185,15 @@ const ogAlternates = ogLocaleAlternates(locale, canonicalUrl, pageFiles);
     <a href="#main" class="skip-to-content">{t('skipToContent')}</a>
 
     <!-- Header -->
-    <Header locale={locale} currentPath={Astro.url.pathname} />
+    {/* The 404 page is served at every unmatched URL and has no real path of
+        its own; '/' sends its language switcher to each locale's home page
+        rather than to a /404/ that was never built. The nav keeps the real
+        path, so no nav item claims to be the current page. */}
+    <Header
+      locale={locale}
+      currentPath={Astro.url.pathname}
+      switcherPath={errorPage ? '/' : undefined}
+    />
 
     <!-- Main content -->
     <main id="main">

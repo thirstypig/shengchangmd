@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p3
 issue_id: 006
 tags: [code-review, i18n, guards, pre-existing]
@@ -81,3 +81,14 @@ rebuilding `dist/` and an earlier grep against it returned a false result.
 ## Resources
 
 - `docs/solutions/logic-errors/green-checks-that-cannot-see-the-defect.md`
+
+## Resolution (2026-10-15)
+
+Option A, localized by showing all three languages rather than by URL:
+`src/pages/404.astro` renders `notFound.{title,body,home,call}` in EN, 繁體 and
+简体, each block marked with its own `lang`, with a home link per locale and a
+call button. BaseLayout's new `errorPage` prop forces `noindex` and drops
+canonical/hreflang/og:url (an error page has no address of its own); the
+language switcher links to each locale's home page. `verify-build.mjs` now
+reads the site origin from the first page that has a canonical. Already
+excluded from the sitemap by the existing `/404` filter.

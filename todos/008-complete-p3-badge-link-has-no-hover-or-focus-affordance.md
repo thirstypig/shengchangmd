@@ -1,5 +1,5 @@
 ---
-status: pending
+status: complete
 priority: p3
 issue_id: 008
 tags: [code-review, accessibility, ux]
@@ -86,3 +86,11 @@ token-mapped.
 
 - Commit `fef0fe7`
 - `docs/solutions/ui-bugs/tailwind-palette-classes-bypass-theme-tokens.md`
+
+## Resolution (2026-10-15)
+
+Option A, in `global.css` once rather than in three page style blocks: a
+`.badge-link` class adds a → at rest, a thickened border and underlined label
+on hover, and a 2px focus-visible ring — all `--positive`, the badge's own
+themed token, so no palette-map entry was needed. Verified in a browser in both
+themes: hover state and keyboard (Tab) focus.
