@@ -825,3 +825,7 @@ them, offline and at the owner's arrangement — land on live, indexable pages. 
 not flip the flag back and do not re-ask. Un-indexing is far slower than
 indexing, which is now the reason to get Chinese copy right *before* merging:
 nothing downstream holds it back.
+
+## Status file
+
+STATUS.md is read by Jimmy's claude.ai assistant as the source of truth. Whenever a change affects scope, stack, hosting, URLs, shipped features, open bugs, or next phases, update STATUS.md and its Last updated date in the SAME commit.
