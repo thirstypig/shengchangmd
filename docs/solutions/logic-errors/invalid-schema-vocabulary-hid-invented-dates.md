@@ -111,6 +111,31 @@ Concretely, for structured data here:
   all optional; a missing `validUntil` claims nothing, and a guessed one claims
   a date.
 
+## Postscript, 2026-11-12: the input was invented too
+
+`#90` removed `validUntil` because `mostRecentCertification + 10` derived a
+date nobody supplied. It kept `mostRecentCertification` itself, which
+`practice.ts` held as **2026** and the About page displayed in all three
+locales. That value came from the same initial scaffold, `441f55e`, and was
+also never supplied. Dr. Chang's answer, relayed by the owner: **2020**.
+
+The audit asked where the derived value came from and stopped one step short.
+The value it was derived from had the same provenance and got none of the same
+scrutiny, because it lived in `practice.ts`, the file this repo calls the
+single source of truth. **Being in the source-of-truth file is not
+provenance.** Anything written in the scaffold's first two days that has not
+since been re-supplied by the owner should be treated as unverified.
+
+`git blame -s src/data/practice.ts | grep '^^441f55e'` lists the candidates,
+but it can't settle them: a value the owner later confirmed is still
+blamed on the scaffold, because confirming it changed no line. Run on
+2026-11-12, it listed the NPI, phone, weekend hours, accepting-new-patients
+flag, the school and 1967 graduation year, and ABFM's 1978 first
+certification and "Certified" status. Several of those have since been
+confirmed elsewhere (CLAUDE.md records the owner's 2026-08-06 credentials
+list and Doximity). Each one still needs its own check against that record,
+not a blanket assumption either way.
+
 ## Related
 
 - [Publishing a fact does not remove its contradiction](publishing-a-fact-does-not-remove-its-contradiction.md):
