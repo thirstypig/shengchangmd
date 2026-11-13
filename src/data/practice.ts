@@ -256,7 +256,9 @@ export const practice: PracticeInfo = {
       firstCertified: 1978,
       currentStatus: 'Certified',
       maintenanceRequired: true,
-      mostRecentCertification: 2026,
+      // 2020, per Dr. Chang, relayed by the owner 2026-11-12. The site said 2026
+      // from the initial scaffold (441f55e) until then — a year nobody supplied.
+      mostRecentCertification: 2020,
     },
     {
       board: 'American Board of Pathology',

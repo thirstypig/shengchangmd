@@ -91,7 +91,7 @@ export const translations = {
       adults: 'Adults aged 18 and over',
       seniors: 'Seniors aged 65 and over',
       noMinors:
-        'We do not see patients under 18. Please ask us and we will point you to a pediatric practice.',
+        'Apart from immigration medical exams, we do not see patients under 18. Please ask us and we will point you to a pediatric practice.',
       noObGyn: 'We do not provide gynecology or obstetric care.',
       referrals:
         'We refer to specialists where it is indicated. Some referrals need prior authorization from your plan, and we will tell you if yours does.',
@@ -102,7 +102,7 @@ export const translations = {
       // and "accepting new patients" has already decided to call. The full list
       // stays on /services/#who-we-see, linked.
       summary:
-        'We see adults 18 and over. We do not see patients under 18, and we do not provide gynecology or obstetric care.',
+        'We see adults 18 and over. For patients under 18 we provide immigration medical exams only, and we do not provide gynecology or obstetric care.',
       linkLabel: 'Who we see',
     },
     coverage: {
@@ -132,6 +132,10 @@ export const translations = {
       languagesLabel: 'Languages',
       languagesValue: 'Dr. Chang explains results in English or Mandarin. Our office speaks {languages}.',
       whoLabel: 'Who we see',
+      // Dr. Chang, relayed by the owner 2026-11-12: "I do that for the children
+      // too." The general under-18 limit (patientScope) still stands for
+      // everything else; I-693 exams are the one exception.
+      whoValue: 'Adults and children',
       vaccinesLabel: 'Vaccines',
       vaccinesYes: 'Given in the office',
       vaccinesNo: 'Not given in the office',
@@ -145,7 +149,7 @@ export const translations = {
       faqCostA: 'The exam is one flat fee. Please call the office for the current price.',
       faqChildrenQ: 'Do you examine children?',
       faqChildrenA:
-        'No. We see adults 18 and over. For a child, use the USCIS Find a Civil Surgeon tool to find a civil surgeon who sees children.',
+        'Yes. Dr. Chang does immigration medical exams for children as well as adults. Exams are by appointment only, so please call the office to book.',
     },
     whatToBring: {
       photoId: "A valid government-issued photo ID, such as your unexpired passport or driver's license",
@@ -358,13 +362,13 @@ export const translations = {
       heading: '看診對象',
       adults: '18 歲以上成人',
       seniors: '65 歲以上長者',
-      noMinors: '本診所不看 18 歲以下患者。歡迎來電，我們可為您介紹兒科診所。',
+      noMinors: '除移民體檢外，本診所不看 18 歲以下患者。歡迎來電，我們可為您介紹兒科診所。',
       noObGyn: '本診所不提供婦科及產科服務。',
       referrals:
         '如有需要，我們會轉介專科醫師。部分轉介需保險公司事先核准，屆時我們會告知您。',
       stemCellAppointment: '幹細胞治療採預約制。',
       summary:
-        '本診所看診對象為 18 歲以上成人，不看 18 歲以下患者，亦不提供婦科及產科服務。',
+        '本診所看診對象為 18 歲以上成人，18 歲以下僅提供移民體檢，亦不提供婦科及產科服務。',
       linkLabel: '看診對象說明',
     },
     coverage: {
@@ -394,6 +398,7 @@ export const translations = {
       languagesLabel: '語言',
       languagesValue: '張醫師以英語或國語為您說明結果。診所可使用的語言：{languages}。',
       whoLabel: '看診對象',
+      whoValue: '成人及孩童',
       vaccinesLabel: '疫苗',
       vaccinesYes: '診所可施打',
       vaccinesNo: '診所不提供施打',
@@ -407,7 +412,7 @@ export const translations = {
       faqCostA: '移民體檢採單一固定費用，目前價格請來電洽詢。',
       faqChildrenQ: '可以為孩童做體檢嗎？',
       faqChildrenA:
-        '很抱歉，本診所只看 18 歲以上成人。孩童的移民體檢，請使用美國移民局的 Find a Civil Surgeon 工具，尋找有看孩童的體檢醫師。',
+        '可以。張醫師為成人及孩童進行移民體檢。移民體檢採預約制，請來電預約。',
     },
     whatToBring: {
       photoId: '政府核發、附照片的有效身分證件，例如未過期的護照或駕照',
@@ -561,13 +566,13 @@ export const translations = {
       heading: '看诊对象',
       adults: '18 岁以上成人',
       seniors: '65 岁以上长者',
-      noMinors: '本诊所不看 18 岁以下患者。欢迎来电，我们可为您介绍儿科诊所。',
+      noMinors: '除移民体检外，本诊所不看 18 岁以下患者。欢迎来电，我们可为您介绍儿科诊所。',
       noObGyn: '本诊所不提供妇科及产科服务。',
       referrals:
         '如有需要，我们会转介专科医师。部分转介需保险公司事先核准，届时我们会告知您。',
       stemCellAppointment: '干细胞治疗采预约制。',
       summary:
-        '本诊所看诊对象为 18 岁以上成人，不看 18 岁以下患者，亦不提供妇科及产科服务。',
+        '本诊所看诊对象为 18 岁以上成人，18 岁以下仅提供移民体检，亦不提供妇科及产科服务。',
       linkLabel: '看诊对象说明',
     },
     coverage: {
@@ -597,6 +602,7 @@ export const translations = {
       languagesLabel: '语言',
       languagesValue: '张医师以英语或国语为您说明结果。诊所可使用的语言：{languages}。',
       whoLabel: '看诊对象',
+      whoValue: '成人及孩童',
       vaccinesLabel: '疫苗',
       vaccinesYes: '诊所可施打',
       vaccinesNo: '诊所不提供施打',
@@ -610,7 +616,7 @@ export const translations = {
       faqCostA: '移民体检采单一固定费用，目前价格请来电洽询。',
       faqChildrenQ: '可以为孩童做体检吗？',
       faqChildrenA:
-        '很抱歉，本诊所只看 18 岁以上成人。孩童的移民体检，请使用美国移民局的 Find a Civil Surgeon 工具，寻找有看孩童的体检医师。',
+        '可以。张医师为成人及孩童进行移民体检。移民体检采预约制，请来电预约。',
     },
     whatToBring: {
       photoId: '政府核发、附照片的有效身分证件，例如未过期的护照或驾照',

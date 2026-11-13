@@ -268,6 +268,12 @@ what you are about to publish, in every locale and in the structured data.**
   twice before it is published" — in all three locales — while both articles
   rendered "Awaiting review". The existing gate checked the byline and the
   JSON-LD and was blind to prose elsewhere on the site.
+- **I-693 exams for children: yes** (Dr. Chang, relayed by the owner,
+  2026-11-12: "I do that for the children too"). This is the one exception to
+  the under-18 limit; general care stays adults only. The site had said the
+  opposite in 11 places across three locales, including the FAQ JSON-LD. No
+  minimum age was given, so none is published. Same day: the ABFM most recent
+  certification is **2020**, not the scaffold's invented 2026.
 - **The I-693 immigration medical exam page** at `/immigration-medical-exam/`
   went live 2026-09-22 (PR #67). **Deliberately general, by the owner's
   decision of 2026-09-21:** the fee amount, whether vaccines are given in the

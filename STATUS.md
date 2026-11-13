@@ -1,6 +1,6 @@
 # STATUS — shengchangmd
 
-**Last updated:** 2026-11-11
+**Last updated:** 2026-11-12
 
 ## One-line description
 Trilingual (English, Traditional Chinese, Simplified Chinese) static website for the family medicine practice of Sheng Chang, M.D., in San Gabriel, CA.
@@ -19,6 +19,7 @@ Trilingual (English, Traditional Chinese, Simplified Chinese) static website for
 - Repo: https://github.com/thirstypig/shengchangmd
 
 ## Shipped (last 60 days)
+- I-693 exams now stated as available for children too, the one exception to the under-18 limit; ABFM most recent certification corrected 2026 → 2020 (both per Dr. Chang, 2026-11-12).
 - Form I-693 page in three locales with FAQ and JSON-LD (PR #67, 2026-09-22).
 - Articles section: index, method page, two sourced I-693 articles, AI-drafting disclosure.
 - Chinese pages set indexable (2026-09-22); Chinese SEO titles/descriptions and Chinese-name header wordmark.
