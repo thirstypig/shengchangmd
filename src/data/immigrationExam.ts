@@ -65,7 +65,7 @@ export function getExamFacts(
       label: t('immigrationExam.languagesLabel'),
       value: t('immigrationExam.languagesValue').replace('{languages}', languageList(locale)),
     },
-    { key: 'who', label: t('immigrationExam.whoLabel'), value: t('patientScope.adults') },
+    { key: 'who', label: t('immigrationExam.whoLabel'), value: t('immigrationExam.whoValue') },
     exam.vaccinesOnSite === null
       ? null
       : {
