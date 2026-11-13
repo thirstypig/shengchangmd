@@ -1,6 +1,6 @@
 # STATUS — shengchangmd
 
-**Last updated:** 2026-11-12
+**Last updated:** 2026-11-13
 
 ## One-line description
 Trilingual (English, Traditional Chinese, Simplified Chinese) static website for the family medicine practice of Sheng Chang, M.D., in San Gabriel, CA.
@@ -37,6 +37,8 @@ Trilingual (English, Traditional Chinese, Simplified Chinese) static website for
 - Multilingual blog (todo 011): acceptance criteria still open.
 
 ## Open bugs / known issues
+- Open question for Dr. Chang: is there a minimum age for children's I-693 exams? None is published.
+- Values in `src/data/practice.ts` unchanged since the initial scaffold (NPI, school, 1967, ABFM 1978) should each be checked against an owner confirmation; the scaffold's ABFM "2026" turned out to be invented (fixed 2026-11-12).
 - Google index: on 2026-10-15 Search Console showed only the home page indexed; child `sitemap-0.xml` read "Couldn't fetch". Resubmitted and indexing requested 2026-10-16; recheck not recorded.
 - README still says both Chinese locales are `noindex`, contradicting CLAUDE.md and the 2026-09-22 change.
 - Third-party listings contradict site facts (todo 009); owner handles offline.

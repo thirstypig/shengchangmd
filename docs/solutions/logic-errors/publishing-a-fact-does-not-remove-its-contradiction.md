@@ -182,6 +182,25 @@ to revert it also discarded uncommitted coverage markup on both Chinese
 insurance pages. The guard went red immediately rather than letting a silently
 empty coverage section ship.
 
+## The reverse case: a general limit applied to a service nobody asked about (2026-11-12)
+
+The same limit, "we do not see patients under 18", caused the opposite defect
+six weeks later. When the I-693 page was written on 2026-09-21, its FAQ
+answered "Do you examine children?" with **"No"** and sent parents to the
+USCIS locator. Nobody had said that. It was inferred: the site says adults
+only, so presumably no child I-693s either. The inference was recorded as a
+fact, rendered in three locales, put in the FAQPage JSON-LD and repeated in
+both articles.
+
+On 2026-11-12 Dr. Chang said "I do that for the children too." Fixing it took
+11 edits, and four of them were not on the I-693 page: the general
+`patientScope` copy, which had been true until that day and now contradicted
+the new FAQ unless it gained "apart from immigration medical exams".
+
+**A general limit is a claim about the services you asked about when it was
+written.** Applying it to a new service is a new claim, and it needs its own
+source. Ask the owner, or leave the question out of the FAQ until someone does.
+
 ## The general lesson
 
 A specification that says "publish X" is describing half a change. The other
